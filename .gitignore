@@ -1,0 +1,12 @@
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components
+/vendor
+src/main/webapp/assets/vendor/*
+.directory
+*.iml
+.idea/*
+npm-debug.log
+target/

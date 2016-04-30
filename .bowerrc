@@ -1,0 +1,11 @@
+{
+  "analytics": true,
+  "directory": "src/main/webapp/assets/vendor",
+  "timeout": 60000,
+  "save": true,
+  "storage": {
+    "packages" : "~/.bower/packages",
+    "registry" : "~/.bower/registry",
+    "links" : "~/.bower/links"
+  }
+}
