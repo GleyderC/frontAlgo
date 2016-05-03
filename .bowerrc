@@ -7,5 +7,10 @@
     "packages" : "~/.bower/packages",
     "registry" : "~/.bower/registry",
     "links" : "~/.bower/links"
+  },
+  "scripts": {
+    "preinstall": "",
+    "postinstall": "",
+    "preuninstall": ""
   }
 }
