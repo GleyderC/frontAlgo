@@ -1,11 +1,16 @@
 # collateral
-
+​
 This is the frontend of collateral project.
-
-## Build & development
-
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+​
+## Install Node.js
+https://nodejs.org/en/download/
+​
+## Install npm
+https://www.npmjs.com/package/npm
+​
+## Build & development: Run npm install (in package directory, no arguments):
+cd ccm_front
+npm install
+​
+## Run Bower
+bower install
