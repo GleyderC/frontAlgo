@@ -31,7 +31,7 @@ var paths = {
     ],
     karma: 'karma.conf.js',
     views: {
-        main: collateral.app + '/views/index.jsp',
+        main: collateral.app + '/index.jsp',
         files: [collateral.app + '/views/**/*.html']
     }
 };
@@ -139,12 +139,13 @@ gulp.task('test', ['start:server:test'], function () {
 
 // inject bower components
 gulp.task('bower', function () {
+
     return gulp.src(paths.views.main)
         .pipe(wiredep({
             directory: collateral.app + '/assets/vendor',
-            //ignorePath: '..'
+            ignorePath: '..'
         }))
-        .pipe(gulp.dest(collateral.app + '/views'));
+        .pipe(gulp.dest(collateral.app));
 });
 
 ///////////
