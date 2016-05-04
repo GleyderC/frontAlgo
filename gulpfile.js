@@ -8,11 +8,12 @@ var lazypipe = require('lazypipe');
 var rimraf = require('rimraf');
 var wiredep = require('wiredep').stream;
 var runSequence = require('run-sequence');
+var sass = require('gulp-sass');
 
 var collateral = {
     //app: require('./bower.json').appPath || 'app',
     app: 'src/main/webapp/app',
-    dist: 'dist'
+    dist: 'src/main/webapp/app'
 };
 
 var paths = {
@@ -46,11 +47,11 @@ var lintScripts = lazypipe()
 
 var styles = lazypipe()
     .pipe($.sass, {
-        outputStyle: 'expanded',
+        outputStyle: 'compressed',
         precision: 10
     })
     .pipe($.autoprefixer, 'last 1 version')
-    .pipe(gulp.dest, '.tmp/styles');
+    .pipe(gulp.dest, collateral.app + '/styles/');
 
 ///////////
 // Tasks //

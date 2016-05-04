@@ -10,7 +10,7 @@
   },
   "scripts": {
     "preinstall": "",
-    "postinstall": "",
+    "postinstall": "gulp bower",
     "preuninstall": ""
   }
 }
