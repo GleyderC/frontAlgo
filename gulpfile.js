@@ -20,12 +20,12 @@ var paths = {
     styles: [collateral.app + '/styles/**/*.scss'],
     test: ['test/spec/**/*.js'],
     testRequire: [
-        collateral.app + '/vendor/angular/angular.js',
-        collateral.app + '/vendor/angular-mocks/angular-mocks.js',
-        collateral.app + '/vendor/angular-resource/angular-resource.js',
-        collateral.app + '/vendor/angular-cookies/angular-cookies.js',
-        collateral.app + '/vendor/angular-sanitize/angular-sanitize.js',
-        collateral.app + '/vendor/angular-route/angular-route.js',
+        collateral.app + '/assets/vendor/angular/angular.js',
+        collateral.app + '/assets/vendor/angular-mocks/angular-mocks.js',
+        collateral.app + '/assets/vendor/angular-resource/angular-resource.js',
+        collateral.app + '/assets/vendor/angular-cookies/angular-cookies.js',
+        collateral.app + '/assets/vendor/angular-sanitize/angular-sanitize.js',
+        collateral.app + '/assets/vendor/angular-route/angular-route.js',
         'test/mock/**/*.js',
         'test/spec/**/*.js'
     ],
@@ -141,7 +141,7 @@ gulp.task('test', ['start:server:test'], function () {
 gulp.task('bower', function () {
     return gulp.src(paths.views.main)
         .pipe(wiredep({
-            directory: collateral.app + '/../assets/vendor',
+            directory: collateral.app + '/assets/vendor',
             //ignorePath: '..'
         }))
         .pipe(gulp.dest(collateral.app + '/views'));

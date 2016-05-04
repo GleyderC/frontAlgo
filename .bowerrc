@@ -1,6 +1,6 @@
 {
   "analytics": true,
-  "directory": "src/main/webapp/assets/vendor",
+  "directory": "src/main/webapp/app/assets/vendor",
   "timeout": 60000,
   "save": true,
   "storage": {
