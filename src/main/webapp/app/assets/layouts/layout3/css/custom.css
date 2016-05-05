@@ -1,1 +1,78 @@
 /* here you can put your own css to customize and override the theme */
+
+.collateral-main-container
+{
+    width: 94%;
+    background-color: white;
+    margin-top: 0;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    padding: 10px;
+}
+
+
+
+/* ##############MEDIA QUERY FOR MENU ##############*/
+@media screen and (min-width: 992px) and (max-width: 1023px){
+
+    .menu-sub-tab ul
+    {
+        width: 943px;
+    }
+
+    .menu-sub-tab ul > li
+    {
+        width: auto;
+        margin: 10px;
+        float: left !important;
+    }
+
+}
+
+@media screen and (min-width: 1024px) {
+
+    .menu-sub-tab
+    {
+        margin-bottom: 40px;
+    }
+
+    .menu-sub-tab ul
+    {
+        width: 944px;
+    }
+
+    .menu-sub-tab ul > li
+    {
+        width: auto;
+        margin: 10px;
+        float: left !important;
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+
+    .menu-sub-tab li
+    {
+        margin-bottom: 40px;
+    }
+
+    .menu-sub-tab li ul
+    {
+        width: 1140px;
+    }
+
+    .menu-sub-tab li ul > li
+    {
+        width: auto;
+        margin: 10px;
+        float: left !important;
+    }
+
+}
+
+.page-header
+{
+    margin-bottom: 70px;
+}

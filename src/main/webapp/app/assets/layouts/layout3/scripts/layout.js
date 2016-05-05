@@ -261,11 +261,11 @@ var Layout = function () {
 
         initHeader: function() {
             handleHeader(); // handles horizontal menu    
-            handleMainMenu(); // handles menu toggle for mobile
-            App.addResizeHandler(handleMainMenuOnResize); // handle main menu on window resize
+            //handleMainMenu(); // handles menu toggle for mobile
+            //App.addResizeHandler(handleMainMenuOnResize); // handle main menu on window resize
 
             if (App.isAngularJsApp()) {      
-                handleMainMenuActiveLink('match'); // init sidebar active links 
+                //handleMainMenuActiveLink('match'); // init sidebar active links
             }
         },
 
@@ -284,15 +284,15 @@ var Layout = function () {
         },
 
         setMainMenuActiveLink: function(mode, el) {
-            handleMainMenuActiveLink(mode, el);
+            //handleMainMenuActiveLink(mode, el);
         },
 
         closeMainMenu: function() {
-            $('.hor-menu').find('li.open').removeClass('open');
+            /*$('.hor-menu').find('li.open').removeClass('open');
 
             if (App.getViewPort().width < resBreakpointMd && $('.page-header-menu').is(":visible")) { // close the menu on mobile view while laoding a page 
                 $('.page-header .menu-toggler').click();
-            }
+            }*/
         },
 
         getLayoutImgPath: function() {

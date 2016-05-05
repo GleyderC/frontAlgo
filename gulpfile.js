@@ -17,8 +17,8 @@ var collateral = {
 };
 
 var paths = {
-    scripts: [collateral.app + '/scripts/**/*.js'],
-    styles: [collateral.app + '/styles/**/*.scss'],
+    scripts: [collateral.app + '/assets/global/**/*.js'],
+    styles: [collateral.app + '/assets/global/css/**/*.scss'],
     test: ['test/spec/**/*.js'],
     testRequire: [
         collateral.app + '/assets/vendor/angular/angular.js',
@@ -51,7 +51,7 @@ var styles = lazypipe()
         precision: 10
     })
     .pipe($.autoprefixer, 'last 1 version')
-    .pipe(gulp.dest, collateral.app + '/styles/');
+    .pipe(gulp.dest, collateral.app + '/assets/global/css');
 
 ///////////
 // Tasks //

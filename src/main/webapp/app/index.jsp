@@ -1,98 +1,109 @@
 <!DOCTYPE html>
-
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js" data-ng-app="MetronicApp"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js" data-ng-app="MetronicApp"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en">
+<html lang="en" data-ng-app="MetronicApp">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 
 <head>
-    <meta charset="utf-8"/>
-    <title>Collateral | User Login 1</title>
+    <title data-ng-bind="'Collateral | ' + $state.current.data.pageTitle"></title>
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <meta content="" name="description"/>
-    <meta content="" name="author"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
-    <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <!-- END PAGE LEVEL PLUGINS -->
-    <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css"/>
-    <link href="assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css"/>
-    <!-- END THEME GLOBAL STYLES -->
-    <!-- BEGIN PAGE LEVEL STYLES -->
-    <link href="assets/pages/css/login.css" rel="stylesheet" type="text/css"/>
-    <link href="styles/main.css" rel="stylesheet" type="text/css"/>
-    <!-- END PAGE LEVEL STYLES -->
-    <!-- BEGIN THEME LAYOUT STYLES -->
-    <!-- END THEME LAYOUT STYLES -->
-    <link rel="shortcut icon" href="favicon.ico"/>
-</head>
+    <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
+    <link id="ng_load_plugins_before" />
+    <!-- END DYMANICLY LOADED CSS FILES -->
+    <!-- BEGIN THEME STYLES -->
+    <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
+    <link href="assets/global/css/components-rounded.min.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/layouts/layout3/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="assets/layouts/layout3/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/css/main.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+    <link rel="shortcut icon" href="favicon.ico" /> </head>
 <!-- END HEAD -->
+<!-- BEGIN BODY -->
+<!-- DOC: Apply "page-header-menu-fixed" class to set the mega menu fixed  -->
+<!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
 
-<!-- bower:css -->
-<link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.css"/>
-<link rel="stylesheet" href="assets/vendor/datatables.net-bs/css/dataTables.bootstrap.css"/>
-<!-- endbower -->
-</head>
-<body ng-app="collateralApp">
-
-<div ui-view="header"></div>
-<div ui-view="content"></div>
-<div ui-view="footer"></div>
-
-<!-- bower:js -->
-<script src="assets/vendor/jquery/dist/jquery.js"></script>
-<script src="assets/vendor/angular/angular.js"></script>
-<script src="assets/vendor/angular-animate/angular-animate.js"></script>
-<script src="assets/vendor/angular-cookies/angular-cookies.js"></script>
-<script src="assets/vendor/angular-resource/angular-resource.js"></script>
-<script src="assets/vendor/angular-route/angular-route.js"></script>
-<script src="assets/vendor/angular-sanitize/angular-sanitize.js"></script>
-<script src="assets/vendor/angular-touch/angular-touch.js"></script>
-<script src="assets/vendor/jquery-ui/jquery-ui.js"></script>
-<script src="assets/vendor/bootstrap/dist/js/bootstrap.js"></script>
-<script src="assets/vendor/datatables.net/js/jquery.dataTables.js"></script>
-<script src="assets/vendor/datatables.net-bs/js/dataTables.bootstrap.js"></script>
-<script src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
-<!-- endbower -->
-<script src="scripts/app.js"></script>
-<script src="scripts/controllers/loginController.js"></script>
+<body ng-controller="AppController" class="page-on-load">
+<!-- BEGIN PAGE SPINNER -->
+<div collateral-spinner-bar class="page-spinner-bar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+<!-- END PAGE SPINNER -->
+<!-- BEGIN HEADER -->
+<div data-ng-include="'collateral-apps/views/header.jsp'" data-ng-controller="HeaderController" class="page-header"> </div>
+<!-- END HEADER -->
+<div class="clearfix"> </div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN PAGE HEAD -->
+    <!--<div data-ng-include="'collateral-apps/views/page-head.html'" data-ng-controller="PageHeadController" class="page-head"> </div>-->
+    <!-- END PAGE HEAD -->
+    <!-- BEGIN PAGE CONTENT -->
+    <div class="page-content">
+        <div class="container collateral-main-container">
+            <!-- BEGIN ACTUAL CONTENT -->
+            <div ui-view class="fade-in-up"> </div>
+            <!-- END ACTUAL CONTENT -->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div data-ng-include="'collateral-apps/views/footer.jsp'" data-ng-controller="FooterController"> </div>
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE JQUERY PLUGINS -->
 <!--[if lt IE 9]>
 <script src="assets/global/plugins/respond.min.js"></script>
 <script src="assets/global/plugins/excanvas.min.js"></script>
 <![endif]-->
-<!-- BEGIN CORE PLUGINS -->
 <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
-        type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
-<!-- END PAGE LEVEL PLUGINS -->
-<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<!-- END CORE JQUERY PLUGINS -->
+<!-- BEGIN CORE ANGULARJS PLUGINS -->
+<script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<!-- END CORE ANGULARJS PLUGINS -->
+<!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
+<!--<script src="collateral-apps/app.js" type="text/javascript"></script>-->
+<script src="collateral-apps/main.js" type="text/javascript"></script>
+<script src="collateral-apps/directives/collateralSpinnerBar.js" type="text/javascript"></script>
+<!-- END APP LEVEL ANGULARJS SCRIPTS -->
+<!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
-<!-- END THEME GLOBAL SCRIPTS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<!-- END PAGE LEVEL SCRIPTS -->
-<!-- BEGIN THEME LAYOUT SCRIPTS -->
-<!-- END THEME LAYOUT SCRIPTS -->
+<script src="assets/layouts/layout3/scripts/layout.js" type="text/javascript"></script>
+<script src="assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>
+<!-- END APP LEVEL JQUERY SCRIPTS -->
+<!-- END JAVASCRIPTS -->
 </body>
+<!-- END BODY -->
+
 </html>
