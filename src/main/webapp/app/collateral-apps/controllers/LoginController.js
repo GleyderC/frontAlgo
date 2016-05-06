@@ -8,7 +8,7 @@
  * Controller of the collateralApp
  */
 
-angular.module('MetronicApp')
+angular.module('CollateralApp')
 
     .controller('LoginController',['$scope','$state', function ($scope, $state) {
         

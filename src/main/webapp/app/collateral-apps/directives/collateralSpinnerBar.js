@@ -3,7 +3,7 @@ GLobal Directives
 ***/
 
 // Route State Load Spinner(used on page or content load)
-MetronicApp.directive('collateralSpinnerBar', ['$rootScope',
+CollateralApp.directive('collateralSpinnerBar', ['$rootScope',
     function($rootScope) {
         return {
             link: function(scope, element, attrs) {
@@ -13,14 +13,14 @@ MetronicApp.directive('collateralSpinnerBar', ['$rootScope',
                 // display the spinner bar whenever the route changes(the content part started loading)
                 $rootScope.$on('$stateChangeStart', function() {
                     element.removeClass('hide'); // show spinner bar
-                    Layout.closeMainMenu();
+                    //Layout.closeMainMenu();
                 });
 
                 // hide the spinner bar on rounte change success(after the content loaded)
                 $rootScope.$on('$stateChangeSuccess', function() {
                     element.addClass('hide'); // hide spinner bar
                     $('body').removeClass('page-on-load'); // remove page loading indicator
-                    Layout.setMainMenuActiveLink('match'); // activate selected link in the sidebar menu
+                    //Layout.setMainMenuActiveLink('match'); // activate selected link in the sidebar menu
 
                     // auto scorll to page top
                     setTimeout(function () {
@@ -43,7 +43,7 @@ MetronicApp.directive('collateralSpinnerBar', ['$rootScope',
 ])
 
 // Handle global LINK click
-MetronicApp.directive('a',
+CollateralApp.directive('a',
     function() {
         return {
             restrict: 'E',
@@ -58,7 +58,7 @@ MetronicApp.directive('a',
     });
 
 // Handle Dropdown Hover Plugin Integration
-MetronicApp.directive('dropdownMenuHover', function () {
+CollateralApp.directive('dropdownMenuHover', function () {
   return {
     link: function (scope, elem) {
       elem.dropdownHover();

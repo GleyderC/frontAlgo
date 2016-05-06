@@ -4,14 +4,21 @@ Login page
 ***/
 /* bg color */
 .login {
+    background-color: #2F373E !important;
+}
+
+.container.collateral-main-container
+{
     background-color: #364150 !important;
 }
 
-.login .logo {
-    margin: 0 auto;
-    margin-top: 35px;
-    padding: 5px;
+.page-header .logo {
+    width: 100%;
+    height: 100%;
+    background-color: #364150;
     text-align: center;
+    padding-top: 40px;
+
 }
 
 .login .content {
@@ -216,22 +223,10 @@ Login page
     margin-top: 5px;
 }
 
-/* footer copyright */
-.login .copyright {
-    text-align: right;
-    margin-bottom: 0px !important;
-    padding: 10px;
-    color: #7a8ca5;
-    font-size: 13px;
-}
-
 @media (max-width: 440px) {
     /***
     Login page
     ***/
-    .login .logo {
-        margin-top: 10px;
-    }
 
     .login .content {
         width: 280px;
@@ -255,4 +250,11 @@ Login page
     .login .checkbox {
         font-size: 13px;
     }
+}
+
+/*############### CUSTOM ###################*/
+
+.login .logo {
+    margin-top: 30px;
+    text-align: center;
 }

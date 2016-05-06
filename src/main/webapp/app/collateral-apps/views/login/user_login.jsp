@@ -1,16 +1,16 @@
-
-
 <div class="login" ng-controller="LoginController">
     <!-- BEGIN LOGO -->
     <div class="logo">
-        <a href="index.html">
-            <img src="assets/layouts/layout3/img/logo-collateral-white.png" alt="" width="280px" height="auto"/> </a>
+        <a href="#">
+            <img src="assets/global/img/logo-collateral-white.png" alt="" width="280px" height="auto"/> </a>
     </div>
     <!-- END LOGO -->
+
+
     <!-- BEGIN LOGIN -->
     <div class="content">
         <!-- BEGIN LOGIN FORM -->
-        <form name="loginForm" class="login-form" action="#dashboard" method="post">
+        <form name="loginForm" class="login-form" action="#home" method="post">
             <h3 class="form-title font-green">Sign In</h3>
             <div class="alert alert-danger display-hide">
                 <button class="close" data-close="alert"></button>
@@ -68,16 +68,20 @@
         <!-- END FORGOT PASSWORD FORM -->
 
 
-    <script>
-        $(document).ready(function () {
-            $("#username").focus();
-        });
-    </script>
-</div>
+        <script>
+            $(document).ready(function () {
+                $("#username").focus();
+            });
+        </script>
+    </div>
 
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="assets/pages/scripts/login.min.js" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-<!-- BEGIN THEME LAYOUT SCRIPTS -->
-<!-- END THEME LAYOUT SCRIPTS -->
+    <!-- BEGIN FOOTER -->
+        <div data-ng-include="'collateral-apps/views/footer.jsp'"> </div>
+    <!-- END FOOTER -->
+
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="assets/pages/scripts/login.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <!-- END THEME LAYOUT SCRIPTS -->
 

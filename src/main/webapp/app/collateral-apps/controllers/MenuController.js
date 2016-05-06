@@ -7,7 +7,7 @@
  * # MenuCtrl
  * Controller of the collateralApp
  */
-angular.module('MetronicApp')
+angular.module('CollateralApp')
     
 
     .controller('MenuCtrl', ['$scope','menuService', function ($scope,menuService) {

@@ -1,7 +1,7 @@
 /**
 Core script to handle the entire theme and core functions
 **/
-var MenuLayout = function() {
+var Layout = function() {
 
     var layoutImgPath = 'layouts/layout5/img/';
 
@@ -49,9 +49,8 @@ var MenuLayout = function() {
     };
 
     var handleHeaderMenu = function() {
-
         $('.page-header .navbar-nav > .dropdown-fw, .page-header .navbar-nav > .more-dropdown, .page-header .navbar-nav > .dropdown > .dropdown-menu  > .dropdown').click(function(e) {
-
+            
             if (App.getViewPort().width > resBreakpointMd) {
                 if ($(this).hasClass('more-dropdown') || $(this).hasClass('more-dropdown-sub')) {
                     return;
@@ -116,7 +115,7 @@ var MenuLayout = function() {
         // Main init methods to initialize the layout
         // IMPORTANT!!!: Do not modify the core handlers call order.
 
-        init: function () {            
+        init: function () {
             handleGo2Top();
             handleHeaderOnScroll();
             handleHeaderMenu();
@@ -139,3 +138,7 @@ var MenuLayout = function() {
     };
 
 }();
+
+jQuery(document).ready(function() {
+   Layout.init(); // init metronic core componets
+});

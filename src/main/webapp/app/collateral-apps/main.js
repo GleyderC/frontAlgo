@@ -1,9 +1,9 @@
 /***
-Metronic AngularJS App Main Script
+Collateral AngularJS App Main Script
 ***/
 
-/* Metronic App */
-var MetronicApp = angular.module("MetronicApp", [
+/* Collateral App */
+var CollateralApp = angular.module("CollateralApp", [
     "ui.router", 
     "ui.bootstrap", 
     "oc.lazyLoad",  
@@ -16,7 +16,7 @@ var paths = {
 };
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-MetronicApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+CollateralApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         // global configs go here
     });
@@ -61,7 +61,7 @@ angular.module('myModule').config(['$controllerProvider', function($controllerPr
 **/
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
-MetronicApp.config(['$controllerProvider', function($controllerProvider) {
+CollateralApp.config(['$controllerProvider', function($controllerProvider) {
   // this option might be handy for migrating old apps, but please don't use it
   // in new ones!
   $controllerProvider.allowGlobals();
@@ -72,7 +72,7 @@ MetronicApp.config(['$controllerProvider', function($controllerProvider) {
 *********************************************/
 
 /* Setup global settings */
-MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
+CollateralApp.factory('settings', ['$rootScope', function($rootScope) {
     // supported languages
     var settings = {
         layout: {
@@ -83,7 +83,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
         },
         assetsPath: 'assets',
         globalPath: 'assets/global',
-        layoutPath: 'assets/layouts/layout3',
+        layoutPath: 'assets/layouts/layout',
     };
 
     $rootScope.settings = settings;
@@ -92,7 +92,7 @@ MetronicApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /* Setup App Main Controller */
-MetronicApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
+CollateralApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$viewContentLoaded', function() {
         App.initComponents(); // init core components
         //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive 
@@ -106,21 +106,21 @@ initialization can be disabled and Layout.init() should be called on page load c
 ***/
 
 /* Setup Layout Part - Header */
-MetronicApp.controller('HeaderController', ['$scope', function($scope) {
+CollateralApp.controller('HeaderController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
     });
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('SidebarController', ['$scope', function($scope) {
+CollateralApp.controller('SidebarController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar(); // init sidebar
     });
 }]);
 
 /* Setup Layout Part - Quick Sidebar */
-MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {    
+CollateralApp.controller('QuickSidebarController', ['$scope', function($scope) {    
     $scope.$on('$includeContentLoaded', function() {
        setTimeout(function(){
             QuickSidebar.init(); // init quick sidebar        
@@ -129,46 +129,56 @@ MetronicApp.controller('QuickSidebarController', ['$scope', function($scope) {
 }]);
 
 /* Setup Layout Part - Sidebar */
-MetronicApp.controller('PageHeadController', ['$scope', function($scope) {
+CollateralApp.controller('PageHeadController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {        
         Demo.init(); // init theme panel
     });
 }]);
 
 /* Setup Layout Part - Theme Panel */
-MetronicApp.controller('ThemePanelController', ['$scope', function($scope) {    
+CollateralApp.controller('ThemePanelController', ['$scope', function($scope) {    
     $scope.$on('$includeContentLoaded', function() {
         Demo.init(); // init theme panel
     });
 }]);
 
 /* Setup Layout Part - Footer */
-MetronicApp.controller('FooterController', ['$scope', function($scope) {
+CollateralApp.controller('FooterController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initFooter(); // init footer
     });
 }]);
 
 /* Setup Rounting For All Pages */
-MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("login");
     
     $stateProvider
+
         //login
         .state('login', {
             url: '/login',
-            templateUrl: paths.views + '/login/user_login.jsp',
             data: {pageTitle: 'Collateral User Login'},
-            controller: 'LoginController',
-            controllerAs: 'loginCtrl',
+
+            views: {
+                'header@': {
+                    templateUrl: paths.views + '/login/login_header.html',
+                },
+                'main-content@':
+                {
+                    templateUrl: paths.views + '/login/user_login.jsp',
+                    controller: 'LoginController',
+                    controllerAs: 'loginCtrl',
+                }
+            },
             resolve: {
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-                            'assets/pages/css/login.min.css',
+                            'assets/pages/css/login.css',
                             'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
                             'assets/global/plugins/jquery-validation/js/additional-methods.min.js',
                             'assets/global/plugins/select2/js/select2.full.min.js',
@@ -180,36 +190,40 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             }
         })
 
-        // Dashboard
-        .state('dashboard', {
-            url: "/dashboard",
-            templateUrl: paths.views + "/dashboard/dashboard.jsp",
-            data: {pageTitle: 'Admin Dashboard Template'},
-            controller: "DashboardController",
+        // Home
+        .state('home', {
+            url: "/home",
+
+            data: {pageTitle: 'Collateral'},
+
+            views: {
+                'header@': {
+                    templateUrl: 'collateral-apps/views/header.jsp',
+                },
+                'main-content@':
+                {
+                    templateUrl: paths.views + "/dashboard/dashboard.jsp",
+                    controller: 'DashboardController',
+                    controllerAs: 'dashboardCtrl',
+                }
+            },
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
                         files: [
-
-                            'assets/global/plugins/morris/morris.css',
-                            'assets/layouts/layout5/css/layout.css',
-
-
-                            'assets/layouts/layout5/scripts/layout.js',
-                            'assets/global/plugins/morris/morris.min.js',
-                            'assets/global/plugins/morris/raphael-min.js',
-                            'assets/global/plugins/jquery.sparkline.min.js',
-
-                            'assets/pages/scripts/dashboard.min.js',
-                            'collateral-apps/controllers/DashboardController.js',
+                            'collateral-apps/modules/DashboardModule.js',
+                            'collateral-apps/controllers/DashboardController.js'
                         ] 
                     });
                 }]
             }
         })
 
+
+
+//############################# OWN ROUTES END #################################################
         // AngularJS plugins
         .state('fileupload', {
             url: "/file_upload.html",
@@ -224,7 +238,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             'assets/global/plugins/angularjs/plugins/angular-file-upload/angular-file-upload.min.js',
                         ] 
                     }, {
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         files: [
                             'js/controllers/GeneralPageController.js'
                         ]
@@ -249,7 +263,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
                             'assets/global/plugins/angularjs/plugins/ui-select/select.min.js'
                         ] 
                     }, {
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         files: [
                             'js/controllers/UISelectController.js'
                         ] 
@@ -267,7 +281,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         files: [
                             'js/controllers/GeneralPageController.js'
                         ] 
@@ -285,7 +299,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/jstree/dist/themes/default/style.min.css',
@@ -308,7 +322,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -344,7 +358,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/clockface/css/clockface.css',
@@ -377,7 +391,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load([{
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css',
@@ -406,7 +420,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [                             
                             'assets/global/plugins/datatables/datatables.min.css',
@@ -432,7 +446,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',
+                        name: 'CollateralApp',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/datatables/datatables.min.css',
@@ -460,7 +474,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'MetronicApp',  
+                        name: 'CollateralApp',  
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -508,7 +522,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
             resolve: {
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({ 
-                        name: 'MetronicApp',  
+                        name: 'CollateralApp',  
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             'assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
@@ -532,7 +546,7 @@ MetronicApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvi
 }]);
 
 /* Init global settings and run the app */
-MetronicApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
+CollateralApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
 }]);
