@@ -162,9 +162,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             data: {pageTitle: 'Collateral User Login'},
 
             views: {
-                'header@': {
-                    templateUrl: paths.views + '/login/login_header.html',
-                },
                 'main-content@':
                 {
                     templateUrl: paths.views + '/login/user_login.jsp',

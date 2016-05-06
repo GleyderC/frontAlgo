@@ -27,6 +27,22 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                 {
                     templateUrl: paths.views + "/configuration/legal_entity.html",
                 }
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'Collateral App',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
+                            'assets/global/plugins/datatables/datatables.min.css',
+                            'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+
+                            'assets/global/plugins/datatables/datatables.all.min.js',
+
+                            'assets/pages/scripts/table-datatables-managed.min.js',
+                        ]
+                    });
+                }]
             }
         })
 }]);

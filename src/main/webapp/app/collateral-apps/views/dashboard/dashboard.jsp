@@ -217,7 +217,7 @@
                                 <ul class="dropdown-menu dropdown-menu-fw">
                                     <li class="active">
                                         <a ui-sref="home.config.legalEntity">
-                                            <i class="icon-bar-chart"></i> Item1 </a>
+                                            <i class="fa fa-bank"></i> Legal Entity </a>
                                     </li>
                                     <li>
                                         <a href="#">
@@ -230,7 +230,7 @@
                                 </ul>
                             </li>
 
-                            <li class="dropdown dropdown-fw  ">
+                            <li class="dropdown dropdown-fw hide ">
                                 <a href="javascript:;" class="text-uppercase">
                                     <i class="icon-briefcase"></i> Tables </a>
                                 <ul class="dropdown-menu dropdown-menu-fw">
