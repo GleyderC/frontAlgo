@@ -1,4 +1,8 @@
+
 <div class="page-header-fixed page-sidebar-closed-hide-logo page-md" ng-app="DashboardApp">
+    <!-- BEGIN TEMPLATE DIRECTIVES
+    <script src="collateral-apps/directives/MenuCollateral.js" type="text/javascript"></script>
+    <!-- END TEMPLATE DIRECTIVES-->
     <!-- BEGIN CONTAINER -->
     <div class="wrapper">
         <!-- BEGIN HEADER -->
@@ -209,77 +213,7 @@
                         <!-- END TOPBAR ACTIONS -->
                     </div>
                     <!-- BEGIN HEADER MENU -->
-                    <div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown dropdown-fw  active open selected">
-                                <a href="javascript:;" class="text-uppercase">
-                                    <i class="icon-home"></i> Configuration </a>
-                                <ul class="dropdown-menu dropdown-menu-fw">
-                                    <li class="active">
-                                        <a ui-sref="home.config.legalEntity">
-                                            <i class="fa fa-bank"></i> Legal Entity </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="icon-bulb"></i> Item 2 </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="icon-graph"></i> Item 3 </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown dropdown-fw hide ">
-                                <a href="javascript:;" class="text-uppercase">
-                                    <i class="icon-briefcase"></i> Tables </a>
-                                <ul class="dropdown-menu dropdown-menu-fw">
-                                    <li>
-                                        <a href="table_static_basic.html"> Basic Tables </a>
-                                    </li>
-                                    <li>
-                                        <a href="table_static_responsive.html"> Responsive Tables </a>
-                                    </li>
-                                    <li>
-                                        <a href="table_bootstrap.html"> Bootstrap Tables </a>
-                                    </li>
-                                    <li class="dropdown more-dropdown-sub">
-                                        <a href="javascript:;"> Datatables </a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="table_datatables_managed.html"> Managed Datatables </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_buttons.html"> Buttons Extension </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_colreorder.html"> Colreorder Extension </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_rowreorder.html"> Rowreorder Extension </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_scroller.html"> Scroller Extension </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_fixedheader.html"> FixedHeader Extension </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_responsive.html"> Responsive Extension </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_editable.html"> Editable Datatables </a>
-                                            </li>
-                                            <li>
-                                                <a href="table_datatables_ajax.html"> Ajax Datatables </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </div>
+                    <div menu-collateral></div>
                     <!-- END HEADER MENU -->
                 </div>
                 <!--/container-->
@@ -313,16 +247,18 @@
             </div>
         </div>
     </div>
+
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="assets/pages/scripts/dashboard.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="assets/layouts/layout/scripts/layout.js" type="text/javascript"></script>
+    <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+
+    <!-- END THEME LAYOUT SCRIPTS -->
+
 </div>
 
 <!-- BEGIN FOOTER -->
 <div data-ng-include="'collateral-apps/views/footer.jsp'"> </div>
 <!-- END FOOTER -->
-
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="assets/pages/scripts/dashboard.js" type="text/javascript"></script>
-<!-- END PAGE LEVEL SCRIPTS -->
-<!-- BEGIN THEME LAYOUT SCRIPTS -->
-<script src="assets/layouts/layout/scripts/layout.js" type="text/javascript"></script>
-<script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-<!-- END THEME LAYOUT SCRIPTS -->

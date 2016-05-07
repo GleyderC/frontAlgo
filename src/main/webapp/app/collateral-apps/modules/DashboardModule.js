@@ -10,7 +10,7 @@ var DashboardApp = angular.module("DashboardApp", [
 /* Setup Rounting For All Pages */
 DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
-    $urlRouterProvider.otherwise("dashboard");
+    $urlRouterProvider.otherwise("home");
 
     $stateProvider
 
