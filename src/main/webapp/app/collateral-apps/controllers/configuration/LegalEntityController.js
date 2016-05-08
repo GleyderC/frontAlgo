@@ -37,55 +37,7 @@ angular.module('CollateralApp').filter('propsFilter', function() {
 });
 
 angular.module('CollateralApp').controller('LegalEntityController', function($scope, $http, $timeout) {
-    $scope.disabled = undefined;
-    $scope.searchEnabled = undefined;
-
-    $scope.enable = function() {
-        $scope.disabled = false;
-    };
-
-    $scope.disable = function() {
-        $scope.disabled = true;
-    };
-
-    $scope.enableSearch = function() {
-        $scope.searchEnabled = true;
-    }
-
-    $scope.disableSearch = function() {
-        $scope.searchEnabled = false;
-    }
-
-    $scope.clear = function() {
-        $scope.legalEntity.selected = undefined;
-        $scope.country.selected = undefined;
-    };
-
-    $scope.someGroupFn = function(item) {
-
-        if (item.name[0] >= 'A' && item.name[0] <= 'M')
-            return 'From A - M';
-
-        if (item.name[0] >= 'N' && item.name[0] <= 'Z')
-            return 'From N - Z';
-
-    };
-
-    $scope.counter = 0;
-    $scope.someFunction = function(item, model) {
-        $scope.counter++;
-        $scope.eventResult = {
-            item: item,
-            model: model
-        };
-    };
-
-    $scope.removed = function(item, model) {
-        $scope.lastRemoved = {
-            item: item,
-            model: model
-        };
-    };
+    $scope.allowClear = true; // THIS IS YOUR $SCOPE SETTING
 
     $scope.legalEntity = {};
     $scope.legalEntities = [{

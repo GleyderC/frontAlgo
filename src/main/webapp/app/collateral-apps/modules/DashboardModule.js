@@ -42,6 +42,8 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                             /* select css*/
                             'assets/global/plugins/select2/css/select2.min.css',
                             'assets/global/plugins/select2/css/select2-bootstrap.min.css',
+                            'assets/global/plugins/angularjs/plugins/ui-select/select.min.css',
+
 
                             /* form css */
                              'assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
@@ -58,6 +60,8 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
 
                             'assets/pages/scripts/components-bootstrap-select.min.js',
                             'assets/pages/scripts/components-select2.min.js',
+                            'assets/global/plugins/angularjs/plugins/ui-select/select.min.js',
+
 
 
                             /* form js */
