@@ -23,7 +23,7 @@
                         <!-- End Toggle Button -->
                         <!-- BEGIN LOGO -->
                         <a id="index" class="page-logo" href="#">
-                            <img src="assets/global/img/logo-collateral-white.png" alt="Logo" style="width: 270px;" /> </a>
+                            <img src="assets/global/img/logo-common.png" alt="Logo" style="width: 270px;" /> </a>
                         <!-- END LOGO -->
                         <!-- BEGIN SEARCH -->
                         <form class="search hide" action="extra_search.html" method="GET">

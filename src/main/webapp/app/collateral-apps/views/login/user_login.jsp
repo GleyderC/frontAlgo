@@ -2,7 +2,7 @@
     <!-- BEGIN LOGO -->
     <div class="logo">
         <a href="#">
-            <img src="assets/global/img/logo-collateral-white.png" alt="" width="280px" height="auto"/> </a>
+            <img src="assets/global/img/logo-common.png" alt="" width="280px" height="auto"/> </a>
     </div>
     <!-- END LOGO -->
 

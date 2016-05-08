@@ -36,7 +36,7 @@
     <!-- BEGIN THEME STYLES -->
 
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="assets/global/css/components-md.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME GLOBAL STYLES -->
 

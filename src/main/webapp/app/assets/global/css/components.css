@@ -5,7 +5,7 @@
 /***
 Rounded corners reset
 ***/
-/* Reset rounded corners for all elements */
+/* Reset rounded corners for all elements
 div,
 svg,
 input,
@@ -27,7 +27,7 @@ li {
   -webkit-border-radius: 0 !important;
   -moz-border-radius: 0 !important;
   border-radius: 0 !important; }
-
+*/
 /* except below bootstrap elements */
 .img-circle {
   border-radius: 50% !important; }
@@ -12029,7 +12029,9 @@ Customized Bootstrap Tabs
     -moz-border-radius: 4px 4px 0 0;
     -ms-border-radius: 4px 4px 0 0;
     -o-border-radius: 4px 4px 0 0;
-    border-radius: 4px 4px 0 0; }
+    border-radius: 4px 4px 0 0;
+    background: rgba(151, 189, 232, 0.42);
+  }
     .nav-tabs > li > a > .badge,
     .nav-pills > li > a > .badge {
       margin-top: -6px; }

@@ -1,6 +1,6 @@
 angular.module('CollateralApp').controller('DashboardController', function($rootScope, $scope, $http, $timeout) {
-    $scope.$on('$viewContentLoaded', function() {   
-        // initialize core components
+
+    $scope.$on('$includeContentLoaded', function() {
         App.initAjax();
     });
 
