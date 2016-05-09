@@ -7,7 +7,7 @@
             out.print(cal.get(Calendar.YEAR));
         %> &copy; Collateral - Common Management Solutions.
     </div>
-    <div class="scroll-to-top">
+    <a class="go2top hide">
         <i class="icon-arrow-up"></i>
-    </div>
+    </a>
 </footer>

@@ -3,7 +3,7 @@
     <div class="container">
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="#/dashboard">
+            <a ui-sref="home">
                 <img src="assets/global/img/logo-common.png" alt="logo" class="logo-default" width="280px">
             </a>
         </div>

@@ -38,6 +38,21 @@
     font-size: 14px;
 }
 
+.go2top
+{
+    -webkit-transition: all 400ms ease-in-out;
+    -moz-transition: all 400ms ease-in-out;
+    -ms-transition: all 400ms ease-in-out;
+    -o-transition: all 400ms ease-in-out;
+    transition: all 400ms ease-in-out;
+}
+
+.go2top i
+{
+    font-weight: bold;
+    color: #ffffff;
+}
+
 @media (min-width: 1200px){
     .container{
 
