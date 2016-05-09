@@ -2,6 +2,7 @@ angular.module('CollateralApp').controller('DashboardController', function($root
 
     $scope.$on('$includeContentLoaded', function() {
         App.initAjax();
+        $(".go2top").show();
     });
 
     // set sidebar closed and body solid layout mode

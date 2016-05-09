@@ -94,7 +94,7 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope) {
 }]);
 
 /*Collateral Request Service*/
-CollateralApp.factory('$Request',['$http','settings','$log',function($http,$settings,$log){
+CollateralApp.factory('$request',['$http','settings','$log',function($http,$settings,$log){
 
     //default config all requets
     $httpProvider.defaults.headers.common({
@@ -227,7 +227,7 @@ CollateralApp.factory('$Request',['$http','settings','$log',function($http,$sett
 CollateralApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$viewContentLoaded', function() {
         App.initComponents(); // init core components
-        //Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
+        Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
 }]);
 
@@ -277,7 +277,7 @@ CollateralApp.controller('ThemePanelController', ['$scope', function($scope) {
 /* Setup Layout Part - Footer */
 CollateralApp.controller('FooterController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
-        Layout.initFooter(); // init footer
+        //Layout.initFooter(); // init footer
     });
 }]);
 
@@ -682,4 +682,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 CollateralApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
+    var msj = "Hi, Developer ^_^";
+    console.log("%c"+msj,"font-size: 15px;font-weight: bold; color: darkblue;")
 }]);
