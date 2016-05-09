@@ -240,10 +240,6 @@
                 <div ui-view="content" class="fade-in-up"> </div>
 
                 <!-- END PAGE BASE CONTENT -->
-
-                <div class="hide scroll-to-top">
-                    <i class="icon-arrow-up"></i>
-                </div>
             </div>
         </div>
     </div>
@@ -260,5 +256,5 @@
 </div>
 
 <!-- BEGIN FOOTER -->
-<div data-ng-include="'collateral-apps/views/footer.jsp'"> </div>
+<div data-ng-include="'collateral-apps/views/footer.jsp'" data-ng-controller="FooterController"> </div>
 <!-- END FOOTER -->

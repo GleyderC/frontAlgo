@@ -75,6 +75,8 @@ CollateralApp.config(['$controllerProvider', function($controllerProvider) {
 CollateralApp.factory('settings', ['$rootScope', function($rootScope) {
     // supported languages
     var settings = {
+        urlService: 'http://localhost:8080',
+        urlServiceloginAttempt: 'http://localhost:8080/loginAttempt',
         layout: {
             pageSidebarClosed: false, // sidebar menu state
             pageContentWhite: true, // set page content layout
@@ -89,6 +91,136 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope) {
     $rootScope.settings = settings;
 
     return settings;
+}]);
+
+/*Collateral Request Service*/
+CollateralApp.factory('$Request',['$http','settings','$log',function($http,$settings,$log){
+
+    //default config all requets
+    $httpProvider.defaults.headers.common({
+       'Accept': 'application/json'
+    });
+
+    var config_request = {};
+    var response = null;
+
+    var successDefaultHandler = function (data){
+
+        response = data;
+        return response;
+
+    }
+
+    var errorDefaultHandler = function (errorInfo){
+        console.log("There is an error. Reason: " + errorInfo);
+    }
+
+    //interceptor all request
+    $httpProvider.interceptors.push(['$q', '$stateProvider', '$localStorage', function ($q, $location, $localStorage) {
+        return {
+            'request': function (config) {
+                config.headers = config.headers || {};
+                if ($localStorage.token) {
+                    config.headers.Authorization = 'Bearer ' + $localStorage.token;
+                }
+                return config;
+            },
+            // optional method
+            'requestError': function(rejection) {
+                // do something on error
+                if (canRecover(rejection)) {
+                    return responseOrNewPromise
+                }
+                return $q.reject(rejection);
+            },
+            // optional method
+            'response': function(response) {
+                // do something on success
+                return response;
+            },
+
+            'responseError': function(response) {
+                if (response.status === 401 || response.status === 403) {
+                    $state.go('login');
+                }
+                return $q.reject(response);
+            }
+        };
+    }]);
+
+    var request = {};
+
+    request.get = function  (urlRelative, dataRequest, successCallback, errorCallback)
+    {
+        if( !!dataRequest && typeof dataRequest === 'object' ){
+            config_request = {
+                params: dataRequest
+            };
+        }
+
+        if(!!successCallback && typeof successCallback === 'function'){
+            successDefaultHandler = successCallback;
+        }
+
+        if(!!errorCallback && typeof errorCallback === 'function'){
+            errorDefaultHandler = errorCallback;
+        }
+
+        $http.get( settings.urlService + '' + urlRelative, config_request).then(successDefaultHandler, errorDefaultHandler);
+
+    }
+
+    request.post = function (urlRelative, dataRequest, successCallback, errorCallback){
+
+        if(!!successCallback && typeof successCallback === 'function'){
+            successDefaultHandler = successCallback;
+        }
+
+        if(!!errorCallback && typeof errorCallback === 'function'){
+            errorDefaultHandler = errorCallback;
+        }
+
+        $http.post( settings.urlService + '' + urlRelative, data).then(successDefaultHandler, errorDefaultHandler);
+
+    }
+
+    request.put = function (urlRelative, dataRequest, successCallback, errorCallback){
+
+        if(!!successCallback && typeof successCallback === 'function'){
+            successDefaultHandler = successCallback;
+        }
+
+        if(!!errorCallback && typeof errorCallback === 'function'){
+            errorDefaultHandler = errorCallback;
+        }
+
+        $http.put( settings.urlService + '' + urlRelative, dataRequest).then(successDefaultHandler, errorDefaultHandler);
+
+    }
+
+    request.delete = function  (urlRelative, dataRequest, successCallback, errorCallback)
+    {
+        if( !!dataRequest && typeof dataRequest === 'object' ){
+            config_request =
+            {
+                data: dataRequest
+            };
+        }
+
+        if(!!successCallback && typeof successCallback === 'function'){
+            successDefaultHandler = successCallback;
+        }
+
+        if(!!errorCallback && typeof errorCallback === 'function'){
+            errorDefaultHandler = errorCallback;
+        }
+
+        $http.delete( settings.urlService + '' + urlRelative, config_request).then(successDefaultHandler, errorDefaultHandler);
+
+    }
+
+    return request;
+
 }]);
 
 /* Setup App Main Controller */
