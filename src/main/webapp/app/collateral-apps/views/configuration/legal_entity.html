@@ -133,63 +133,17 @@
                     </div>
                 </div>
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                <div class="portlet-body">
-                    <ul class="nav nav-pills">
-                        <li class="active">
-                            <a href="#" data-target="#tab_2_1" data-toggle="tab" class="iconify">  <i class="icon-note"></i> General Data </a>
-                        </li>
-                        <li>
-                            <a href="#" data-target="#tab_2_2" data-toggle="tab" class="iconify">  <i class="icon-user"></i> Contact info </a>
-                        </li>
-                        <li>
-                            <a href="#" data-target="#tab_2_3" data-toggle="tab"> Regulatory Settings </a>
-                        </li>
-                        <li>
-                            <a href="#" data-target="#tab_2_4" data-toggle="tab"> Risk Profiles </a>
-                        </li>
-                        <li>
-                            <a href="#" data-target="#tab_2_5" data-toggle="tab"> Bilateral agreements </a>
-                        </li>
-                        <li>
-                            <a href="#" data-target="#tab_2_6" data-toggle="tab"> Clearing agreements </a>
-                        </li>
-                        <li>
-                            <a href="#" data-target="#tab_2_7" data-toggle="tab"> SDI </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade active in" id="tab_2_1">
-                            <div data-ng-include="'collateral-apps/views/configuration/le_general_data.html'"> </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab_2_2">
-                            <div data-ng-include="'collateral-apps/views/configuration/le_contact_info.html'"> </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="tab_2_3">
-                            <div data-ng-include="'collateral-apps/views/configuration/le_regulatory.html'"> </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="tab_2_4">
-                            <div data-ng-include="'collateral-apps/views/configuration/le_risk_profile.html'"> </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="tab_2_5">
-                            <div data-ng-include="'collateral-apps/views/configuration/le_billateral_a.html'"> </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="tab_2_6">
-                            <div data-ng-include="'collateral-apps/views/configuration/le_clearing_a.html'"> </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="tab_2_7">
-                            <div data-ng-include="'collateral-apps/views/configuration/le_sdi.html'"> </div>
-
-                        </div>
-                    </div>
+                <div class="portlet-body" ng-controller="TabsLegalEntityController">
+                    <uib-tabset active="active">
+                        <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
+                            <uib-tab-heading>
+                                <i class="{{tab.icon}}"></i>{{tab.title}}
+                            </uib-tab-heading>
+                            <div ng-include=tab.templateUrl></div>
+                        </uib-tab>
+                    </uib-tabset>
                 </div>
-                <!-- END EXAMPLE TABLE PORTLET-->
-            </div>
-            <!-- END CHART PORTLET-->
+                <!-- END CHART PORTLET-->
         </div>
     </div>
     <!-- END ROW -->
@@ -199,6 +153,5 @@
 <!-- BEGIN MAIN JS -->
 <script>
     TableDatatablesManaged.init();
-    //ComponentsFormTools.init(); // init todo page
 </script>
 <!-- END MAIN JS -->

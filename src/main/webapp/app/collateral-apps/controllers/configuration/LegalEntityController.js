@@ -5,7 +5,7 @@
  * We want to perform a OR.
  */
 
-angular.module('CollateralApp').filter('propsFilter', function() {
+angular.module('DashboardApp').filter('propsFilter', function() {
     return function(items, props) {
         var out = [];
 
@@ -36,7 +36,11 @@ angular.module('CollateralApp').filter('propsFilter', function() {
     };
 });
 
-angular.module('CollateralApp').controller('LegalEntityController', function($scope, $http, $timeout) {
+DashboardApp.controller('LegalEntityController', function($scope, $http, $timeout) {
+    $scope.$on('$includeContentLoaded', function() {
+        App.initAjax();
+    });
+
     $scope.allowClear = true; // THIS IS YOUR $SCOPE SETTING
 
     $scope.legalEntity = {};
@@ -790,3 +794,22 @@ angular.module('CollateralApp').controller('LegalEntityController', function($sc
         }
     ];
 });
+
+DashboardApp.controller('TabsLegalEntityController',['$scope',function ($scope) {
+
+    $scope.$on('$includeContentLoaded', function() {
+        App.initAjax();
+    });
+
+    $scope.tabs = [
+        { title:'General Data', templateUrl: 'collateral-apps/views/configuration/le_general_data.html', icon:'icon-note' },
+        { title:'Contact info', templateUrl: 'collateral-apps/views/configuration/le_contact_info.html', icon:'icon-user' },
+        { title:'Regulatory Settings', templateUrl: 'collateral-apps/views/configuration/le_regulatory.html', icon:'' },
+        { title:'Risk Profiles', templateUrl: 'collateral-apps/views/configuration/le_risk_profile.html', icon:'' },
+        { title:'Bilateral agreements', templateUrl: 'collateral-apps/views/configuration/le_billateral_a.html', icon:'' },
+        { title:'Clearing agreements', templateUrl: 'collateral-apps/views/configuration/le_clearing_a.html', icon:'' },
+        { title:'SDI', templateUrl: 'collateral-apps/views/configuration/le_sdi.html', icon:'' }
+
+    ];
+
+}]);
