@@ -110,6 +110,8 @@
 <script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/angularjs/plugins/angular-animate/angular-animate.js" type="text/javascript"></script>
+<script src="assets/global/plugins/angularjs/angular-scroll.min.js" type="text/javascript"></script>
+
 <!-- END CORE ANGULARJS PLUGINS -->
 
 

@@ -7,7 +7,8 @@ var CollateralApp = angular.module("CollateralApp", [
     "ui.router",
     "ui.bootstrap",
     "oc.lazyLoad",
-    "ngSanitize"
+    "ngSanitize",
+    "duScroll"
 ]);
 
 var paths = {
@@ -345,7 +346,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                         files: [
                             'collateral-apps/modules/DashboardModule.js',
                             'collateral-apps/directives/MenuCollateral.js',
-                            'collateral-apps/controllers/DashboardController.js'
+                            'collateral-apps/controllers/DashboardController.js',
+                            'collateral-apps/services/DashboardService.js'
+
                         ],
                         serie: true,
                         cache: false

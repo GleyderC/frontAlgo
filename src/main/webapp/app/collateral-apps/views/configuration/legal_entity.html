@@ -1,4 +1,4 @@
-<div class="portlet light">
+<div class="portlet light" ng-controller="LegalEntityController">
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN CHART PORTLET-->
@@ -77,7 +77,7 @@
                             <td> Open </td>
                             <td> Counterparty </td>
                             <td>
-                                <a class="edit" href="javascript:;"> Edit </a>
+                                <a class="edit" ng-click="editLegalEntity('legal-entity-tabs')"> Edit </a>
                             </td>
                             <td>
                                 <a class="delete" href="javascript:;"> Delete </a>
@@ -123,7 +123,7 @@
     </div>
     <!-- END ROW -->
 
-    <div class="row">
+    <div class="row" id="legal-entity-tabs">
         <div class="col-md-12">
             <!-- BEGIN CHART PORTLET-->
             <div class="portlet light bordered">
@@ -133,13 +133,13 @@
                         <span class="caption-subject bold uppercase font-green-haze"> Legal Test</span>
                     </div>
                     <div class="tools">
-                        <a href="javascript:;" class="expand"> </a>
+                        <a href="javascript:;" class="collapse"> </a>
                         <a href="" class="fullscreen"> </a>
                         <a href="javascript:;" class="reload"> </a>
                     </div>
                 </div>
                 <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                <div class="portlet-body portlet-collapsed" ng-controller="TabsLegalEntityController">
+                <div class="portlet-body" ng-controller="TabsLegalEntityController">
                     <uib-tabset active="active">
                         <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
                             <uib-tab-heading>

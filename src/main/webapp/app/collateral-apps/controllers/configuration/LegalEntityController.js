@@ -36,7 +36,7 @@ angular.module('DashboardApp').filter('propsFilter', function() {
     };
 });
 
-DashboardApp.controller('LegalEntityController', function($scope, $http, $timeout) {
+DashboardApp.controller('LegalEntityController', function($scope,scrollService, $http, $timeout) {
     $scope.$on('$includeContentLoaded', function() {
         App.initAjax();
     });
@@ -59,6 +59,10 @@ DashboardApp.controller('LegalEntityController', function($scope, $http, $timeou
         shortName: 'Telf Vzla',
         country: 'Venezuela'
     }];
+    
+    $scope.editLegalEntity = function ($elementScroll) {
+        scrollService.scrollToElement($elementScroll);
+    };
 
     $scope.country = {};
     $scope.countries = [ // Taken from https://gist.github.com/unceus/6501985
@@ -813,7 +817,8 @@ DashboardApp.controller('TabsLegalEntityController',['$scope',function ($scope) 
     ];
 
 }]);
-Dashboard.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
+
+DashboardApp.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
 
     $scope.items = ['item1', 'item2', 'item3'];
 
