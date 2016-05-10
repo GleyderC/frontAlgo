@@ -4,7 +4,7 @@
 /.sass-cache
 /bower_components
 /vendor
-src/main/webapp/app/assets/vendor/*
+src/main/webapp/assets/vendor/*
 .directory
 *.iml
 .idea/*
@@ -13,4 +13,3 @@ target/
 .classpath
 .project
 .settings/
-
