@@ -7,7 +7,10 @@ var CollateralApp = angular.module("CollateralApp", [
     "ui.router",
     "ui.bootstrap",
     "oc.lazyLoad",
-    "ngSanitize"
+    "ngSanitize",
+    "duScroll",
+    "ngCookies",
+    "ngStorage"
 ]);
 
 var paths = {
@@ -93,60 +96,115 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope) {
     return settings;
 }]);
 
-/*Collateral Request Service*/
-CollateralApp.factory('$request',['$http','settings','$log',function($http,$settings,$log){
 
-    //default config all requets
-    $httpProvider.defaults.headers.common({
-       'Accept': 'application/json'
+/* Setup App Main Controller */
+CollateralApp.controller('AppController', ['$scope', '$rootScope', '$request', function($scope, $rootScope, $request) {
+    $scope.$on('$viewContentLoaded', function() {
+        App.initComponents(); // init core components
+        Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
+}]);
+
+/***
+Layout Partials.
+By default the partials are loaded through AngularJS ng-include directive. In case they loaded in server side(e.g: PHP include function) then below partial
+initialization can be disabled and Layout.init() should be called on page load complete as explained above.
+***/
+
+/* Setup Layout Part - Header */
+CollateralApp.controller('HeaderController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Layout.initHeader(); // init header
+    });
+}]);
+
+/* Setup Layout Part - Sidebar */
+CollateralApp.controller('SidebarController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Layout.initSidebar(); // init sidebar
+    });
+}]);
+
+/* Setup Layout Part - Quick Sidebar */
+CollateralApp.controller('QuickSidebarController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+       setTimeout(function(){
+            QuickSidebar.init(); // init quick sidebar
+        }, 2000)
+    });
+}]);
+
+/* Setup Layout Part - Sidebar */
+CollateralApp.controller('PageHeadController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Demo.init(); // init theme panel
+    });
+}]);
+
+/* Setup Layout Part - Theme Panel */
+CollateralApp.controller('ThemePanelController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        Demo.init(); // init theme panel
+    });
+}]);
+
+/* Setup Layout Part - Footer */
+CollateralApp.controller('FooterController', ['$scope', function($scope) {
+    $scope.$on('$includeContentLoaded', function() {
+        //Layout.initFooter(); // init footer
+    });
+}]);
+
+
+/* ###### Collateral Request Service #####*/
+
+//interceptor all request
+CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', '$localStorage', function ($q, $injector, $localStorage) {
+    return {
+        'request': function (config) {
+            config.headers = config.headers || {};
+            if ($localStorage.token) {
+                config.headers.Authorization = 'Bearer ' + $localStorage.token;
+            }
+            return config;
+        },
+        // optional method
+        'requestError': function(rejection) {
+            // do something on error
+            if (canRecover(rejection)) {
+                return responseOrNewPromise
+            }
+            return $q.reject(rejection);
+        },
+        // optional method
+        'response': function(response) {
+            // do something on success
+            return response;
+        },
+
+        'responseError': function(response) {
+            if (response.status === 401 || response.status === 403) {
+                $injector.get('$state').go('login');
+            }
+            return $q.reject(response);
+        }
+    };
+}]);
+
+CollateralApp.factory('$request',['$rootScope','$http','settings','$log',function($rootScope,$http, settings, $log){
 
     var config_request = {};
     var response = null;
 
     var successDefaultHandler = function (data){
-
         response = data;
-        return response;
-
+        $rootScope.lastResponse = response;
     }
 
     var errorDefaultHandler = function (errorInfo){
-        console.log("There is an error. Reason: " + errorInfo);
+        $log.error("There is an error. Reason: " + errorInfo);
     }
 
-    //interceptor all request
-    $httpProvider.interceptors.push(['$q', '$stateProvider', '$localStorage', function ($q, $location, $localStorage) {
-        return {
-            'request': function (config) {
-                config.headers = config.headers || {};
-                if ($localStorage.token) {
-                    config.headers.Authorization = 'Bearer ' + $localStorage.token;
-                }
-                return config;
-            },
-            // optional method
-            'requestError': function(rejection) {
-                // do something on error
-                if (canRecover(rejection)) {
-                    return responseOrNewPromise
-                }
-                return $q.reject(rejection);
-            },
-            // optional method
-            'response': function(response) {
-                // do something on success
-                return response;
-            },
-
-            'responseError': function(response) {
-                if (response.status === 401 || response.status === 403) {
-                    $state.go('login');
-                }
-                return $q.reject(response);
-            }
-        };
-    }]);
 
     var request = {};
 
@@ -223,66 +281,20 @@ CollateralApp.factory('$request',['$http','settings','$log',function($http,$sett
 
 }]);
 
-/* Setup App Main Controller */
-CollateralApp.controller('AppController', ['$scope', '$rootScope', function($scope, $rootScope) {
-    $scope.$on('$viewContentLoaded', function() {
-        App.initComponents(); // init core components
-        Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
-    });
-}]);
+/*Default Setup $http Service*/
+CollateralApp.config(['$httpProvider', function($httpProvider){
 
-/***
-Layout Partials.
-By default the partials are loaded through AngularJS ng-include directive. In case they loaded in server side(e.g: PHP include function) then below partial
-initialization can be disabled and Layout.init() should be called on page load complete as explained above.
-***/
+    //default config all requets
+    $httpProvider.defaults.headers.common['Access-Control-Max-Age'] = '1728000';
+    $httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
+    $httpProvider.interceptors.push('httpGlobalInterceptor');
 
-/* Setup Layout Part - Header */
-CollateralApp.controller('HeaderController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initHeader(); // init header
-    });
 }]);
+/* #### CONFIG $request SERVICE END #### */
 
-/* Setup Layout Part - Sidebar */
-CollateralApp.controller('SidebarController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initSidebar(); // init sidebar
-    });
-}]);
-
-/* Setup Layout Part - Quick Sidebar */
-CollateralApp.controller('QuickSidebarController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-       setTimeout(function(){
-            QuickSidebar.init(); // init quick sidebar
-        }, 2000)
-    });
-}]);
-
-/* Setup Layout Part - Sidebar */
-CollateralApp.controller('PageHeadController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        Demo.init(); // init theme panel
-    });
-}]);
-
-/* Setup Layout Part - Theme Panel */
-CollateralApp.controller('ThemePanelController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        Demo.init(); // init theme panel
-    });
-}]);
-
-/* Setup Layout Part - Footer */
-CollateralApp.controller('FooterController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        //Layout.initFooter(); // init footer
-    });
-}]);
 
 /* Setup Rounting For All Pages */
-CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider ) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("login");
 
@@ -345,7 +357,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                         files: [
                             'collateral-apps/modules/DashboardModule.js',
                             'collateral-apps/directives/MenuCollateral.js',
-                            'collateral-apps/controllers/DashboardController.js'
+                            'collateral-apps/controllers/DashboardController.js',
+                            'collateral-apps/services/DashboardService.js'
                         ],
                         serie: true,
                         cache: false

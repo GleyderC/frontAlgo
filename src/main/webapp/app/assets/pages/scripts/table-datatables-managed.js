@@ -17,8 +17,8 @@ var TableDatatablesManaged = function () {
                 "info": "Showing _START_ to _END_ of _TOTAL_ records",
                 "infoEmpty": "No records found",
                 "infoFiltered": "(filtered1 from _MAX_ total records)",
-                "lengthMenu": "Show _MENU_",
                 "search": "Search:",
+                "lengthMenu": "Show _MENU_",
                 "zeroRecords": "No matching records found",
                 "paginate": {
                     "previous":"Prev",
