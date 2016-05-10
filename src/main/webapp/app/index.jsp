@@ -156,6 +156,7 @@
 <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
 <script src="collateral-apps/main.js" type="text/javascript"></script>
+<script src="collateral-apps/services/ConfigUrlService.js" type="text/javascript"></script>
 <!-- END THEME GLOBAL SCRIPTS -->
 
 <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->

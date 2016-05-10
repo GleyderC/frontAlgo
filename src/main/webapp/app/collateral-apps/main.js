@@ -25,44 +25,6 @@ CollateralApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     });
 }]);
 
-/********************************************
- BEGIN: BREAKING CHANGE in AngularJS v1.3.x:
-*********************************************/
-/**
-`$controller` will no longer look for controllers on `window`.
-The old behavior of looking on `window` for controllers was originally intended
-for use in examples, demos, and toy apps. We found that allowing global controller
-functions encouraged poor practices, so we resolved to disable this behavior by
-default.
-
-To migrate, register your controllers with modules rather than exposing them
-as globals:
-
-Before:
-
-```javascript
-function MyController() {
-  // ...
-}
-```
-
-After:
-
-```javascript
-angular.module('myApp', []).controller('MyController', [function() {
-  // ...
-}]);
-
-Although it's not recommended, you can re-enable the old behavior like this:
-
-```javascript
-angular.module('myModule').config(['$controllerProvider', function($controllerProvider) {
-  // this option might be handy for migrating old apps, but please don't use it
-  // in new ones!
-  $controllerProvider.allowGlobals();
-}]);
-**/
-
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
 CollateralApp.config(['$controllerProvider', function($controllerProvider) {
   // this option might be handy for migrating old apps, but please don't use it
@@ -75,11 +37,10 @@ CollateralApp.config(['$controllerProvider', function($controllerProvider) {
 *********************************************/
 
 /* Setup global settings */
-CollateralApp.factory('settings', ['$rootScope', function($rootScope) {
+CollateralApp.factory('settings', ['$rootScope', function($rootScope, $urlSettings) {
     // supported languages
     var settings = {
-        urlService: 'http://localhost:8080',
-        urlServiceloginAttempt: 'http://localhost:8080/loginAttempt',
+
         layout: {
             pageSidebarClosed: false, // sidebar menu state
             pageContentWhite: true, // set page content layout
@@ -99,6 +60,7 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope) {
 
 /* Setup App Main Controller */
 CollateralApp.controller('AppController', ['$scope', '$rootScope', '$request', function($scope, $rootScope, $request) {
+    $request.get("/").then(function(response){ console.log("el response "); console.log(response)});
     $scope.$on('$viewContentLoaded', function() {
         App.initComponents(); // init core components
         Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
@@ -195,7 +157,7 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', '$localStorage
     };
 }]);
 
-CollateralApp.factory('$request',['$rootScope','$http','settings','$log',function($rootScope,$http, settings, $log){
+CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',function($rootScope,$http, URL_CONFIG, $log){
 
     var config_request = {};
 
@@ -209,19 +171,19 @@ CollateralApp.factory('$request',['$rootScope','$http','settings','$log',functio
             };
         }
 
-        return $http.get( settings.urlService + '' + urlRelative, config_request);
+        return $http.get( URL_CONFIG.API_URL + '' + urlRelative, config_request);
 
     }
 
     request.post = function (urlRelative, dataRequest){
 
-        return $http.post( settings.urlService + '' + urlRelative, dataRequest);
+        return $http.post( URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
 
     }
 
     request.put = function (urlRelative, dataRequest){
 
-        return $http.put( settings.urlService + '' + urlRelative, dataRequest);
+        return $http.put( URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
 
     }
 
@@ -234,7 +196,7 @@ CollateralApp.factory('$request',['$rootScope','$http','settings','$log',functio
             };
         }
 
-        return $http.delete( settings.urlService + '' + urlRelative, config_request);
+        return $http.delete( URL_CONFIG.API_URL + '' + urlRelative, config_request);
 
     }
 
