@@ -2,13 +2,14 @@
     <div class="col-md-12">
         <div class="portlet light bordered">
             <div class="portlet-body form">
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" role="form" id="le-general-data">
                     <div class="form-body">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="col-md-3 control-label">Internal ID</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control input-medium" placeholder="Enter Text" id="legal-entity-internal-id" ng-disabled="false"> </div>
+                                    <input type="text" class="form-control input-medium" placeholder="Enter Text" id="legal-entity-internal-id" ng-disabled="false">
+                                </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="col-md-3 control-label">Entity Name</label>
@@ -20,9 +21,6 @@
                                         <input type="text" class="form-control input-medium" placeholder="Enter text" id="legal-entity-name"> </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--/row-->
-                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="col-md-3 control-label">LEI</label>
                                 <div class="col-md-9">
@@ -30,16 +28,11 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">BIC</label>
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control input-medium" placeholder="Enter text" name="bic" id="legal-entity-bic">
-                                    </div>
+                                <label class="col-md-3 control-label">BIC</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-medium" placeholder="Enter text" name="bic" id="legal-entity-bic">
                                 </div>
                             </div>
-                        </div>
-                        <!--/row-->
-                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="col-md-3 control-label">Other ID</label>
                                 <div class="col-md-9">
@@ -52,9 +45,6 @@
                                     <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No">
                                 </div>
                             </div>
-                        </div>
-                        <!--/row-->
-                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="col-md-3 control-label">Mother Legal Entity:</label>
                                 <div class="col-md-9">
@@ -69,7 +59,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="control-label col-md-3">Country List</label>
-                                <div class="col-md-7">
+                                <div class="col-md-9">
                                     <select name="" id="select2_sample4" class="form-control select2 input-medium">
                                         <option value="AF">Afghanistan</option>
                                         <option value="AL">Albania</option>
@@ -308,33 +298,31 @@
                                         <option value="ZW">Zimbabwe</option>
                                     </select>
                                 </div>
-                            </div>
-                        </div>
-                        <!--/row-->
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Rol</label>
-                                <div class="col-md-9">
-                                    <select multiple class="form-control input-medium">
-                                        <option>Counterparty</option>
-                                        <option>PO</option>
-                                        <option>Issuer</option>
-                                        <option>CCP</option>
-                                    </select>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-3 control-label">Rol</label>
+                                    <div class="col-md-9">
+                                        <select multiple class="form-control input-medium">
+                                            <option>Counterparty</option>
+                                            <option>PO</option>
+                                            <option>Issuer</option>
+                                            <option>CCP</option>
+                                        </select>
+                                    </div>
                                 </div>
+                                <!--/row-->
                             </div>
                         </div>
-                        <!--/row-->
-                    </div>
-                    <div class="form-actions">
+                        <!--</div> row-->
                         <div class="row">
-                            <div class="col-md-offset-5 col-md-7">
-                                <button type="submit" class="btn green">Submit</button>
-                                <button type="button" class="btn default">Cancel</button>
+                            <div class="form-actions">
+                                    <div class="col-md-offset-5 col-md-7">
+                                        <button type="submit" class="btn green">Submit</button>
+                                        <button type="button" class="btn default">Cancel</button>
+                                    </div>
                             </div>
+                            <!--/form-actions-->
                         </div>
-                    </div>
-                    <!--/form-actions-->
+                        <!--</div> row-->
                 </form>
             </div>
         </div>

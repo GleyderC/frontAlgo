@@ -22,7 +22,6 @@ angular.module('DashboardApp').filter('propsFilter', function() {
                         break;
                     }
                 }
-
                 if (itemMatches) {
                     out.push(item);
                 }
@@ -31,12 +30,11 @@ angular.module('DashboardApp').filter('propsFilter', function() {
             // Let the output be the input untouched
             out = items;
         }
-
         return out;
     };
 });
 
-DashboardApp.controller('LegalEntityController', function($scope,scrollService,$document, $http, $timeout) {
+DashboardApp.controller('LegalEntityController', function($scope,elementService,$document, $http, $timeout) {
     $scope.$on('$includeContentLoaded', function() {
         App.initAjax();
     });
@@ -60,30 +58,33 @@ DashboardApp.controller('LegalEntityController', function($scope,scrollService,$
         country: 'Venezuela'
     }];
 
-    $scope.addLegalEntity = function (elementScroll) {
-        $('#legal-entity-tabs .portlet-title .expand').click();
-        $('#legal-entity-table .portlet-title .collapse').click();
-
-        var offset = $("#legal-entity-tabs").offset().top - $("#legal-entity-table").offset().top;;
-        console.log(offset);
-        scrollService.scrollToElement(elementScroll,offset);
-
-
-        $('#legal-entity-internal-id').focus();
-
-
+    $scope.setFocusInput = function (element) {
+        console.log("#"+element+" input:first:not([readonly])");
+        $("#"+element+" input:first:not([readonly])").focus();
     }
 
-    $scope.editLegalEntity = function (elementScroll) {
-        $('#legal-entity-tabs .portlet-title .expand').click();
-        $('#legal-entity-table .portlet-title .collapse').click();
 
-        var offset = $("#legal-entity-tabs").offset().top - $("#legal-entity-table").offset().top;;
-        console.log(offset);
-        scrollService.scrollToElement(elementScroll,offset);
+    $scope.addLegalEntity = function (element) {
 
-        $('#legal-entity-name').focus();
+        elementService.collapsePortlet('legal-entity-table');
+        elementService.expandPortlet(element);
+        var offset = $("#"+element).offset().top - $("#legal-entity-table").offset().top;
+        elementService.scrollToElement(element,offset);
+
+        $scope.setFocusInput('le-general-data');
+    }
+
+    $scope.editLegalEntity = function (element) {
+        elementService.collapsePortlet('legal-entity-table');
+        elementService.expandPortlet(element);
+
+        var offset = $("#"+element).offset().top - $("#legal-entity-table").offset().top;
+        elementService.scrollToElement(element,offset);
+
+        //$("#"+element+" input").not(':input[readonly]').eq(1).focus();
     };
+
+
 
     $scope.country = {};
     $scope.countries = [ // Taken from https://gist.github.com/unceus/6501985
@@ -827,13 +828,13 @@ DashboardApp.controller('TabsLegalEntityController',['$scope',function ($scope) 
     });
 
     $scope.tabs = [
-        { title:'General Data', templateUrl: 'collateral-apps/views/configuration/le_general_data.html', icon:'icon-note' },
-        { title:'Contact info', templateUrl: 'collateral-apps/views/configuration/le_contact_info.html', icon:'icon-user' },
-        { title:'Regulatory Settings', templateUrl: 'collateral-apps/views/configuration/le_regulatory.html', icon:'' },
-        { title:'Risk Profiles', templateUrl: 'collateral-apps/views/configuration/le_risk_profile.html', icon:'' },
-        { title:'Bilateral agreements', templateUrl: 'collateral-apps/views/configuration/le_billateral_a.html', icon:'' },
-        { title:'Clearing agreements', templateUrl: 'collateral-apps/views/configuration/le_clearing_a.html', icon:'' },
-        { title:'SDI', templateUrl: 'collateral-apps/views/configuration/le_sdi.html', icon:'' }
+        { id:'le-general-data', title:'General Data', templateUrl: 'collateral-apps/views/configuration/le_general_data.html', icon:'icon-note' },
+        { id:'le-contact-info', title:'Contact info', templateUrl: 'collateral-apps/views/configuration/le_contact_info.html', icon:'icon-user' },
+        { id:'le-regulatory', title:'Regulatory Settings', templateUrl: 'collateral-apps/views/configuration/le_regulatory.html', icon:'' },
+        { id:'le-risk-profile', title:'Risk Profiles', templateUrl: 'collateral-apps/views/configuration/le_risk_profile.html', icon:'' },
+        { id:'le-billateral-a', title:'Bilateral agreements', templateUrl: 'collateral-apps/views/configuration/le_billateral_a.html', icon:'' },
+        { id:'le-clearing-a', title:'Clearing agreements', templateUrl: 'collateral-apps/views/configuration/le_clearing_a.html', icon:'' },
+        { id:'le-sdi', title:'SDI', templateUrl: 'collateral-apps/views/configuration/le_sdi.html', icon:'' }
 
     ];
 
