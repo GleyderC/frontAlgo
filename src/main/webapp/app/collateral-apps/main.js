@@ -159,7 +159,7 @@ CollateralApp.controller('FooterController', ['$scope', function($scope) {
 /* ###### Collateral Request Service #####*/
 
 //interceptor all request
-CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', '$localStorage', function ($q, $injector, $localStorage) {
+CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', '$localStorage', '$log', function ($q, $injector, $localStorage, $log) {
     return {
         'request': function (config) {
             config.headers = config.headers || {};
@@ -168,21 +168,25 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', '$localStorage
             }
             return config;
         },
-        // optional method
         'requestError': function(rejection) {
-            // do something on error
+
+            $log.warn("There is an error. Reason:");
+            $log.debug("http_code: " + response.status + ", Response: " + response.statusText);
+
             if (canRecover(rejection)) {
                 return responseOrNewPromise
             }
             return $q.reject(rejection);
         },
-        // optional method
         'response': function(response) {
-            // do something on success
+
             return response;
         },
-
         'responseError': function(response) {
+
+            $log.warn("There is an error. Reason:");
+            $log.debug("http_code: " + response.status + ", Response: " + response.statusText);
+
             if (response.status === 401 || response.status === 403) {
                 $injector.get('$state').go('login');
             }
@@ -194,21 +198,10 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', '$localStorage
 CollateralApp.factory('$request',['$rootScope','$http','settings','$log',function($rootScope,$http, settings, $log){
 
     var config_request = {};
-    var response = null;
-
-    var successDefaultHandler = function (data){
-        response = data;
-        $rootScope.lastResponse = response;
-    }
-
-    var errorDefaultHandler = function (errorInfo){
-        $log.error("There is an error. Reason: " + errorInfo);
-    }
-
 
     var request = {};
 
-    request.get = function  (urlRelative, dataRequest, successCallback, errorCallback)
+    request.get = function  (urlRelative, dataRequest)
     {
         if( !!dataRequest && typeof dataRequest === 'object' ){
             config_request = {
@@ -216,47 +209,23 @@ CollateralApp.factory('$request',['$rootScope','$http','settings','$log',functio
             };
         }
 
-        if(!!successCallback && typeof successCallback === 'function'){
-            successDefaultHandler = successCallback;
-        }
-
-        if(!!errorCallback && typeof errorCallback === 'function'){
-            errorDefaultHandler = errorCallback;
-        }
-
-        $http.get( settings.urlService + '' + urlRelative, config_request).then(successDefaultHandler, errorDefaultHandler);
+        return $http.get( settings.urlService + '' + urlRelative, config_request);
 
     }
 
-    request.post = function (urlRelative, dataRequest, successCallback, errorCallback){
+    request.post = function (urlRelative, dataRequest){
 
-        if(!!successCallback && typeof successCallback === 'function'){
-            successDefaultHandler = successCallback;
-        }
-
-        if(!!errorCallback && typeof errorCallback === 'function'){
-            errorDefaultHandler = errorCallback;
-        }
-
-        $http.post( settings.urlService + '' + urlRelative, data).then(successDefaultHandler, errorDefaultHandler);
+        return $http.post( settings.urlService + '' + urlRelative, dataRequest);
 
     }
 
-    request.put = function (urlRelative, dataRequest, successCallback, errorCallback){
+    request.put = function (urlRelative, dataRequest){
 
-        if(!!successCallback && typeof successCallback === 'function'){
-            successDefaultHandler = successCallback;
-        }
-
-        if(!!errorCallback && typeof errorCallback === 'function'){
-            errorDefaultHandler = errorCallback;
-        }
-
-        $http.put( settings.urlService + '' + urlRelative, dataRequest).then(successDefaultHandler, errorDefaultHandler);
+        return $http.put( settings.urlService + '' + urlRelative, dataRequest);
 
     }
 
-    request.delete = function  (urlRelative, dataRequest, successCallback, errorCallback)
+    request.delete = function  (urlRelative, dataRequest)
     {
         if( !!dataRequest && typeof dataRequest === 'object' ){
             config_request =
@@ -265,15 +234,7 @@ CollateralApp.factory('$request',['$rootScope','$http','settings','$log',functio
             };
         }
 
-        if(!!successCallback && typeof successCallback === 'function'){
-            successDefaultHandler = successCallback;
-        }
-
-        if(!!errorCallback && typeof errorCallback === 'function'){
-            errorDefaultHandler = errorCallback;
-        }
-
-        $http.delete( settings.urlService + '' + urlRelative, config_request).then(successDefaultHandler, errorDefaultHandler);
+        return $http.delete( settings.urlService + '' + urlRelative, config_request);
 
     }
 
