@@ -59,8 +59,7 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope, $urlSettin
 
 
 /* Setup App Main Controller */
-CollateralApp.controller('AppController', ['$scope', '$rootScope', '$request', function($scope, $rootScope, $request) {
-    $request.get("/").then(function(response){ console.log("el response "); console.log(response)});
+CollateralApp.controller('AppController', ['$scope', function($scope) {
     $scope.$on('$viewContentLoaded', function() {
         App.initComponents(); // init core components
         Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
