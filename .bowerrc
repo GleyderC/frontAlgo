@@ -1,11 +1,16 @@
 {
   "analytics": true,
-  "directory": "src/main/webapp/assets/vendor",
+  "directory": "src/main/webapp/app/assets/vendor",
   "timeout": 60000,
   "save": true,
   "storage": {
     "packages" : "~/.bower/packages",
     "registry" : "~/.bower/registry",
     "links" : "~/.bower/links"
+  },
+  "scripts": {
+    "preinstall": "",
+    "postinstall": "gulp bower",
+    "preuninstall": ""
   }
 }
