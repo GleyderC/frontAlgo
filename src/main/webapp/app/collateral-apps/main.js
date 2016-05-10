@@ -59,11 +59,17 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope, $urlSettin
 
 
 /* Setup App Main Controller */
-CollateralApp.controller('AppController', ['$scope', function($scope) {
+CollateralApp.controller('AppController', ['$scope', '$request', '$localStorage', '$sessionStorage', function($scope, $request, $localStorage, $sessionStorage) {
+
+    $request.get('/servlet/LegalEntity/SelectAll').then(function(Response){
+        $localStorage.LegalEntities = Response.dataResponse;
+    });
+
     $scope.$on('$viewContentLoaded', function() {
         App.initComponents(); // init core components
         Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
+
 }]);
 
 /***
