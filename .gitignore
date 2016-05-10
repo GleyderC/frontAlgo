@@ -10,3 +10,5 @@ src/main/webapp/assets/vendor/*
 .idea/*
 npm-debug.log
 target/
+/.classpath
+/.project
