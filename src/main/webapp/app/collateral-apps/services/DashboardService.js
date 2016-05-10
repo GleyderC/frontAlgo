@@ -8,8 +8,8 @@
  * Service scroll
  */
 DashboardApp.service('scrollService', ['$document',function ($document) {
-    this.scrollToElement = function ($element) {
-        var entityELement = angular.element(document.getElementById($element));
-        $document.scrollToElementAnimated(entityELement);
+    this.scrollToElement = function (element,offset) {
+        var entityELement = angular.element($("#"+element));
+        $document.scrollToElement(entityELement,offset,1000);
     }
 }]);

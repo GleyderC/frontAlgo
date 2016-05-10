@@ -36,7 +36,7 @@ angular.module('DashboardApp').filter('propsFilter', function() {
     };
 });
 
-DashboardApp.controller('LegalEntityController', function($scope,scrollService, $http, $timeout) {
+DashboardApp.controller('LegalEntityController', function($scope,scrollService,$document, $http, $timeout) {
     $scope.$on('$includeContentLoaded', function() {
         App.initAjax();
     });
@@ -59,9 +59,30 @@ DashboardApp.controller('LegalEntityController', function($scope,scrollService, 
         shortName: 'Telf Vzla',
         country: 'Venezuela'
     }];
-    
-    $scope.editLegalEntity = function ($elementScroll) {
-        scrollService.scrollToElement($elementScroll);
+
+    $scope.addLegalEntity = function (elementScroll) {
+        $('#legal-entity-tabs .portlet-title .expand').click();
+        $('#legal-entity-table .portlet-title .collapse').click();
+
+        var offset = $("#legal-entity-tabs").offset().top - $("#legal-entity-table").offset().top;;
+        console.log(offset);
+        scrollService.scrollToElement(elementScroll,offset);
+
+
+        $('#legal-entity-internal-id').focus();
+
+
+    }
+
+    $scope.editLegalEntity = function (elementScroll) {
+        $('#legal-entity-tabs .portlet-title .expand').click();
+        $('#legal-entity-table .portlet-title .collapse').click();
+
+        var offset = $("#legal-entity-tabs").offset().top - $("#legal-entity-table").offset().top;;
+        console.log(offset);
+        scrollService.scrollToElement(elementScroll,offset);
+
+        $('#legal-entity-name').focus();
     };
 
     $scope.country = {};
