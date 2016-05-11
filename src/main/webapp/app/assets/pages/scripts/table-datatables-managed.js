@@ -2,7 +2,7 @@ var TableDatatablesManaged = function () {
 
     var initTable1 = function () {
 
-        var table = $('#sample_1');
+        var table = $('.colaterall-datatable');
 
         // begin first table
         table.dataTable({
