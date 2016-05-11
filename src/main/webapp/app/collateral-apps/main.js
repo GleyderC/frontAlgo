@@ -5,13 +5,13 @@ Collateral AngularJS App Main Script
 /* Collateral App */
 var CollateralApp = angular.module("CollateralApp", [
     "ui.router",
+    "ngAnimate",
     "ui.bootstrap",
     "oc.lazyLoad",
     "ngSanitize",
     "duScroll",
     "ngCookies",
-    "ngStorage",
-    "ngAnimate"
+    "LocalStorageModule"
 ]);
 
 var paths = {
@@ -60,7 +60,7 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope, $urlSettin
 
 
 /* Setup App Main Controller */
-CollateralApp.controller('AppController', ['$scope', '$request', '$localStorage', '$sessionStorage', function($scope, $request, $localStorage, $sessionStorage) {
+CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageService', '$sessionStorage', function($scope, $request, $localStorage, $sessionStorage) {
 
     $request.get('/servlet/LegalEntity/SelectAll').then(function(Response){
         $localStorage.LegalEntities = Response.dataResponse;
@@ -127,7 +127,7 @@ CollateralApp.controller('FooterController', ['$scope', function($scope) {
 /* ###### Collateral Request Service #####*/
 
 //interceptor all request
-CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', '$localStorage', '$log', function ($q, $injector, $localStorage, $log) {
+CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageService', '$log', function ($q, $injector, $localStorage, $log) {
     return {
         'request': function (config) {
             config.headers = config.headers || {};

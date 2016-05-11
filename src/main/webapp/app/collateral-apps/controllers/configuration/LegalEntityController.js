@@ -82,9 +82,11 @@ DashboardApp.controller('LegalEntityController', function($scope,elementService,
         elementService.scrollToElement(element,offset);
 
         $scope.setFocusInput('le-general-data');
-
-        $scope.open('lg');
     };
+    $scope.cancel = function () {
+        elementService.collapsePortlet('legal-entity-tabs');
+        elementService.expandPortlet('legal-entity-table');
+    }
 
 
 
@@ -852,6 +854,7 @@ DashboardApp.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
 
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
+            backdrop: false,
             templateUrl: 'myModalContent.html',
             controller: 'ModalInstanceCtrl',
             size: size,
@@ -874,6 +877,10 @@ DashboardApp.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
     };
 
 });
+
+// Please note that $uibModalInstance represents a modal window (instance) dependency.
+// It is not the same as the $uibModal service used above.
+
 DashboardApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
 
     $scope.items = items;
