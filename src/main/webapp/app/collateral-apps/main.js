@@ -10,7 +10,8 @@ var CollateralApp = angular.module("CollateralApp", [
     "ngSanitize",
     "duScroll",
     "ngCookies",
-    "ngStorage"
+    "ngStorage",
+    "ngAnimate"
 ]);
 
 var paths = {

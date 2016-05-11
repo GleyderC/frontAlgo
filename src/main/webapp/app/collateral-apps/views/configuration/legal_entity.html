@@ -1,152 +1,146 @@
 <div class="portlet light" ng-controller="LegalEntityController">
-    <div class="row" id="legal-entity-table">
-        <!-- BEGIN CHART PORTLET-->
-        <div class="portlet light bordered">
-            <div  class="portlet-title">
-                <div class="caption" col-md-3>
-                    <i class="fa fa-bank font-dark font-green-haze"></i>
-                    <span class="caption-subject bold uppercase font-green-haze"> Legal Entities</span>
-                    <span class="caption-helper">Lists</span>
+    <div class="row portlet light bordered" id="legal-entity-table">
+        <div  class="portlet-title">
+            <div class="caption" col-md-3>
+                <i class="fa fa-bank font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze"> Legal Entities</span>
+                <span class="caption-helper">Lists</span>
+            </div>
+            <div class="col-md-3">
+                <div class="btn-group">
+                    <button class="btn sbold green" ng-click="addLegalEntity('legal-entity-tabs')"> Add New
+                        <i class="fa fa-plus"></i>
+                    </button>
                 </div>
-                <div class="col-md-3">
-                    <div class="btn-group">
-                        <button class="btn sbold green" ng-click="addLegalEntity('legal-entity-tabs')"> Add New
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                    <div class="btn-group hide">
-                        <button id="search_legal_entity" class="btn sbold green"> Search
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse"> </a>
-                    <a href="javascript:;" class="fullscreen"> </a>
+                <div class="btn-group hide">
+                    <button id="search_legal_entity" class="btn sbold green"> Search
+                        <i class="fa fa-search"></i>
+                    </button>
                 </div>
             </div>
-            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <div class="portlet-body">
-                <div class="table-toolbar">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="btn-group pull-right">
-                                <button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown">Tools
-                                    <i class="fa fa-angle-down"></i>
-                                </button>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-print"></i> Print </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-file-pdf-o"></i> Save as PDF </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">
-                                            <i class="fa fa-file-excel-o"></i> Export to Excel </a>
-                                    </li>
-                                </ul>
-                            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="javascript:;" class="fullscreen"> </a>
+            </div>
+        </div>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="table-toolbar">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group pull-right">
+                            <button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-print"></i> Print </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-file-pdf-o"></i> Save as PDF </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-file-excel-o"></i> Export to Excel </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-bordered table-hover table-checkable order-column collateral-datatable">
-                    <thead>
-                    <tr>
-                        <th>
-                            <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="group-checkable" data-set=".collateral-datatable .checkboxes" /><span></span> </label></th>
-                        <th> Short Name </th>
-                        <th> Name </th>
-                        <th> Country </th>
-                        <th> Open/Close </th>
-                        <th> Rol </th>
-                        <th> Edit </th>
-                        <th> Delete </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="odd gradeX">
-                        <td>
-                            <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" value="1" /><span></span></label> </td>
-                        <td> BKA </td>
-                        <td> Bankia </td>
-                        <td> Spain </td>
-                        <td> Open </td>
-                        <td> Counterparty </td>
-                        <td>
-                            <a class="edit" ng-click="editLegalEntity('legal-entity-tabs')"> Edit </a>
-                        </td>
-                        <td>
-                            <a class="delete" href="javascript:;"> Delete </a>
-                        </td>
-                    </tr>
-                    <tr class="odd gradeX">
-                        <td>
-                            <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" value="2" /><span></span></label> </td>
-                        <td> Gold Equity </td>
-                        <td> Goldman Sach Equity </td>
-                        <td> UK </td>
-                        <td> Open </td>
-                        <td> Counterparty, Issuer </td>
-                        <td>
-                            <a class="edit" href="javascript:;"> Edit </a>
-                        </td>
-                        <td>
-                            <a class="delete" href="javascript:;"> Delete </a>
-                        </td>
-                    </tr>
-                    <tr class="odd gradeX">
-                        <td>
-                            <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" value="3" /><span></span></label> </td>
-                        <td> Telf Vzla </td>
-                        <td> Telefonica Venezuela </td>
-                        <td> Venezuela </td>
-                        <td> Close </td>
-                        <td> Counterparty </td>
-                        <td>
-                            <a class="edit" href="javascript:;"> Edit </a>
-                        </td>
-                        <td>
-                            <a class="delete" href="javascript:;"> Delete </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
-            <!-- END EXAMPLE TABLE PORTLET-->
+            <table class="table table-striped table-bordered table-hover table-checkable order-column collateral-datatable">
+                <thead>
+                <tr>
+                    <th>
+                        <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="group-checkable" data-set=".collateral-datatable .checkboxes" /><span></span> </label></th>
+                    <th> Short Name </th>
+                    <th> Name </th>
+                    <th> Country </th>
+                    <th> Open/Close </th>
+                    <th> Rol </th>
+                    <th> Edit </th>
+                    <th> Delete </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="odd gradeX">
+                    <td>
+                        <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" value="1" /><span></span></label> </td>
+                    <td> BKA </td>
+                    <td> Bankia </td>
+                    <td> Spain </td>
+                    <td> Open </td>
+                    <td> Counterparty </td>
+                    <td>
+                        <a class="edit" ng-click="editLegalEntity('legal-entity-tabs')"> Edit </a>
+                    </td>
+                    <td>
+                        <a class="delete" href="javascript:;"> Delete </a>
+                    </td>
+                </tr>
+                <tr class="odd gradeX">
+                    <td>
+                        <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" value="2" /><span></span></label> </td>
+                    <td> Gold Equity </td>
+                    <td> Goldman Sach Equity </td>
+                    <td> UK </td>
+                    <td> Open </td>
+                    <td> Counterparty, Issuer </td>
+                    <td>
+                        <a class="edit" href="javascript:;"> Edit </a>
+                    </td>
+                    <td>
+                        <a class="delete" href="javascript:;"> Delete </a>
+                    </td>
+                </tr>
+                <tr class="odd gradeX">
+                    <td>
+                        <label class="mt-checkbox mt-checkbox-outline mt-checkbox-single"><input type="checkbox" class="checkboxes" value="3" /><span></span></label> </td>
+                    <td> Telf Vzla </td>
+                    <td> Telefonica Venezuela </td>
+                    <td> Venezuela </td>
+                    <td> Close </td>
+                    <td> Counterparty </td>
+                    <td>
+                        <a class="edit" href="javascript:;"> Edit </a>
+                    </td>
+                    <td>
+                        <a class="delete" href="javascript:;"> Delete </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <!-- END CHART PORTLET-->
+        <!-- END EXAMPLE TABLE PORTLET-->
     </div>
     <!-- END ROW -->
 
     <div class="row" id="legal-entity-tabs">
-        <div class="col-md-12">
-            <!-- BEGIN CHART PORTLET-->
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-bank font-dark font-green-haze"></i>
-                        <span class="caption-subject bold uppercase font-green-haze"> Legal Test</span>
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse"> </a>
-                        <a href="" class="fullscreen"> </a>
-                        <a href="javascript:;" class="reload"> </a>
-                    </div>
+        <!-- BEGIN CHART PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-bank font-dark font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> Legal Test</span>
                 </div>
-                <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                <div class="portlet-body" ng-controller="TabsLegalEntityController">
-                    <uib-tabset active="active">
-                        <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
-                            <uib-tab-heading>
-                                <i class="{{tab.icon}}"></i>{{tab.title}}
-                            </uib-tab-heading>
-                            <div ng-include=tab.templateUrl></div>
-                        </uib-tab>
-                    </uib-tabset>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="" class="fullscreen"> </a>
+                    <a href="javascript:;" class="reload"> </a>
                 </div>
+            </div>
+            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <div class="portlet-body" ng-controller="TabsLegalEntityController">
+                <uib-tabset active="active">
+                    <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
+                        <uib-tab-heading>
+                            <i class="{{tab.icon}}"></i>{{tab.title}}
+                        </uib-tab-heading>
+                        <div ng-include=tab.templateUrl></div>
+                    </uib-tab>
+                </uib-tabset>
                 <div class="row">
                     <div class="form-actions">
                         <div class="col-md-offset-5 col-md-7">
@@ -158,8 +152,8 @@
                 </div>
                 <!--</div> row-->
             </div>
-            <!-- END CHART PORTLET-->
         </div>
+        <!-- END CHART PORTLET-->
     </div>
     <!-- END ROW -->
 </div>

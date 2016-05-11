@@ -1,79 +1,53 @@
 <div class="portlet light">
-    <div class="portlet-title">
-        <div class="caption">
-            <i class="icon-settings font-dark"></i>
-            <span class="caption-subject font-dark sbold uppercase">Risk Profile</span>
-        </div>
-    </div>
-    <div class="portle-body"></div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body form">
-                    <form class="form-horizontal" role="form" id="le-risk-profile">
-                        <div class="form-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">CDS Mkt Data Proxy Name</label>
-                                        <select class="form-control">
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Option 3</option>
-                                            <option>Option 4</option>
-                                            <option>Option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="control-label">S&Poors Raiting</label>
-                                        <select class="form-control">
-                                            <option>AAA</option>
-                                            <option>AA</option>
-                                            <option>A</option>
-                                            <option>BBB</option>
-                                            <option>BB</option>
-                                            <option>B</option>
-                                            <option>CCC_or_less</option>
-                                            <option>Unrated</option>
+    <div class="row portle-body">
+        <!-- BEGIN CHART PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bar-chart font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> CDS Spreads</span>
+                    <span class="caption-helper">duration on value axis</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                    <a href="javascript:;" class="reload"> </a>
+                    <a href="javascript:;" class="fullscreen"> </a>
+                    <a href="javascript:;" class="remove"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-4">CDS Mkt Data Proxy Name</label>
+                        <select class="form-control input-medium">
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                            <option>Option 4</option>
+                            <option>Option 5</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label col-md-3">S&Poors Raiting</label>
+                        <select class="form-control input-medium">
+                            <option>AAA</option>
+                            <option>AA</option>
+                            <option>A</option>
+                            <option>BBB</option>
+                            <option>BB</option>
+                            <option>B</option>
+                            <option>CCC_or_less</option>
+                            <option>Unrated</option>
 
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--END ROW -->
-    <div class="row">
-        <div class="col-md-12">
-            <!-- BEGIN CHART PORTLET-->
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="icon-bar-chart font-green-haze"></i>
-                        <span class="caption-subject bold uppercase font-green-haze"> CDS Spreads</span>
-                        <span class="caption-helper">duration on value axis</span>
-                    </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse"> </a>
-                        <a href="#portlet-config" data-toggle="modal" class="config"> </a>
-                        <a href="javascript:;" class="reload"> </a>
-                        <a href="javascript:;" class="fullscreen"> </a>
-                        <a href="javascript:;" class="remove"> </a>
+                        </select>
                     </div>
                 </div>
-                <div class="portlet-body">
-                    <div id="chart_2" class="chart" style="height: 400px;"> </div>
-                </div>
+                <!--/row-->
+                <div id="chart_2" class="chart" style="height: 400px;"> </div>
             </div>
-            <!-- END CHART PORTLET-->
         </div>
+        <!-- END CHART PORTLET-->
     </div>
     <!-- END ROW -->
 </div>
