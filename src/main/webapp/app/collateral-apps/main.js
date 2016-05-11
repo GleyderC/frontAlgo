@@ -60,7 +60,7 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope, $urlSettin
 
 
 /* Setup App Main Controller */
-CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageService', '$sessionStorage', function($scope, $request, $localStorage, $sessionStorage) {
+CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageService', function($scope, $request, $localStorage) {
 
     $request.get('/servlet/LegalEntity/SelectAll').then(function(Response){
         $localStorage.LegalEntities = Response.dataResponse;

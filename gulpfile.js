@@ -26,7 +26,6 @@ var paths = {
         collateral.app + '/assets/vendor/angular-resource/angular-resource.js',
         collateral.app + '/assets/vendor/angular-cookies/angular-cookies.js',
         collateral.app + '/assets/vendor/angular-sanitize/angular-sanitize.js',
-        collateral.app + '/assets/vendor/angular-route/angular-route.js',
         'test/mock/**/*.js',
         'test/spec/**/*.js'
     ],
@@ -142,10 +141,7 @@ gulp.task('test', ['start:server:test'], function () {
 gulp.task('bower', function () {
 
     return gulp.src(paths.views.main)
-        .pipe(wiredep({
-            directory: collateral.app + '/assets/vendor',
-            ignorePath: '..'
-        }))
+        .pipe(wiredep())
         .pipe(gulp.dest(collateral.app));
 });
 

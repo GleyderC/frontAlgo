@@ -53,6 +53,21 @@
     color: #ffffff;
 }
 
+.logo img{
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+    box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+}
+
+.page-logo img{
+    border-radius: 4px;
+    margin-left: 20px;
+    -webkit-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+    box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+}
+
 @media (min-width: 1200px){
     .container{
 

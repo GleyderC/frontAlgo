@@ -7,47 +7,57 @@
 <!-- BEGIN HEAD -->
 
 <head>
+    
+    <!-- bower:css -->
+    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/theme.css" />
+    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" />
+    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <!-- endbower -->
+
     <title data-ng-bind="'Collateral | ' + $state.current.data.pageTitle"></title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+          type="text/css"/>
+    <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet"
+          type="text/css"/>
+    <link href="assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
     <!-- END PAGE LEVEL PLUGINS -->
 
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
-    <link id="ng_load_plugins_before" />
+    <link id="ng_load_plugins_before"/>
     <!-- END DYMANICLY LOADED CSS FILES -->
 
     <!-- BEGIN THEME STYLES -->
 
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
-    <link href="assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css"/>
+    <link href="assets/global/css/plugins-md.min.css" rel="stylesheet" type="text/css"/>
     <!-- END THEME GLOBAL STYLES -->
 
     <!-- BEGIN THEME LAYOUT STYLES -->
-    <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css"/>
     <!-- END THEME LAYOUT STYLES -->
 
     <!-- END THEME STYLES -->
 
-    <link rel="shortcut icon" href="favicon.ico" /> </head>
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
 
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -55,6 +65,25 @@
 <!-- DOC: Apply "page-header-top-fixed" class to set the top menu fixed  -->
 
 <body ng-controller="AppController" class="page-on-load">
+
+<!-- bower:js -->
+<script src="assets/vendor/jquery/dist/jquery.js"></script>
+<script src="assets/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/vendor/angular/angular.js"></script>
+<script src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="assets/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="assets/vendor/angular-scroll/angular-scroll.js"></script>
+<script src="assets/vendor/angular-animate/angular-animate.js"></script>
+<script src="assets/vendor/angular-aria/angular-aria.js"></script>
+<script src="assets/vendor/angular-resource/angular-resource.js"></script>
+<script src="assets/vendor/angular-cookies/angular-cookies.js"></script>
+<script src="assets/vendor/angular-touch/angular-touch.js"></script>
+<script src="assets/vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="assets/vendor/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="assets/vendor/oclazyload/dist/ocLazyLoad.js"></script>
+<!-- endbower -->
+
 <!-- BEGIN PAGE SPINNER -->
 <div collateral-spinner-bar class="page-spinner-bar">
     <div class="bounce1"></div>
@@ -65,7 +94,7 @@
 <!-- BEGIN HEADER -->
 <!--<div ui-view="header" class="page-header"> </div>-->
 <!-- END HEADER -->
-<div class="clearfix"> </div>
+<div class="clearfix"></div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN PAGE HEAD -->
@@ -75,7 +104,7 @@
     <div class="page-content">
         <div class="container">
             <!-- BEGIN ACTUAL CONTENT -->
-            <div ui-view="main-content" class="fade-in-up"> </div>
+            <div ui-view="main-content" class="fade-in-up"></div>
             <!-- END ACTUAL CONTENT -->
         </div>
     </div>
@@ -92,10 +121,9 @@
 <script src="assets/global/plugins/respond.min.js"></script>
 <script src="assets/global/plugins/excanvas.min.js"></script>
 <![endif]-->
-<script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"
+        type="text/javascript"></script>
 <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
@@ -103,16 +131,6 @@
 <!-- END CORE JQUERY PLUGINS -->
 
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
-<script src="assets/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/angular-cookies.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/angular-ngStorage.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/plugins/angular-animate/angular-animate.js" type="text/javascript"></script>
-<script src="assets/global/plugins/angularjs/angular-scroll.min.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
 
 
