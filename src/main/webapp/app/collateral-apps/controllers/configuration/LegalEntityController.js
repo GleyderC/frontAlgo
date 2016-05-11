@@ -81,7 +81,9 @@ DashboardApp.controller('LegalEntityController', function($scope,elementService,
         var offset = $("#"+element).offset().top - $("#legal-entity-table").offset().top;
         elementService.scrollToElement(element,offset);
 
-        //$("#"+element+" input").not(':input[readonly]').eq(1).focus();
+        $scope.setFocusInput('le-general-data');
+
+        $scope.open('lg');
     };
 
 
@@ -871,4 +873,19 @@ DashboardApp.controller('ModalDemoCtrl', function ($scope, $uibModal, $log) {
         $scope.animationsEnabled = !$scope.animationsEnabled;
     };
 
+});
+DashboardApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 });
