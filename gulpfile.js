@@ -141,7 +141,8 @@ gulp.task('test', ['start:server:test'], function () {
 gulp.task('bower', function () {
 
     return gulp.src(paths.views.main)
-        .pipe(wiredep({      exclude: ['angular-ui-select','select2','select2-bootstrap-css','datatables.net']}))
+        .pipe(wiredep({      exclude: ['angular-ui-select','select2','select2-bootstrap-css','bootstrap-select',
+            'bootstrap-fileinput']}))
         .pipe(gulp.dest(collateral.app));
 });
 
