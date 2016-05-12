@@ -62,7 +62,7 @@
                        name="email"/></div>
             <div class="form-actions">
                 <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-                <button type="submit" class="btn btn-success uppercase pull-right">Submit</button>
+                <button type="submit" class="btn btn-success uppercase pull-right">Save</button>
             </div>
         </form>
         <!-- END FORGOT PASSWORD FORM -->
