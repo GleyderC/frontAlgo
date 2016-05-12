@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" />
     <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="assets/vendor/datatables/media/css/jquery.dataTables.css" />
     <!-- endbower -->
 
     <title data-ng-bind="'Collateral | ' + $state.current.data.pageTitle"></title>
@@ -83,19 +82,6 @@
 <script src="assets/vendor/angular-sanitize/angular-sanitize.js"></script>
 <script src="assets/vendor/angular-local-storage/dist/angular-local-storage.js"></script>
 <script src="assets/vendor/oclazyload/dist/ocLazyLoad.js"></script>
-<script src="assets/vendor/datatables/media/js/jquery.dataTables.js"></script>
-<script src="assets/vendor/angular-datatables/dist/angular-datatables.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/colreorder/angular-datatables.colreorder.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/light-columnfilter/angular-datatables.light-columnfilter.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/fixedcolumns/angular-datatables.fixedcolumns.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/fixedheader/angular-datatables.fixedheader.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/scroller/angular-datatables.scroller.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
-<script src="assets/vendor/angular-datatables/dist/plugins/select/angular-datatables.select.js"></script>
 <!-- endbower -->
 
 <!-- BEGIN PAGE SPINNER -->
