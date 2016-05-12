@@ -21,7 +21,8 @@
     "select2": "^4.0.2",
     "select2-bootstrap-css": "^1.4.6",
     "bootstrap-select": "^1.10.0",
-    "bootstrap-fileinput": "^4.3.1"
+    "bootstrap-fileinput": "^4.3.1",
+    "angular-datatables": "^0.5.4"
   },
   "devDependencies": {},
   "appPath": "src/main/webapp/app",

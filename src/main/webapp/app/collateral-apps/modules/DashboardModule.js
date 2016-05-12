@@ -4,17 +4,17 @@
 
 /* Collateral App */
 var DashboardApp = angular.module("DashboardApp", [
-    "CollateralApp"
+    "CollateralApp","datatables"
 ]);
 
 /* Setup Rounting For All Pages */
-DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+DashboardApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("home");
 
     $stateProvider
 
-        .state('home.config',{
+        .state('home.config', {
             abstract: true,
             url: '/config'
         })
@@ -23,36 +23,27 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
             data: {pageTitle: 'Legal Entity'},
 
             views: {
-                'content@home':
-                {
+                'content@home': {
                     templateUrl: paths.views + "/configuration/legal_entity.html",
                 }
             },
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'Collateral App',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
-                            /* datatable css*/
-                            'assets/global/plugins/datatables/datatables.min.css',
-                            'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
-                            'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 
                             /* select css*/
+                            'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
                             'assets/vendor/select2/dist/css/select2.min.css',
                             'assets/vendor/select2-bootstrap-css/select2-bootstrap.min.css',
                             'assets/vendor/angular-ui-select/dist/select.min.css',
 
-
                             /* form css */
-                             'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
-                             /*'assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css',
+                            'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
+                            /*'assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css',
                              'assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css',*/
-
-                            /* datatable js*/
-                            'assets/global/plugins/datatables/datatables.all.min.js',
-                            'assets/pages/scripts/table-datatables-managed.min.js',
 
                             /* select js*/
                             'assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
@@ -61,7 +52,6 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                             'assets/pages/scripts/components-bootstrap-select.min.js',
                             'assets/pages/scripts/components-select2.min.js',
                             'assets/vendor/angular-ui-select/dist/select.min.js',
-
 
 
                             /* form js */
