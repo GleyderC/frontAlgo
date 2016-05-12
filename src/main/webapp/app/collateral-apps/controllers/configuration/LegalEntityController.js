@@ -34,19 +34,30 @@ angular.module('DashboardApp').filter('propsFilter', function () {
     };
 });
 
-DashboardApp.controller('LegalEntityController', ['$scope', 'elementService', '$document', '$http', '$timeout', '$request','localStorageService',
-    function ($scope, elementService, $document, $http, $timeout, $request, $localStorage) {
+DashboardApp.controller('LegalEntityController', ['$scope', 'elementService', '$document', '$http',
+    '$timeout', '$request','localStorageService','DTOptionsBuilder', 'DTColumnBuilder',
+    function ($scope, elementService, $document, $http, $timeout, $request, $localStorage,DTOptionsBuilder, DTColumnBuilder) {
 
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();
         });
 
-        $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
-            $localStorage.LegalEntities = Response.data.dataResponse;
-            console.log(Response.data)
-            console.log($localStorage)
+        var vm = this;
+        $scope.dtOptions = DTOptionsBuilder.fromFnPromise(
+            $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
+                console.log(Response.data.dataResponse);
+                //Response.data.dataResponse[0].rolList.push('Other');
+                return Response.data.dataResponse}))
 
-        });
+            .withDataProp('dataResponse');
+        $scope.dtColumns = [
+            DTColumnBuilder.newColumn('id').withTitle('ID'),
+            DTColumnBuilder.newColumn('name').withTitle('Entity Name'),
+            DTColumnBuilder.newColumn('isBranch').withTitle('isBranch'),
+            DTColumnBuilder.newColumn('LEI').withTitle('LEI'),
+            DTColumnBuilder.newColumn('BIC').withTitle('BIC'),
+            DTColumnBuilder.newColumn('rolList').withTitle('Rols')
+        ];
 
         $scope.allowClear = true; // THIS IS YOUR $SCOPE SETTING
 
