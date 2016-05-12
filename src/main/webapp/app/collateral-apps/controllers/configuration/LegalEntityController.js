@@ -59,7 +59,7 @@ DashboardApp.controller('LegalEntityController', function($scope,elementService,
     }];
 
     $scope.setFocusInput = function (element) {
-        console.log("#"+element+" input:first:not([readonly])");
+        //console.log("#"+element+" input:first:not([readonly])");
         $("#"+element+" input:first:not([readonly])").focus();
     }
 

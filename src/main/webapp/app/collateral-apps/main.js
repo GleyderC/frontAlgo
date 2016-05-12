@@ -251,7 +251,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'assets/pages/css/login.css',
                             'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
                             'assets/global/plugins/jquery-validation/js/additional-methods.min.js',
-                            'assets/global/plugins/select2/js/select2.full.min.js',
                             'assets/pages/scripts/login.js',
                             'collateral-apps/controllers/LoginController.js'
                         ],

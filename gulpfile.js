@@ -141,7 +141,7 @@ gulp.task('test', ['start:server:test'], function () {
 gulp.task('bower', function () {
 
     return gulp.src(paths.views.main)
-        .pipe(wiredep())
+        .pipe(wiredep({      exclude: ['angular-ui-select','select2','select2-bootstrap-css','datatables.net']}))
         .pipe(gulp.dest(collateral.app));
 });
 
