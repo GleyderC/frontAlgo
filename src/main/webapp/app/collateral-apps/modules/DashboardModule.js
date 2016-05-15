@@ -38,6 +38,7 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                             /* select css*/
                             'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
                             'assets/vendor/select2/dist/css/select2.min.css',
+                            'assets/vendor/select2-bootstrap-css/select2-bootstrap.min.css',
                             'assets/vendor/angular-ui-select/dist/select.min.css',
                             'assets/vendor/multiselect/css/multi-select.css',
                             

@@ -1,53 +1,21 @@
-/**
- * AngularJS default filter with the following expression:
- * "person in people | filter: {name: $select.search, age: $select.search}"
- * performs a AND between 'name: $select.search' and 'age: $select.search'.
- * We want to perform a OR.
- */
 
-angular.module('DashboardApp').filter('propsFilter', function () {
-    return function (items, props) {
-        var out = [];
+angular.module('DashboardApp')
 
-        if (angular.isArray(items)) {
-            items.forEach(function (item) {
-                var itemMatches = false;
-
-                var keys = Object.keys(props);
-                for (var i = 0; i < keys.length; i++) {
-                    var prop = keys[i];
-                    var text = props[prop].toLowerCase();
-                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                        itemMatches = true;
-                        break;
-                    }
-                }
-                if (itemMatches) {
-                    out.push(item);
-                }
-            });
-        } else {
-            // Let the output be the input untouched
-            out = items;
-        }
-        return out;
-    };
-});
-
-DashboardApp.controller('LegalEntityController', ['$scope', 'elementService', '$document', '$http',
-    '$timeout', '$request','localStorageService','DTOptionsBuilder', 'DTColumnBuilder',
-    function ($scope, elementService, $document, $http, $timeout, $request, $localStorage,DTOptionsBuilder, DTColumnBuilder) {
+    .controller('LegalEntityController', ['$scope', 'elementService', '$document', '$http',
+    '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder', 'DTColumnBuilder',
+    function ($scope, elementService, $document, $http, $timeout, $request, $localStorage, DTOptionsBuilder, DTColumnBuilder) {
 
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();
         });
 
-        var vm = this;
+        /* Carga de de datatable legal entity*/
         $scope.dtOptions = DTOptionsBuilder.fromFnPromise(
             $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
                 console.log(Response.data.dataResponse);
                 //Response.data.dataResponse[0].rolList.push('Other');
-                return Response.data.dataResponse}))
+                return Response.data.dataResponse
+            }))
 
             .withDataProp('dataResponse');
         $scope.dtColumns = [
@@ -59,30 +27,10 @@ DashboardApp.controller('LegalEntityController', ['$scope', 'elementService', '$
             DTColumnBuilder.newColumn('rolList').withTitle('Rols')
         ];
 
-        $scope.allowClear = true; // THIS IS YOUR $SCOPE SETTING
-
-        $scope.legalEntity = {};
-        $scope.legalEntities = [{
-            name: 'Bankia',
-            shortName: 'BKA',
-            country: 'Spain'
-        },
-            {
-                name: 'Goldman Sach Equity',
-                shortName: 'Gold Equity',
-                country: 'UK'
-            },
-            {
-                name: 'Telefonica Venezuela',
-                shortName: 'Telf Vzla',
-                country: 'Venezuela'
-            }];
-
         $scope.setFocusInput = function (element) {
             //console.log("#"+element+" input:first:not([readonly])");
             $("#" + element + " input:first:not([readonly])").focus();
         }
-
 
         $scope.addLegalEntity = function (element) {
 
@@ -846,49 +794,14 @@ DashboardApp.controller('LegalEntityController', ['$scope', 'elementService', '$
 
 DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope) {
 
-    $scope.$on('$includeContentLoaded', function () {
-        App.initAjax();
-    });
-
     $scope.tabs = [
-        {
-            id: 'le-general-data',
-            title: 'General Data',
-            templateUrl: 'collateral-apps/views/configuration/le_general_data.html',
-            icon: 'icon-note'
-        },
-        {
-            id: 'le-contact-info',
-            title: 'Contact info',
-            templateUrl: 'collateral-apps/views/configuration/le_contact_info.html',
-            icon: 'icon-user'
-        },
-        {
-            id: 'le-regulatory',
-            title: 'Regulatory Settings',
-            templateUrl: 'collateral-apps/views/configuration/le_regulatory.html',
-            icon: ''
-        },
-        {
-            id: 'le-risk-profile',
-            title: 'Risk Profiles',
-            templateUrl: 'collateral-apps/views/configuration/le_risk_profile.html',
-            icon: ''
-        },
-        {
-            id: 'le-billateral-a',
-            title: 'Bilateral agreements',
-            templateUrl: 'collateral-apps/views/configuration/le_billateral_a.html',
-            icon: ''
-        },
-        {
-            id: 'le-clearing-a',
-            title: 'Clearing agreements',
-            templateUrl: 'collateral-apps/views/configuration/le_clearing_a.html',
-            icon: ''
-        },
-        {id: 'le-sdi', title: 'SDI', templateUrl: 'collateral-apps/views/configuration/le_sdi.html', icon: ''}
-
+        { id: 'le-general-data', title: 'General Data', templateUrl: 'collateral-apps/views/configuration/le_general_data.html', icon: 'icon-note' },
+        { id: 'le-contact-info', title: 'Contact info', templateUrl: 'collateral-apps/views/configuration/le_contact_info.html', icon: 'icon-user' },
+        { id: 'le-regulatory', title: 'Regulatory Settings', templateUrl: 'collateral-apps/views/configuration/le_regulatory.html',icon: '' },
+        { id: 'le-risk-profile', title: 'Risk Profiles', templateUrl: 'collateral-apps/views/configuration/le_risk_profile.html', icon: '' },
+        { id: 'le-billateral-a', title: 'Bilateral agreements', templateUrl: 'collateral-apps/views/configuration/le_billateral_a.html', icon: '' },
+        { id: 'le-clearing-a', title: 'Clearing agreements', templateUrl: 'collateral-apps/views/configuration/le_clearing_a.html', icon: '' },
+        { id: 'le-sdi', title: 'SDI', templateUrl: 'collateral-apps/views/configuration/le_sdi.html', icon: '' }
     ];
 
 }]);
@@ -943,5 +856,42 @@ DashboardApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
+    };
+});
+
+
+/**
+ * AngularJS default filter with the following expression:
+ * "person in people | filter: {name: $select.search, age: $select.search}"
+ * performs a AND between 'name: $select.search' and 'age: $select.search'.
+ * We want to perform a OR.
+ */
+
+DashboardApp.filter('propsFilter', function () {
+    return function (items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+            items.forEach(function (item) {
+                var itemMatches = false;
+
+                var keys = Object.keys(props);
+                for (var i = 0; i < keys.length; i++) {
+                    var prop = keys[i];
+                    var text = props[prop].toLowerCase();
+                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                        itemMatches = true;
+                        break;
+                    }
+                }
+                if (itemMatches) {
+                    out.push(item);
+                }
+            });
+        } else {
+            // Let the output be the input untouched
+            out = items;
+        }
+        return out;
     };
 });
