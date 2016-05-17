@@ -1,31 +1,14 @@
 'use strict';
-/* Collateral App */
-var App = angular.module("App", ['ngAnimate', 'ui.bootstrap']);
 
-App.config(['$sceDelegateProvider', function ($sceDelegateProvider) {
-    $sceDelegateProvider.resourceUrlWhitelist([
-        // Allow same origin resource loads.
-        'self',
-        // Allow loading from outer templates domain.
-        'http://**.example.com/**'
-    ]);
-}]);
-
-App.config(function ($sceProvider) {
-    // Completely disable SCE.  For demonstration purposes only!
-    // Do not use in new projects.
-    //$sceProvider.enabled(false);
-});
-
-App.controller('appController', ['$scope', function ($scope) {
-
+/**
+ * DEMO TAB MENU
     $scope.tabMenu = {
         name: 'collateral-tabs',
         active: 0,
         tabList: [{
             head: {
                 icon: '',
-                text: 'Hola 1'
+                text: 'Hi 1'
             },
             content: 'Content 1',
             closable: true
@@ -33,21 +16,21 @@ App.controller('appController', ['$scope', function ($scope) {
             {
                 head: {
                     icon: '',
-                    text: 'Hola 2'
+                    text: 'Hi 2'
                 },
                 content: 'Content 2'
             },
             {
                 head: {
                     icon: '',
-                    text: 'Hola 3'
+                    text: 'Hi 3'
                 },
-                content: 'Hola tab 3 :D'
+                content: 'Hi tab 3'
             }]
     };
 
 }]);
-
+ **/
 
 App.directive('appTab', [function () {
 
@@ -56,10 +39,6 @@ App.directive('appTab', [function () {
     TabDirective.restrict = "E";
 
     TabDirective.templateUrl = "tpl/TabManagementTemplate.html";
-
-    //TabDirective.scope = true;
-
-    //TabDirective.replace = true;
 
     TabDirective.link = function (scope, element, attrs) {
 
@@ -72,7 +51,6 @@ App.directive('appTab', [function () {
         });
 
         scope.$watch('$apply', function (newVal, oldVal) {
-            //console.log("tam: " + scope.tabMenu.tabList.length)
             //scope.tabMenu.active = (scope.tabMenu.tabList.length - 1)
         });
 
@@ -88,8 +66,7 @@ App.directive('appTab', [function () {
                 templateUrl: 'demo.html',
                 disabled: false //disable tab
             });
-            //console.log("Agregando un tab")
-            //console.log(scope.tabMenu.tabList)
+
         }
 
         scope.delTab = function (tab) {
@@ -99,9 +76,7 @@ App.directive('appTab', [function () {
                 scope.tabMenu.tabList.splice(tab.$index,1);
 
             }
-
-            //console.log("Eliminando un tab")
-            //console.log(scope.tabMenu.tabList)
+            
         }
 
         scope.delAllTabRight = function (tab) {
