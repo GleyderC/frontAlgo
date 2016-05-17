@@ -19,6 +19,23 @@ var paths = {
     views: "collateral-apps/views"
 };
 
+// ## Begin Strict Context Escaping Config
+CollateralApp.config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        // Allow same origin resource loads.
+        'self',
+        // Allow loading from outer templates domain.
+        'http://**.example.com/**'
+    ]);
+}]);
+
+CollateralApp.config(function ($sceProvider) {
+    // Completely disable SCE.  For demonstration purposes only!
+    // Do not use in new projects.
+    //$sceProvider.enabled(false);
+});
+// ## End Strict Context Escaping Config
+
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
 CollateralApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
