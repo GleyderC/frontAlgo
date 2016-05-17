@@ -1,0 +1,15 @@
+{
+  "financialCalendarList": [
+    {
+      "calendarEntryMap": [
+        {
+          "Cal1": {
+            "FinancialCentreName": "fCentre",
+            "FinancialCentreCode": "XXX",
+            "HolidayDate": "formato-fecha"
+          }
+        }
+      ]
+    }
+  ]
+}
