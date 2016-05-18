@@ -83,3 +83,18 @@
     }
 
 }
+
+i.close-tab-icon
+{
+    -webkit-transition: color 400ms ease-in;
+    -moz-transition: color 400ms ease-in;
+    -ms-transition: color 400ms ease-in;
+    -o-transition: color 400ms ease-in;
+    transition: color 400ms ease-in;
+    margin-left: 5px;
+}
+
+i.close-tab-icon:hover {
+    color: darkgrey;
+    cursor: pointer;
+}

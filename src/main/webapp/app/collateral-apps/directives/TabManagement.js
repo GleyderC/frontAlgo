@@ -2,7 +2,7 @@
 
 /**
  * DEMO TAB MENU
-    $scope.tabMenu = {
+    $scope.workspaceTabs = {
         name: 'collateral-tabs',
         active: 0,
         tabList: [{
@@ -32,13 +32,13 @@
 }]);
  **/
 
-App.directive('appTab', [function () {
+angular.module('DashboardApp').directive('workspaceTabs', [function () {
 
     var TabDirective = {};
 
     TabDirective.restrict = "E";
 
-    TabDirective.templateUrl = "tpl/TabManagementTemplate.html";
+    TabDirective.templateUrl = paths.tpls + "/TabManagementTemplate.html";
 
     TabDirective.link = function (scope, element, attrs) {
 
@@ -51,29 +51,31 @@ App.directive('appTab', [function () {
         });
 
         scope.$watch('$apply', function (newVal, oldVal) {
-            //scope.tabMenu.active = (scope.tabMenu.tabList.length - 1)
+            //scope.workspaceTabs.active = (scope.workspaceTabs.tabList.length - 1)
         });
 
         scope.addTab = function () {
-            scope.tabMenu.tabList.push
+            scope.workspaceTabs.tabList.push
             ({
 
                 head: {
                     icon: 'glyphicon-map-marker',
-                    text: 'Hola ' + (scope.tabMenu.tabList.length + 1)
+                    text: 'Hola ' + (scope.workspaceTabs.tabList.length + 1)
                 },
-                content: 'Content ' + (scope.tabMenu.tabList.length + 1),
+                content: 'Content ' + (scope.workspaceTabs.tabList.length + 1),
                 templateUrl: 'demo.html',
                 disabled: false //disable tab
             });
 
         }
 
-        scope.delTab = function (tab) {
+        scope.delTab = function ( tab, event ) {
 
-            if (scope.tabMenu.tabList.length >= 0) {
+            event.preventDefault();
+            
+            if (scope.workspaceTabs.tabList.length >= 0) {
 
-                scope.tabMenu.tabList.splice(tab.$index,1);
+                scope.workspaceTabs.tabList.splice(tab.$index,1);
 
             }
             
@@ -81,9 +83,9 @@ App.directive('appTab', [function () {
 
         scope.delAllTabRight = function (tab) {
 
-            if (scope.tabMenu.tabList.length >= 0) {
+            if (scope.workspaceTabs.tabList.length >= 0) {
 
-                scope.tabMenu.tabList.splice(tab.$index + 1);
+                scope.workspaceTabs.tabList.splice(tab.$index + 1);
 
             }
 
@@ -91,14 +93,14 @@ App.directive('appTab', [function () {
 
         scope.delAllTabLeft = function (tab) {
 
-            if (scope.tabMenu.tabList.length >= 0) {
+            if (scope.workspaceTabs.tabList.length >= 0) {
 
-                angular.forEach(scope.tabMenu.tabList, function(index, tab){
+                angular.forEach(scope.workspaceTabs.tabList, function(index, tab){
 
                     if(index >= tab.$index)
                         return false;
 
-                    scope.tabMenu.tabList.splice(index);
+                    scope.workspaceTabs.tabList.splice(index);
 
                 });
 
@@ -107,13 +109,13 @@ App.directive('appTab', [function () {
         }
 
         scope.backTab = function () {
-            if(scope.tabMenu.active > 0 )
-                scope.tabMenu.active--;
+            if(scope.workspaceTabs.active > 0 )
+                scope.workspaceTabs.active--;
         }
 
         scope.nextTab = function () {
-            if(scope.tabMenu.active < (scope.tabMenu.tabList.length - 1) )
-                scope.tabMenu.active++;
+            if(scope.workspaceTabs.active < (scope.workspaceTabs.tabList.length - 1) )
+                scope.workspaceTabs.active++;
         }
 
     };

@@ -1,9 +1,9 @@
-<uib-tabset active="tabMenu.active">
-    <uib-tab index="$index" ng-repeat="tab in tabMenu.tabList track by $index" active="tab.active"
+<uib-tabset active="workspaceTabs.active">
+    <uib-tab index="$index" ng-repeat="tab in workspaceTabs.tabList track by $index" active="tab.active"
              disable="tab.disabled">
         <uib-tab-heading>
             <i class="glyphicon {{ tab.head.icon }}"></i> {{ tab.head.text }}
-            <i ng-show="tab.closable" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="delTab(this)"></i>
+            <i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="delTab( this, $event )"></i>
         </uib-tab-heading>
         <div ng-if="!!tab.content">{{ tab.content }}</div>
         <div ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>

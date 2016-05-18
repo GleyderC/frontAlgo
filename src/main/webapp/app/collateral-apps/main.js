@@ -16,7 +16,9 @@ var CollateralApp = angular.module("CollateralApp", [
 
 var paths = {
 
-    views: "collateral-apps/views"
+    views: "collateral-apps/views",
+    tpls:   "collateral-apps/tpl"
+
 };
 
 // ## Begin Strict Context Escaping Config

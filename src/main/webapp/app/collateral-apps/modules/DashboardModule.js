@@ -55,7 +55,14 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                             'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
 
                             /* Controller js */
-                            'collateral-apps/controllers/configuration/LegalEntityController.js'
+                            'collateral-apps/controllers/configuration/LegalEntityController.js',
+
+                            /* Bilateral Controller js */
+                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
+
+
+                            /* Tabs Management */
+                            'collateral-apps/directives/TabManagement.js'
 
                         ]
                     });
