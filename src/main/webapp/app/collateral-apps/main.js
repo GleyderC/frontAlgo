@@ -303,12 +303,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/DashboardService.js',
 
                             /* datatable css*/
-                            'assets/global/plugins/datatables/datatables.min.css',
-                            'assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+                            'assets/vendor/DataTables/datatables.min.css',
 
                             /* datatable js*/
-                            'assets/global/plugins/datatables/datatables.all.min.js',
-                            'assets/pages/scripts/table-datatables-managed.min.js',
+                            'assets/vendor/DataTables/datatables.min.js',
                             'assets/vendor/angular-datatables/dist/angular-datatables.min.js'
 
                         ],

@@ -1,36 +1,65 @@
 angular.module('DashboardApp')
 
-    .controller('LegalEntityController', ['$scope', 'elementService', '$document', '$http',
-        '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder', 'DTColumnBuilder',
-        function ($scope, elementService, $document, $http, $timeout, $request, $localStorage, DTOptionsBuilder, DTColumnBuilder) {
+    .controller('LegalEntityController', ['$scope', 'elementService',
+        '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder', 'DTColumnBuilder','DTColumnDefBuilder',
+        function ($scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder, DTColumnBuilder,DTColumnDefBuilder) {
 
             $scope.$on('$includeContentLoaded', function () {
                 App.initAjax();
+                buildLegalData();
             });
 
-            /* Carga de de datatable legal entity*/
+            $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
+                //Response.data.dataResponse[0].rolList.push('Other');
+                $scope.legalEntities = Response.data.dataResponse;
+                console.log($scope.legalEntities);
 
-            //Cargando datos del back
-            $scope.dtOptions = DTOptionsBuilder.fromFnPromise(
+                /* Cargando datos en legal entity datatable*/
+                $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
+                $scope.dtColumnDefs = [
+                    DTColumnDefBuilder.newColumnDef(0),
+                    DTColumnDefBuilder.newColumnDef(1),
+                    DTColumnDefBuilder.newColumnDef(2),
+                    DTColumnDefBuilder.newColumnDef(3),
+                    DTColumnDefBuilder.newColumnDef(4),
+                    DTColumnDefBuilder.newColumnDef(5),
+                    DTColumnDefBuilder.newColumnDef(6).notSortable()
+                ];
+            });
+
+            function buildLegalData() {
+                $scope.legalEntity ={
+                    id:"",
+                    name:"",
+                    LEI:"",
+                    BIC:"",
+                    otherName:"",
+                    isBranch:"",
+                    motherLegalEntity:"",
+                    country:"",
+                    holidays:"",
+                    rolList:""
+                };
+            }
+
+
+            /*$scope.dtOptions = DTOptionsBuilder.fromFnPromise(
                 $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
-                    console.log(Response.data.dataResponse);
+                    //console.log(Response.data.dataResponse);
                     //Response.data.dataResponse[0].rolList.push('Other');
                     return Response.data.dataResponse
                 }))
                 .withDataProp('dataResponse')
                ;
-
-            $scope.dtColumns = [
-                DTColumnBuilder.newColumn('id').withTitle('ID'),
-                DTColumnBuilder.newColumn('name').withTitle('Entity Name'),
-                DTColumnBuilder.newColumn('isBranch').withTitle('isBranch'),
-                DTColumnBuilder.newColumn('LEI').withTitle('LEI'),
-                DTColumnBuilder.newColumn('BIC').withTitle('BIC'),
-                DTColumnBuilder.newColumn('rolList').withTitle('Rols')
-            ];
-
-
-
+             $scope.dtColumns = [
+             DTColumnBuilder.newColumn('id').withTitle('ID'),
+             DTColumnBuilder.newColumn('name').withTitle('Entity Name'),
+             DTColumnBuilder.newColumn('isBranch').withTitle('isBranch'),
+             DTColumnBuilder.newColumn('LEI').withTitle('LEI'),
+             DTColumnBuilder.newColumn('BIC').withTitle('BIC'),
+             DTColumnBuilder.newColumn('rolList').withTitle('Rols')
+             ];
+            */
 
 
             $scope.setFocusInput = function (element) {
@@ -48,7 +77,8 @@ angular.module('DashboardApp')
                 $scope.setFocusInput('le-general-data');
             }
 
-            $scope.editLegalEntity = function (element) {
+            // Edit legalEntity
+            $scope.editLegalEntity = function (element,index) {
                 elementService.collapsePortlet('legal-entity-table');
                 elementService.expandPortlet(element);
 
@@ -56,7 +86,20 @@ angular.module('DashboardApp')
                 elementService.scrollToElement(element, offset);
 
                 $scope.setFocusInput('le-general-data');
+
+                $scope.legalEntity = $scope.legalEntities[index];
             };
+
+            // Delete legalEntity
+            $scope.deleteLegalEntity = function (index) {
+
+                var params = "id:"+index;
+                $request.delete('/servlet/LegalEntity/Delete',params).then(function (Response) {
+                    console.log(Response.data.DataResponse);
+                });
+                
+            }
+            
             $scope.cancel = function () {
                 elementService.collapsePortlet('legal-entity-tabs');
                 elementService.expandPortlet('legal-entity-table');
@@ -896,38 +939,3 @@ DashboardApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance
 });
 
 
-/**
- * AngularJS default filter with the following expression:
- * "person in people | filter: {name: $select.search, age: $select.search}"
- * performs a AND between 'name: $select.search' and 'age: $select.search'.
- * We want to perform a OR.
- */
-
-DashboardApp.filter('propsFilter', function () {
-    return function (items, props) {
-        var out = [];
-
-        if (angular.isArray(items)) {
-            items.forEach(function (item) {
-                var itemMatches = false;
-
-                var keys = Object.keys(props);
-                for (var i = 0; i < keys.length; i++) {
-                    var prop = keys[i];
-                    var text = props[prop].toLowerCase();
-                    if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                        itemMatches = true;
-                        break;
-                    }
-                }
-                if (itemMatches) {
-                    out.push(item);
-                }
-            });
-        } else {
-            // Let the output be the input untouched
-            out = items;
-        }
-        return out;
-    };
-});

@@ -108,7 +108,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Beneficiary</label>
-                                    <ui-select ng-model="legalEntity.selected" theme="bootstrap" class="input-medium">
+                                    <!--ui-select ng-model="legalEntity.selected" theme="bootstrap" class="input-medium">
                                         <ui-select-match allow-clear="{{!!allowClear}}" placeholder="Select or search a Legal Entity...">{{$select.selected.name}}</ui-select-match>
                                         <ui-select-choices repeat="legalEntity in legalEntities | propsFilter: {name: $select.search, shortName: $select.search}">
                                             <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
@@ -116,7 +116,7 @@
                                                 shortName: <span ng-bind-html="''+legalEntity.shortName | highlight: $select.search"></span>
                                             </small>
                                         </ui-select-choices>
-                                    </ui-select>
+                                    </ui-select-->
                                 </div>
                                 <!--/span-->
                                 <div class="form-group col-md-6">

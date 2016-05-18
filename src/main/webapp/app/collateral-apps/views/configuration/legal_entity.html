@@ -50,9 +50,35 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-bordered table-hover table-checkable order-column"
-                   datatable="" dt-options="dtOptions" dt-columns="dtColumns">
+            <table  datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs"  class="table table-striped table-bordered table-hover table-checkable order-column">
+                <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> Entity Name </th>
+                    <th> isBranch </th>
+                    <th> LEI </th>
+                    <th> BIC </th>
+                    <th> Rols </th>
+                    <th> Actions </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="odd gradeX" ng-repeat="legalEntity in legalEntities">
+                    <td>{{legalEntity.id}}</td>
+                    <td>{{legalEntity.name}}</td>
+                    <td>{{legalEntity.isBranch?'Yes':'No'}}</td>
+                    <td>{{legalEntity.LEI}}</td>
+                    <td>{{legalEntity.BIC}}</td>
+                    <td>{{legalEntity.rolList.join(", ")}}</td>
+
+                    <td>
+                        <button type="button" ng-click="editLegalEntity('legal-entity-tabs',$index)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                        <button type="button"  ng-click="deleteLegalEntity($index)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                </tbody>
             </table>
+
         </div>
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
