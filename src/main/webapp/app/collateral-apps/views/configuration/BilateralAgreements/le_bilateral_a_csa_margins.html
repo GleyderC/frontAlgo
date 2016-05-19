@@ -1,0 +1,189 @@
+<div>
+
+    <!-- FORM SECTION LEFT BEGIN -->
+    <div class="portlet light bordered col-md-6">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
+                <div class="form-body">
+                    <!-- FORM BODY BEGIN -->
+                    <h3>PARTY A: {{ LegalEntity.BilateralAgreements.partyA.name || 'Demo PartyA' }}</h3>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Party A pays collateral?</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.LegEnforceableAgreement"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Threshold</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-threshold-partyA"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.active"
+                                   ng-disabled="false">
+                        </div>
+                        <div class="col-md-4">
+                            <select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency" name="base-currency-select[]"
+                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.currencies.selected">
+                                <option value="">-- SELECT BASE CURRENCY --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Minimum Transfer Amount</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-transfAmount-partyA"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.transfAmount"
+                                   ng-disabled="false">
+                        </div>
+                        <div class="col-md-4">
+                            <select id="le-bilateral-ag-csa-partyA-transfAmount-baseCurrency" name="base-currency-select[]"
+                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-model="LegalEntity.BilateralAgreements.csa.partyA.transfAmount.currencies.selected">
+                                <option value="">-- SELECT BASE CURRENCY --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Independent Amount</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.independentAmount"/>
+                            <button type="button">Configure</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Rounding</label>
+                        <select class="form-control input-medium" ng-model="LegalEntity.BilateralAgreements.csa.partyA.roundingType">
+                            <option value="NEAREST">NEAREST</option>
+                            <option value="UP">UP</option>
+                            <option value="DOWN">DOWN</option>
+                            <option value="NONE">NONE</option>
+                        </select>
+                        <input type="text" class="form-control input-medium" id="le-bilateral-ag-partyA-rounding-amount" ng-model="LegalEntity.BilateralAgreements.csa.partyA.roundingAmount"
+                                ng-disabled="false">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Configuration based on ratings</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.config.ratings"/>
+                            <button type="button">Configure</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Rehipotecation</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.rehipotecation"/>
+                        </div>
+                    </div>
+
+                    <!-- FORM BODY END -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- FORM SECTION LEFT END -->
+
+    <!-- FORM SECTION RIGHT BEGIN -->
+    <div class="portlet light bordered col-md-6">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" id="le-bilateral-ag-right-side">
+                <div class="form-body">
+                    <!-- FORM BODY BEGIN -->
+                    <h3>PARTY B: {{ LegalEntity.BilateralAgreements.partyB.name || 'Demo PartyB' }}</h3>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Party B pays collateral?</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.LegEnforceableAgreement"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Threshold</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-threshold-partyB"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.threshold.active"
+                                   ng-disabled="false">
+                        </div>
+                        <div class="col-md-4">
+                            <select id="le-bilateral-ag-csa-partyB-threshold-baseCurrency" name="base-currency-select[]"
+                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-model="LegalEntity.BilateralAgreements.csa.partyB.threshold.currencies.selected">
+                                <option value="">-- SELECT BASE CURRENCY --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Minimum Transfer Amount</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-transfAmount-partyB"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.transfAmount"
+                                   ng-disabled="false">
+                        </div>
+                        <div class="col-md-4">
+                            <select id="le-bilateral-ag-csa-partyB-transfAmount-baseCurrency" name="base-currency-select[]"
+                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-model="LegalEntity.BilateralAgreements.csa.partyB.transfAmount.currencies.selected">
+                                <option value="">-- SELECT BASE CURRENCY --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Independent Amount</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.independentAmount"/>
+                            <button type="button">Configure</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Rounding</label>
+                        <select class="form-control input-medium" ng-model="LegalEntity.BilateralAgreements.csa.partyB.roundingType">
+                            <option value="NEAREST">NEAREST</option>
+                            <option value="UP">UP</option>
+                            <option value="DOWN">DOWN</option>
+                            <option value="NONE">NONE</option>
+                        </select>
+                        <input type="text" class="form-control input-medium" id="le-bilateral-ag-partyB-rounding-amount" ng-model="LegalEntity.BilateralAgreements.csa.partyB.roundingAmount"
+                               ng-disabled="false">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Configuration based on ratings</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.config.ratings"/>
+                            <button type="button">Configure</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Rehipotecation</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.rehipotecation"/>
+                        </div>
+                    </div>
+
+                    <!-- FORM BODY END -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- FORM SECTION RIGHT END -->
+
+</div>

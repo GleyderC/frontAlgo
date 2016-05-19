@@ -72,13 +72,13 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
         scope.delTab = function ( tab, event ) {
 
             event.preventDefault();
-            
+
             if (scope.workspaceTabs.tabList.length >= 0) {
 
                 scope.workspaceTabs.tabList.splice(tab.$index,1);
 
             }
-            
+
         }
 
         scope.delAllTabRight = function (tab) {

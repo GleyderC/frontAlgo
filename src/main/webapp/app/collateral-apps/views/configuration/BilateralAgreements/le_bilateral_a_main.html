@@ -1,0 +1,224 @@
+<div>
+
+    <!-- FORM SECTION LEFT BEGIN -->
+    <div class="portlet light bordered col-md-6">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
+                <div class="form-body">
+                    <!-- FORM BODY BEGIN -->
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Principal</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-id"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Counterparty</label>
+                        <ui-select ng-model="legalEntity.selected" theme="bootstrap" class="input-medium">
+                            <ui-select-match allow-clear="{{!!allowClear}}"
+                                             placeholder="Select or search a Legal Entity...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="legalEntity in legalEntities | propsFilter: {name: $select.search, shortName: $select.search}">
+                                <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
+                                <small>
+                                    shortName: <span
+                                        ng-bind-html="''+legalEntity.shortName | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Base Currency</label>
+                        <div class="col-md-9">
+                            <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
+                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-model="LegalEntity.BilateralAgreements.currencies.selected">
+                                <option value="">-- SELECT BASE CURRENCY --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Contract Type</label>
+                        <div class="col-md-9">
+                            <select id="le-bilateral-ag-contract-type" name="contract-type-select[]"
+                                    ng-options="contractType as contractType.codigo for contractType in LegalEntity.BilateralAgreements.contractType.list track by contractType.id"
+                                    ng-model="LegalEntity.BilateralAgreements.contractType.selected">
+                                <option value="">-- SELECT CONTRACT TYPE --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Is a legally enforceable agreement compliant to EBA
+                            section 7, chapter 4
+                            ?</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                   ng-model="LegalEntity.BilateralAgreements.LegEnforceableAgreement"/>
+                        </div>
+                    </div>
+
+
+                    <h3>Messaging:</h3>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Call issuance</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-call-issuance"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Auto Send Time</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-auto-send-time"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Auto Send Tol</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-auto-send-x"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Acacia Soft</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" class="form-control input-medium" id="le-bilateral-ag-acasia-soft"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Acacia Soft Ref</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <!-- FORM BODY END -->
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FORM SECTION LEFT END -->
+
+    <!-- FORM SECTION RIGHT BEGIN -->
+    <div class="portlet light bordered col-md-6">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" id="le-bilateral-ag-right-side">
+                <div class="form-body">
+                    <!-- FORM BODY BEGIN -->
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Call Frequency</label>
+                        <select class="form-control input-medium">
+                            <option value="daily">Daily</option>
+                            <option value="week">Weekly</option>
+                            <option value="month">Monthly</option>
+                            <option value="end-of-month">End of Month</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Call Day</label>
+                        <select class="form-control input-medium">
+                            <option value="mon">Monday</option>
+                            <option value="tue">Tuesday</option>
+                            <option value="wed">Wednesday</option>
+                            <option value="thu">Thursday</option>
+                            <option value="fri">Friday</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Call Date</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-calldate"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Call Offset</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-calloffset"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Notification</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium timepicker timepicker-no-seconds"
+                                   id="le-bilateral-ag-notification"
+                                   ng-disabled="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Cure Period</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control input-medium timepicker timepicker-no-seconds"
+                                   id="le-bilateral-ag-cure-period"
+                                   ng-disabled="false">
+                        </div>
+                        <select class="form-control input-medium col-md-3">
+                            <option value="0">T</option>
+                            <option value="1">T + 1</option>
+                            <option value="2">T + 2</option>
+                            <option value="3">T + 3</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Holidays</label>
+                        <div class="col-md-9">
+                            <select multiple="multiple" id="holidays-select" name="holidays-select[]"
+                                    ng-options="holiday as holiday.codigo for holiday in LegalEntity.BilateralAgreements.holidays.list track by holiday.id"
+                                    ng-model="LegalEntity.BilateralAgreements.holidays.selectedList">
+                                <option value="">-- SELECT HOLIDAY --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Status</label>
+                        <div class="col-md-9">
+                            <input type="checkbox" class="make-switch" data-on-text="Open" data-off-text="Close">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div class="col-md-6">
+                            <button type="button"><i class="fa file-pdf-o"></i>Export Contract as PDF</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="file"><i class="fa upload"></i>Upload Contract</button>
+                            <button type="file" class="hide"></button>
+                        </div>
+                    </div>
+
+                    <!-- FORM BODY END -->
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+    <!-- FORM SECTION RIGHT BEGIN -->
+
+</div>

@@ -3,7 +3,7 @@
              disable="tab.disabled">
         <uib-tab-heading>
             <i class="glyphicon {{ tab.head.icon }}"></i> {{ tab.head.text }}
-            <i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="delTab( this, $event )"></i>
+            <i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="delTab(this, $event)"></i>
         </uib-tab-heading>
         <div ng-if="!!tab.content">{{ tab.content }}</div>
         <div ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>
