@@ -72,6 +72,8 @@ angular.module('DashboardApp')
                 elementService.scrollToElement(element, offset);
 
                 $scope.setFocusInput('le-general-data');
+
+                buildLegalData();
             }
 
             // Edit legalEntity
