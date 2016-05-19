@@ -77,7 +77,7 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
  * We want to perform a OR.
  */
 
-/*DashboardApp.filter('propsFilter', function () {
+DashboardApp.filter('propsFilter', function () {
     return function (items, props) {
         var out = [];
 
@@ -104,4 +104,4 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
         }
         return out;
     };
-});*/
+});
