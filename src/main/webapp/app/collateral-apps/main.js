@@ -304,10 +304,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/DashboardService.js',
 
                             /* datatable css*/
-                            'assets/vendor/DataTables/datatables.min.css',
+                            'assets/vendor/DataTables-net/datatables.min.css',
 
                             /* datatable js*/
-                            'assets/vendor/DataTables/datatables.min.js',
+                            'assets/vendor/DataTables-net/datatables.min.js',
                             'assets/vendor/angular-datatables/dist/angular-datatables.min.js'
 
                         ],
