@@ -64,7 +64,7 @@
                 </thead>
                 <tbody>
                 <tr class="odd gradeX" ng-repeat="legalEntity in legalEntities">
-                    <td>{{legalEntity.id}}</td>
+                    <td>{{$index}} {{legalEntity.id}}</td>
                     <td>{{legalEntity.name}}</td>
                     <td>{{legalEntity.isBranch?'Yes':'No'}}</td>
                     <td>{{legalEntity.LEI}}</td>

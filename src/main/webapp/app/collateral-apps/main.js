@@ -154,7 +154,7 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageS
         'requestError': function(rejection) {
 
             $log.warn("There is an error. Reason:");
-            $log.debug("http_code: " + response.status + ", Response: " + response.statusText);
+            $log.debug("http_code: " + rejection.status + ", Response: " + rejection.statusText);
 
             if (canRecover(rejection)) {
                 return responseOrNewPromise
@@ -217,7 +217,8 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
             };
         }
 
-        return $http.delete( URL_CONFIG.API_URL + '' + urlRelative, config_request);
+        //return $http.delete( URL_CONFIG.API_URL + '' + urlRelative, config_request);
+        return $http.post( URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
 
     }
 

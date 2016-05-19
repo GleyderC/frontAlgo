@@ -1,8 +1,8 @@
 angular.module('DashboardApp')
 
     .controller('LegalEntityController', ['$scope', 'elementService',
-        '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder', 'DTColumnBuilder','DTColumnDefBuilder',
-        function ($scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder, DTColumnBuilder,DTColumnDefBuilder) {
+        '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTColumnDefBuilder',
+        function ($scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
 
             $scope.$on('$includeContentLoaded', function () {
                 App.initAjax();
@@ -12,45 +12,43 @@ angular.module('DashboardApp')
             $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
                 //Response.data.dataResponse[0].rolList.push('Other');
                 $scope.legalEntities = Response.data.dataResponse;
-                console.log($scope.legalEntities);
 
-                /* Cargando datos en legal entity datatable*/
-                $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
-                $scope.dtColumnDefs = [
-                    DTColumnDefBuilder.newColumnDef(0),
-                    DTColumnDefBuilder.newColumnDef(1),
-                    DTColumnDefBuilder.newColumnDef(2),
-                    DTColumnDefBuilder.newColumnDef(3),
-                    DTColumnDefBuilder.newColumnDef(4),
-                    DTColumnDefBuilder.newColumnDef(5),
-                    DTColumnDefBuilder.newColumnDef(6).notSortable()
-                ];
             });
+            /* Cargando datos en legal entity datatable*/
+            $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
+            $scope.dtColumnDefs = [
+                DTColumnDefBuilder.newColumnDef(0),
+                DTColumnDefBuilder.newColumnDef(1),
+                DTColumnDefBuilder.newColumnDef(2),
+                DTColumnDefBuilder.newColumnDef(3),
+                DTColumnDefBuilder.newColumnDef(4),
+                DTColumnDefBuilder.newColumnDef(5),
+                DTColumnDefBuilder.newColumnDef(6).notSortable()
+            ];
 
             function buildLegalData() {
-                $scope.legalEntity ={
-                    id:"",
-                    name:"",
-                    LEI:"",
-                    BIC:"",
-                    otherName:"",
-                    isBranch:"",
-                    motherLegalEntity:"",
-                    country:"",
-                    holidays:"",
-                    rolList:""
+                $scope.legalEntity = {
+                    id: "",
+                    name: "",
+                    LEI: "",
+                    BIC: "",
+                    otherName: "",
+                    isBranch: "",
+                    motherLegalEntity: "",
+                    country: "",
+                    holidays: "",
+                    rolList: ""
                 };
             }
 
-
             /*$scope.dtOptions = DTOptionsBuilder.fromFnPromise(
-                $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
-                    //console.log(Response.data.dataResponse);
-                    //Response.data.dataResponse[0].rolList.push('Other');
-                    return Response.data.dataResponse
-                }))
-                .withDataProp('dataResponse')
-               ;
+             $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
+             //console.log(Response.data.dataResponse);
+             //Response.data.dataResponse[0].rolList.push('Other');
+             return Response.data.dataResponse
+             }))
+             .withDataProp('dataResponse')
+             ;
              $scope.dtColumns = [
              DTColumnBuilder.newColumn('id').withTitle('ID'),
              DTColumnBuilder.newColumn('name').withTitle('Entity Name'),
@@ -59,8 +57,7 @@ angular.module('DashboardApp')
              DTColumnBuilder.newColumn('BIC').withTitle('BIC'),
              DTColumnBuilder.newColumn('rolList').withTitle('Rols')
              ];
-            */
-
+             */
 
             $scope.setFocusInput = function (element) {
                 //console.log("#"+element+" input:first:not([readonly])");
@@ -78,7 +75,7 @@ angular.module('DashboardApp')
             }
 
             // Edit legalEntity
-            $scope.editLegalEntity = function (element,index) {
+            $scope.editLegalEntity = function (element, index) {
                 elementService.collapsePortlet('legal-entity-table');
                 elementService.expandPortlet(element);
 
@@ -93,13 +90,21 @@ angular.module('DashboardApp')
             // Delete legalEntity
             $scope.deleteLegalEntity = function (index) {
 
-                var params = "id:"+index;
-                $request.delete('/servlet/LegalEntity/Delete',params).then(function (Response) {
-                    console.log(Response.data.DataResponse);
-                });
-                
+                var params = {
+
+                    "id": $scope.legalEntities[index].id
+                };
+
+                $request.post('/servlet/LegalEntity/Delete', params)
+                    .then(function (Response) {
+                        $scope.legalEntities.splice(index, 1);
+                    },
+                    function (Response) {
+                        alert("There is an error on Server");
+                        console.log(Response)
+                    })
             }
-            
+
             $scope.cancel = function () {
                 elementService.collapsePortlet('legal-entity-tabs');
                 elementService.expandPortlet('legal-entity-table');
