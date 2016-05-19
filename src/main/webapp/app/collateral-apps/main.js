@@ -12,7 +12,7 @@ var CollateralApp = angular.module("CollateralApp", [
     "duScroll",
     "ngCookies",
     "LocalStorageModule",
-    "angular-toastr"
+    "toastr"
 ]);
 
 var paths = {

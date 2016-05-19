@@ -1,8 +1,10 @@
 angular.module('DashboardApp')
 
     .controller('LegalEntityController', ['$scope', 'elementService',
-        '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTColumnDefBuilder',
-        function ($scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder) {
+        '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder',
+        'DTColumnBuilder', 'DTColumnDefBuilder','toastr',
+        function ($scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder,
+                  DTColumnBuilder, DTColumnDefBuilder,toastr) {
 
             $scope.$on('$includeContentLoaded', function () {
                 App.initAjax();
@@ -67,7 +69,8 @@ angular.module('DashboardApp')
             $scope.addLegalEntity = function (element) {
 
                 if(!element){
-                    
+                    toastr.warning('Your computer is about to explode!', 'Warning');
+                    false;
                 }
                 elementService.collapsePortlet('legal-entity-table');
                 elementService.expandPortlet(element);
