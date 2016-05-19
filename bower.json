@@ -25,7 +25,8 @@
     "bootstrap-fileinput": "^4.3.1",
     "multiselect": "jquery-multi-select#^0.9.12",
     "angular-ui-grid": "^3.1.1",
-    "pdfmake": "^0.1.20"
+    "pdfmake": "^0.1.20",
+    "angular-toastr": "^1.7.0"
   },
   "devDependencies": {},
   "appPath": "src/main/webapp/app",

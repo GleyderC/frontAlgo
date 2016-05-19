@@ -66,6 +66,9 @@ angular.module('DashboardApp')
 
             $scope.addLegalEntity = function (element) {
 
+                if(!element){
+                    
+                }
                 elementService.collapsePortlet('legal-entity-table');
                 elementService.expandPortlet(element);
                 var offset = $("#" + element).offset().top - $("#legal-entity-table").offset().top;
@@ -87,7 +90,12 @@ angular.module('DashboardApp')
                 $scope.setFocusInput('le-general-data');
 
                 $scope.legalEntity = $scope.legalEntities[index];
+
             };
+
+            $scope.updateLegalEntity = function () {
+
+            }
 
             // Delete legalEntity
             $scope.deleteLegalEntity = function (index) {

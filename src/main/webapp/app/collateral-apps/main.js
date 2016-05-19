@@ -11,7 +11,8 @@ var CollateralApp = angular.module("CollateralApp", [
     "ngSanitize",
     "duScroll",
     "ngCookies",
-    "LocalStorageModule"
+    "LocalStorageModule",
+    "angular-toastr"
 ]);
 
 var paths = {
@@ -51,6 +52,35 @@ CollateralApp.config(['$controllerProvider', function($controllerProvider) {
   // in new ones!
   $controllerProvider.allowGlobals();
 }]);
+
+//notification with angular-toastr
+CollateralApp.config(function(toastrConfig) {
+    angular.extend(toastrConfig, {
+        allowHtml: false,
+        closeButton: false,
+        closeHtml: '<button>&times;</button>',
+        extendedTimeOut: 1000,
+        iconClasses: {
+            error: 'toast-error',
+            info: 'toast-info',
+            success: 'toast-success',
+            warning: 'toast-warning'
+        },
+        messageClass: 'toast-message',
+        onHidden: null,
+        onShown: null,
+        onTap: null,
+        progressBar: false,
+        tapToDismiss: true,
+        templates: {
+            toast: 'directives/toast/toast.html',
+            progressbar: 'directives/progressbar/progressbar.html'
+        },
+        timeOut: 5000,
+        titleClass: 'toast-title',
+        toastClass: 'toast'
+    });
+});
 
 /********************************************
  END: BREAKING CHANGE in AngularJS v1.3.x:
