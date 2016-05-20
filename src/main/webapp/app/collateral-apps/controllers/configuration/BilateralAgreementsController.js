@@ -44,6 +44,8 @@ DashboardApp.controller(
                     }
                 );
 
+                var offset = $("#container-tabs-bilateral-contract").offset().top;
+                //elementService.scrollToElement("container-tabs-bilateral-contract", offset);
             };
 
             $scope.editBillateralAgreement = function () {
@@ -58,6 +60,9 @@ DashboardApp.controller(
                         closable: true
                     }
                 );
+
+                var offset = $("#container-tabs-bilateral-contract").offset().top;
+                //elementService.scrollToElement("container-tabs-bilateral-contract", offset);
 
             };
 
@@ -85,8 +90,6 @@ DashboardApp.controller(
 
             });
 
-            console.log($scope.$parent.workspaceTabs.active)
-
             $scope.workspaceTabs = {
                 name: 'collateral-tabs',
                 active: 0,
@@ -110,64 +113,152 @@ DashboardApp.controller(
                             icon: 'glyphicons-piggy-bank',
                             text: 'Eligible currencies'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_elegible_currencies.html"
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_currencies.html"
                     },
                     {
                         head: {
                             icon: 'glyphicon-eye-open',
                             text: 'Eligible securities'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_elegible_securities.html"
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_securities.html"
                     }
                 ]
             };
 
         }]);
 
-DashboardApp.controller('LEBillateralAgrElegibleCurrenciesController', function($scope, $compile, DTOptionsBuilder, DTColumnBuilder){
+DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
 
-        var vm = this;
-        vm.message = '';
-        vm.edit = edit;
-        vm.delete = deleteRow;
-        vm.dtInstance = {};
-        vm.persons = {};
-        vm.dtOptions = DTOptionsBuilder.fromSource('data1.json')
-            .withPaginationType('full_numbers')
-            .withOption('createdRow', createdRow);
-        vm.dtColumns = [
-            DTColumnBuilder.newColumn('id').withTitle('ID'),
-            DTColumnBuilder.newColumn('firstName').withTitle('First name'),
-            DTColumnBuilder.newColumn('lastName').withTitle('Last name'),
-            DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable()
-                .renderWith(actionsHtml)
-        ];
+    $scope.editRow = function (grid, row) {
+        console.log("editing")
+    }
 
-        function edit(person) {
-            vm.message = 'You are trying to edit the row: ' + JSON.stringify(person);
-            // Edit some data and call server to make changes...
-            // Then reload the data so that DT is refreshed
-            vm.dtInstance.reloadData();
-        }
-        function deleteRow(person) {
-            vm.message = 'You are trying to remove the row: ' + JSON.stringify(person);
-            // Delete some data and call server to make changes...
-            // Then reload the data so that DT is refreshed
-            vm.dtInstance.reloadData();
-        }
-        function createdRow(row, data, dataIndex) {
-            // Recompiling so we can bind Angular directive to the DT
-            $compile(angular.element(row).contents())($scope);
-        }
-        function actionsHtml(data, type, full, meta) {
-            vm.persons[data.id] = data;
-            return '<button class="btn btn-warning" ng-click="showCase.edit(showCase.persons[' + data.id + '])">' +
-                '   <i class="fa fa-edit"></i>' +
-                '</button>&nbsp;' +
-                '<button class="btn btn-danger" ng-click="showCase.delete(showCase.persons[' + data.id + '])" )"="">' +
-                '   <i class="fa fa-trash-o"></i>' +
-                '</button>';
-        }
+    $scope.deleteRow = function (grid, row) {
+        console.log("deleting")
+    }
 
-});
+    $scope.gridOptions = {
+        columnDefs: [
+            {name: 'Currency'},
+            {name: 'Type'},
+            {name: 'Fixed Rate'},
+            {name: 'Index'},
+            {name: 'Tenor'},
+            {name: 'Source'},
+            {name: 'Factor'},
+            {name: 'Compound'},
+            {name: 'Included'},
+            {name: 'Projected'},
+            {name: 'Adjustment Currency'},
+            {
+                name: 'Actions',
+                cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                enableColumnMenu: false,
+                width: 160
+            }
+        ],
+        enableGridMenu: true,
+        enableSelectAll: true,
+        exporterCsvFilename: 'myFile.csv',
+        exporterPdfDefaultStyle: {fontSize: 9},
+        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+        exporterPdfHeader: {text: "My Header", style: 'headerStyle'},
+        exporterPdfFooter: function (currentPage, pageCount) {
+            return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+        },
+        exporterPdfCustomFormatter: function (docDefinition) {
+            docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+            docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+            return docDefinition;
+        },
+        exporterPdfOrientation: 'portrait',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        onRegisterApi: function (gridApi) {
+            $scope.gridApi = gridApi;
+            // call resize every 500 ms for 5 s after modal finishes opening
+            $interval( function() {
+                $scope.gridApi.core.handleWindowResize();
+            }, 1000, 10);
+        }
+    };
+
+    $scope.gridOptions.data = [];
+
+}]);
+
+DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+
+    $scope.gridOptions = {
+
+        columnDefs: [
+            {
+                field: 'collateralType',
+                name: 'Collateral Type'
+            },
+            {
+                name: 'Eligible',
+                cellTemplate: '<input type="checkbox" />',
+                enableColumnMenu: false
+            },
+            {
+                name: 'Haircut',
+                cellTemplate: '<input type="text" />',
+                enableColumnMenu: false
+            },
+            {
+                name: 'Haircut Type',
+                cellTemplate: '<input type="text" />',
+                enableColumnMenu: false
+            }
+        ],
+        enableGridMenu: true,
+        enableSelectAll: true,
+        exporterCsvFilename: 'myFile.csv',
+        exporterPdfDefaultStyle: {fontSize: 9},
+        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+        exporterPdfHeader: {text: "My Header", style: 'headerStyle'},
+        exporterPdfFooter: function (currentPage, pageCount) {
+            return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+        },
+        exporterPdfCustomFormatter: function (docDefinition) {
+            docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+            docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+            return docDefinition;
+        },
+        exporterPdfOrientation: 'portrait',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        onRegisterApi: function (gridApi) {
+            $scope.gridApi = gridApi;
+            // call resize every 500 ms for 5 s after modal finishes opening
+            $interval( function() {
+                $scope.gridApi.core.handleWindowResize();
+            }, 1000, 10);
+        }
+    };
+
+    $scope.gridOptions.data = [
+        {
+            collateralType: "USA Bonds",
+        },
+        {
+            collateralType: "France Bonds",
+        },
+        {
+            collateralType: "Equity Options",
+        },
+        {
+            collateralType: "MBS",
+        },
+        {
+            collateralType: "European Equity",
+        }
+    ];
+
+}]);
 

@@ -1,0 +1,33 @@
+<div ng-controller="LEBillateralAgrEligibleSecuritiesController as eligibSecuritiesCtrl">
+    <!-- FORM SECTION TOP BEGIN -->
+    <div class="portlet light bordered">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
+                <div class="form-body row">
+                    <!-- FORM BODY BEGIN -->
+
+                    <!-- PARTY A LEFT BEGIN -->
+                    <div class="col-md-6">
+                        <h2>
+                            Eligible securirties Party A
+                        </h2>
+                        <div ui-grid="gridOptions" ui-grid-selection ui-grid-exporter class="grid"></div>
+                    </div>
+                    <!-- PARTY A LEFT END -->
+
+                    <!-- PARTY A LEFT BEGIN -->
+                    <div class="col-md-6">
+                        <h2>
+                            Eligible securirties Party B
+                        </h2>
+                        <div ui-grid="gridOptions" ui-grid-selection ui-grid-exporter class="grid"></div>
+                    </div>
+                    <!-- PARTY A LEFT END -->
+
+                    <!-- FORM BODY END -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- FORM SECTION TOP END -->
+</div>

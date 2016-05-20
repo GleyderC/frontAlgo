@@ -4,7 +4,10 @@
 
 /* Collateral App */
 var DashboardApp = angular.module("DashboardApp", [
-    "CollateralApp"
+    "CollateralApp",
+    'ui.grid',
+    'ui.grid.selection',
+    'ui.grid.exporter'
 ]);
 
 /* Setup Rounting For All Pages */
@@ -60,10 +63,8 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                             /* Bilateral Controller js */
                             'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
 
-
                             /* Tabs Management */
-                            'collateral-apps/directives/TabManagement.js'
-
+                            'collateral-apps/directives/TabManagement.js',
                         ]
                     });
                 }]

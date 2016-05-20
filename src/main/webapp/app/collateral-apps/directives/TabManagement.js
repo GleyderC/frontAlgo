@@ -43,11 +43,10 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
     TabDirective.link = function (scope, element, attrs) {
 
         element.on('click', function(){
-           console.log("click")
+           //console.log("click")
         });
         element.on('contexMenu', function (e) {
             e.preventDefault();
-            console.log("aki ta")
         });
 
         scope.$watch('$apply', function (newVal, oldVal) {

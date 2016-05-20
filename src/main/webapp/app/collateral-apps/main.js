@@ -338,7 +338,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /* datatable js*/
                             'assets/vendor/DataTables-net/datatables.min.js',
-                            'assets/vendor/angular-datatables/dist/angular-datatables.min.js'
+                            'assets/vendor/angular-datatables/dist/angular-datatables.min.js',
 
                         ],
                         serie: true,

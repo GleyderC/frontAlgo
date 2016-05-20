@@ -1,12 +1,11 @@
-<div>
+<div class="portlet light bordered">
+    <div class="portlet-body form">
+        <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
+            <div class="form-body row">
+                <!-- FORM BODY BEGIN -->
 
-    <!-- FORM SECTION LEFT BEGIN -->
-    <div class="portlet light bordered col-md-6">
-        <div class="portlet-body form">
-            <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
-                <div class="form-body">
-                    <!-- FORM BODY BEGIN -->
-
+                <!-- FORM SECTION LEFT BEGIN -->
+                <div class="col-md-6">
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Principal</label>
                         <div class="col-md-9">
@@ -16,27 +15,30 @@
                     </div>
 
                     <div class="form-group col-md-12">
-                        <label class="control-label">Counterparty</label>
-                        <ui-select ng-model="legalEntity.selected" theme="bootstrap" class="input-medium">
-                            <ui-select-match allow-clear="{{!!allowClear}}"
-                                             placeholder="Select or search a Legal Entity...">
-                                {{$select.selected.name}}
-                            </ui-select-match>
-                            <ui-select-choices
-                                    repeat="legalEntity in legalEntities | propsFilter: {name: $select.search, shortName: $select.search}">
-                                <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
-                                <small>
-                                    shortName: <span
-                                        ng-bind-html="''+legalEntity.shortName | highlight: $select.search"></span>
-                                </small>
-                            </ui-select-choices>
-                        </ui-select>
+                        <label class="control-label col-md-3">Counterparty</label>
+                        <div class="col-md-9">
+                            <ui-select ng-model="legalEntity.selected" theme="bootstrap" class="input-medium">
+                                <ui-select-match allow-clear="{{!!allowClear}}"
+                                                 placeholder="Select or search a Legal Entity...">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="legalEntity in legalEntities | propsFilter: {name: $select.search, shortName: $select.search}">
+                                    <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
+                                    <small>
+                                        shortName: <span
+                                            ng-bind-html="''+legalEntity.shortName | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
                     </div>
 
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Base Currency</label>
                         <div class="col-md-9">
                             <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
+                                    class="form-control input-medium"
                                     ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
                                     ng-model="LegalEntity.BilateralAgreements.currencies.selected">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
@@ -48,6 +50,7 @@
                         <label class="control-label col-md-3">Contract Type</label>
                         <div class="col-md-9">
                             <select id="le-bilateral-ag-contract-type" name="contract-type-select[]"
+                                    class="form-control input-medium"
                                     ng-options="contractType as contractType.codigo for contractType in LegalEntity.BilateralAgreements.contractType.list track by contractType.id"
                                     ng-model="LegalEntity.BilateralAgreements.contractType.selected">
                                 <option value="">-- SELECT CONTRACT TYPE --</option>
@@ -95,7 +98,8 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Acacia Soft</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" class="form-control input-medium" id="le-bilateral-ag-acasia-soft"
+                            <input type="checkbox" class="make-switch" class="form-control input-medium"
+                                   id="le-bilateral-ag-acasia-soft"
                                    ng-disabled="false">
                         </div>
                     </div>
@@ -108,40 +112,34 @@
                         </div>
                     </div>
 
-                    <!-- FORM BODY END -->
                 </div>
-            </form>
-        </div>
-    </div>
+                <!-- FORM SECTION LEFT END -->
 
-    <!-- FORM SECTION LEFT END -->
-
-    <!-- FORM SECTION RIGHT BEGIN -->
-    <div class="portlet light bordered col-md-6">
-        <div class="portlet-body form">
-            <form class="form-horizontal" role="form" id="le-bilateral-ag-right-side">
-                <div class="form-body">
-                    <!-- FORM BODY BEGIN -->
-
+                <!-- FORM SECTION RIGHT BEGIN -->
+                <div class="col-md-6">
                     <div class="form-group col-md-12">
-                        <label class="control-label">Call Frequency</label>
-                        <select class="form-control input-medium">
-                            <option value="daily">Daily</option>
-                            <option value="week">Weekly</option>
-                            <option value="month">Monthly</option>
-                            <option value="end-of-month">End of Month</option>
-                        </select>
+                        <label class="control-label col-md-3">Call Frequency</label>
+                        <div class="col-md-9">
+                            <select class="form-control input-medium">
+                                <option value="daily">Daily</option>
+                                <option value="week">Weekly</option>
+                                <option value="month">Monthly</option>
+                                <option value="end-of-month">End of Month</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-group col-md-12">
-                        <label class="control-label">Call Day</label>
-                        <select class="form-control input-medium">
-                            <option value="mon">Monday</option>
-                            <option value="tue">Tuesday</option>
-                            <option value="wed">Wednesday</option>
-                            <option value="thu">Thursday</option>
-                            <option value="fri">Friday</option>
-                        </select>
+                        <label class="control-label col-md-3">Call Day</label>
+                        <div class="col-md-9">
+                            <select class="form-control input-medium">
+                                <option value="mon">Monday</option>
+                                <option value="tue">Tuesday</option>
+                                <option value="wed">Wednesday</option>
+                                <option value="thu">Thursday</option>
+                                <option value="fri">Friday</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-group col-md-12">
@@ -176,7 +174,7 @@
                                    id="le-bilateral-ag-cure-period"
                                    ng-disabled="false">
                         </div>
-                        <select class="form-control input-medium col-md-3">
+                        <select class="form-control input-xsmall col-md-3">
                             <option value="0">T</option>
                             <option value="1">T + 1</option>
                             <option value="2">T + 2</option>
@@ -204,21 +202,20 @@
 
                     <div class="form-group col-md-12">
                         <div class="col-md-6">
-                            <button type="button"><i class="fa file-pdf-o"></i>Export Contract as PDF</button>
+                            <button type="button" class="btn btn-info"><i class="fa file-pdf-o"></i>Export Contract as
+                                PDF
+                            </button>
                         </div>
                         <div class="col-md-6">
-                            <button type="file"><i class="fa upload"></i>Upload Contract</button>
-                            <button type="file" class="hide"></button>
+                            <button type="file" class="btn btn-info"><i class="fa upload"></i>Upload Contract</button>
+                            <button type="file" class="btn btn-info hide"></button>
                         </div>
                     </div>
-
-                    <!-- FORM BODY END -->
                 </div>
-            </form>
-        </div>
+                <!-- FORM SECTION RIGHT END -->
 
-
+                <!-- FORM BODY END -->
+            </div>
+        </form>
     </div>
-    <!-- FORM SECTION RIGHT BEGIN -->
-
 </div>

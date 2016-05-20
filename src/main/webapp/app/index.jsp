@@ -171,6 +171,12 @@
 <script src="assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL PLUGINS -->
 
+<!-- UI GRID PLUGIN BEGIN -->
+<script src="assets/vendor/pdfmake/build/pdfmake.min.js" type="text/javascript"></script>
+<script src="assets/vendor/pdfmake/build/vfs_fonts.js" type="text/javascript"></script>
+<script src="assets/vendor/angular-ui-grid/ui-grid.min.js" type="text/javascript"></script>
+<link href="assets/vendor/angular-ui-grid/ui-grid.min.css" rel="stylesheet" type="text/css"/>
+<!-- UI GRID PLUGIN END -->
 
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
