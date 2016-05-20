@@ -7,7 +7,8 @@ var DashboardApp = angular.module("DashboardApp", [
     "CollateralApp",
     'ui.grid',
     'ui.grid.selection',
-    'ui.grid.exporter'
+    'ui.grid.exporter',
+    'ui.grid.autoResize'
 ]);
 
 /* Setup Rounting For All Pages */
