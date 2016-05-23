@@ -1,16 +1,13 @@
-/**
- * Created by laclew on 22/05/16.
- */
 angular.module('DashboardApp')
-    .factory('ConfigurationService',['$q','$request','toastr',function ($q,$request,toastr) {
-        var configuration = {};
+    .factory('LegalEntityService',['$q','$request','toastr',function ($q,$request,toastr) {
+        var LegalEntity = {};
 
         var legalEntities = [];
 
         var defered =  $q.defer();
         var promise = defered.promise;
 
-        configuration.getLegalEntities = function(){
+        LegalEntity.getAll = function(){
             $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
                 //Response.data.dataResponse[0].rolList.push('Other');
                 legalEntities = Response.data.dataResponse;
@@ -22,7 +19,7 @@ angular.module('DashboardApp')
             return promise;
         }
 
-        configuration.getLegalEntity = function(idLegal){
+        LegalEntity.getById = function(idLegal){
             var param = {id:idLegal};
             $request.get('/servlet/LegalEntity/Select',param).then(function (Response) {
                 legalEntity = Response.data.dataResponse;
@@ -34,7 +31,8 @@ angular.module('DashboardApp')
             return promise;
         }
 
-        configuration.setLegalEntity = function (legalEntity,isUpdate) {
+        LegalEntity.set = function (legalEntity,isUpdate) {
+            console.log(legalEntity);
             if(isUpdate){
                 console.log("Update");
                 $request.put('/servlet/LegalEntity/Update', legalEntity)
@@ -46,12 +44,15 @@ angular.module('DashboardApp')
             else
                 $request.post('/servlet/LegalEntity/Insert', legalEntity)
                     .then(function (Response) {
+                            console.log(Response.data.dataResponse);
+                            legalEntity.id = Response.data.dataResponse;
+                            legalEntities.push(legalEntity);
                             toastr.success("Successfully stored data","Success");
                         }
                     );
         }
 
-        configuration.deleteLegalEntity = function (idLegal) {
+        LegalEntity.delete = function (idLegal) {
             var params = {
 
                 "id": legalEntities[idLegal].id
@@ -68,5 +69,5 @@ angular.module('DashboardApp')
                     });
         }
 
-        return configuration;
+        return LegalEntity;
     }]);
