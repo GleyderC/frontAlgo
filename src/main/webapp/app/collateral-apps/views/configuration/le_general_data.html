@@ -47,7 +47,26 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label col-md-3">Is a Branch</label>
                                 <div class="col-md-9">
-                                    <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No" ng-model="legalEntity.isBranch">{{legalEntity.isBranch}}
+                                    {{ legalEntity.isBranch }}
+                                    <input bs-switch ng-model="legalEntity.isBranch"
+                                            type="checkbox"
+                                            switch-active="{{ isActive }}"
+                                            switch-on-text="{{ onText }}"
+                                            switch-off-text="{{ offText }}"
+                                            switch-on-color="{{ onColor }}"
+                                            switch-off-color="{{ offColor }}"
+                                            switch-animate="{{ animate }}"
+                                            switch-size="{{ size }}"
+                                            switch-label="{{ label }}"
+                                            switch-icon="{{ icon }}"
+                                            switch-radio-off="{{ radioOff }}"
+                                            switch-label-width="{{ labelWidth }}"
+                                            switch-handle-width="{{ handleWidth }}"
+                                            switch-wrapper="{{ wrapper }}"
+                                            ng-true-value="'Yes'"
+                                            ng-false-value="'No'"
+                                            switch-inverse="{{ !inverse }}">
+                                    <!--input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No" ng-model="legalEntity.isBranch"-->
                                 </div>
                             </div>
                             <div class="form-group col-md-6">

@@ -349,6 +349,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/directives/MenuCollateral.js',
                             'collateral-apps/controllers/DashboardController.js',
                             'collateral-apps/services/DashboardService.js',
+                            'collateral-apps/directives/bsSwitch.js',
+
 
                             /* datatable js*/
                             'assets/vendor/DataTables-net/datatables.min.js',
