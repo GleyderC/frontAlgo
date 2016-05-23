@@ -330,18 +330,41 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                         name: 'DashboardApp',
                         insertBefore: '#ng_load_plugins_before', // load dependencies before load page inside the element
                         files: [
+
+                            /* datatable css*/
+                            'assets/vendor/DataTables-net/datatables.min.css',
+
+                            /* select css*/
+                            'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
+                            'assets/vendor/select2/dist/css/select2.min.css',
+                            'assets/vendor/select2-bootstrap-css/select2-bootstrap.min.css',
+                            'assets/vendor/angular-ui-select/dist/select.min.css',
+                            'assets/vendor/multiselect/css/multi-select.css',
+
+                            /* form css */
+                            'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
+
+                            /* Js */
                             'collateral-apps/modules/DashboardModule.js',
                             'collateral-apps/directives/MenuCollateral.js',
                             'collateral-apps/controllers/DashboardController.js',
                             'collateral-apps/services/DashboardService.js',
 
-                            /* datatable css*/
-                            'assets/vendor/DataTables-net/datatables.min.css',
-
                             /* datatable js*/
                             'assets/vendor/DataTables-net/datatables.min.js',
                             'assets/vendor/angular-datatables/dist/angular-datatables.min.js',
 
+                            /* select js*/
+                            'assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
+                            'assets/vendor/select2/dist/js/select2.full.min.js',
+                            'assets/vendor/angular-ui-select/dist/select.min.js',
+                            'assets/vendor/multiselect/js/jquery.multi-select.js',
+
+                            /* form js */
+                            'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
+
+                            /* Services */
+                            'collateral-apps/services/LegalEntityService.js',
                         ],
                         serie: true,
                         cache: false

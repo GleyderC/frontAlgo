@@ -143,7 +143,7 @@ gulp.task('bower', function () {
     return gulp.src(paths.views.main)
         .pipe(wiredep({      exclude: ['angular-ui-select','select2','bootstrap-select',
             'bootstrap-fileinput','angular-datatables','multiselect',
-            'datatables','datatables-buttons','angular-ui-grid','pdfmake','angular-toastr',
+            'datatables','datatables-buttons','angular-ui-grid','pdfmake',
             'angular-bootstrap-toggle-switch']}))
         .pipe(gulp.dest(collateral.app));
 });

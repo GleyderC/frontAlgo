@@ -39,27 +39,35 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
 
-                            /* select css*/
-                            'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
-                            'assets/vendor/select2/dist/css/select2.min.css',
-                            'assets/vendor/select2-bootstrap-css/select2-bootstrap.min.css',
-                            'assets/vendor/angular-ui-select/dist/select.min.css',
-                            'assets/vendor/multiselect/css/multi-select.css',
-                            
-                            /* form css */
-                             'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
-                            
-                            /* select js*/
-                            'assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
-                            'assets/vendor/select2/dist/js/select2.full.min.js',
-                            'assets/vendor/angular-ui-select/dist/select.min.js',
-                            'assets/vendor/multiselect/js/jquery.multi-select.js',
-                            
-                            /* form js */
-                            'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
+                            /* Controller js */
+                            'collateral-apps/controllers/configuration/LegalEntityController.js',
 
-                            /* Services */
-                            'collateral-apps/services/ConfigurationService.js',
+                            /* Bilateral Controller js */
+                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
+
+                            /* Tabs Management */
+                            'collateral-apps/directives/TabManagement.js',
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('home.config.bilateralContract', {
+            url: '/bilateralContract',
+            data: {pageTitle: 'Bilateral Contract'},
+
+            views: {
+                'content@home':
+                {
+                    templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                }
+            },
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'Collateral App',
+                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        files: [
                             
                             /* Controller js */
                             'collateral-apps/controllers/configuration/LegalEntityController.js',
