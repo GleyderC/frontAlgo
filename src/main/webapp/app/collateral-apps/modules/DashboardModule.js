@@ -58,6 +58,9 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                             /* form js */
                             'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
 
+                            /* Services */
+                            'collateral-apps/services/ConfigurationService.js',
+                            
                             /* Controller js */
                             'collateral-apps/controllers/configuration/LegalEntityController.js',
 

@@ -183,6 +183,7 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageS
         },
         'requestError': function(rejection) {
 
+            $injector.get('toastr').error("Error sending data to the server","Server Error",{closeButton: true});
             $log.warn("There is an error. Reason:");
             $log.debug("http_code: " + rejection.status + ", Response: " + rejection.statusText);
 
@@ -196,7 +197,8 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageS
             return response;
         },
         'responseError': function(response) {
-
+            
+            $injector.get('toastr').error("Acess to the requested resource has been denied","Unauthorized Error",{closeButton: true});
             $log.warn("There is an error. Reason:");
             $log.debug("http_code: " + response.status + ", Response: " + response.statusText);
 

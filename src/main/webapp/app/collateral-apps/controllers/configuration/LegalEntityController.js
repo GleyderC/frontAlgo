@@ -1,21 +1,22 @@
 angular.module('DashboardApp')
 
-    .controller('LegalEntityController', ['$scope', 'elementService',
+    .controller('LegalEntityController', ['ConfigurationService','$scope', 'elementService',
         '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder',
-        'DTColumnBuilder', 'DTColumnDefBuilder','toastr',
-        function ($scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder,
-                  DTColumnBuilder, DTColumnDefBuilder,toastr) {
+        'DTColumnBuilder', 'DTColumnDefBuilder',
+        function (ConfigurationService,$scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder,
+                  DTColumnBuilder, DTColumnDefBuilder) {
 
             $scope.$on('$includeContentLoaded', function () {
                 App.initAjax();
                 buildLegalData();
             });
 
-            $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
-                //Response.data.dataResponse[0].rolList.push('Other');
-                $scope.legalEntities = Response.data.dataResponse;
-
+            ConfigurationService.getLegalEntities().then(function (result) {
+                $scope.legalEntities = result;
             });
+
+            console.log($scope.legalEntities);
+
             /* Cargando datos en legal entity datatable*/
             $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
             $scope.dtColumnDefs = [
@@ -41,6 +42,7 @@ angular.module('DashboardApp')
                     holidays: "",
                     rolList: ""
                 };
+                $scope.isEditLegal = false;
             }
 
             /*$scope.dtOptions = DTOptionsBuilder.fromFnPromise(
@@ -69,9 +71,11 @@ angular.module('DashboardApp')
             $scope.addLegalEntity = function (element) {
 
                 if(!element){
-                    toastr.warning('Your computer is about to explode!', 'Warning');
-                    false;
+                    //toastr.warning('Your computer is about to explode!', 'Warning', {closeButton: true});
+                    console.log("Problemas al recibir el elemento");
+                    return false;
                 }
+
                 elementService.collapsePortlet('legal-entity-table');
                 elementService.expandPortlet(element);
                 var offset = $("#" + element).offset().top - $("#legal-entity-table").offset().top;
@@ -79,43 +83,50 @@ angular.module('DashboardApp')
 
                 $scope.setFocusInput('le-general-data');
 
+                
+                
                 buildLegalData();
+
             }
 
             // Edit legalEntity
             $scope.editLegalEntity = function (element, index) {
+
+                if(!element || index == null){
+                    console.log("Problemas al recibir el elemento o el indice del objeto");
+                    return false;
+                }
+
                 elementService.collapsePortlet('legal-entity-table');
                 elementService.expandPortlet(element);
 
                 var offset = $("#" + element).offset().top - $("#legal-entity-table").offset().top;
                 elementService.scrollToElement(element, offset);
 
-                $scope.setFocusInput('le-general-data');
+                $scope.setFocusInput('le-general-data')
 
+                $scope.isEditLegal = true;
+                
                 $scope.legalEntity = $scope.legalEntities[index];
 
             };
 
-            $scope.updateLegalEntity = function () {
+            $scope.saveLegalEntity = function (idLegalEntity) {
+
+                ConfigurationService.setLegalEntity(index,$scope.isEditLegal);
+                buildLegalData();
 
             }
 
             // Delete legalEntity
             $scope.deleteLegalEntity = function (index) {
 
-                var params = {
+                if(index == null){
+                    console.log("Problemas al recibir el indice del objeto");
+                    return false;
+                }
 
-                    "id": $scope.legalEntities[index].id
-                };
-
-                $request.post('/servlet/LegalEntity/Delete', params)
-                    .then(function (Response) {
-                        $scope.legalEntities.splice(index, 1);
-                    },
-                    function (Response) {
-                        alert("There is an error on Server");
-                        console.log(Response)
-                    })
+               ConfigurationService.deleteLegalEntity(index);
             }
 
             $scope.cancel = function () {
