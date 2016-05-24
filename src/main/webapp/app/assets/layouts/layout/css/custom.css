@@ -98,3 +98,10 @@ i.close-tab-icon:hover {
     color: darkgrey;
     cursor: pointer;
 }
+
+/* UI GRID STYLES*/
+.uigrid-btn
+{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}

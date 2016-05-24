@@ -1,0 +1,28 @@
+<div class="row" ng-controller="LEBillateralAgrSearchController">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light portlet-fit bordered">
+            <div class="portlet-body" id="le-billateral-a">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group">
+                            <button class="btn green" ng-click="addNewBillateralAgreement()"> Add New Contract
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="gridOptions" ui-grid-exporter ui-grid-auto-resize
+                             class="grid"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+
+</div>

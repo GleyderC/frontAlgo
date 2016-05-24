@@ -9,15 +9,27 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Principal</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-id"
-                                   ng-disabled="false">
+                            <ui-select ng-model="legalEntityPrimary.selected" theme="bootstrap" class="input-medium">
+                                <ui-select-match allow-clear="{{!!allowClear}}"
+                                                 placeholder="Select or search a Legal Entity...">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="legalEntity in legalEntities | propsFilter: {name: $select.search, shortName: $select.search}">
+                                    <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
+                                    <small>
+                                        shortName: <span
+                                            ng-bind-html="''+legalEntity.shortName | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
 
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Counterparty</label>
                         <div class="col-md-9">
-                            <ui-select ng-model="legalEntity.selected" theme="bootstrap" class="input-medium">
+                            <ui-select ng-model="legalEntityCounterParty.selected" theme="bootstrap" class="input-medium">
                                 <ui-select-match allow-clear="{{!!allowClear}}"
                                                  placeholder="Select or search a Legal Entity...">
                                     {{$select.selected.name}}
