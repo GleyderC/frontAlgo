@@ -367,6 +367,27 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /* Services */
                             'collateral-apps/services/LegalEntityService.js',
+
+                            /* ## Legal Entity ## */
+                            /* Controller js */
+                            'collateral-apps/controllers/configuration/LegalEntityController.js',
+
+                            /* Bilateral Controller js */
+                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
+
+                            /* Tabs Management */
+                            'collateral-apps/directives/TabManagement.js',
+
+                            /* ## Bilateral Agreements ## */
+                            /* Controller js */
+                            'collateral-apps/controllers/configuration/LegalEntityController.js',
+
+                            /* Bilateral Controller js */
+                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
+
+                            /* Tabs Management */
+                            'collateral-apps/directives/TabManagement.js',
+
                         ],
                         serie: true,
                         cache: false

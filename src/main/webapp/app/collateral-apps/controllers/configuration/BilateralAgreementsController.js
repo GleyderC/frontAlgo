@@ -293,7 +293,12 @@ DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope'
             },
             {
                 name: 'Haircut Type',
-                cellTemplate: '<input type="text" />',
+                cellTemplate: ''+
+                '<select id="le-bilateral-ag-eleg-security-haircutType"' +
+                    'name="" class="form-control"' +
+                    'ng-model="LegalEntity.BilateralAgreements.elegibleSecurity.partyA.haircutType.selected">' +
+                    '<option value="">-- CHOICE --</option>' +
+                '</select>',
                 enableColumnMenu: false
             }
         ],

@@ -1,4 +1,3 @@
-
 <div class="page-header-fixed page-sidebar-closed-hide-logo page-md" ng-app="DashboardApp">
     <!-- BEGIN TEMPLATE DIRECTIVES
     <script src="collateral-apps/directives/MenuCollateral.js" type="text/javascript"></script>
@@ -221,10 +220,10 @@
             </nav>
         </header>
         <!-- END HEADER -->
-        <div class="container-fluid">
+        <%--<div class="container-fluid">
             <div class="page-content">
                 <!-- BEGIN BREADCRUMBS -->
-                <div class="breadcrumbs">
+                &lt;%&ndash;<div class="breadcrumbs">
                     <h1>Dashboard</h1>
                     <ol class="breadcrumb">
                         <li>
@@ -232,7 +231,7 @@
                         </li>
                         <li class="active">Dashboard</li>
                     </ol>
-                </div>
+                </div>&ndash;%&gt;
                 <!-- END BREADCRUMBS -->
 
 
@@ -242,7 +241,7 @@
 
                 <!-- END PAGE BASE CONTENT -->
             </div>
-        </div>
+        </div>--%>
     </div>
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->

@@ -1,71 +1,69 @@
-<div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse">
-    <ul class="nav navbar-nav">
-        <li class="dropdown dropdown-fw  active open selected">
-            <a href="javascript:;" class="text-uppercase">
-                <i class="icon-home"></i> Configuration </a>
-            <ul class="dropdown-menu dropdown-menu-fw">
-                <li class="active">
-                    <a ui-sref="home.config.legalEntity">
-                        <i class="fa fa-bank"></i> Legal Entity </a>
-                </li>
-                <li>
-                    <a ui-sref="home.config.bilateralContract">
-                        <i class="icon-bulb"></i> Bilateral Contract </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-graph"></i> Item 3 </a>
-                </li>
-            </ul>
-        </li>
+<div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse menu-collateral-management row">
 
-        <li class="dropdown dropdown-fw  ">
-            <a href="javascript:;" class="text-uppercase">
-                <i class="icon-briefcase"></i> Tables </a>
-            <ul class="dropdown-menu dropdown-menu-fw">
-                <li>
-                    <a href="table_static_basic.html"> Basic Tables </a>
-                </li>
-                <li>
-                    <a href="table_static_responsive.html"> Responsive Tables </a>
-                </li>
-                <li>
-                    <a href="table_bootstrap.html"> Bootstrap Tables </a>
-                </li>
-                <li class="dropdown more-dropdown-sub">
-                    <a href="javascript:;"> Datatables </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="table_datatables_managed.html"> Managed Datatables </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_buttons.html"> Buttons Extension </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_colreorder.html"> Colreorder Extension </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_rowreorder.html"> Rowreorder Extension </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_scroller.html"> Scroller Extension </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_fixedheader.html"> FixedHeader Extension </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_responsive.html"> Responsive Extension </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_editable.html"> Editable Datatables </a>
-                        </li>
-                        <li>
-                            <a href="table_datatables_ajax.html"> Ajax Datatables </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
+        <uib-tabset class="col-md-12 menu-collateral-container" active="active">
+            <uib-tab index="1" class="selected nav navbar-nav collateral-menu-item">
+                <uib-tab-heading>
+                    <i class="icon-home"></i> Collateral Management!
+                </uib-tab-heading>
 
-    </ul>
+                <!-- TAB CONTENT BEGIN -->
+                <div class="container-fluid">
+                    <div class="page-content">
+                        <!-- BEGIN PAGE BASE CONTENT -->
+
+                        <div ng-include="''" class="fade-in-up"></div>
+
+                        <!-- END PAGE BASE CONTENT -->
+                    </div>
+                </div>
+                <!-- TAB CONTENT END -->
+
+            </uib-tab>
+
+            <uib-tab index="2" class="collateral-menu-item">
+                <uib-tab-heading>
+                    <i class="glyphicon glyphicon-folder-open"></i> Configuration!
+                </uib-tab-heading>
+                <uib-tabset active="active">
+                    <uib-tab index="1">
+                        <uib-tab-heading>
+                            <i class="fa fa-bank"></i> Legal Entity
+                        </uib-tab-heading>
+
+                        <!-- TAB CONTENT BEGIN -->
+                        <div class="container-fluid">
+                            <div class="page-content">
+                                <!-- BEGIN PAGE BASE CONTENT -->
+
+                                <div ng-include="'collateral-apps/views/configuration/legal_entity.html'" class="fade-in-up"></div>
+
+                                <!-- END PAGE BASE CONTENT -->
+                            </div>
+                        </div>
+                        <!-- TAB CONTENT END -->
+
+                    </uib-tab>
+
+                    <uib-tab index="2">
+                        <uib-tab-heading>
+                            <i class="icon-bulb"></i> Bilateral Contract
+                        </uib-tab-heading>
+
+                        <!-- TAB CONTENT BEGIN -->
+                        <div class="container-fluid">
+                            <div class="page-content">
+                                <!-- BEGIN PAGE BASE CONTENT -->
+
+                                <div ng-include="'collateral-apps/views/configuration/BilateralAgreements/index.html'" class="fade-in-up"></div>
+
+                                <!-- END PAGE BASE CONTENT -->
+                            </div>
+                        </div>
+                        <!-- TAB CONTENT END -->
+
+                    </uib-tab>
+                </uib-tabset>
+            </uib-tab>
+        </uib-tabset>
+
 </div>

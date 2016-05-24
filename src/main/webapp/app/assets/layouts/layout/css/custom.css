@@ -105,3 +105,25 @@ i.close-tab-icon:hover {
     margin-top: 2px;
     margin-bottom: 2px;
 }
+
+/* User Menu */
+
+.menu-collateral-management
+{
+    background-color: white;
+    border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
+    border: 0px solid #000000;
+}
+
+.menu-collateral-management .menu-collateral-container{
+    padding-left: 0 !important;;
+    padding-right: 0 !important;
+}
+
+.collateral-menu-item .nav-link{
+    padding: 18px;
+}
+
+/* User Menu */

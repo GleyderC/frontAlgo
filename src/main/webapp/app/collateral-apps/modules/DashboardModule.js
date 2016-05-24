@@ -41,14 +41,7 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
 
-                            /* Controller js */
-                            'collateral-apps/controllers/configuration/LegalEntityController.js',
 
-                            /* Bilateral Controller js */
-                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
-
-                            /* Tabs Management */
-                            'collateral-apps/directives/TabManagement.js',
                         ]
                     });
                 }]
@@ -71,14 +64,7 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
                         files: [
                             
-                            /* Controller js */
-                            'collateral-apps/controllers/configuration/LegalEntityController.js',
-
-                            /* Bilateral Controller js */
-                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
-
-                            /* Tabs Management */
-                            'collateral-apps/directives/TabManagement.js',
+                            
                         ]
                     });
                 }]
