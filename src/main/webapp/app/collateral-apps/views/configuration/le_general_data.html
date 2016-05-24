@@ -47,25 +47,9 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label col-md-3">Is a Branch</label>
                                 <div class="col-md-9">
-                                    {{ legalEntity.isBranch }}
-                                    <input bs-switch ng-model="legalEntity.isBranch"
-                                            type="checkbox"
-                                            switch-active="{{ isActive }}"
-                                            switch-on-text="{{ onText }}"
-                                            switch-off-text="{{ offText }}"
-                                            switch-on-color="{{ onColor }}"
-                                            switch-off-color="{{ offColor }}"
-                                            switch-animate="{{ animate }}"
-                                            switch-size="{{ size }}"
-                                            switch-label="{{ label }}"
-                                            switch-icon="{{ icon }}"
-                                            switch-radio-off="{{ radioOff }}"
-                                            switch-label-width="{{ labelWidth }}"
-                                            switch-handle-width="{{ handleWidth }}"
-                                            switch-wrapper="{{ wrapper }}"
-                                            ng-true-value="'Yes'"
-                                            ng-false-value="'No'"
-                                            switch-inverse="{{ !inverse }}">
+                                    <input bs-switch ng-model="legalEntity.isBranch" type="checkbox"
+                                            switch-on-text="Yes" switch-off-text="No" switch-size="normal"
+                                            ng-true-value="true"  ng-false-value="false">
                                     <!--input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No" ng-model="legalEntity.isBranch"-->
                                 </div>
                             </div>
@@ -112,11 +96,15 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label col-md-3">Rol</label>
                                 <div class="col-md-9">
-                                    <select multiple class="form-control input-medium">
-                                        <option>Counterparty</option>
-                                        <option>PO</option>
-                                        <option>Issuer</option>
-                                        <option>CCP</option>
+                                    <select multiple class="form-control input-medium"
+                                    id="legal-entity-rols" name="legal-entity-rols[]"
+                                        ng-options="rol for rol in rols" ng-model="legalEntity.rolList">
+                                    </select>
+                                    <!--select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
+                                            name="base-currency-select[]" class="form-control input-small"
+                                            ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                            ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.currencies.selected">
+                                        <option value="">-- SELECT BASE CURRENCY --</option-->
                                     </select>
                                 </div>
                             </div>

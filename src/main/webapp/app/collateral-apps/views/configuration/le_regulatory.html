@@ -8,7 +8,7 @@
                             <label class="control-label col-md-3">Multiplier for RWA Capital Charge</label>
                             <div class="col-md-9">
                                 <div class="input-inline input-medium">
-                                    <input type="text" value="55" name="demo1" class="form-control"></div>
+                                    <input type="text" name="demo1" class="form-control"></div>
                                 <span class="help-block"> example with decimal steps </span>
                             </div>
                         </div>
@@ -16,7 +16,7 @@
                             <label class="control-label col-md-3">Multiplier For Leveral Ratio Capital Charge</label>
                             <div class="col-md-9">
                                 <div class="input-inline input-medium">
-                                    <input type="text" value="55" name="demo1" class="form-control"></div>
+                                    <input type="text" name="demo1" class="form-control"></div>
                                 <span class="help-block"> example with decimal steps </span>
                             </div>
                         </div>
@@ -24,13 +24,11 @@
                             <label class="control-label col-md-3">Regulatory Status</label>
                             <div class="col-md-9">
                                 <div class="input-inline input-medium">
-                                    <select class="form-control">
-                                        <option>NFC</option>
-                                        <option>NFC_PLUS</option>
-                                        <option>CATEGORY_1</option>
-                                        <option>CATEGORY_2</option>
-                                        <option>CATEGORY_3</option>
+                                    <select class="form-control input-medium"
+                                            id="legal-entity-regulatories_status" name="legal-entity-regulatories_status[]"
+                                            ng-options="regulatory_status for regulatory_status in regulatories_status" ng-model="legalEntity.regulatory" >
                                     </select>
+
                                 </div>
                             </div>
                         </div>
