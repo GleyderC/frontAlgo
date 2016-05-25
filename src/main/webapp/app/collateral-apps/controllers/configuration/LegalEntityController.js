@@ -4,14 +4,15 @@ var DashboardApp = angular.module('DashboardApp')
 
 DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope', 'elementService',
     '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder',
-    'DTColumnBuilder', 'DTColumnDefBuilder','$interval',
+    'DTColumnBuilder', 'DTColumnDefBuilder',
     function (LegalEntityService, $scope, elementService, $timeout, $request, $localStorage, DTOptionsBuilder,
-              DTColumnBuilder, DTColumnDefBuilder,$interval) {
+              DTColumnBuilder, DTColumnDefBuilder) {
 
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();
-            buildLegalData();
         });
+
+        buildLegalData();
 
         LegalEntityService.getAll().then(function (result) {
             $scope.legalEntities = result;
@@ -100,9 +101,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             $scope.setFocusInput('le-general-data');
 
-
             buildLegalData();
-            cargarContactPerson();
 
         }
 
@@ -125,8 +124,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             $scope.isEditLegal = true;
 
             $scope.legalEntity = $scope.legalEntities[index];
-
-           cargarContactPerson();
 
         };
 
@@ -891,75 +888,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         ];
 
 
-        /*$scope.editRow = function (grid, row) {
-            console.log("editing contract");
-        }
-
-        $scope.deleteRow = function (grid, row) {
-            console.log("deleting")
-        }*/
-
-        $scope.gridContactPersonOptions = {
-            enableColumnResizing: true,
-            rowHeight: 35, // set height to each row
-            enableGridMenu: true,
-            exporterCsvFilename: 'contact_info.csv',
-            exporterPdfDefaultStyle: {fontSize: 9},
-            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: {text: "Contact Person", style: 'headerStyle'},
-            exporterPdfFooter: function (currentPage, pageCount) {
-                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
-            },
-            exporterPdfCustomFormatter: function (docDefinition) {
-                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
-                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
-                return docDefinition;
-            },
-            exporterPdfOrientation: 'portrait',
-            exporterPdfPageSize: 'LETTER',
-            exporterPdfMaxGridWidth: 500,
-            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-            onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
-                // call resize every 500 ms for 5 s after modal finishes opening
-                $interval(function () {
-                    $scope.gridApi.core.handleWindowResize();
-                }, 1000, 10);
-            }
-        };
-
-        $scope.gridContactPersonOptions.columnDefs =  [
-            {field: 'lastName', width: 130},
-            {field: 'firstName', width: 130},
-            {field: 'city', width: 100},
-            {field: 'state', width: 100},
-            {field: 'phone', width: 100},
-            {field: 'email', width: 130},
-            {field: 'swift', width: 100},
-            {field: 'linkedInUrl', width: 150},
-            {
-                name: 'Actions',
-                cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
-                enableColumnMenu: false,
-                width: 120
-            }
-        ];
-
-
-        function cargarContactPerson() {
-
-            if($scope.legalEntity.contactPersonList.length > 0)
-                $scope.gridContactPersonOptions.data = $scope.legalEntity.contactPersonList;
-
-            console.log($scope.gridContactPersonOptions.data);
-        }
-
-
-
-
-
-
     }]);
 
 DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope) {
@@ -1006,14 +934,97 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
 
 }]);
 
-DashboardApp.controller('ModalController', function ($scope, $interval, $uibModal, $log) {
+DashboardApp.controller('ContactInfoController', function ($scope, $uibModal, $log) {
+
+    $scope.$watchCollection('$parent.legalEntity.contactPersonList', function (newContactPerson, oldContactPerson) {
+        if (newContactPerson === oldContactPerson) {
+            return false;
+        }
+        $scope.gridContactPersonOptions.data = newContactPerson;
+
+    });
+
+    /*ui-grid contactPerson*/
+    $scope.editRow = function (grid, row) {
+        //console.log(row.entity);
+        $scope.openModal('lg',row.entity);
+    }
+
+    $scope.deleteRow = function (grid, row) {
+
+        $scope.gridContactPersonOptions.data.splice(row,1);
+    }
+
+    $scope.gridContactPersonOptions = {
+        enableColumnResizing: true,
+        enableFiltering: false,
+        rowHeight: 35, // set height to each row
+        enableGridMenu: true,
+        exporterCsvFilename: 'contact_info.csv',
+        exporterPdfDefaultStyle: {fontSize: 9},
+        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+        exporterPdfHeader: {text: "Contact Person", style: 'headerStyle'},
+        exporterPdfFooter: function (currentPage, pageCount) {
+            return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+        },
+        exporterPdfCustomFormatter: function (docDefinition) {
+            docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+            docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+            return docDefinition;
+        },
+        exporterPdfOrientation: 'portrait',
+        exporterPdfPageSize: 'LETTER',
+        exporterPdfMaxGridWidth: 500,
+        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+        onRegisterApi: function (gridApi) {
+            $scope.gridApi = gridApi;
+            $scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
+        }
+    };
+
+    $scope.gridContactPersonOptions.columnDefs = [
+        {field: 'lastName', width: 130},
+        {field: 'firstName', width: 130},
+        {field: 'city', width: 100},
+        {field: 'state', width: 100},
+        {field: 'phone', width: 100},
+        {field: 'email', width: 130},
+        {field: 'swift', width: 100},
+        {field: 'linkedInProfileUrl', name: "Linkedin", width: 150},
+        {
+            name: 'Actions',
+            cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+            enableColumnMenu: false,
+            width: 120
+        }
+    ];
+    $scope.filter = function () {
+        $scope.gridApi.grid.refresh();
+    };
+
+    $scope.singleFilter = function (renderableRows) {
+        var matcher = new RegExp($scope.filterValue);
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['lastName', 'firstName', 'city', 'state', 'phone', 'email', 'swift', 'linkedInProfileUrl'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
+            }
+        });
+        return renderableRows;
+    };
+
 
     /* Modal */
-    $scope.items = ['item1', 'item2', 'item3'];
-
     $scope.animationsEnabled = true;
 
-    $scope.open = function (size) {
+    $scope.openModal = function (size, items) {
+        $scope.items = items;
 
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
@@ -1047,12 +1058,10 @@ DashboardApp.controller('ModalController', function ($scope, $interval, $uibModa
 DashboardApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
 
     $scope.items = items;
-    $scope.selected = {
-        item: $scope.items[0]
-    };
+    console.log($scope.items);
 
     $scope.ok = function () {
-        $uibModalInstance.close($scope.selected.item);
+        $uibModalInstance.close();
     };
 
     $scope.cancel = function () {
