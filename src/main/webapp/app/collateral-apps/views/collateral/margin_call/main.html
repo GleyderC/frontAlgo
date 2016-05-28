@@ -1,0 +1,48 @@
+<div class="row">
+	<div class="col-md-4">
+
+		<div class="form-group">
+			<label class="control-label col-md-3 text-right">Status</label>
+			<div class="col-md-8">
+				<ui-select multiple ng-model="status.selected" theme="bootstrap"
+					class="pull-right"> <ui-select-match
+					placeholder="Select status">{{$item.name}} </ui-select-match> <ui-select-choices
+					repeat="status in statusList |  filter: $select.search">
+				<div ng-bind-html="status.name | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="form-group">
+		<label class="control-label col-md-3 text-right">Date</label>
+			<div class="col-md-8">
+				
+				<div class="input-group">
+				     <input placeholder="Date" type="text" class="form-control" placeholer="Date" uib-datepicker-popup ng-model="dt"    is-open="popup.opened"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+				<span class="input-group-btn">          
+				            <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+				          </span>
+				          </div>
+				   
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="control-label col-md-3 text-right">Type</label>
+			<div class="col-md-8">
+				<ui-select multiple ng-model="type.selected" theme="bootstrap"
+					class="pull-right"> <ui-select-match
+					placeholder="Select type">{{$item.name}} </ui-select-match> <ui-select-choices
+					repeat="type in typeList |  filter: $select.search">
+				<div ng-bind-html="type.name | highlight: $select.search"></div>
+				</ui-select-choices> </ui-select>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div id="grid1" ui-grid="gridOptions" class="grid"></div>
+
+</div>
