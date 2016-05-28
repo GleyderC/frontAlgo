@@ -385,6 +385,12 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /* Bilateral Controller js */
                             'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
 
+                            /* Agreements Controller js */
+                            'collateral-apps/controllers/collateral/agreements/AgreementsController.js',
+
+                            /* Margin Call Controller js */
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallController.js',
+
                             /* Tabs Management */
                             'collateral-apps/directives/TabManagement.js',
 
