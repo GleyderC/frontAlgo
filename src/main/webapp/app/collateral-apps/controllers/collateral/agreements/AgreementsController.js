@@ -55,11 +55,11 @@ DashboardApp.controller('AgreementsController',
                         }
                     }
                 },
-//                {
-//                    name : 'Rating',
-//                    field: 'rating',
-//                    enableFiltering: false
-//                },
+                {
+                    name : 'Rating',
+                    field: 'counterpartyB.riskProfile.SPRating',
+                    enableFiltering: false
+                },
 //                {
 //
 //                    name : 'Margin Call Frequency',
@@ -72,7 +72,7 @@ DashboardApp.controller('AgreementsController',
 //                    name: 'Exposure (EUR)',
 //                    headerCellClass: $scope.highlightFilteredHeader,
 //                    filter: {
-//                        term: '1',
+//                        term: '1',	
 //                        type: uiGridConstants.filter.SELECT,
 //                        selectOptions: [
 //                            { value: '1', label: 'EUR' },
@@ -84,7 +84,7 @@ DashboardApp.controller('AgreementsController',
 
                 {
                 	 name: 'Actions',
-                     cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                     cellTemplate: paths.views + '/collateral/agreements/agr_action_buttons.html',
                      enableColumnMenu: false,
                      width: 160,
                      enableFiltering:false,

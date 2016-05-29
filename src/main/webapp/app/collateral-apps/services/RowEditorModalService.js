@@ -1,5 +1,5 @@
 angular.module('DashboardApp')
-    .factory('RowEditorService',[ '$uibModal', function ($uibModal) {
+    .factory('RowEditorModalService',[ '$uibModal', function ($uibModal) {
     var service = {};
     service.editRow = editRow;
 

@@ -6,17 +6,45 @@
                     <i class="icon-home"></i> Collateral Management!
                 </uib-tab-heading>
 
-                <!-- TAB CONTENT BEGIN -->
-                <div class="container-fluid">
-                    <div class="page-content">
-                        <!-- BEGIN PAGE BASE CONTENT -->
+                  <uib-tabset active="active">
+                    <uib-tab index="1">
+                        <uib-tab-heading>
+                            <i class="fa"></i> Agreements
+                        </uib-tab-heading>
 
-                        <div ng-include="''" class="fade-in-up"></div>
+                        <!-- TAB CONTENT BEGIN -->
+                        <div class="container-fluid">
+                            <div class="page-content">
+                                <!-- BEGIN PAGE BASE CONTENT -->
 
-                        <!-- END PAGE BASE CONTENT -->
-                    </div>
-                </div>
-                <!-- TAB CONTENT END -->
+                                <div ng-include="'collateral-apps/views/collateral/agreements/index.html'" class="fade-in-up"></div>
+
+                                <!-- END PAGE BASE CONTENT -->
+                            </div>
+                        </div>
+                        <!-- TAB CONTENT END -->
+
+                    </uib-tab>
+
+                    <uib-tab index="2">
+                        <uib-tab-heading>
+                            <i class="icon-bulb"></i>Margin Call
+                        </uib-tab-heading>
+
+                        <!-- TAB CONTENT BEGIN -->
+                        <div class="container-fluid">
+                            <div class="page-content">
+                                <!-- BEGIN PAGE BASE CONTENT -->
+
+                                <div ng-include="'collateral-apps/views/collateral/margin_call/index.html'" class="fade-in-up"></div>
+
+                                <!-- END PAGE BASE CONTENT -->
+                            </div>
+                        </div>
+                        <!-- TAB CONTENT END -->
+
+                    </uib-tab>
+                </uib-tabset>
 
             </uib-tab>
 

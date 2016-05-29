@@ -980,9 +980,9 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         $scope.deleteRow = function (grid, row) {
 
             $scope.gridContactPersonOptions.data.splice(row, 1);
-            toastr.success("Data successfully removed", "Success")
+            toastr.success("Data successfully removed", "Success");
 
-        }
+        };
 
         $scope.gridContactPersonOptions = {
             enableColumnResizing: true,
