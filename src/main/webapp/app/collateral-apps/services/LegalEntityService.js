@@ -44,6 +44,7 @@ angular.module('DashboardApp')
             else
                 $request.post('/servlet/LegalEntity/Insert', legalEntity)
                     .then(function (Response) {
+                            console.log("Insert");
                             console.log(Response.data.dataResponse);
                             legalEntity.id = Response.data.dataResponse;
                             legalEntities.push(legalEntity);
@@ -58,9 +59,7 @@ angular.module('DashboardApp')
                 "id": legalEntities[idLegal].id
             };
 
-            console.log(legalEntities[idLegal].id);
-
-            console.log(params);
+            //console.log(params);
 
             $request.delete('/servlet/LegalEntity/Delete', params)
                 .then(function (Response) {

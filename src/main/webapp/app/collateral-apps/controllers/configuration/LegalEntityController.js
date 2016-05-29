@@ -1,6 +1,6 @@
 'use strict';
 
-var DashboardApp = angular.module('DashboardApp')
+var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope', 'elementService',
     '$timeout', '$request', 'localStorageService', 'DTOptionsBuilder',
@@ -934,140 +934,148 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
 
 }]);
 
-DashboardApp.controller('ContactInfoController', function ($scope, $uibModal, $log) {
+DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'RowEditorModalService',
+    function ($scope, $log, toastr, RowEditorModalService) {
 
-    $scope.$watchCollection('$parent.legalEntity.contactPersonList', function (newContactPerson, oldContactPerson) {
-        if (newContactPerson === oldContactPerson) {
-            return false;
+        $scope.$watchCollection('$parent.legalEntity.contactPersonList', function (newContactPerson, oldContactPerson) {
+            if (newContactPerson === oldContactPerson) {
+                return false;
+            }
+            $scope.gridContactPersonOptions.data = newContactPerson;
+
+            //console.log($scope.gridContactPersonOptions.data);
+
+        });
+
+        /*ui-grid contactPerson*/
+        $scope.addRow = function () {
+            var newContact = {
+                "address": "",
+                "city": "",
+                "comments": "",
+                "contactType": "",
+                "countryId": 0,
+                "email": "",
+                "fax": "",
+                "firstName": "",
+                "id": 0,
+                "idLegalEntity": 0,
+                "lastName": "",
+                "linkedInProfileUrl": "",
+                "phone": "",
+                "state": "",
+                "swift": "",
+                "telex": "",
+                "title": "",
+                "zipCode": ""
         }
-        $scope.gridContactPersonOptions.data = newContactPerson;
+            ;
+            var rowTmp = {};
+            rowTmp.entity = newContact;
+            $scope.editRow($scope.gridContactPersonOptions, rowTmp);
+        };
 
-    });
+        $scope.editRow = RowEditorModalService.editRow;
 
-    /*ui-grid contactPerson*/
-    $scope.editRow = function (grid, row) {
-        //console.log(row.entity);
-        $scope.openModal('lg',row.entity);
-    }
+        $scope.deleteRow = function (grid, row) {
 
-    $scope.deleteRow = function (grid, row) {
+            $scope.gridContactPersonOptions.data.splice(row, 1);
+            toastr.success("Data successfully removed", "Success")
 
-        $scope.gridContactPersonOptions.data.splice(row,1);
-    }
-
-    $scope.gridContactPersonOptions = {
-        enableColumnResizing: true,
-        enableFiltering: false,
-        rowHeight: 35, // set height to each row
-        enableGridMenu: true,
-        exporterCsvFilename: 'contact_info.csv',
-        exporterPdfDefaultStyle: {fontSize: 9},
-        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-        exporterPdfHeader: {text: "Contact Person", style: 'headerStyle'},
-        exporterPdfFooter: function (currentPage, pageCount) {
-            return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
-        },
-        exporterPdfCustomFormatter: function (docDefinition) {
-            docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
-            docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
-            return docDefinition;
-        },
-        exporterPdfOrientation: 'portrait',
-        exporterPdfPageSize: 'LETTER',
-        exporterPdfMaxGridWidth: 500,
-        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-        onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
-            $scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
         }
-    };
 
-    $scope.gridContactPersonOptions.columnDefs = [
-        {field: 'lastName', width: 130},
-        {field: 'firstName', width: 130},
-        {field: 'city', width: 100},
-        {field: 'state', width: 100},
-        {field: 'phone', width: 100},
-        {field: 'email', width: 130},
-        {field: 'swift', width: 100},
-        {field: 'linkedInProfileUrl', name: "Linkedin", width: 150},
-        {
-            name: 'Actions',
-            cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
-            enableColumnMenu: false,
-            width: 120
-        }
-    ];
-    $scope.filter = function () {
-        $scope.gridApi.grid.refresh();
-    };
+        $scope.gridContactPersonOptions = {
+            enableColumnResizing: true,
+            enableFiltering: false,
+            rowHeight: 35, // set height to each row
+            enableGridMenu: true,
+            exporterCsvFilename: 'contact_info.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Contact Person", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 500,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+                $scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
+            }
+        };
 
-    $scope.singleFilter = function (renderableRows) {
-        var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach(function (row) {
-            var match = false;
-            ['lastName', 'firstName', 'city', 'state', 'phone', 'email', 'swift', 'linkedInProfileUrl'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
-                    match = true;
+        $scope.gridContactPersonOptions.columnDefs = [
+            {field: 'lastName', width: 130},
+            {field: 'firstName', width: 130},
+            {field: 'city', width: 100},
+            {field: 'state', width: 100},
+            {field: 'phone', width: 100},
+            {field: 'email', width: 130},
+            {field: 'swift', width: 100},
+            {field: 'linkedInProfileUrl', name: "Linkedin", width: 150},
+            {
+                name: 'Actions',
+                cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                enableColumnMenu: false,
+                enableCellEdit : false,
+                width: 120
+            }
+        ];
+        $scope.filter = function () {
+            $scope.gridApi.grid.refresh();
+        };
+
+        $scope.singleFilter = function (renderableRows) {
+            var matcher = new RegExp($scope.filterValue);
+            renderableRows.forEach(function (row) {
+                var match = false;
+                ['lastName', 'firstName', 'city', 'state', 'phone', 'email', 'swift', 'linkedInProfileUrl'].forEach(function (field) {
+                    if (row.entity[field].match(matcher)) {
+                        match = true;
+                    }
+                });
+                if (!match) {
+                    row.visible = false;
                 }
             });
-            if (!match) {
-                row.visible = false;
-            }
-        });
-        return renderableRows;
-    };
+            return renderableRows;
+        };
 
-
-    /* Modal */
-    $scope.animationsEnabled = true;
-
-    $scope.openModal = function (size, items) {
-        $scope.items = items;
-
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            backdrop: false,
-            templateUrl: 'myModalContent.html',
-            controller: 'ModalInstanceCtrl',
-            size: size,
-            resolve: {
-                items: function () {
-                    return $scope.items;
-                }
-            }
-        });
-
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-    };
-
-    $scope.toggleAnimation = function () {
-        $scope.animationsEnabled = !$scope.animationsEnabled;
-    };
-
-});
+    }]);
 
 // Please note that $uibModalInstance represents a modal window (instance) dependency.
 // It is not the same as the $uibModal service used above.
+DashboardApp.controller('RowEditCtrl', RowEditCtrl);
+function RowEditCtrl($scope, $uibModalInstance, grid, row) {
 
-DashboardApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
+    $scope.entity = angular.copy(row.entity);
 
-    $scope.items = items;
-    console.log($scope.items);
+    $scope.save = save;
 
-    $scope.ok = function () {
-        $uibModalInstance.close();
-    };
+    function save() {
 
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-});
+        console.log(row.entity)
+        if (row.entity.id === 0) {
+            row.entity = angular.extend(row.entity, $scope.entity);
+            //real ID come back from response after the save in DB
+            row.entity.id = Math.floor(100 + Math.random() * 1000);
+            grid.data.push(row.entity);
 
+        }
+        else {
+            row.entity = angular.extend(row.entity, $scope.entity);
+        }
 
+        $uibModalInstance.close(row.entity);
 
+    }
+
+};

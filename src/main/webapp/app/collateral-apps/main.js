@@ -330,7 +330,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                         name: 'DashboardApp',
                         insertBefore: '#ng_load_plugins_before', // load dependencies before load page inside the element
                         files: [
-
                             /* datatable css*/
                             'assets/vendor/DataTables-net/datatables.min.css',
 
@@ -343,14 +342,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /* form css */
                             'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
-
-                            /* Js */
-                            'collateral-apps/modules/DashboardModule.js',
-                            'collateral-apps/directives/MenuCollateral.js',
-                            'collateral-apps/controllers/DashboardController.js',
-                            'collateral-apps/services/DashboardService.js',
-                            'collateral-apps/directives/bsSwitch.js',
-
 
                             /* datatable js*/
                             'assets/vendor/DataTables-net/datatables.min.js',
@@ -365,21 +356,21 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /* form js */
                             'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
 
-                            /* Services */
-                            'collateral-apps/services/LegalEntityService.js',
+                            /* Dashboard */
+                            'collateral-apps/modules/DashboardModule.js',
+                            'collateral-apps/controllers/DashboardController.js',
 
-                            /* ## Legal Entity ## */
-                            /* Controller js */
-                            'collateral-apps/controllers/configuration/LegalEntityController.js',
-
-                            /* Bilateral Controller js */
-                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
-
-                            /* Tabs Management */
+                            /* Directives */
+                            'collateral-apps/directives/MenuCollateral.js',
+                            'collateral-apps/directives/bsSwitch.js',
                             'collateral-apps/directives/TabManagement.js',
 
-                            /* ## Bilateral Agreements ## */
-                            /* Controller js */
+                            /* Services */
+                            'collateral-apps/services/DashboardService.js',
+                            'collateral-apps/services/LegalEntityService.js',
+                            'collateral-apps/services/RowEditorService.js',
+
+                            /* Legal Entity Controller js */
                             'collateral-apps/controllers/configuration/LegalEntityController.js',
 
                             /* Bilateral Controller js */
@@ -387,12 +378,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /* Agreements Controller js */
                             'collateral-apps/controllers/collateral/agreements/AgreementsController.js',
-
                             /* Margin Call Controller js */
-                            'collateral-apps/controllers/collateral/margin_call/MarginCallController.js',
-
-                            /* Tabs Management */
-                            'collateral-apps/directives/TabManagement.js',
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallController.js'
 
                         ],
                         serie: true,
