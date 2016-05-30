@@ -116,6 +116,8 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             elementService.collapsePortlet('legal-entity-table');
             elementService.expandPortlet(element);
 
+            console.log($("#" + element).offset().top);
+            console.log($("#legal-entity-table").offset().top);
             var offset = $("#" + element).offset().top - $("#legal-entity-table").offset().top;
             elementService.scrollToElement(element, offset);
 
@@ -968,8 +970,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                 "telex": "",
                 "title": "",
                 "zipCode": ""
-        }
-            ;
+        };
             var rowTmp = {};
             rowTmp.entity = newContact;
             $scope.editRow($scope.gridContactPersonOptions, rowTmp);
@@ -985,6 +986,8 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         };
 
         $scope.gridContactPersonOptions = {
+            enablePaginationControls: false,
+            paginationPageSize: 25,
             enableColumnResizing: true,
             enableFiltering: false,
             rowHeight: 35, // set height to each row
@@ -1062,11 +1065,13 @@ function RowEditCtrl($scope, $uibModalInstance, grid, row) {
 
     function save() {
 
-        console.log(row.entity)
+        //console.log(row.entity);
+
         if (row.entity.id === 0) {
             row.entity = angular.extend(row.entity, $scope.entity);
             //real ID come back from response after the save in DB
             row.entity.id = Math.floor(100 + Math.random() * 1000);
+            console.log($scope.legalEntity);
             grid.data.push(row.entity);
 
         }
