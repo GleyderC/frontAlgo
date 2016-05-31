@@ -75,6 +75,12 @@ DashboardApp.controller(
 
             };
 
+            //main fields
+            $scope.LegalEntity = {};
+            $scope.LegalEntity.BilateralAgreements = {};
+            $scope.LegalEntity.BilateralAgreements.main = {};
+            $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
+
         }]);
 
 
