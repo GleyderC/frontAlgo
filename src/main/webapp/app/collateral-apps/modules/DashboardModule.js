@@ -10,7 +10,6 @@ var DashboardApp = angular.module("DashboardApp", [
     'ui.grid.selection',
     'ui.grid.exporter',
     'ui.grid.autoResize',
-    'ui.grid.resizeColumns',
     'ui.grid.moveColumns',
     'ui.grid.edit'
 ]);

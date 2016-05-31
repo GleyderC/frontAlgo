@@ -47,10 +47,32 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         /* Cargando datos en legal entity ui-grid*/
 
         $scope.gridLegalEntityOptions = {
+            enablePaginationControls: false,
+            paginationPageSize: 25,
+            enableColumnResizing: true,
+            enableFiltering: false,
             rowHeight: 35, // set height to each row
+            enableGridMenu: true,
+            exporterCsvFilename: 'legal_entity.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Legal Entity", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 500,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
-                //$scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
+                $scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
             }
         };
 
@@ -58,9 +80,9 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             {field: 'id', width: 130},
             {field: 'name', width: 130},
             {field: 'isBranch', width: 100},
-            {field: 'LEI', width: 100},
-            {field: 'BIC', width: 100},
-            {field: 'rolList', width: 130},
+            {field: 'LEI', width: 200},
+            {field: 'BIC', width: 180},
+            {field: rolList.join(", "), width: 180},
             {
                 name: 'Actions',
                 cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
@@ -998,7 +1020,6 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         $scope.gridContactPersonOptions = {
             enablePaginationControls: false,
             paginationPageSize: 25,
-            enableColumnResizing: true,
             enableFiltering: false,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
