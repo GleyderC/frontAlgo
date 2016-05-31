@@ -14,24 +14,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         buildLegalData();
 
-        LegalEntityService.getAll().then(function (result) {
-            $scope.legalEntities = result;
-        });
-
-        //console.log($scope.legalEntities);
-
-        /* Cargando datos en legal entity datatable*/
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers');
-        $scope.dtColumnDefs = [
-            DTColumnDefBuilder.newColumnDef(0),
-            DTColumnDefBuilder.newColumnDef(1),
-            DTColumnDefBuilder.newColumnDef(2),
-            DTColumnDefBuilder.newColumnDef(3),
-            DTColumnDefBuilder.newColumnDef(4),
-            DTColumnDefBuilder.newColumnDef(5),
-            DTColumnDefBuilder.newColumnDef(6).notSortable()
-        ];
-
         function buildLegalData() {
             $scope.legalEntity =
             {
@@ -60,8 +42,40 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             };
             $scope.isEditLegal = false;
-
         }
+
+        /* Cargando datos en legal entity ui-grid*/
+
+        $scope.gridLegalEntityOptions = {
+            rowHeight: 35, // set height to each row
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+                //$scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
+            }
+        };
+
+        $scope.gridLegalEntityOptions.columnDefs = [
+            {field: 'id', width: 130},
+            {field: 'name', width: 130},
+            {field: 'isBranch', width: 100},
+            {field: 'LEI', width: 100},
+            {field: 'BIC', width: 100},
+            {field: 'rolList', width: 130},
+            {
+                name: 'Actions',
+                cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                enableColumnMenu: false,
+                enableCellEdit : false,
+                width: 120
+            }
+        ];
+
+
+        LegalEntityService.getAll().then(function (result) {
+            $scope.legalEntities = result;
+            $scope.gridLegalEntityOptions.data = $scope.legalEntities;
+            console.log($scope.gridLegalEntityOptions.data);
+        });
 
         /*$scope.dtOptions = DTOptionsBuilder.fromFnPromise(
          $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
@@ -106,26 +120,21 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         }
 
         // Edit legalEntity
-        $scope.editLegalEntity = function (element, index) {
-
-            if (!element || index == null) {
-                console.log("Problemas al recibir el elemento o el indice del objeto");
-                return false;
-            }
+        $scope.editRow = function (grid, row) {
 
             elementService.collapsePortlet('legal-entity-table');
-            elementService.expandPortlet(element);
+            elementService.expandPortlet("legal-entity-tabs");
 
-            console.log($("#" + element).offset().top);
-            console.log($("#legal-entity-table").offset().top);
-            var offset = $("#" + element).offset().top - $("#legal-entity-table").offset().top;
-            elementService.scrollToElement(element, offset);
+            //console.log($("#legal-entity-tabs").offset().top);
+            //console.log($("#legal-entity-table").offset().top);
+            var offset = $("#legal-entity-tabs").offset().top - $("#legal-entity-table").offset().top;
+            elementService.scrollToElement("legal-entity-tabs", offset);
 
             $scope.setFocusInput('le-general-data')
 
-            $scope.isEditLegal = true;
+           console.log(row);
 
-            $scope.legalEntity = $scope.legalEntities[index];
+            $scope.legalEntity = row.entity;
 
         };
 
@@ -137,14 +146,16 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         }
 
         // Delete legalEntity
-        $scope.deleteLegalEntity = function (index) {
+        $scope.deleteRow = function (grid, row) {
 
             if (index == null) {
                 console.log("Problemas al recibir el indice del objeto");
                 return false;
             }
+            console.log(row.entity.id);
+            LegalEntityService.delete(row.entity.id);
 
-            LegalEntityService.delete(index);
+            $scope.gridLegalEntityOptions.data.splice(row, 1);
         }
 
         $scope.cancel = function () {
@@ -944,7 +955,6 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                 return false;
             }
             $scope.gridContactPersonOptions.data = newContactPerson;
-
             //console.log($scope.gridContactPersonOptions.data);
 
         });
@@ -1032,6 +1042,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                 width: 120
             }
         ];
+
         $scope.filter = function () {
             $scope.gridApi.grid.refresh();
         };
