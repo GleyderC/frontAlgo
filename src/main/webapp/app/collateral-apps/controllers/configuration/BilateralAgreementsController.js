@@ -4,6 +4,7 @@ var DashboardApp = angular.module('DashboardApp')
 
 DashboardApp.controller(
     'BilateralAgreementsController', [
+        'LegalEntityService',
         '$scope',
         '$document',
         '$timeout',
@@ -12,7 +13,8 @@ DashboardApp.controller(
         'DTOptionsBuilder',
         'DTColumnBuilder',
         'elementService',
-        function ($scope,
+        function (LegalEntityService,
+                  $scope,
                   $document,
                   $timeout,
                   $request,
@@ -76,12 +78,18 @@ DashboardApp.controller(
             };
 
             //main fields
+            $scope.legalEntities = [];
             $scope.LegalEntity = {};
             $scope.LegalEntity.BilateralAgreements = {};
             $scope.LegalEntity.BilateralAgreements.main = {};
             $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
 
-        }]);
+            LegalEntityService.getAll().then(function (result) {
+                $scope.legalEntities = result;
+            });
+        }
+    ])
+;
 
 
 DashboardApp.controller(
@@ -194,7 +202,7 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
             // call resize every 500 ms for 5 s after modal finishes opening
-            $interval( function() {
+            $interval(function () {
                 $scope.gridApi.core.handleWindowResize();
             }, 1000, 10);
         }
@@ -217,8 +225,10 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
 
 }]);
 
-DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', function (ModalService, $scope, $request, $interval) {
 
+    this.modal = ModalService;
+    
     $scope.editRow = function (grid, row) {
         console.log("editing")
     }
@@ -234,11 +244,11 @@ DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['$scope'
             {name: 'Index'},
             {name: 'Tenor'},
             /*{name: 'Source'},
-            {name: 'Factor'},
-            {name: 'Compound'},
-            {name: 'Included'},
-            {name: 'Projected'},
-            {name: 'Adjustment Currency'},*/
+             {name: 'Factor'},
+             {name: 'Compound'},
+             {name: 'Included'},
+             {name: 'Projected'},
+             {name: 'Adjustment Currency'},*/
             {
                 name: 'Actions',
                 cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
@@ -268,7 +278,7 @@ DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['$scope'
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
             // call resize every 500 ms for 5 s after modal finishes opening
-            $interval( function() {
+            $interval(function () {
                 $scope.gridApi.core.handleWindowResize();
             }, 1000, 10);
         }
@@ -299,11 +309,11 @@ DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope'
             },
             {
                 name: 'Haircut Type',
-                cellTemplate: ''+
+                cellTemplate: '' +
                 '<select id="le-bilateral-ag-eleg-security-haircutType"' +
-                    'name="" class="form-control"' +
-                    'ng-model="LegalEntity.BilateralAgreements.elegibleSecurity.partyA.haircutType.selected">' +
-                    '<option value="">-- CHOICE --</option>' +
+                'name="" class="form-control"' +
+                'ng-model="LegalEntity.BilateralAgreements.elegibleSecurity.partyA.haircutType.selected">' +
+                '<option value="">-- CHOICE --</option>' +
                 '</select>',
                 enableColumnMenu: false
             }
@@ -330,7 +340,7 @@ DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope'
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
             // call resize every 500 ms for 5 s after modal finishes opening
-            $interval( function() {
+            $interval(function () {
                 $scope.gridApi.core.handleWindowResize();
             }, 1000, 10);
         }
