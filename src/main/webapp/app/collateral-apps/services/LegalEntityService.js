@@ -56,7 +56,7 @@ angular.module('DashboardApp')
         LegalEntity.delete = function (idLegal) {
             var params = {
 
-                "id": legalEntities[idLegal].id
+                "id": idLegal
             };
 
             //console.log(params);
