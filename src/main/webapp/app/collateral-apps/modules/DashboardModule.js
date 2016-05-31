@@ -6,6 +6,7 @@
 var DashboardApp = angular.module("DashboardApp", [
     "CollateralApp",
     'ui.grid',
+    'ui.grid.pagination',
     'ui.grid.selection',
     'ui.grid.exporter',
     'ui.grid.autoResize',

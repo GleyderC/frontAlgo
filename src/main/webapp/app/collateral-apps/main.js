@@ -5,7 +5,6 @@ Collateral AngularJS App Main Script
 /* Collateral App */
 var CollateralApp = angular.module("CollateralApp", [
     "ui.router",
-    "ngAnimate",
     "ui.bootstrap",
     "oc.lazyLoad",
     "ngSanitize",
