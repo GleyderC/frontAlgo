@@ -19,7 +19,7 @@
 			<div class="col-md-8">
 				
 				<div class="input-group">
-				     <input placeholder="Date" type="text" class="form-control" placeholer="Date" uib-datepicker-popup ng-model="dt"    is-open="popup.opened"  datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+				     <input placeholder="Date" type="text" class="form-control" placeholer="Date" uib-datepicker-popup ng-model="dt"    is-open="popup.opened"  datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-change="aloh()"/>
 				<span class="input-group-btn">          
 				            <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
 				          </span>
@@ -43,6 +43,6 @@
 	</div>
 </div>
 <div class="row">
-	<div id="grid1" ui-grid="gridOptions" class="grid"></div>
+                        <div ui-grid="gridOptions"  ui-grid-exporter ui-grid-auto-resize class="grid"></div>
 
 </div>
