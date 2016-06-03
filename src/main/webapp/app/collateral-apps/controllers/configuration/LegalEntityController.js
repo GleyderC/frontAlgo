@@ -45,8 +45,9 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         /* Cargando datos en legal entity ui-grid*/
 
         $scope.gridLegalEntityOptions = {
-            enablePaginationControls: false,
-            paginationPageSize: 25,
+            showGridFooter: true,
+            paginationPageSizes: [12, 50, 100, 200, 500],
+            paginationPageSize: 12,
             enableColumnResizing: true,
             enableFiltering: true,
             rowHeight: 35, // set height to each row
@@ -66,7 +67,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             },
             exporterPdfOrientation: 'portrait',
             exporterPdfPageSize: 'LETTER',
-            exporterPdfMaxGridWidth: 500,
+            exporterPdfMaxGridWidth: 450,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
