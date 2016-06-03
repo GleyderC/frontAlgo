@@ -10,8 +10,6 @@ DashboardApp.controller(
         '$timeout',
         '$request',
         'localStorageService',
-        'DTOptionsBuilder',
-        'DTColumnBuilder',
         'elementService',
         function (LegalEntityService,
                   $scope,
@@ -19,8 +17,6 @@ DashboardApp.controller(
                   $timeout,
                   $request,
                   $localStorage,
-                  DTOptionsBuilder,
-                  DTColumnBuilder,
                   elementService) {
 
             $scope.$on('$includeContentLoaded', function () {

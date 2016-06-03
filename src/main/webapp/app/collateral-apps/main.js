@@ -330,7 +330,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                         insertBefore: '#ng_load_plugins_before', // load dependencies before load page inside the element
                         files: [
                             /* datatable css*/
-                            'assets/vendor/DataTables-net/datatables.min.css',
+                            //'assets/vendor/DataTables-net/datatables.min.css',
 
                             /* select css*/
                             'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
@@ -342,9 +342,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /* form css */
                             'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
 
-                            /* datatable js*/
+                            /* datatable js
                             'assets/vendor/DataTables-net/datatables.min.js',
-                            'assets/vendor/angular-datatables/dist/angular-datatables.min.js',
+                            'assets/vendor/angular-datatables/dist/angular-datatables.min.js',*/
 
                             /* select js*/
                             'assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
@@ -579,7 +579,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             }
         })
 
-        // Advanced Datatables
+        /* Advanced Datatables
         .state('datatablesAdvanced', {
             url: "/datatables/managed.html",
             templateUrl: "views/datatables/managed.html",
@@ -632,7 +632,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                 }]
             }
         })
-
+        */
         // User Profile
         .state("profile", {
             url: "/profile",
