@@ -88,14 +88,14 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         $scope.gridLegalEntityOptions.columnDefs = [
             {field: 'id', enableCellEdit : false},
-            {field: 'name',
+            {field: 'name', enableCellEdit : false,
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
             {
-                field: 'isBranch',
+                field: 'isBranch', enableCellEdit : false,
                 cellTemplate: "<div>{{grid.appScope.booleanValue(row)}}</div>",
                     filter: {
                         type: uiGridConstants.filter.SELECT,
@@ -103,8 +103,8 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                     },
 
             },
-            {field: 'LEI'},
-            {field: 'BIC'},
+            {field: 'LEI', enableCellEdit : false },
+            {field: 'BIC', enableCellEdit : false },
             {field: 'rolList',
                 displayName: 'Roles',
                 cellFilter: 'stringArrayFilter',
