@@ -63,7 +63,7 @@ angular.module('DashboardApp')
 
             $request.delete('/servlet/LegalEntity/Delete', params)
                 .then(function (Response) {
-                       legalEntities.splice(idLegal, 1);
+                       
                         toastr.success("Data successfully removed","Success")
                     });
         }

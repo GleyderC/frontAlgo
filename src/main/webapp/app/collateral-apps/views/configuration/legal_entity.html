@@ -6,6 +6,10 @@
                 <span class="caption-subject bold uppercase font-green-haze"> Legal Entities</span>
                 <span class="caption-helper">Lists</span>
             </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+            </div>
             <div class="col-md-3">
                 <div class="btn-group">
                     <button class="btn sbold green" ng-click="addLegalEntity('legal-entity-tabs')"> Add New
@@ -17,8 +21,8 @@
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet-body">
 
-            <!--input ng-model='filterValue'/><button ng-click='filter()'>Filter</button-->
-                <div ui-grid="gridLegalEntityOptions" i-grid-exporter ui-grid-auto-resize ui-grid-edit
+            <input ng-model='filterValue'/><button ng-click='filter()'>Filter</button>
+                <div ui-grid="gridLegalEntityOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
                      class="grid" style="height: 400px;"></div>
             <!--div class="table-toolbar">
                 <div class="row">

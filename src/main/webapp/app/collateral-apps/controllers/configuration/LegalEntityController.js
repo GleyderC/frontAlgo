@@ -72,17 +72,26 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
-                $scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
+                $scope.gridApi.grid.registerRowsProcessor($scope.legalFilter, 200);
             }
+        };
+
+        $scope.booleanValue = function(row){
+            return row.entity.isBranch ? 'Yes' : 'No';
         };
 
         $scope.gridLegalEntityOptions.columnDefs = [
             {field: 'id', width: 130},
             {field: 'name', width: 130},
-            {field: 'isBranch', width: 100},
+            {field: 'isBranch',
+                cellTemplate: "<div>{{grid.appScope.booleanValue(row)}}</div>",
+                width: 100},
             {field: 'LEI', width: 200},
             {field: 'BIC', width: 180},
-            {field: rolList.join(", "), width: 180},
+            {field: 'rolList',
+                displayName: 'Roles',
+                cellFilter: 'stringArrayFilter',
+                width: 180},
             {
                 name: 'Actions',
                 cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
@@ -91,6 +100,27 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 width: 120
             }
         ];
+
+
+        $scope.filter = function () {
+            $scope.gridApi.grid.refresh();
+        };
+
+        $scope.legalFilter = function (renderableRows) {
+            var matcher = new RegExp($scope.filterValue);
+            renderableRows.forEach(function (row) {
+                var match = false;
+                ['name', 'LEI', 'BIC' ].forEach(function (field) {
+                    if (row.entity[field].match(matcher)) {
+                        match = true;
+                    }
+                });
+                if (!match) {
+                    row.visible = false;
+                }
+            });
+            return renderableRows;
+        };
 
 
         LegalEntityService.getAll().then(function (result) {
@@ -147,14 +177,10 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             elementService.collapsePortlet('legal-entity-table');
             elementService.expandPortlet("legal-entity-tabs");
 
-            //console.log($("#legal-entity-tabs").offset().top);
-            //console.log($("#legal-entity-table").offset().top);
             var offset = $("#legal-entity-tabs").offset().top - $("#legal-entity-table").offset().top;
             elementService.scrollToElement("legal-entity-tabs", offset);
 
             $scope.setFocusInput('le-general-data')
-
-           console.log(row);
 
             $scope.legalEntity = row.entity;
 
@@ -162,7 +188,16 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         $scope.saveLegalEntity = function (legalEntity) {
 
-            LegalEntityService.set(legalEntity, $scope.isEditLegal);
+            //LegalEntityService.set(legalEntity, $scope.isEditLegal);
+
+            if (row.entity.id === -1) {
+                LegalEntityService.set(legalEntity, false);
+
+            }
+            else {
+                row.entity = angular.extend(row.entity, $scope.entity);
+            }
+
             buildLegalData();
 
         }
@@ -170,14 +205,10 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         // Delete legalEntity
         $scope.deleteRow = function (grid, row) {
 
-            if (index == null) {
-                console.log("Problemas al recibir el indice del objeto");
-                return false;
-            }
-            console.log(row.entity.id);
+            var index = $scope.gridLegalEntityOptions.data.indexOf(row.entity);
+            $scope.gridLegalEntityOptions.data.splice(index, 1);
             LegalEntityService.delete(row.entity.id);
 
-            $scope.gridLegalEntityOptions.data.splice(row, 1);
         }
 
         $scope.cancel = function () {
@@ -186,7 +217,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         }
 
 
-        $scope.rols = ['Counterparty', 'PO', 'Issuer', 'CCP'];
+        $scope.rols = ['COUNTERPARTY', 'PO', 'ISSUER', 'CCP'];
         $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
         $scope.country = {};
         $scope.countries = [ // Taken from https://gist.github.com/unceus/6501985
@@ -925,6 +956,11 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
     }]);
 
+DashboardApp.filter('stringArrayFilter', function() {
+    return function (myArray) {
+        return myArray.join(', ');
+    };
+})
 DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope) {
 
     $scope.tabs = [
@@ -992,7 +1028,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                 "email": "",
                 "fax": "",
                 "firstName": "",
-                "id": 0,
+                "id": -1,
                 "idLegalEntity": 0,
                 "lastName": "",
                 "linkedInProfileUrl": "",
@@ -1042,7 +1078,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
-                $scope.gridApi.grid.registerRowsProcessor($scope.singleFilter, 200);
+                $scope.gridApi.grid.registerRowsProcessor($scope.contactFilter, 200);
             }
         };
 
@@ -1064,11 +1100,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
             }
         ];
 
-        $scope.filter = function () {
-            $scope.gridApi.grid.refresh();
-        };
-
-        $scope.singleFilter = function (renderableRows) {
+        $scope.contactFilter = function (renderableRows) {
             var matcher = new RegExp($scope.filterValue);
             renderableRows.forEach(function (row) {
                 var match = false;
@@ -1099,11 +1131,10 @@ function RowEditCtrl($scope, $uibModalInstance, grid, row) {
 
         //console.log(row.entity);
 
-        if (row.entity.id === 0) {
+        if (row.entity.id === -1) {
             row.entity = angular.extend(row.entity, $scope.entity);
             //real ID come back from response after the save in DB
             row.entity.id = Math.floor(100 + Math.random() * 1000);
-            console.log($scope.legalEntity);
             grid.data.push(row.entity);
 
         }
