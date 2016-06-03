@@ -95,15 +95,11 @@ DashboardApp.controller(
         '$timeout',
         '$request',
         'localStorageService',
-        'DTOptionsBuilder',
-        'DTColumnBuilder',
         function ($scope,
                   $document,
                   $timeout,
                   $request,
-                  $localStorage,
-                  DTOptionsBuilder,
-                  DTColumnBuilder) {
+                  $localStorage) {
 
             $scope.$on('$includeContentLoaded', function () {
 
@@ -294,11 +290,6 @@ DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope'
                 name: 'Collateral Type'
             },
             {
-                name: 'Eligible',
-                cellTemplate: '<input type="checkbox" />',
-                enableColumnMenu: false
-            },
-            {
                 name: 'Haircut',
                 cellTemplate: '<input type="text" />',
                 enableColumnMenu: false
@@ -309,7 +300,8 @@ DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope'
                 '<select id="le-bilateral-ag-eleg-security-haircutType"' +
                 'name="" class="form-control"' +
                 'ng-model="LegalEntity.BilateralAgreements.elegibleSecurity.partyA.haircutType.selected">' +
-                '<option value="">-- CHOICE --</option>' +
+                '<option value="regular" selected>REGULAR</option>' +
+                '<option value="inverse">INVERSE</option>' +
                 '</select>',
                 enableColumnMenu: false
             }
@@ -339,23 +331,31 @@ DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope'
             $interval(function () {
                 $scope.gridApi.core.handleWindowResize();
             }, 1000, 10);
+
+            console.log();
+
         }
     };
 
     $scope.gridOptions.data = [
         {
+            selected: false,
             collateralType: "USA Bonds",
         },
         {
+            selected: false,
             collateralType: "France Bonds",
         },
         {
+            selected: false,
             collateralType: "Equity Options",
         },
         {
+            selected: false,
             collateralType: "MBS",
         },
         {
+            selected: false,
             collateralType: "European Equity",
         }
     ];
