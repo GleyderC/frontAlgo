@@ -71,6 +71,10 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
+                /*$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    console.log('row selected ' + row.isSelected);
+
+                });*/
                 gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
                     //console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue );
                     if(newValue!=oldValue)
@@ -140,10 +144,10 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 return false;
             }
 
-            elementService.collapsePortlet('legal-entity-table');
-            elementService.expandPortlet(element);
-            var offset = $("#" + element).offset().top - $("#legal-entity-table").offset().top;
-            elementService.scrollToElement(element, offset);
+            //elementService.collapsePortlet('legal-entity-table');
+            //elementService.expandPortlet(element);
+            //var offset = $("#" + element).offset().top;
+            elementService.scrollToElement(element, 80);
 
             $scope.setFocusInput('le-general-data');
 
@@ -154,11 +158,11 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         // Edit legalEntity
         $scope.editRow = function (grid, row) {
 
-            elementService.collapsePortlet('legal-entity-table');
-            elementService.expandPortlet("legal-entity-tabs");
+            //elementService.collapsePortlet('legal-entity-table');
+            //elementService.expandPortlet("legal-entity-tabs");
+            //var offset = $("#legal-entity-tabs").offset().top;
 
-            var offset = $("#legal-entity-tabs").offset().top - $("#legal-entity-table").offset().top;
-            elementService.scrollToElement("legal-entity-tabs", offset);
+            elementService.scrollToElement("legal-entity-tabs", 80);
 
             $scope.setFocusInput('le-general-data')
 
@@ -998,8 +1002,8 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
 
 }]);
 
-DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'RowEditorModalService',
-    function ($scope, $log, toastr, RowEditorModalService) {
+DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'RowEditorModalService','uiGridConstants',
+    function ($scope, $log, toastr, RowEditorModalService,uiGridConstants) {
 
         $scope.$watchCollection('$parent.legalEntity.contactPersonList', function (newContactPerson, oldContactPerson) {
             if (newContactPerson === oldContactPerson) {
@@ -1047,9 +1051,11 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         };
 
         $scope.gridContactPersonOptions = {
-            enablePaginationControls: false,
-            paginationPageSize: 25,
-            enableFiltering: false,
+            showGridFooter: true,
+            paginationPageSizes: [12, 50, 100, 200, 500],
+            paginationPageSize: 12,
+            enableColumnResizing: true,
+            enableFiltering: true,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
             exporterCsvFilename: 'contact_info.csv',
@@ -1071,25 +1077,30 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
-                $scope.gridApi.grid.registerRowsProcessor($scope.contactFilter, 200);
             }
         };
 
         $scope.gridContactPersonOptions.columnDefs = [
-            {field: 'lastName', width: 130},
-            {field: 'firstName', width: 130},
-            {field: 'city', width: 100},
-            {field: 'state', width: 100},
-            {field: 'phone', width: 100},
-            {field: 'email', width: 130},
-            {field: 'swift', width: 100},
-            {field: 'linkedInProfileUrl', name: "Linkedin", width: 150},
+            {field: 'lastName',
+                sort: {
+                    direction: uiGridConstants.ASC,
+                    priority: 0
+                }
+            },
+            {field: 'firstName',},
+            {field: 'city'},
+            {field: 'state'},
+            {field: 'phone'},
+            {field: 'email'},
+            {field: 'swift'},
+            {field: 'linkedInProfileUrl', name: "Linkedin",},
             {
                 name: 'Actions',
                 cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
                 enableColumnMenu: false,
                 enableCellEdit : false,
-                width: 120
+                width: 120,
+                enableFiltering: false
             }
         ];
 

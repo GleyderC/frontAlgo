@@ -20,7 +20,8 @@
         </div>
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet-body">
-             <div ui-grid="gridLegalEntityOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+             <div ui-grid="gridLegalEntityOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
+                  ui-grid-resize-columns ui-grid-selection ui-grid-pagination
                      class="grid" style="height: 570px;"></div>
             <!--div class="table-toolbar">
                 <div class="row">
@@ -81,7 +82,7 @@
     </div>
     <!-- END ROW -->
 
-    <div class="row" id="legal-entity-tabs">
+    <div class="row" id="legal-entity-tabs" du-smooth-scroll du-scrollspy>
         <!-- BEGIN CHART PORTLET-->
         <div class="portlet light bordered">
             <div class="portlet-title">
@@ -92,13 +93,13 @@
 
                 </div>
                 <div class="tools">
-                    <a href="javascript:;" class="expand"> </a>
+                    <a href="javascript:;" class="collapse"> </a>
                     <a href="" class="fullscreen"> </a>
                     <a href="javascript:;" class="reload"> </a>
                 </div>
             </div>
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <div class="portlet-body portlet-collapsed" ng-controller="TabsLegalEntityController">
+            <div class="portlet-body" ng-controller="TabsLegalEntityController">
                 <uib-tabset active="active">
                     <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
                         <uib-tab-heading>
