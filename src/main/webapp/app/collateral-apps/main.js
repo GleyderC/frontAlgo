@@ -333,27 +333,24 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             //'assets/vendor/DataTables-net/datatables.min.css',
 
                             /* select css*/
-                            'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
-                            'assets/vendor/select2/dist/css/select2.min.css',
-                            'assets/vendor/select2-bootstrap-css/select2-bootstrap.min.css',
+                            'assets/vendor/select2/select2.css',
                             'assets/vendor/angular-ui-select/dist/select.min.css',
                             'assets/vendor/multiselect/css/multi-select.css',
 
                             /* form css */
-                            'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
+                            //'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
 
                             /* datatable js
                             'assets/vendor/DataTables-net/datatables.min.js',
                             'assets/vendor/angular-datatables/dist/angular-datatables.min.js',*/
 
                             /* select js*/
-                            'assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
-                            'assets/vendor/select2/dist/js/select2.full.min.js',
+                            //'assets/vendor/select2/dist/js/select2.full.min.js',
                             'assets/vendor/angular-ui-select/dist/select.min.js',
                             'assets/vendor/multiselect/js/jquery.multi-select.js',
 
                             /* form js */
-                            'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
+                            //'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
 
                             /* Dashboard */
                             'collateral-apps/modules/DashboardModule.js',

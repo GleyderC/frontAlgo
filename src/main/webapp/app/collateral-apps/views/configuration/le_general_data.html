@@ -49,13 +49,16 @@
                             <div class="form-group col-md-6">
                                 <label class="control-label col-md-3">Mother Legal Entity:</label>
                                 <div class="col-md-9">
-                                    <select class="form-control input-medium">
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                        <option>Option 3</option>
-                                        <option>Option 4</option>
-                                        <option>Option 5</option>
-                                    </select>
+
+                                    <ui-select ng-model="legalEntityMother.selected" theme="select2" style="min-width: 300px;" title="Choose a Legal Entity Mother">
+                                        <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="legalEntityMother in legalEntities | propsFilter: {name: $select.search, otherName: $select.search}">
+                                            <div ng-bind-html="legalEntityMother.name | highlight: $select.search"></div>
+                                            <small>
+                                                otherName: <span ng-bind-html="''+legalEntityMother.otherName | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -69,6 +72,7 @@
                                             <small ng-bind-html="country.code | highlight: $select.search"></small>
                                         </ui-select-choices>
                                     </ui-select>
+
                                 </div>
                             </div>
                         </div>

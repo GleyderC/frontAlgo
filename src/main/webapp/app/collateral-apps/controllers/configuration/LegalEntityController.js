@@ -181,9 +181,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             }
             LegalEntityService.set(legalEntity, $scope.isEditLegal);
 
-
             buildLegalData();
-
         }
 
         // Delete legalEntity
@@ -1014,6 +1012,9 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
 
         });
 
+        //set templateUrl with id modal edit
+        RowEditorModalService.templateUrl = 'edit-modal-contact.html';
+
         /*ui-grid contactPerson*/
         $scope.addRow = function () {
             var newContact = {
@@ -1121,33 +1122,3 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         };
 
     }]);
-
-// Please note that $uibModalInstance represents a modal window (instance) dependency.
-// It is not the same as the $uibModal service used above.
-DashboardApp.controller('RowEditCtrl', RowEditCtrl);
-function RowEditCtrl($scope, $uibModalInstance, grid, row) {
-
-    $scope.entity = angular.copy(row.entity);
-
-    $scope.save = save;
-
-    function save() {
-
-        //console.log(row.entity);
-
-        if (row.entity.id === -1) {
-            row.entity = angular.extend(row.entity, $scope.entity);
-            //real ID come back from response after the save in DB
-            row.entity.id = Math.floor(100 + Math.random() * 1000);
-            grid.data.push(row.entity);
-
-        }
-        else {
-            row.entity = angular.extend(row.entity, $scope.entity);
-        }
-
-        $uibModalInstance.close(row.entity);
-
-    }
-
-};

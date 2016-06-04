@@ -141,9 +141,9 @@ gulp.task('test', ['start:server:test'], function () {
 gulp.task('bower', function () {
 
     return gulp.src(paths.views.main)
-        .pipe(wiredep({      exclude: ['angular-ui-select','select2','bootstrap-select',
-            'bootstrap-fileinput','angular-datatables','multiselect',
-            'datatables','datatables-buttons','angular-ui-grid','pdfmake']}))
+        .pipe(wiredep({      exclude: ['angular-ui-select','select2',
+            'angular-datatables','multiselect',
+            'angular-ui-grid','pdfmake']}))
         .pipe(gulp.dest(collateral.app));
 });
 
