@@ -1,4 +1,187 @@
 <div ng-controller="LEBillateralAgrEligibleCurrenciesController as eligibCurrencyCtrl">
+    <!-- TEMPLATE TO ADD CURRENCY BEGIN-->
+    <script type="text/ng-template" id="modalAddCurrency.html">
+        <div class="modal-header">
+            <h4 class="modal-title">Adding Eligible Currency</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Base Currency</label>
+                    <div class="col-md-8">
+                        <select id="adding-eligible-currency" name="eligible-currencies-select[]"
+                                class="form-control input-medium"
+                                ng-options="currency as currency.codigo for currency in currenciesList track by currency.id"
+                                ng-model="LegalEntity.BilateralAgreements.eligibleCurrencies.baseCurrency">
+                            <option value="">-- BASE CURRENCY --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-offset-6"></div>
+            </div>
+
+            <div class="row">
+
+                <div class="form-group col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Compounding</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="checkbox" class="make-switch form-control" data-size="small"
+                                       data-on-text="Yes"
+                                       data-off-text="No"
+                                       ng-model="eligibleCurrencies.compounding"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Include Interest to Position</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="checkbox" class="make-switch form-control" data-size="small"
+                                       data-on-text="Yes"
+                                       data-off-text="No"
+                                       ng-model="eligibleCurrencies.includeInterestPosition"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Adjustment Currency</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="checkbox" class="make-switch form-control" data-size="small"
+                                       data-on-text="Yes"
+                                       data-off-text="No"
+                                       ng-model="eligibleCurrencies.adjustmentCurrency"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Project Interest to Position</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="checkbox" class="make-switch form-control" data-size="small"
+                                       data-on-text="Yes"
+                                       data-off-text="No"
+                                       ng-model="eligibleCurrencies.projectInterestPosition"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">HairCut (100%)</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control input-xsmall"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Inverse</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="checkbox" class="make-switch form-control" data-size="small"
+                                       data-on-text="Yes"
+                                       data-off-text="No"
+                                       ng-model="eligibleCurrencies.inverse"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Rate:</h3>
+                </div>
+                <div class="panel-body">
+
+                    <label class="radio-inline"><input type="radio" ng-model="EligCurRate" value="fixed"
+                                                       checked>Fixed Rate</label>
+                    <label class="radio-inline"><input type="radio" ng-model="EligCurRate" value="floating">Floating
+                        Rate</label>
+
+                    <div class="form-group" ng-show="EligCurRate == 'fixed'">
+                        <label class="control-label">Interest Date Rule Only</label>
+                        <input type="number" class="form-control input-small" placeholder="Fixed Rate"
+                               ng-model="EligCurRateFixed" min="0"
+                               max="100"
+                               maxlength="3">
+                    </div>
+
+                    <div class="form-group" ng-show="EligCurRate == 'floating'">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label">Index</label>
+                                <select class="form-control input-medium">
+                                    <option>--Index--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Tenor</label>
+                                <select class="form-control input-medium">
+                                    <option>--Tenor--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Spread</label>
+                                <input type="number" class="form-control input-medium" placeholder="Spread"
+                                       min="0"
+                                       max="100"
+                                       maxlength="3">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label">Factor</label>
+                                <input type="number" class="form-control input-medium" placeholder="Factor"
+                                       min="0"
+                                       max="100"
+                                       maxlength="3">
+                            </div>
+                            <div class="col-md-8">
+                                <div>
+                                    <label class="control-label">Floor</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="form-control make-switch" type="checkbox"/>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control input-small"
+                                           placeholder="Floor" min="0"
+                                           max="100"
+                                           maxlength="3">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="ok()">Save</button>
+        </div>
+    </script>
+    <!-- TEMPLATE TO ADD CURRENCY END -->
 
     <!-- FORM SECTION TOP BEGIN -->
     <div class="portlet light bordered col-md-12">
@@ -14,7 +197,7 @@
                             <div class="col-md-9">
                                 <select id="le-bilateral-a-eligible-currencies" name="eligible-currencies-select[]"
                                         class="form-control input-medium"
-                                        ng-options="currency as currency.codigo for currency in eligibCurrencyCtrl.LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                        ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                         ng-model="LegalEntity.BilateralAgreements.eligibleCurrencies.baseCurrency">
                                     <option value="">-- SELECT BASE CURRENCY --</option>
                                 </select>
@@ -37,7 +220,7 @@
                             <div class="col-md-9">
                                 <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
                                         class="form-control input-medium"
-                                        ng-options="currency as currency.codigo for currency in eligibCurrencyCtrl.LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                        ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                         ng-model="LegalEntity.BilateralAgreements.eligibleCurrencies.interestDateRule">
                                     <option value="">-- SELECT BASE CURRENCY --</option>
                                 </select>
@@ -46,7 +229,8 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-3">Interest Date Rule Only</label>
                             <div class="col-md-9">
-                                <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                <input type="checkbox" class="make-switch form-control" data-on-text="Yes"
+                                       data-off-text="No"
                                        ng-model="LegalEntity.BilateralAgreements.eligibleCurrencies.interestDateRuleOnly"/>
                             </div>
                         </div>
@@ -56,7 +240,8 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-3">Roll Interest to Principal</label>
                             <div class="col-md-9">
-                                <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
+                                <input type="checkbox" class="make-switch form-control" data-on-text="Yes"
+                                       data-off-text="No"
                                        ng-model="LegalEntity.BilateralAgreements.eligibleCurrencies.interestDateRuleOnly"/>
                             </div>
                         </div>

@@ -51,7 +51,7 @@
                         <div class="col-md-9">
                             <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
                                     class="form-control input-medium"
-                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                     ng-model="LegalEntity.BilateralAgreements.currencies.selected">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>

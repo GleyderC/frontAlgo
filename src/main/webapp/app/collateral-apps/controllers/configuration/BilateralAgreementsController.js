@@ -10,14 +10,36 @@ DashboardApp.controller(
         '$timeout',
         '$request',
         'localStorageService',
-        'elementService',
+        '$filter',
         function (LegalEntityService,
                   $scope,
                   $document,
                   $timeout,
                   $request,
                   $localStorage,
-                  elementService) {
+                  $filter) {
+
+
+            var currenciesList = [];
+
+            angular.forEach($localStorage.get("CurrencyEnum"), function (obj) {
+                currenciesList.push(
+                    {
+                        id: obj.key,
+                        codigo: obj.name
+                    }
+                );
+            });
+
+            currenciesList = $filter('orderBy')(currenciesList, 'codigo');
+
+            $scope.BilateralAgreements =
+            {
+                staticData: {
+                    contractType: $localStorage.get("BilateralContractType"),
+                    currencies: currenciesList
+                }
+            };
 
             $scope.$on('$includeContentLoaded', function () {
 
@@ -148,6 +170,7 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
 
     $scope.editRow = function (grid, row) {
         console.log("editing contract")
+        console.log(row)
         $scope.editBillateralAgreement();
     }
 
@@ -158,22 +181,36 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
     $scope.gridOptions = {
         columnDefs: [
             {
-                field: 'contract_name',
+                //field: 'contract_name',
+                cellTemplate: '<div>Demo Contract Name</div>',
                 name: 'Contract name'
             },
             {
-                field: 'contract_type',
-                name: 'Contract type'
+                field: 'counterpartyA.name',
+                name: 'Counter Party A'
+            },
+            {
+                field: 'counterpartyB.name',
+                name: 'Counter Party B'
+            },
+            {
+                field: 'bilateralContractType',
+                name: 'Contract type',
+                groupable: true
             },
             {
                 name: 'Actions',
                 cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
                 enableColumnMenu: false,
+                enableFiltering: false,
+                enableSorting: false,
                 width: 160
             }
         ],
+        data: [],
         rowHeight: 35, // set height to each row
         enableGridMenu: true,
+        enableFiltering: true,
         exporterCsvFilename: 'Bilateral_Agreements.csv',
         exporterPdfDefaultStyle: {fontSize: 9},
         exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
@@ -200,27 +237,47 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
         }
     };
 
-    $scope.gridOptions.data = [
-        {
-            contract_name: "CSA Contract Swaps",
-            contract_type: "CSA"
-        },
-        {
-            contract_name: "CSA Contract FX Swaps",
-            contract_type: "CSA"
-        },
-        {
-            contract_name: "SCSA Contract Rates Swaps",
-            contract_type: "SCSA"
-        }
-    ];
+    $request.get("/servlet/BilateralContract/SelectAll").then(function(response){
+        $scope.BilateralAgreements.contracts = response.data.dataResponse;
+        $scope.gridOptions.data = $scope.BilateralAgreements.contracts;
+    });
 
 }]);
 
-DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', function (ModalService, $scope, $request, $interval) {
+DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
+
+    var currenciesList = $filter('orderBy')($scope.BilateralAgreements.staticData.currencies, 'codigo');
 
     this.modal = ModalService;
-    
+    this.modal.Options = {
+        templateUrl: "modalAddCurrency.html",
+        size: 'lg',
+        rendered: function () {
+            App.initComponents();
+        },
+        controller: function ($scope, $uibModalInstance, currencies) {
+
+            $scope.currenciesList = currencies;
+
+            $scope.ok = function () {
+                console.log("Press Ok")
+                $uibModalInstance.close();
+            };
+
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+
+            $scope.EligCurRate = 'fixed';
+
+        },
+        resolve: {
+            currencies: function(){
+                return currenciesList;
+            }
+        }
+    }
+
     $scope.editRow = function (grid, row) {
         console.log("editing")
     }
@@ -331,8 +388,6 @@ DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope'
             $interval(function () {
                 $scope.gridApi.core.handleWindowResize();
             }, 1000, 10);
-
-            console.log();
 
         }
     };

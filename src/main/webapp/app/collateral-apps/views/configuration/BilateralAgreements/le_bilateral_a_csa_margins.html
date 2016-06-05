@@ -26,7 +26,7 @@
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
                                     name="base-currency-select[]" class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                     ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.currencies.selected">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
@@ -44,7 +44,7 @@
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-csa-partyA-transfAmount-baseCurrency"
                                     name="base-currency-select[]" class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                     ng-model="LegalEntity.BilateralAgreements.csa.partyA.transfAmount.currencies.selected">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
@@ -122,7 +122,7 @@
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-csa-partyB-threshold-baseCurrency" name="base-currency-select[]"
                                     class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                     ng-model="LegalEntity.BilateralAgreements.csa.partyB.threshold.currencies.selected">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
@@ -140,7 +140,7 @@
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-csa-partyB-transfAmount-baseCurrency"
                                     name="base-currency-select[]" class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                     ng-model="LegalEntity.BilateralAgreements.csa.partyB.transfAmount.currencies.selected">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>

@@ -3,31 +3,34 @@ angular.module('DashboardApp')
 
         var ModalService = {};
         var modalInstance = null;
+        ModalService.Options = {
+            templateUrl: null,
+            controller: function(){},
+            animationsEnabled: true,
+            size: 'md',
+            opened: function(){},
+            closed: function(){},
+            rendered: function(){},
+            resolve: {}
+        };
 
-        ModalService.animationsEnabled = true;
+        ModalService.open = function () {
 
-        ModalService.open = function (size) {
+            if(!ModalService.Options.templateUrl){
+                console.log("Select a templateUrl to render please");
+                return false;
+            }
 
+            console.log("***")
+            console.log(ModalService.Options.resolve)
+            console.log("***")
             modalInstance = $uibModal.open({
-                animation: ModalService.animationsEnabled,
-                templateUrl: paths.tpls + '/ModalTpl.html',
-                controller: function ($scope, $uibModalInstance) {
-                    
-                    $scope.ok = function () {
-                        $uibModalInstance.close($scope.selected.item);
-                    };
-
-                    $scope.cancel = function () {
-                        $uibModalInstance.dismiss('cancel');
-                    };
-
-                },
-                size: size,
-                resolve: {
-                    items: function () {
-                        return [];
-                    }
-                }
+                animation: ModalService.Options.animationsEnabled,
+                templateUrl: ModalService.Options.templateUrl,
+                controller: ModalService.Options.controller,
+                controllerAs: ModalService.Options.controllerAlias,
+                size: ModalService.Options.size,
+                resolve: ModalService.Options.resolve
             });
 
             modalInstance.result.then(function (selectedItem) {
@@ -35,6 +38,13 @@ angular.module('DashboardApp')
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
             });
+
+            modalInstance.opened.then(ModalService.Options.opened);
+
+            modalInstance.closed.then(ModalService.Options.closed);
+
+            modalInstance.rendered.then(ModalService.Options.rendered);
+
         };
 
         ModalService.close = function () {
