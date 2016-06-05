@@ -21534,3 +21534,8 @@ Color library demo
   .mt-cookie-consent-bar.mt-cookie-consent-bar-light {
     background: rgba(238, 238, 238, 0.9);
     color: #333; }
+
+.select2 > .select2-choice.ui-select-match {
+  /* Because of the inclusion of Bootstrap */
+  height: 30px;
+}

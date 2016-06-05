@@ -50,26 +50,27 @@
                                 <label class="control-label col-md-3">Mother Legal Entity:</label>
                                 <div class="col-md-9">
 
-                                    <ui-select ng-model="legalEntityMother.selected" theme="select2" style="min-width: 300px;" title="Choose a Legal Entity Mother">
-                                        <ui-select-match placeholder="Select a person in the list or search his name/age...">{{$select.selected.name}}</ui-select-match>
-                                        <ui-select-choices repeat="legalEntityMother in legalEntities | propsFilter: {name: $select.search, otherName: $select.search}">
+                                    <ui-select ng-model="legalEntityMother.selected" theme="select2" style="min-width: 250px;height:30px;" title="Choose a Legal Entity Mother">
+                                        <ui-select-match placeholder="Select name or othername...">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="legalEntityMother in legalEntities | filter: {name: $select.search, otherName: $select.search, id :  '!' +legalEntity.id} ">
                                             <div ng-bind-html="legalEntityMother.name | highlight: $select.search"></div>
                                             <small>
                                                 otherName: <span ng-bind-html="''+legalEntityMother.otherName | highlight: $select.search"></span>
                                             </small>
                                         </ui-select-choices>
                                     </ui-select>
+
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="col-md-3 control-label">Country</label>
                                 <div class="col-md-9">
-                                    <ui-select ng-model="country.selected" theme="bootstrap" class="input-medium">
+                                    <ui-select ng-model="country.selected" theme="select2" class="input-medium">
                                         <ui-select-match placeholder="Select Country...">{{$select.selected.name}}
                                         </ui-select-match>
                                         <ui-select-choices repeat="country in countries | filter: $select.search">
                                             <div ng-bind-html="country.name | highlight: $select.search"></div>
-                                            <small ng-bind-html="country.code | highlight: $select.search"></small>
+                                            <small ng-bind-html="country.key | highlight: $select.search"></small>
                                         </ui-select-choices>
                                     </ui-select>
 

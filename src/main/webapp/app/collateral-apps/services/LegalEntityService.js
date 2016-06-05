@@ -1,5 +1,5 @@
 angular.module('DashboardApp')
-    .factory('LegalEntityService',['$q','$request','toastr',function ($q,$request,toastr) {
+    .service('LegalEntityService',['$q','$request','toastr',function ($q,$request,toastr) {
         var LegalEntity = {};
 
         var legalEntities = [];
@@ -7,31 +7,17 @@ angular.module('DashboardApp')
         var defered =  $q.defer();
         var promise = defered.promise;
 
-        LegalEntity.getAll = function(){
-            $request.get('/servlet/LegalEntity/SelectAll').then(function (Response) {
-                //Response.data.dataResponse[0].rolList.push('Other');
-                legalEntities = Response.data.dataResponse;
-                defered.resolve(legalEntities);
-
-            }),function (error) {
-                defered.reject(error);
-            };
-            return promise;
+        this.getAll = function(){
+            return $request.get('/servlet/LegalEntity/SelectAll');
         }
 
-        LegalEntity.getById = function(idLegal){
+        this.getById = function(idLegal){
+            //console.log(idLegal);
             var param = {id:idLegal};
-            $request.get('/servlet/LegalEntity/Select',param).then(function (Response) {
-                legalEntity = Response.data.dataResponse;
-                defered.resolve(legalEntity);
-
-            }),function (error) {
-                defered.reject(error);
-            };
-            return promise;
+            return $request.post('/servlet/LegalEntity/Select',param);
         }
 
-        LegalEntity.set = function (legalEntity,isUpdate) {
+        this.set = function (legalEntity,isUpdate) {
             console.log(legalEntity);
             if(isUpdate){
                 console.log("Update");
@@ -53,7 +39,7 @@ angular.module('DashboardApp')
                     );
         }
 
-        LegalEntity.delete = function (idLegal) {
+        this.delete = function (idLegal) {
             var params = {
 
                 "id": idLegal
@@ -68,5 +54,4 @@ angular.module('DashboardApp')
                     });
         }
 
-        return LegalEntity;
     }]);

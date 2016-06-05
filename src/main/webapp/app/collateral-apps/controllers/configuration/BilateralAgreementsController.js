@@ -103,7 +103,7 @@ DashboardApp.controller(
             $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
 
             LegalEntityService.getAll().then(function (result) {
-                $scope.legalEntities = result;
+                $scope.legalEntities = result.data.dataResponse;
             });
         }
     ])
