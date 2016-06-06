@@ -10,17 +10,13 @@
                         <label class="control-label col-md-3">Principal</label>
                         <div class="col-md-9">
                             <ui-select ng-model="legalEntityPrimary.selected" theme="bootstrap" class="input-medium">
-                                <ui-select-match allow-clear="{{!!allowClear}}"
-                                                 placeholder="Select or search a Legal Entity...">
+                                <ui-select-match
+                                        placeholder="Select or search a Legal Entity...">
                                     {{$select.selected.name}}
                                 </ui-select-match>
                                 <ui-select-choices
-                                        repeat="legalEntity in legalEntities | propsFilter: {name: $select.search, shortName: $select.search} track by legalEntity.id">
+                                        repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
                                     <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
-                                    <small>
-                                        shortName: <span
-                                            ng-bind-html="''+legalEntity.shortName | highlight: $select.search"></span>
-                                    </small>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
@@ -29,18 +25,14 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Counterparty</label>
                         <div class="col-md-9">
-                            <ui-select ng-model="legalEntityCounterParty.selected" theme="bootstrap" class="input-medium">
-                                <ui-select-match allow-clear="{{!!allowClear}}"
-                                                 placeholder="Select or search a Legal Entity...">
+                            <ui-select ng-model="legalEntityCounterparty.selected" theme="bootstrap" class="input-medium">
+                                <ui-select-match
+                                        placeholder="Select or search a Legal Entity...">
                                     {{$select.selected.name}}
                                 </ui-select-match>
                                 <ui-select-choices
-                                        repeat="legalEntity in legalEntities | propsFilter: {name: $select.search, shortName: $select.search} track by legalEntity.id">
+                                        repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
                                     <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
-                                    <small>
-                                        shortName: <span
-                                            ng-bind-html="''+legalEntity.shortName | highlight: $select.search"></span>
-                                    </small>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
@@ -132,7 +124,8 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Call Frequency</label>
                         <div class="col-md-9">
-                            <select class="form-control input-medium" ng-model="LegalEntity.BilateralAgreements.main.callFrequency">
+                            <select class="form-control input-medium"
+                                    ng-model="LegalEntity.BilateralAgreements.main.callFrequency">
                                 <option value="daily" selected>Daily</option>
                                 <option value="week">Weekly</option>
                                 <option value="month">Monthly</option>
@@ -141,7 +134,8 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12" ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'week'">
+                    <div class="form-group col-md-12"
+                         ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'week'">
                         <label class="control-label col-md-3">Call Day</label>
                         <div class="col-md-9">
                             <select class="form-control input-medium">
@@ -154,14 +148,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12" ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'month' || LegalEntity.BilateralAgreements.main.callFrequency == 'end-of-month'">
+                    <div class="form-group col-md-12"
+                         ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'month' || LegalEntity.BilateralAgreements.main.callFrequency == 'end-of-month'">
                         <label class="control-label col-md-3">Call Date</label>
                         <div class="col-md-9">
-                            <input type="number" class="form-control input-medium" id="le-bilateral-ag-calldate" name="le-bilateral-ag-calldate"
-                                   min="1" max="28" ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'month'">
+                            <input type="number" class="form-control input-medium" id="le-bilateral-ag-calldate"
+                                   name="le-bilateral-ag-calldate"
+                                   min="1" max="28"
+                                   ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'month'">
 
-                            <input type="number" class="form-control input-medium" id="le-bilateral-ag-calldate-eom" name="le-bilateral-ag-calldate-eom"
-                                   min="28" max="31" ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'end-of-month'">
+                            <input type="number" class="form-control input-medium" id="le-bilateral-ag-calldate-eom"
+                                   name="le-bilateral-ag-calldate-eom"
+                                   min="28" max="31"
+                                   ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'end-of-month'">
                         </div>
                     </div>
 
