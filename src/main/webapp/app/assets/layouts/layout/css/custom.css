@@ -82,6 +82,9 @@
         margin-left: 1px;
     }
 
+    .menu-collateral-management{
+        margin-top: 60px !important;
+    }
 }
 
 i.close-tab-icon
@@ -127,3 +130,12 @@ i.close-tab-icon:hover {
 }
 
 /* User Menu */
+
+/* Full Screen Customize*/
+
+.page-portlet-fullscreen .page-header
+{
+    display: block !important;
+}
+
+/* Full Screen Customize*/

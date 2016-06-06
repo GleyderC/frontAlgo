@@ -10,7 +10,7 @@
                 <div class="container-fluid">
                     <div class="clearfix navbar-fixed-top">
                         <!-- Brand and toggle get grouped for better mobile display -->
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        <button type="button" class="navbar-toggle hide" data-toggle="collapse"
                                 data-target=".navbar-responsive-collapse">
                             <span class="sr-only">Toggle navigation</span>
                                 <span class="toggle-icon">
@@ -220,6 +220,12 @@
             </nav>
         </header>
         <!-- END HEADER -->
+        <!-- PAGE CONTENT-->
+        <div class="container-fluid">
+            <div class="page-content">
+                </div>
+            </div>
+
         <%--<div class="container-fluid">
             <div class="page-content">
                 <!-- BEGIN BREADCRUMBS -->
