@@ -221,10 +221,6 @@
         </header>
         <!-- END HEADER -->
         <!-- PAGE CONTENT-->
-        <div class="container-fluid">
-            <div class="page-content">
-                </div>
-            </div>
 
         <%--<div class="container-fluid">
             <div class="page-content">

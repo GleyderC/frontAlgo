@@ -47,7 +47,6 @@ DashboardApp.controller(
 
             $scope.workspaceTabs = {
                 name: 'collateral-tabs',
-                active: true,
                 tabList: [
                     {
                         head: {
