@@ -76,6 +76,21 @@
 
                                 </div>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-3">Rol</label>
+                                <div class="col-md-9">
+                                    <select multiple class="form-control input-medium"
+                                            id="legal-entity-rols" name="legal-entity-rols[]"
+                                            ng-options="rol for rol in rols" ng-model="legalEntity.rolList">
+                                    </select>
+                                    <!--select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
+                                            name="base-currency-select[]" class="form-control input-small"
+                                            ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
+                                            ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.currencies.selected">
+                                        <option value="">-- SELECT BASE CURRENCY --</option-->
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <!--END </div> row-->
                         <div class="row">
@@ -91,22 +106,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label col-md-3">Rol</label>
-                                <div class="col-md-9">
-                                    <select multiple class="form-control input-medium"
-                                    id="legal-entity-rols" name="legal-entity-rols[]"
-                                        ng-options="rol for rol in rols" ng-model="legalEntity.rolList">
-                                    </select>
-                                    <!--select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
-                                            name="base-currency-select[]" class="form-control input-small"
-                                            ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
-                                            ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.currencies.selected">
-                                        <option value="">-- SELECT BASE CURRENCY --</option-->
-                                    </select>
-                                </div>
-                            </div>
-                            <!--/row-->
                         </div>
                         <!--END </DIV> ROW-->
                     </div>

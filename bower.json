@@ -15,7 +15,6 @@
     "angular-cookies": "^1.5.5",
     "angular-touch": "^1.5.5",
     "angular-sanitize": "^1.5.5",
-    "angular-datatables": "^0.5.4",
     "angular-local-storage": "^0.2.7",
     "oclazyload": "^1.0.9",
     "angular-ui-select": "^0.17.0",
@@ -23,8 +22,7 @@
     "multiselect": "jquery-multi-select#^0.9.12",
     "angular-ui-grid": "^3.1.1",
     "pdfmake": "^0.1.20",
-    "angular-toastr": "^1.7.0",
-    "selectize": "^0.12.1"
+    "angular-toastr": "^1.7.0"
   },
   "devDependencies": {},
   "appPath": "src/main/webapp/app",
