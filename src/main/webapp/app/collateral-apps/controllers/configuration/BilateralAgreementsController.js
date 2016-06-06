@@ -41,12 +41,14 @@ DashboardApp.controller(
                 }
             };
 
-            $scope.$on('$includeContentLoaded', function () {
-
+            $scope.$on('$includeContentLoaded', function (event,url) {
+                $scope.workspaceTabs.active = $scope.workspaceTabs.tabList.length;
+                $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = 'fa fa-money';
             });
 
             $scope.workspaceTabs = {
                 name: 'collateral-tabs',
+                active: 1,
                 tabList: [
                     {
                         head: {
@@ -64,7 +66,7 @@ DashboardApp.controller(
                 $scope.workspaceTabs.tabList.push(
                     {
                         head: {
-                            icon: '',
+                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
                             text: 'New Billateral Agreement(' + ($scope.workspaceTabs.tabList.length) + ')'
                         },
                         templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
@@ -72,8 +74,6 @@ DashboardApp.controller(
                     }
                 );
 
-                //var offset = $("#container-tabs-bilateral-contract").offset().top;
-                //elementService.scrollToElement("container-tabs-bilateral-contract", offset);
             };
 
             $scope.editBillateralAgreement = function () {
@@ -88,9 +88,6 @@ DashboardApp.controller(
                         closable: true
                     }
                 );
-
-                //var offset = $("#container-tabs-bilateral-contract").offset().top;
-                //elementService.scrollToElement("container-tabs-bilateral-contract", offset);
 
             };
 
@@ -122,13 +119,13 @@ DashboardApp.controller(
                   $request,
                   $localStorage) {
 
-            $scope.$on('$includeContentLoaded', function () {
+            $scope.$on('$includeContentLoaded', function (event,url) {
 
             });
 
             $scope.workspaceTabs = {
                 name: 'collateral-tabs',
-                active: 0,
+                active: 1,
                 tabList: [
                     {
                         head: {
