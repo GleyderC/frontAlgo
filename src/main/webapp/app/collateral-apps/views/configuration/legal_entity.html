@@ -23,32 +23,8 @@
              <div ui-grid="gridLegalEntityOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
                   ui-grid-resize-columns ui-grid-selection ui-grid-pagination
                      class="grid" style="height: 570px;"></div>
-            <!--div class="table-toolbar">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="btn-group pull-right">
-                            <button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown">Tools
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-                            <ul class="dropdown-menu pull-right">
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="fa fa-print"></i> Print </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="fa fa-file-pdf-o"></i> Save as PDF </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <i class="fa fa-file-excel-o"></i> Export to Excel </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <table  datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs"  class="table table-striped table-bordered table-hover table-checkable order-column">
+
+            <!--table  datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs"  class="table table-striped table-bordered table-hover table-checkable order-column">
                 <thead>
                 <tr>
                     <th> ID </th>
@@ -88,8 +64,8 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-bank font-dark font-green-haze"></i>
-                    <span class="caption-subject bold uppercase font-green-haze"> {{legalEntity.name}} </span>
-                    <span class="caption-helper"> {{legalEntity.id}} </span>
+                    <span class="caption-subject bold uppercase font-green-haze" ng-bind="legalEntity.name"> </span>
+                    <span class="caption-helper" ng-if="legalEntity.id!=-1" ng-bind="legalEntity.id"> </span>
 
                 </div>
                 <div class="tools">
