@@ -11,7 +11,17 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         });
 
         $scope.legalEntities = [];
-        $scope.financialCalendar = localStorageService.get('FinancialCalendar');
+
+        var financialCalendar = localStorageService.get('FinancialCalendar');
+        var i = 0;
+        //console.log($('#holidays-select').multiSelect());
+        /*financialCalendar.forEach(function (holiday) {
+
+            $('#holidays-select').multiSelect('addOption', { value: holiday.key, text: holiday.name, index: i, nested: 'optgroup_label' });
+            i++;
+        });*/
+
+
         $scope.rols = ['COUNTERPARTY', 'PO', 'ISSUER', 'CCP'];
         $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
         $scope.country = {};
@@ -159,6 +169,8 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 legal.countryId = country[0];
             });*/
             $scope.legalEntities.forEach(function(legalEntity){
+
+                //Insert mother Legal Entity
                 var MotherLegal = $scope.legalEntities.filter(function (legal) {
                     if(legal.id == legalEntity.motherLegalEntity)
                         return legal.name;
@@ -168,10 +180,11 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
                 if(MotherLegal[0]) {
                     legalEntity.namemotherLegalEntity = MotherLegal[0].name;
-                    //console.log(MotherLegal[0].name);
                 }
             });
             $scope.gridLegalEntityOptions.data = $scope.legalEntities;
+
+
         });
 
         $scope.setFocusInput = function (element) {
