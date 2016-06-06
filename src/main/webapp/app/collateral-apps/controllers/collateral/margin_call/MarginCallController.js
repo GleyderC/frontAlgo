@@ -35,17 +35,16 @@ DashboardApp
 								name : "Disputed"
 							} ];
 							$scope.type = {};
-							$scope.typeList = [ {
-								name : "CSA - SCSA"
-							}, {
-								name : "REPO"
-							}, {
-								name : "SEC Lending"
-							}, {
-								name : "CCP"
+							function buildBilateralContractTypeList(){
+								var list=  $localStorage.get("BilateralContractType");
+								var buildList  = [];
+								list.forEach(function(v,k){
+									buildList.push({na: v.key ,  value:v.key}); 
+								});
+								console.log(buildList);
+								return buildList;
 							}
-							 ];
-							
+							$scope.typeList = $localStorage.get("BilateralContractType");
 					
 							$scope.workspaceTabs = {
 								name : 'margin-call-tabs',
@@ -60,29 +59,92 @@ DashboardApp
 									active : true
 								} ]
 							};
-
+							$scope.gridData = [
+							                   {
+							                	    "counterpartyA": {
+							                	      "id": 1563412744,
+							                	      "name": "Demo Bank"
+							                	    },
+							                	    "counterpartyB": {
+							                	      "id": 423287131,
+							                	      "name": "J.P. MORGAN"
+							                	    },
+							                	    "marginFrequency": "DAILY",
+							                	    "contractType": "CSA_MARGINED",
+							                	    "vm": "1200 EUR",
+							                	    "currency": "EUR",
+							                	    "status" : "Awaiting Response"
+							                	   
+							                	  },
+							                	  {
+							                	    "counterpartyA": {
+							                	      "id": 1563412744,
+							                	      "name": "Demo Bank",
+							                	      "otherName": "DEMO"
+							                	    },
+							                	    "counterpartyB": {
+							                	      "id": 423287131,
+							                	      "name": "J.P. MORGAN",
+							                	      "otherName": "JPMORGAN"
+							                	    },
+							                	    "vm": "10000 EUR",
+							                	    "currency": "EUR",
+							                	    "status" : "Awaiting Call",
+							                	    "partyBPaysVm": false,
+							                	    "marginFrequency": "WEEKLY",
+							                	    "contractType": "CSA_MARGINED"
+							                	  },
+							                	  {
+							                	    "counterpartyA": {
+							                	      "id": 1563412744,
+							                	      "name": "Demo Bank",
+							                	      "riskProfile": {
+							                	        "SPRating": "Unrated",
+							                	        "riskWeight": 0,
+							                	        "cdsSpreadArrayList": []
+							                	      },
+							                	      "countryId": -1,
+							                	      "financialCalendarList": []
+							                	    },
+							                	    "counterpartyB": {
+							                	      "id": 423287131,
+							                	      "name": "J.P. MORGAN",
+							                	      "otherName": "JPMORGAN"
+							                	    },
+							                	    "currency": "EUR",
+							                	    "partyBPaysVm": false,
+							                	    "marginFrequency": "WEEKLY",
+							                	    "contractType": "SCSA_MARGINED",
+							                	    "callDay": 0
+							                	  }
+							                	];
 							$scope.gridOptions = {
 
 								enableFiltering : true,
 								onRegisterApi : function(gridApi) {
 									$scope.gridApi = gridApi;
 								},
+								data : $scope.gridData,
 								columnDefs : [
 										{
 											name : 'Principal',
-											field : 'principal',
-//											field : 'counterpartyA.name',
+											field : 'counterpartyA.name',
 											headerCellClass : $scope.highlightFilteredHeader,
 											filter : {
-												type : uiGridConstants.filter.SELECT,
+												type : 	uiGridConstants.filter.SELECT,
 												selectOptions : $scope.counterPartyAList
 
 											},
 										},
 										{
+
+											name : ' Type',
+											field : 'contractType',
+											enableFiltering : false
+										},
+										{
 											name : 'Counter Party',
-											field : "counterparty",
-//											field : 'counterpartyB.name',
+											field : "counterpartyB.name",
 											filter : {
 												type : uiGridConstants.filter.SELECT,
 												selectOptions : $scope.counterPartyBList
@@ -90,29 +152,17 @@ DashboardApp
 											},
 										},
 
-										{
-
-											name : ' Type',
-											field : 'contractType',
-											filter : {
-												type : uiGridConstants.filter.SELECT,
-												selectOptions : $scope.contractTypeList,
-												condition : function(
-														searchTerm, cellValue) {
-													return cellValue === searchTerm;
-												}
-											}
-										},
+										
 										{
 											name : 'Currency',
 											field : 'currency',
 											filter : {
 												type : uiGridConstants.filter.SELECT,
 												selectOptions : [ {
-													value : '1',
+													value : 'EUR',
 													label : 'EUR'
 												}, {
-													value : '2',
+													value : 'USD',
 													label : 'USD'
 												}
 
@@ -125,8 +175,8 @@ DashboardApp
 										},
 										
 										{
-											name : 'Action required',
-											cellTemplate : '<ul> <li class="list-group-item" >Yes</li><li class="list-group-item">No</li></ul>',
+											name : 'Status',
+											field : "status",
 											enableFiltering : false
 										},
 										{
@@ -136,11 +186,10 @@ DashboardApp
 										},
 										{
 											name : 'IM',
-											field : 'im',
 											enableFiltering : false
 										},
 										{
-											name : 'Actions',
+											name : 'Action buttons',
 											cellTemplate : ' <button class="btn btn-sm btn-primary uigrid-btn" ><i class="fa fa-eye"></i></button>',
 											enableColumnMenu : false,
 											width : 160,
@@ -202,16 +251,7 @@ DashboardApp
 									}, 1000, 10);
 								}
 							};
-						$scope.gridData = [{
-							principal: "Test",
-							counterparty : "counter test",
-							vm : "Vm test",
-							im : "im test",
-							currency : "EUR",
-							contractType : "CSA"
-							
-								
-						}];
+						
 						$scope.today = function() {
 						    $scope.dt = new Date();
 						  };
@@ -230,14 +270,16 @@ DashboardApp
 
 
 						  $scope.dateOptions = {
-						    dateDisabled: false,
+						    dateDisabled: disabled,
 						    formatYear: 'yy',
 						    maxDate: new Date(2020, 5, 22),
 						    minDate: new Date(),
 						    startingDay: 1
 						  };
 
+						
 						  $scope.toggleMin = function() {
+							
 						    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
 						    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
 						  };
@@ -276,12 +318,17 @@ DashboardApp
 						    }
 						  ];
 
+						  function disabled(data) {
+							    var date = data.date,
+							      mode = data.mode;
+							    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+							}
 						  function getDayClass(data) {
 						    var date = data.date,
 						      mode = data.mode;
 						    if (mode === 'day') {
 						      var dayToCheck = new Date(date).setHours(0,0,0,0);
-
+						      
 						      for (var i = 0; i < $scope.events.length; i++) {
 						        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
 
@@ -292,5 +339,8 @@ DashboardApp
 						    }
 						  }
 
+						  $scope.$watch("dt", function(newValue, oldValue) {
+						      console.log("I've changed : ",newValue );
+						  });
 						
 						} ]);
