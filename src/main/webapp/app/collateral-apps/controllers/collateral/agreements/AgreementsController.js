@@ -89,6 +89,11 @@ DashboardApp.controller('AgreementsController',
 //                        ]
 //                    }
 //                },
+                {
+                    name : 'Exposure / Collateral',
+                     enableFiltering: false,
+                 }  ,
+                 
 
                 {
                 	 name: 'Actions',
@@ -98,11 +103,7 @@ DashboardApp.controller('AgreementsController',
                      enableFiltering:false,
                      enableSorting  : false
                 },
-                {
-                   name : 'Exposure / Collateral',
-                    enableFiltering: false,
-                }  ,
-                
+            
             ],
             rowHeight: 45, 
             enableGridMenu: true,
