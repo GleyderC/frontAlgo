@@ -45,6 +45,7 @@ var MarginCallCtrl = DashboardApp
 									"id" : 423287131,
 									"name" : "J.P. MORGAN"
 								},
+								"ccpName" : "SwapClear",
 								"marginFrequency" : "DAILY",
 								"contractType" : "CSA_MARGINED",
 								"vm" : "1200 EUR",
@@ -85,6 +86,7 @@ var MarginCallCtrl = DashboardApp
 									"name" : "J.P. MORGAN",
 									"otherName" : "JPMORGAN"
 								},
+								"ccpName" : "BmeClearing",
 								"currency" : "EUR",
 								"partyBPaysVm" : false,
 								"marginFrequency" : "WEEKLY",
@@ -109,12 +111,12 @@ var MarginCallCtrl = DashboardApp
 
 											},
 										},
-										{
-
-											name : ' Type',
-											field : 'contractType',
-											filterHeaderTemplate : '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
-										},
+										 {
+						                    name : 'Fund/Clearing Broker',
+						                    field: 'ccpName',
+						                    enableFiltering:false	
+						                    
+						                },
 										{
 											name : 'Counter Party',
 											field : "counterpartyB.name",
@@ -123,6 +125,14 @@ var MarginCallCtrl = DashboardApp
 												selectOptions : $scope.counterPartyBList
 
 											},
+										},
+										{
+
+											name : 'Contract Type',
+											field : 'contractType',
+											width : 140,
+											filterHeaderTemplate : '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
+										
 										},
 
 										{
@@ -159,13 +169,14 @@ var MarginCallCtrl = DashboardApp
 										},
 										{
 											name : 'IM',
-											enableFiltering : false
+											enableFiltering : false,
+											width:80
 										},
 										{
 											name : 'Action buttons',
 											cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ><i class="fa fa-eye"></i></button> </div>',
 											enableColumnMenu : false,
-											width : 160,
+											width : 120,
 											enableFiltering : false,
 											enableSorting : false
 										}
@@ -280,32 +291,32 @@ MarginCallCtrl
 					var $elm;
 					$scope.listOfTypes  =$localStorage.get("BilateralContractType");
 					$scope.showModal = function() {
-								$scope.gridOptions = {
-									data : [],
-									enableColumnMenus : false,
-									onRegisterApi : function(gridApi) {
-										$scope.gridApi = gridApi;
+						$scope.gridOptions = {
+								data : [],
+								enableColumnMenus : false,
+								onRegisterApi : function(gridApi) {
+									$scope.gridApi = gridApi;
 
-										if ($scope.colFilter
-												&& $scope.colFilter.listTerm) {
-											$timeout(function() {
-												$scope.colFilter.listTerm
-														.forEach(function(value) {
-															var entities = $scope.gridOptions.data
-																	.filter(function(
-																			row) {
-																		return row.type === value;
-																	});
+									if ($scope.colFilter
+											&& $scope.colFilter.listTerm) {
+										$timeout(function() {
+											$scope.colFilter.listTerm
+													.forEach(function(type) {
+														var entities = $scope.gridOptions.data
+																.filter(function(
+																		row) {
+																	return row.type === type;
+																});
 
-															if (entities.length > 0) {
-																$scope.gridApi.selection
-																		.selectRow(entities[0]);
-															}
-														});
-											});
-										}
+														if (entities.length > 0) {
+															$scope.gridApi.selection
+																	.selectRow(entities[0]);
+														}
+													});
+										});
 									}
-								};
+								}
+							};
 						$scope.listOfTypes.forEach(function(contractType) {
 							$scope.gridOptions.data.push({
 								type : contractType.key
@@ -316,12 +327,29 @@ MarginCallCtrl
 						angular.element(document.body).prepend($elm);
 						$compile($elm)($scope);
 					};
+					$scope.close = function() {
+						var contractTypes = $scope.gridApi.selection.getSelectedRows();
+						$scope.colFilter.listTerm = [];
+
+						contractTypes.forEach(function(val) {
+							$scope.colFilter.listTerm.push(val.type);
+						});
+
+						$scope.colFilter.term = $scope.colFilter.listTerm
+								.join(', ');
+						$scope.colFilter.condition = new RegExp(
+								$scope.colFilter.listTerm.join('|'));
+
+						if ($elm) {
+							$elm.remove();
+						}
+					};
 				} ])
 		.directive(
 				'modalTypes',
 				function() {
 					return {
-						template : '<label>{{colFilter.term}}</label><button class="btn btn-default" ng-click="showModal()">Filter</button>',
+						template : '<label></label><button class="btn btn-default" ng-click="showModal()">Filter</button>',
 						controller : 'modalTypesCtrl'
 					};
 				})
