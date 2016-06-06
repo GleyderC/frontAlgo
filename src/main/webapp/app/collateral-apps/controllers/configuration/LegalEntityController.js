@@ -11,7 +11,13 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         });
 
         $scope.legalEntities = [];
-        //console.log($scope.legalEntityMother.selected.id);
+        $scope.financialCalendar = localStorageService.get('FinancialCalendar');
+        $scope.rols = ['COUNTERPARTY', 'PO', 'ISSUER', 'CCP'];
+        $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
+        $scope.country = {};
+        $scope.countries = localStorageService.get('CountryEnum');
+
+        //console.log($scope.countries);
 
         buildLegalData();
 
@@ -19,30 +25,33 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             $scope.legalEntityMother = { selected: { id: -1}};
 
+            $scope.country = { selected: { id: -1}};
+
             $scope.legalEntity =
             {
-                "name": "",
-                "otherName": "",
-                "otherName2": "",
-                "otherName3": "",
-                "otherName4": "",
-                "otherName5": "",
-                "otherName6": "",
-                "BIC": "",
-                "LEI": "",
-                "isBranch": false,
-                "motherLegalEntity": -1,
-                "cdsMarketDataName": "",
-                "contactPersonList": [],
-                "rolList": [],
-                "ccpOwnClientAccounts": [],
-                "ccpMyClientsAccounts": [],
-                "rwaMultiplier": 0,
-                "leverageRatioMultiplier": 0,
-                "cvaComputes": false,
-                "riskProfile": {"SPRating": "", "riskWeight": 0, "cdsSpreadArrayList": []},
-                "countryId": "-1",
-                "financialCalendarList": []
+                id: -1,
+                name: "",
+                otherName: "",
+                otherName2: "",
+                otherName3: "",
+                otherName4: "",
+                otherName5: "",
+                otherName6: "",
+                BIC: "",
+                LEI: "",
+                isBranch: false,
+                motherLegalEntity: -1,
+                cdsMarketDataName: "",
+                contactPersonList: [],
+                rolList: [],
+                ccpOwnClientAccounts: [],
+                ccpMyClientsAccounts: [],
+                rwaMultiplier: 0,
+                leverageRatioMultiplier: 0,
+                cvaComputes: false,
+                riskProfile: {SPRating: "", riskWeight: 0, cdsSpreadArrayList: []},
+                countryId: "-1",
+                financialCalendarList: []
 
             };
             $scope.isEditLegal = false;
@@ -84,13 +93,13 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                     console.log('row selected ' + row.isSelected);
 
                 });*/
-                gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+                /*gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
                     //console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue );
                     if(newValue!=oldValue)
                         LegalEntityService.set(rowEntity, true);
 
                     $scope.$apply();
-                });
+                });*/
             }
         };
 
@@ -100,15 +109,16 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
 
         $scope.gridLegalEntityOptions.columnDefs = [
-            {field: 'id', enableCellEdit : false},
+            {field: 'id', enableCellEdit : false, width: 90,},
             {field: 'name', enableCellEdit : false,
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
+            {field: 'otherName', enableCellEdit : false },
             {
-                field: 'isBranch', enableCellEdit : false,
+                field: 'isBranch', name: 'Branch',enableCellEdit : false, width: 70,
                 cellTemplate: "<div>{{grid.appScope.booleanValue(row)}}</div>",
                     filter: {
                         type: uiGridConstants.filter.SELECT,
@@ -116,6 +126,13 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                     },
 
             },
+            {field:'namemotherLegalEntity',name:'Mother', enableCellEdit : false},
+            /*{   name: 'Country',
+                field: 'countryId.name',
+                editModelField: 'countryId',
+                editableCellTemplate: paths.tpls + '/UiSelect.html',
+                editDropdownOptionsArray : $scope.countries
+            },*/
             {field: 'LEI', enableCellEdit : false },
             {field: 'BIC', enableCellEdit : false },
             {field: 'rolList',
@@ -133,9 +150,27 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             }
         ];
 
-
         LegalEntityService.getAll().then(function (result) {
             $scope.legalEntities = result.data.dataResponse;
+            /*$scope.legalEntities.forEach(function(legal){
+                var country = $scope.countries.filter(function (country) {
+                    return country.key == legal.countryId;
+                });
+                legal.countryId = country[0];
+            });*/
+            $scope.legalEntities.forEach(function(legalEntity){
+                var MotherLegal = $scope.legalEntities.filter(function (legal) {
+                    if(legal.id == legalEntity.motherLegalEntity)
+                        return legal.name;
+                    else return "";
+
+                });
+
+                if(MotherLegal[0]) {
+                    legalEntity.namemotherLegalEntity = MotherLegal[0].name;
+                    //console.log(MotherLegal[0].name);
+                }
+            });
             $scope.gridLegalEntityOptions.data = $scope.legalEntities;
         });
 
@@ -168,7 +203,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             elementService.scrollToElement("legal-entity-tabs", 80);
 
-            $scope.setFocusInput('le-general-data')
+            $scope.setFocusInput('le-general-data');
 
             $scope.legalEntity = row.entity;
 
@@ -177,14 +212,15 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 LegalEntityService.getById($scope.legalEntity.motherLegalEntity).then(function (result) {
                     var legalEntityMother = result.data.dataResponse;
                     //console.log(legalEntityMother);
-                        $scope.legalEntityMother.selected = legalEntityMother;
+                    $scope.legalEntityMother.selected = legalEntityMother;
                 });
             }
 
-            $scope.country.selected = $scope.countries.filter(function (country) {
+            $scope.country = { selected: { id: -1}};
+            var country = $scope.countries.filter(function (country) {
                 return country.key == $scope.legalEntity.countryId;
             });
-            console.log($scope.country.selected);
+            $scope.country.selected = country[0];
 
             $scope.isEditLegal = true;
 
@@ -194,10 +230,11 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             if($scope.legalEntityMother.selected){
                 legalEntity.motherLegalEntity = $scope.legalEntityMother.selected.id;
+                legalEntity.namemotherLegalEntity = $scope.legalEntityMother.selected.name;
 
             }
             if($scope.country.selected){
-                console.log($scope.country.selected);
+                //console.log($scope.country.selected);
                 legalEntity.countryId = $scope.country.selected.key;
             }
 
@@ -223,13 +260,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.cancel = function () {
             buildLegalData();
         }
-
-        $scope.financialCalendar = localStorageService.get('FinancialCalendar');
-        $scope.rols = ['COUNTERPARTY', 'PO', 'ISSUER', 'CCP'];
-        $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
-        $scope.country = {};
-        $scope.countries = localStorageService.get('CountryEnum');
-
 
     }]);
 

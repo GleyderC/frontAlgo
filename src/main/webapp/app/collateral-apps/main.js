@@ -334,6 +334,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /* select css*/
                             'assets/vendor/select2/select2.css',
+                            'assets/vendor/selectize/dist/css/selectize.css',
                             'assets/vendor/angular-ui-select/dist/select.min.css',
                             'assets/vendor/multiselect/css/multi-select.css',
 
@@ -360,6 +361,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/directives/MenuCollateral.js',
                             'collateral-apps/directives/bsSwitch.js',
                             'collateral-apps/directives/TabManagement.js',
+                            'collateral-apps/directives/UiSelectWrap.js',
 
                             /* Services */
                             'collateral-apps/services/DashboardService.js',

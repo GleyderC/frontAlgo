@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" />
     <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="assets/vendor/datatables/media/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="assets/vendor/angular-toastr/dist/angular-toastr.css" />
     <!-- endbower -->
 
@@ -81,9 +82,12 @@
 <script src="assets/vendor/angular-cookies/angular-cookies.js"></script>
 <script src="assets/vendor/angular-touch/angular-touch.js"></script>
 <script src="assets/vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="assets/vendor/datatables/media/js/jquery.dataTables.js"></script>
 <script src="assets/vendor/angular-local-storage/dist/angular-local-storage.js"></script>
 <script src="assets/vendor/oclazyload/dist/ocLazyLoad.js"></script>
 <script src="assets/vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
+<script src="assets/vendor/sifter/sifter.js"></script>
+<script src="assets/vendor/microplugin/src/microplugin.js"></script>
 <!-- endbower -->
 
 <!-- BEGIN PAGE SPINNER -->
