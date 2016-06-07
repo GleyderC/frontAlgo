@@ -1,7 +1,6 @@
 'use strict';
 
 var DashboardApp = angular.module('DashboardApp')
-
 var MarginCallCtrl = DashboardApp
 		.controller(
 				'MarginCallController',
@@ -36,6 +35,23 @@ var MarginCallCtrl = DashboardApp
 									active : true
 								} ]
 							};
+						
+					         $scope.viewMarginCall = function (value) {
+					               $scope.gridApi.selection.getSelectedRows();
+					        	 
+					                $scope.workspaceTabs.tabList.push(
+					                    {
+					                        head: {
+					                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
+					                            text: 'Margin call ('+value+')',
+					                        },
+					                        templateUrl: paths.views + "/collateral/margin_call/margin_call_detail.html",
+					                        closable: true
+					                    }
+					                );
+
+					            };
+							
 							$scope.gridData = [ {
 								"counterpartyA" : {
 									"id" : 1563412744,
@@ -123,11 +139,9 @@ var MarginCallCtrl = DashboardApp
 											filter : {
 												type : uiGridConstants.filter.SELECT,
 												selectOptions : $scope.counterPartyBList
-
 											},
 										},
 										{
-
 											name : 'Contract Type',
 											field : 'contractType',
 											width : 140,
@@ -155,7 +169,6 @@ var MarginCallCtrl = DashboardApp
 												}
 											}
 										},
-
 										{
 											name : 'Status',
 											field : "status",
@@ -174,7 +187,7 @@ var MarginCallCtrl = DashboardApp
 										},
 										{
 											name : 'Action buttons',
-											cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ><i class="fa fa-eye"></i></button> </div>',
+											cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity.counterpartyA.name)" ><i class="fa fa-eye"></i></button> </div>',
 											enableColumnMenu : false,
 											width : 120,
 											enableFiltering : false,
