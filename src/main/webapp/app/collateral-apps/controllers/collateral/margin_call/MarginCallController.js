@@ -304,7 +304,7 @@ MarginCallCtrl
 					var $elm;
 					$scope.listOfTypes  =$localStorage.get("BilateralContractType");
 					$scope.showModal = function() {
-						$scope.gridOptions = {
+						$scope.gridOptionsContractType = {
 								data : [],
 								enableColumnMenus : false,
 								onRegisterApi : function(gridApi) {
@@ -315,7 +315,7 @@ MarginCallCtrl
 										$timeout(function() {
 											$scope.colFilter.listTerm
 													.forEach(function(type) {
-														var entities = $scope.gridOptions.data
+														var entities = $scope.gridOptionsContractType.data
 																.filter(function(
 																		row) {
 																	return row.type === type;
@@ -331,11 +331,11 @@ MarginCallCtrl
 								}
 							};
 						$scope.listOfTypes.forEach(function(contractType) {
-							$scope.gridOptions.data.push({
+							$scope.gridOptionsContractType.data.push({
 								type : contractType.key
 							});
 						});
-						var html = '<div class="modal" ng-style="{display: \'block\'}"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">Filter Contract Type</div><div class="modal-body"><div id="grid1" ui-grid="gridOptions" ui-grid-selection class="modalGrid"></div></div><div class="modal-footer"><button id="buttonClose" class="btn btn-primary" ng-click="close()">Filter</button></div></div></div></div>';
+						var html = '<div class="modal" ng-style="{display: \'block\'}"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">Filter Contract Type</div><div class="modal-body"><div id="grid1" ui-grid="gridOptionsContractType" ui-grid-selection class="modalGrid"></div></div><div class="modal-footer"><button id="buttonClose" class="btn btn-primary" ng-click="close()">Filter</button></div></div></div></div>';
 						$elm = angular.element(html);
 						angular.element(document.body).prepend($elm);
 						$compile($elm)($scope);
@@ -374,18 +374,17 @@ MarginCallCtrl
 						$scope.listOfStatus = [ "Awaiting Response",
 								"Awaiting Call", "Completed", "Computed",
 								"Disputed" ];
-						$scope.gridOptions = {
+						$scope.gridStatusFilterOptions = {
 							data : [],
 							enableColumnMenus : false,
 							onRegisterApi : function(gridApi) {
 								$scope.gridApi = gridApi;
 
-								if ($scope.colFilter
-										&& $scope.colFilter.listTerm) {
+								if ($scope.colFilter && $scope.colFilter.listTerm) {
 									$timeout(function() {
 										$scope.colFilter.listTerm
 												.forEach(function(status) {
-													var entities = $scope.gridOptions.data
+													var entities = $scope.gridStatusFilterOptions.data
 															.filter(function(
 																	row) {
 																return row.status === status;
@@ -398,16 +397,16 @@ MarginCallCtrl
 												});
 									});
 								}
+
 							}
 						};
 
 						$scope.listOfStatus.forEach(function(val) {
-							$scope.gridOptions.data.push({
+							$scope.gridStatusFilterOptions.data.push({
 								status : val
 							});
 						});
-
-						var html = '<div class="modal" ng-style="{display: \'block\'}"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">Filter Status</div><div class="modal-body"><div id="grid1" ui-grid="gridOptions" ui-grid-selection class="modalGrid"></div></div><div class="modal-footer"><button id="buttonClose" class="btn btn-primary" ng-click="close()">Filter</button></div></div></div></div>';
+						var html = '<div class="modal" ng-style="{display: \'block\'}"><div class="modal-dialog"><div class="modal-content"><div class="modal-header">Filter Status</div><div class="modal-body"><div ng-if="!refresh" id="gridFilter" ui-grid="gridStatusFilterOptions" ui-grid-selection class="modalGrid"></div></div><div class="modal-footer"><button id="buttonClose" class="btn btn-primary" ng-click="close()">Filter</button></div></div></div></div>';
 						$elm = angular.element(html);
 						angular.element(document.body).prepend($elm);
 						$compile($elm)($scope);
@@ -426,10 +425,10 @@ MarginCallCtrl
 								.join(', ');
 						$scope.colFilter.condition = new RegExp(
 								$scope.colFilter.listTerm.join('|'));
-
 						if ($elm) {
 							$elm.remove();
 						}
+
 					};
 				})
 		.directive(
