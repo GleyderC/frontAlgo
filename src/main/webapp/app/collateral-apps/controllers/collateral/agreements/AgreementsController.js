@@ -124,15 +124,7 @@ DashboardApp.controller('AgreementsController',
             exporterPdfPageSize: 'LETTER',
             exporterPdfMaxGridWidth: 500,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-            onRegisterApi: function (gridApi) {
-            	$scope.gridApi = gridApi;
-            	// call resize every 500 ms for 5 s after modal finishes opening
-            	$interval( function() {
-            		$scope.gridApi.core.handleWindowResize();
-            	}, 1000, 10);
-            }
         };
-        
         $request.get('/servlet/CollateralContract/SelectAll')
             .success(function(data) {
             	console.log(data.dataResponse)

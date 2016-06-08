@@ -22,7 +22,7 @@ var MarginCallCtrl = DashboardApp
 
 							});
 
-							$scope.workspaceTabs = {
+							$scope.marginCallTabs = {
 								name : 'margin-call-tabs',
 								active : true,
 								tabList : [ {
@@ -39,7 +39,7 @@ var MarginCallCtrl = DashboardApp
 					         $scope.viewMarginCall = function (value) {
 					               $scope.gridApi.selection.getSelectedRows();
 					        	 
-					                $scope.workspaceTabs.tabList.push(
+					                $scope.marginCallTabs.tabList.push(
 					                    {
 					                        head: {
 					                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
@@ -112,9 +112,6 @@ var MarginCallCtrl = DashboardApp
 							$scope.gridOptions = {
 
 								enableFiltering : true,
-								onRegisterApi : function(gridApi) {
-									$scope.gridApi = gridApi;
-								},
 								data : $scope.gridData,
 								columnDefs : [
 										{
@@ -148,7 +145,6 @@ var MarginCallCtrl = DashboardApp
 											filterHeaderTemplate : '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
 										
 										},
-
 										{
 											name : 'Currency',
 											field : 'currency',
@@ -199,10 +195,6 @@ var MarginCallCtrl = DashboardApp
 								enableGridMenu : true,
 								onRegisterApi : function(gridApi) {
 									$scope.gridApi = gridApi;
-									$interval(function() {
-										$scope.gridApi.core
-												.handleWindowResize();
-									}, 1000, 10);
 								}
 							};
 
@@ -210,11 +202,9 @@ var MarginCallCtrl = DashboardApp
 								$scope.dt = new Date();
 							};
 							$scope.today();
-
 							$scope.clear = function() {
 								$scope.dt = null;
 							};
-
 							$scope.inlineOptions = {
 								customClass : getDayClass,
 								minDate : new Date(),
@@ -290,11 +280,6 @@ var MarginCallCtrl = DashboardApp
 									}
 								}
 							}
-
-							$scope.$watch("dt", function(newValue, oldValue) {
-								console.log("I've changed : ", newValue);
-							});
-
 						} ]);
 
 MarginCallCtrl
