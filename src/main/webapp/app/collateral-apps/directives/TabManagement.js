@@ -1,36 +1,8 @@
 'use strict';
 
 /**
- * DEMO TAB MENU
-    $scope.workspaceTabs = {
-        name: 'collateral-tabs',
-        active: 0,
-        tabList: [{
-            head: {
-                icon: '',
-                text: 'Hi 1'
-            },
-            content: 'Content 1',
-            closable: true
-        },
-            {
-                head: {
-                    icon: '',
-                    text: 'Hi 2'
-                },
-                content: 'Content 2'
-            },
-            {
-                head: {
-                    icon: '',
-                    text: 'Hi 3'
-                },
-                content: 'Hi tab 3'
-            }]
-    };
-
-}]);
- **/
+ * WORKSPACE TAB MENU
+ */
 
 angular.module('DashboardApp').directive('workspaceTabs', [function () {
 
@@ -40,7 +12,7 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
 
     TabDirective.templateUrl = paths.tpls + "/TabManagementTemplate.html";
 
-    TabDirective.link = function (scope, element, attrs) {
+    TabDirective.link = function ($scope, element, attrs) {
 
         element.on('click', function(){
            //console.log("click")
@@ -49,57 +21,100 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
             e.preventDefault();
         });
 
-        scope.$watch('$apply', function (newVal, oldVal) {
-            //scope.workspaceTabs.active = (scope.workspaceTabs.tabList.length - 1)
+        $scope.$watch('$apply', function (newVal, oldVal) {
+            //$scope.workspaceTabs.active = ($scope.workspaceTabs.tabList.length - 1)
         });
 
-        scope.addTab = function () {
-            scope.workspaceTabs.tabList.push
-            ({
+        $scope.workspaceTabs.addTab = function (tabConfig) {
 
+            var globalTabConfig = {
                 head: {
-                    icon: 'glyphicon-map-marker',
-                    text: 'Hola ' + (scope.workspaceTabs.tabList.length + 1)
+                    icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
+                    text: ''
                 },
-                content: 'Content ' + (scope.workspaceTabs.tabList.length + 1),
-                templateUrl: 'demo.html',
-                disabled: false //disable tab
+                content: '',
+                templateUrl: '',
+                disabled: false,
+                closable: false
+            };
+
+            if(!!tabConfig && typeof tabConfig === 'object')
+            {
+
+                if(!!tabConfig.head.text){
+                    globalTabConfig.head.text = tabConfig.head.text;
+                }
+
+                if(!!tabConfig.content){
+                    globalTabConfig.content = tabConfig.content;
+                }
+
+                if(!!tabConfig.templateUrl){
+                    globalTabConfig.templateUrl = tabConfig.templateUrl;
+                }
+
+                if(!!tabConfig.disabled){
+                    globalTabConfig.disabled = tabConfig.disabled;
+                }
+
+                if(!!tabConfig.closable){
+                    globalTabConfig.closable = tabConfig.closable;
+                }
+
+            }
+
+            $scope.workspaceTabs.tabList.push(globalTabConfig);
+
+            $scope.workspaceTabs.active = $scope.workspaceTabs.tabList.length;
+
+            $scope.$on('$includeContentLoaded', function (event,url) {
+
+                $scope.workspaceTabs.active = $scope.workspaceTabs.tabList.length;
+
+                if(!!tabConfig.head.icon){
+                    $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = tabConfig.head.icon;
+                }
+                else
+                {
+                    $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = '';
+                }
+
             });
 
         }
 
-        scope.delTab = function ( tab, event ) {
+        $scope.workspaceTabs.closeTab = function ( tab, event ) {
 
             event.preventDefault();
 
-            if (scope.workspaceTabs.tabList.length >= 0) {
+            if ($scope.workspaceTabs.tabList.length >= 0) {
 
-                scope.workspaceTabs.tabList.splice(tab.$index,1);
-
-            }
-
-        }
-
-        scope.delAllTabRight = function (tab) {
-
-            if (scope.workspaceTabs.tabList.length >= 0) {
-
-                scope.workspaceTabs.tabList.splice(tab.$index + 1);
+                $scope.workspaceTabs.tabList.splice(tab.$index,1);
 
             }
 
         }
 
-        scope.delAllTabLeft = function (tab) {
+        $scope.workspaceTabs.delAllTabRight = function (tab) {
 
-            if (scope.workspaceTabs.tabList.length >= 0) {
+            if ($scope.workspaceTabs.tabList.length >= 0) {
 
-                angular.forEach(scope.workspaceTabs.tabList, function(index, tab){
+                $scope.workspaceTabs.tabList.splice(tab.$index + 1);
+
+            }
+
+        }
+
+        $scope.workspaceTabs.delAllTabLeft = function (tab) {
+
+            if ($scope.workspaceTabs.tabList.length >= 0) {
+
+                angular.forEach($scope.workspaceTabs.tabList, function(index, tab){
 
                     if(index >= tab.$index)
                         return false;
 
-                    scope.workspaceTabs.tabList.splice(index);
+                    $scope.workspaceTabs.tabList.splice(index);
 
                 });
 
@@ -107,14 +122,14 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
 
         }
 
-        scope.backTab = function () {
-            if(scope.workspaceTabs.active > 0 )
-                scope.workspaceTabs.active--;
+        $scope.workspaceTabs.backTab = function () {
+            if($scope.workspaceTabs.active > 0 )
+                $scope.workspaceTabs.active--;
         }
 
-        scope.nextTab = function () {
-            if(scope.workspaceTabs.active < (scope.workspaceTabs.tabList.length - 1) )
-                scope.workspaceTabs.active++;
+        $scope.workspaceTabs.nextTab = function () {
+            if($scope.workspaceTabs.active < ($scope.workspaceTabs.tabList.length - 1) )
+                $scope.workspaceTabs.active++;
         }
 
     };
