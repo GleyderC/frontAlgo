@@ -1,4 +1,4 @@
-<div class="portlet light bordered">
+<div ng-controller="BAMainController" class="portlet light bordered">
     <div class="portlet-body form">
         <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
             <div class="form-body row">
@@ -198,13 +198,14 @@
 
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Holidays</label>
-                        <div class="col-md-9">
+                        <!--<div class="col-md-9">
                             <select multiple="multiple" id="holidays-select" name="holidays-select[]"
                                     ng-options="holiday as holiday.codigo for holiday in LegalEntity.BilateralAgreements.holidays.list track by holiday.id"
                                     ng-model="LegalEntity.BilateralAgreements.holidays.selectedList">
                                 <option value="">-- SELECT HOLIDAY --</option>
                             </select>
-                        </div>
+                        </div>-->
+                        <multiselect-dual multiselect-elements="holidays"></multiselect-dual>
                     </div>
 
                     <div class="form-group col-md-12">

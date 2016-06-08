@@ -37,7 +37,8 @@ DashboardApp.controller(
             {
                 staticData: {
                     contractType: $localStorage.get("BilateralContractType"),
-                    currencies: currenciesList
+                    currencies: currenciesList,
+                    financialCalendar: $localStorage.get("FinancialCalendar")
                 }
             };
 
@@ -159,6 +160,15 @@ DashboardApp.controller(
             };
 
         }]);
+
+//BILATERAL AGREEMENT MAIN TAB CONTROLLER
+DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+    $scope.holidays = {
+        searchSelect: true,
+        searchSelected: true,
+        data: $scope.BilateralAgreements.staticData.financialCalendar
+    };
+}]);
 
 DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
 

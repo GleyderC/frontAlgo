@@ -1,7 +1,5 @@
 <div class="page-header-fixed page-sidebar-closed-hide-logo page-md" ng-app="DashboardApp">
-    <!-- BEGIN TEMPLATE DIRECTIVES
-    <script src="collateral-apps/directives/MenuCollateral.js" type="text/javascript"></script>
-    <!-- END TEMPLATE DIRECTIVES-->
+
     <!-- BEGIN CONTAINER -->
     <div class="wrapper">
         <!-- BEGIN HEADER -->
@@ -254,6 +252,10 @@
     <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 
     <!-- END THEME LAYOUT SCRIPTS -->
+
+    <!-- BEGIN TEMPLATE DIRECTIVES-->
+    <!--<script src="collateral-apps/directives/AngularMultiselectDual.js" type="text/javascript"></script>-->
+    <!-- END TEMPLATE DIRECTIVES-->
 
 </div>
 

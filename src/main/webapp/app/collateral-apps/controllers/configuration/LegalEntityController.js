@@ -21,6 +21,12 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             i++;
         });*/
 
+        $scope.holidays = {
+            searchSelect: true,
+            searchSelected: true,
+            data: financialCalendar
+        };
+
 
         $scope.rols = ['COUNTERPARTY', 'PO', 'ISSUER', 'CCP'];
         $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
