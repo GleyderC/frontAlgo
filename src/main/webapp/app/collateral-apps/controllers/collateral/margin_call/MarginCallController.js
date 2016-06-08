@@ -22,7 +22,7 @@ var MarginCallCtrl = DashboardApp
 
 							});
 
-							$scope.marginCallTabs = {
+							$scope.workspaceTabs = {
 								name : 'margin-call-tabs',
 								active : true,
 								tabList : [ {
@@ -35,15 +35,18 @@ var MarginCallCtrl = DashboardApp
 									active : true
 								} ]
 							};
-						
+							$scope.currentMarginCall = {} ;
+							$scope.setCurrentMarginCall = function (MarginCallEntity) {
+								$scope.currentMarginCall = MarginCallEntity;
+							};
 					         $scope.viewMarginCall = function (value) {
 					               $scope.gridApi.selection.getSelectedRows();
-					        	 
-					                $scope.marginCallTabs.tabList.push(
+								 $scope.setCurrentMarginCall(value);
+								 $scope.workspaceTabs.tabList.push(
 					                    {
 					                        head: {
 					                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
-					                            text: 'Margin call ('+value+')',
+					                            text: 'Margin call ('+value.counterpartyA.name+')',
 					                        },
 					                        templateUrl: paths.views + "/collateral/margin_call/margin_call_detail.html",
 					                        closable: true
@@ -51,7 +54,6 @@ var MarginCallCtrl = DashboardApp
 					                );
 
 					            };
-							
 							$scope.gridData = [ {
 								"counterpartyA" : {
 									"id" : 1563412744,
@@ -183,7 +185,7 @@ var MarginCallCtrl = DashboardApp
 										},
 										{
 											name : 'Action buttons',
-											cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity.counterpartyA.name)" ><i class="fa fa-eye"></i></button> </div>',
+											cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity)" ><i class="fa fa-eye"></i></button> </div>',
 											enableColumnMenu : false,
 											width : 120,
 											enableFiltering : false,
@@ -294,7 +296,6 @@ MarginCallCtrl
 								enableColumnMenus : false,
 								onRegisterApi : function(gridApi) {
 									$scope.gridApi = gridApi;
-
 									if ($scope.colFilter
 											&& $scope.colFilter.listTerm) {
 										$timeout(function() {
