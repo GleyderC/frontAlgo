@@ -17,8 +17,6 @@ DashboardApp.controller('AgreementsController',
         $scope.counterPartyBList =[];
         
         $scope.gridOptions = {
-
-            enableFiltering: true,
             onRegisterApi: function(gridApi){
                 $scope.gridApi = gridApi;
             },
@@ -68,7 +66,6 @@ DashboardApp.controller('AgreementsController',
                     width: 80
                 },
                 {
-
                     name : 'Margin Freq',
                     field: 'marginFrequency',
                     enableFiltering:false,
@@ -93,8 +90,6 @@ DashboardApp.controller('AgreementsController',
                     name : 'Exposure / Collateral',
                      enableFiltering: false,
                  }  ,
-                 
-
                 {
                 	 name: 'Actions',
                      cellTemplate: paths.views + '/collateral/agreements/agr_action_buttons.html',
@@ -103,8 +98,12 @@ DashboardApp.controller('AgreementsController',
                      enableFiltering:false,
                      enableSorting  : false
                 },
-            
             ],
+            paginationPageSizes: [12, 50, 100, 200, 500],
+            paginationPageSize: 12,
+            enablePaginationControl:true,
+            enableColumnResizing: true,
+            enableFiltering: true,
             rowHeight: 45, 
             enableGridMenu: true,
             exporterCsvFilename: 'Collateral_contract_agreemens.csv',
@@ -127,7 +126,6 @@ DashboardApp.controller('AgreementsController',
         };
         $request.get('/servlet/CollateralContract/SelectAll')
             .success(function(data) {
-            	console.log(data.dataResponse)
                 $scope.gridOptions.data = data.dataResponse;
                 var arr = {}; 
                 arr["contractType"] = {}; 
@@ -143,7 +141,6 @@ DashboardApp.controller('AgreementsController',
                 	if(v.hasOwnProperty("counterpartyB")){
                 		arr["counterpartyB"][v.counterpartyB.otherName] = v.counterpartyB; 
                 	}
-                	
                 });
                 if(Object.keys(arr.contractType).length>0){
                 	Object.keys(arr.contractType).forEach(function(val,k){
@@ -153,7 +150,6 @@ DashboardApp.controller('AgreementsController',
             	}
                 if(Object.keys(arr.counterpartyA).length>0){
                 	Object.keys(arr.counterpartyA).forEach(function(val,k){
-                		console.log(k);
                 		$scope.counterPartyAList.push({value:arr.counterpartyA[val].name , label : arr.counterpartyA[val].name })
                 	});
             	}
@@ -167,10 +163,4 @@ DashboardApp.controller('AgreementsController',
             $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
             $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
         };
-
-
-
-
-    }]);
-
-
+ }]);
