@@ -43,8 +43,7 @@ DashboardApp.controller(
             };
 
             $scope.$on('$includeContentLoaded', function (event,url) {
-                $scope.workspaceTabs.active = $scope.workspaceTabs.tabList.length;
-                $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = 'fa fa-money';
+
             });
 
             $scope.workspaceTabs = {
@@ -63,18 +62,14 @@ DashboardApp.controller(
             };
 
             $scope.addNewBillateralAgreement = function () {
-
-                $scope.workspaceTabs.tabList.push(
-                    {
-                        head: {
-                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
-                            text: 'New Billateral Agreement(' + ($scope.workspaceTabs.tabList.length) + ')'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
-                        closable: true
-                    }
-                );
-
+                $scope.workspaceTabs.addTab({
+                    head: {
+                        icon: 'fa fa-money',
+                        text: 'New Billateral Agreement(' + ($scope.workspaceTabs.tabList.length) + ')'
+                    },
+                    templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
+                    closable: true
+                });
             };
 
             $scope.editBillateralAgreement = function () {
