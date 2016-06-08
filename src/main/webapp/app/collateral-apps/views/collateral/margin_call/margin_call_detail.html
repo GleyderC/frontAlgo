@@ -1,2 +1,66 @@
-<div class="portlet light">
-</div>>
+<div class="portlet light" ng-controller="MarginCallDetailController">
+
+    <div class="row" du-smooth-scroll du-scrollspy>
+        <!-- BEGIN CHART PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-call-in font-dark font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> Margin Call </span>
+                    <span class="caption-helper">{{dt | date:'dd/MM/yyyy HH:mm'}}</span>
+
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="" class="fullscreen"> </a>
+                    <a href="javascript:;" class="reload"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+
+                <button type="submit" class="btn green">
+                    <i class="fa fa-check"></i> Actions
+                </button>
+                <br>
+                <table  class="table table-striped table-bordered table-hover table-checkable order-column">
+                <thead>
+                <tr>
+                    <th> Counterparty </th>
+                    <th> Status </th>
+                    <th> Contract </th>
+                    <th> Currency </th>
+                    <th> Amount </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{currentMarginCall.counterpartyB.name}}</td>
+                    <td>{{currentMarginCall.status}}</td>
+                    <td>{{currentMarginCall.contractType?'Yes':'No'}}</td>
+                    <td>{{currentMarginCall.currency}}</td>
+                    <td></td>
+                </tr>
+                </tbody>
+                </table>
+                <uib-tabset active="1">
+                    <uib-tab index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
+                        <uib-tab-heading>
+                            <i class="{{tab.icon}}"></i>{{tab.title}}
+                        </uib-tab-heading>
+                        <div ng-include=tab.templateUrl></div>
+                    </uib-tab>
+                </uib-tabset>
+                <uib-tabset active="1">
+                    <uib-tab index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
+                        <uib-tab-heading>
+                            <i class="{{tab.icon}}"></i>{{tab.title}}
+                        </uib-tab-heading>
+                        <div ng-include=tab.templateUrl></div>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+        </div>
+        <!-- END CHART PORTLET-->
+    </div>
+    <!-- END ROW -->
+</div>
