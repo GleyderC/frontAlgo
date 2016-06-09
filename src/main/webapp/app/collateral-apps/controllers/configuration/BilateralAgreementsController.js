@@ -20,6 +20,20 @@ DashboardApp.controller(
                   $filter) {
 
 
+            $scope.workspaceTabs = {
+                active: 1,
+                tabList: [
+                    {
+                        head: {
+                            icon: 'fa fa-money',
+                            text: 'Search Billateral Agreement'
+                        },
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_add_search.html",
+                        active: true
+                    }
+                ]
+            };
+
             var currenciesList = [];
 
             angular.forEach($localStorage.get("CurrencyEnum"), function (obj) {
@@ -42,132 +56,59 @@ DashboardApp.controller(
                 }
             };
 
-            $scope.$on('$includeContentLoaded', function (event,url) {
-
-            });
-
-            $scope.workspaceTabs = {
-                name: 'collateral-tabs',
-                active: 1,
-                tabList: [
-                    {
-                        head: {
-                            icon: 'fa fa-money',
-                            text: 'Search Billateral Agreement'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_add_search.html",
-                        active: true
-                    }
-                ]
-            };
-
-            $scope.addNewBillateralAgreement = function () {
-                $scope.workspaceTabs.addTab({
-                    head: {
-                        icon: 'fa fa-money',
-                        text: 'New Billateral Agreement(' + ($scope.workspaceTabs.tabList.length) + ')'
-                    },
-                    templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
-                    closable: true
-                });
-            };
-
-            $scope.editBillateralAgreement = function () {
-
-                $scope.workspaceTabs.tabList.push(
-                    {
-                        head: {
-                            icon: '',
-                            text: 'Editing Billateral Agreement (' + ($scope.workspaceTabs.tabList.length) + ')'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
-                        closable: true
-                    }
-                );
-
-            };
-
-            //main fields
-            $scope.legalEntities = [];
-            $scope.LegalEntity = {};
-            $scope.LegalEntity.BilateralAgreements = {};
-            $scope.LegalEntity.BilateralAgreements.main = {};
-            $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
-
-            LegalEntityService.getAll().then(function (result) {
-                $scope.legalEntities = result.data.dataResponse;
-            });
         }
-    ])
-;
+    ]);
 
+DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request', '$interval', 'localStorageService', '$filter', 'LegalEntityService', function ($scope, $request, $interval, $localStorage, $filter, LegalEntityService) {
 
-DashboardApp.controller(
-    'BAFormController', [
-        '$scope',
-        '$document',
-        '$timeout',
-        '$request',
-        'localStorageService',
-        function ($scope,
-                  $document,
-                  $timeout,
-                  $request,
-                  $localStorage) {
+    console.log($scope)
 
-            $scope.$on('$includeContentLoaded', function (event,url) {
-
-            });
-
-            $scope.workspaceTabs = {
-                name: 'collateral-tabs',
-                active: 1,
-                tabList: [
-                    {
-                        head: {
-                            icon: 'glyphicon glyphicon-blackboard',
-                            text: 'Main'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_main.html"
-                    },
-                    {
-                        head: {
-                            icon: 'glyphicon glyphicon-list-alt',
-                            text: 'CSA Margin'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_csa_margins.html"
-                    },
-                    {
-                        head: {
-                            icon: 'glyphicon glyphicon-piggy-bank',
-                            text: 'Eligible currencies'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_currencies.html"
-                    },
-                    {
-                        head: {
-                            icon: 'glyphicon glyphicon-eye-open',
-                            text: 'Eligible securities'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_securities.html"
-                    }
-                ]
-            };
-
-        }]);
-
-//BILATERAL AGREEMENT MAIN TAB CONTROLLER
-DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
-    $scope.holidays = {
-        searchSelect: true,
-        searchSelected: true,
-        data: $scope.BilateralAgreements.staticData.financialCalendar
+    $scope.BilateralAgreements = {
+        contracts: []
     };
-}]);
 
-DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+    $scope.addNewBillateralAgreement = function () {
+        console.log($scope)
+        $scope.workspaceTabs.addTab({
+            head: {
+                icon: 'fa fa-money',
+                text: 'New Billateral Agreement(' + ($scope.workspaceTabs.tabList.length) + ')'
+            },
+            templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
+            closable: true
+        });
+    };
+
+    $scope.editBillateralAgreement = function () {
+
+        $scope.workspaceTabs.tabList.push(
+            {
+                head: {
+                    icon: '',
+                    text: 'Editing Billateral Agreement (' + ($scope.workspaceTabs.tabList.length) + ')'
+                },
+                templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
+                closable: true
+            }
+        );
+
+    };
 
     //FIRST SEARCH TAB
+    $scope.$on('$includeContentLoaded', function (event, url) {
+
+    });
+
+    //main fields
+    $scope.legalEntities = [];
+    $scope.LegalEntity = {};
+    $scope.LegalEntity.BilateralAgreements = {};
+    $scope.LegalEntity.BilateralAgreements.main = {};
+    $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
+
+    LegalEntityService.getAll().then(function (result) {
+        $scope.legalEntities = result.data.dataResponse;
+    });
 
     $scope.editRow = function (grid, row) {
         console.log("editing contract")
@@ -238,11 +179,73 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
         }
     };
 
-    $request.get("/servlet/BilateralContract/SelectAll").then(function(response){
+    $request.get("/servlet/BilateralContract/SelectAll").then(function (response) {
         $scope.BilateralAgreements.contracts = response.data.dataResponse;
         $scope.gridOptions.data = $scope.BilateralAgreements.contracts;
     });
 
+}]);
+
+DashboardApp.controller(
+    'BAFormController', [
+        '$scope',
+        '$document',
+        '$timeout',
+        '$request',
+        'localStorageService',
+        function ($scope,
+                  $document,
+                  $timeout,
+                  $request,
+                  $localStorage) {
+
+            $scope.$on('$includeContentLoaded', function (event, url) {
+
+            });
+
+            $scope.workspaceTabs = {
+                active: 1,
+                tabList: [
+                    {
+                        head: {
+                            icon: 'glyphicon glyphicon-blackboard',
+                            text: 'Main'
+                        },
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_main.html"
+                    },
+                    {
+                        head: {
+                            icon: 'glyphicon glyphicon-list-alt',
+                            text: 'CSA Margin'
+                        },
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_csa_margins.html"
+                    },
+                    {
+                        head: {
+                            icon: 'glyphicon glyphicon-piggy-bank',
+                            text: 'Eligible currencies'
+                        },
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_currencies.html"
+                    },
+                    {
+                        head: {
+                            icon: 'glyphicon glyphicon-eye-open',
+                            text: 'Eligible securities'
+                        },
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_securities.html"
+                    }
+                ]
+            };
+
+        }]);
+
+//BILATERAL AGREEMENT MAIN TAB CONTROLLER
+DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+    $scope.holidays = {
+        searchSelect: true,
+        searchSelected: true,
+        data: $scope.BilateralAgreements.staticData.financialCalendar
+    };
 }]);
 
 DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
@@ -273,7 +276,7 @@ DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalSe
 
         },
         resolve: {
-            currencies: function(){
+            currencies: function () {
                 return currenciesList;
             }
         }
