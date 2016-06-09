@@ -140,7 +140,9 @@ i.close-tab-icon:hover {
     color: darkgrey;
     cursor: pointer;
 }
-
+img.interest-icon{
+	width: 20px;
+}
 /* UI GRID STYLES*/
 .uigrid-btn
 {
