@@ -1,8 +1,10 @@
 <div class="login" ng-controller="LoginController">
     <!-- BEGIN LOGO -->
     <div class="logo">
-        <a href="#">
-            <img src="assets/global/img/logo-common.png" alt="" width="280px" height="auto"/> </a>
+        <div class="logo-container">
+            <img src="assets/global/img/logo-common.png" alt="Logo"/>
+            <img src="assets/global/img/logo-collateral.png" alt="Logo"/>
+        </div>
     </div>
     <!-- END LOGO -->
 

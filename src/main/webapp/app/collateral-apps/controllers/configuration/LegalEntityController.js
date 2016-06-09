@@ -3,8 +3,8 @@
 var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope', 'elementService',
-    '$timeout', '$request', 'localStorageService', 'uiGridConstants',
-    function (LegalEntityService, $scope, elementService, $timeout, $request, localStorageService, uiGridConstants) {
+    '$timeout', 'localStorageService', 'uiGridConstants',
+    function (LegalEntityService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
 
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();

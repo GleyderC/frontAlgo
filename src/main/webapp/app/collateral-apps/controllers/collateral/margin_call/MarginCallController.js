@@ -45,7 +45,7 @@ var MarginCallCtrl = DashboardApp
 								 $scope.workspaceTabs.tabList.push(
 					                    {
 					                        head: {
-					                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
+					                            icon: 'icon-call-in font-dark font-green-haze',
 					                            text: 'Margin call ('+value.counterpartyA.name+')',
 					                        },
 					                        templateUrl: paths.views + "/collateral/margin_call/margin_call_detail.html",
