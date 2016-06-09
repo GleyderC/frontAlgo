@@ -379,7 +379,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /* Agreements Controller js */
                             'collateral-apps/controllers/collateral/agreements/AgreementsController.js',
                             /* Margin Call Controller js */
-                            'collateral-apps/controllers/collateral/margin_call/MarginCallController.js'
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallController.js',
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallDetailController.js'
 
                         ],
                         serie: true,

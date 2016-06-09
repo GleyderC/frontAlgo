@@ -35,15 +35,18 @@ var MarginCallCtrl = DashboardApp
 									active : true
 								} ]
 							};
-						
+							$scope.currentMarginCall = {} ;
+							$scope.setCurrentMarginCall = function (MarginCallEntity) {
+								$scope.currentMarginCall = MarginCallEntity;
+							};
 					         $scope.viewMarginCall = function (value) {
 					               $scope.gridApi.selection.getSelectedRows();
-					        	 
-					                $scope.workspaceTabs.tabList.push(
+								 $scope.setCurrentMarginCall(value);
+								 $scope.workspaceTabs.tabList.push(
 					                    {
 					                        head: {
-					                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
-					                            text: 'Margin call ('+value+')',
+					                            icon: 'icon-call-in font-dark font-green-haze',
+					                            text: 'Margin call ('+value.counterpartyA.name+')',
 					                        },
 					                        templateUrl: paths.views + "/collateral/margin_call/margin_call_detail.html",
 					                        closable: true
@@ -51,7 +54,6 @@ var MarginCallCtrl = DashboardApp
 					                );
 
 					            };
-							
 							$scope.gridData = [ {
 								"counterpartyA" : {
 									"id" : 1563412744,
@@ -112,9 +114,6 @@ var MarginCallCtrl = DashboardApp
 							$scope.gridOptions = {
 
 								enableFiltering : true,
-								onRegisterApi : function(gridApi) {
-									$scope.gridApi = gridApi;
-								},
 								data : $scope.gridData,
 								columnDefs : [
 										{
@@ -148,7 +147,6 @@ var MarginCallCtrl = DashboardApp
 											filterHeaderTemplate : '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
 										
 										},
-
 										{
 											name : 'Currency',
 											field : 'currency',
@@ -187,7 +185,7 @@ var MarginCallCtrl = DashboardApp
 										},
 										{
 											name : 'Action buttons',
-											cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity.counterpartyA.name)" ><i class="fa fa-eye"></i></button> </div>',
+											cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity)" ><i class="fa fa-eye"></i></button> </div>',
 											enableColumnMenu : false,
 											width : 120,
 											enableFiltering : false,
@@ -199,10 +197,6 @@ var MarginCallCtrl = DashboardApp
 								enableGridMenu : true,
 								onRegisterApi : function(gridApi) {
 									$scope.gridApi = gridApi;
-									$interval(function() {
-										$scope.gridApi.core
-												.handleWindowResize();
-									}, 1000, 10);
 								}
 							};
 
@@ -210,11 +204,9 @@ var MarginCallCtrl = DashboardApp
 								$scope.dt = new Date();
 							};
 							$scope.today();
-
 							$scope.clear = function() {
 								$scope.dt = null;
 							};
-
 							$scope.inlineOptions = {
 								customClass : getDayClass,
 								minDate : new Date(),
@@ -290,11 +282,6 @@ var MarginCallCtrl = DashboardApp
 									}
 								}
 							}
-
-							$scope.$watch("dt", function(newValue, oldValue) {
-								console.log("I've changed : ", newValue);
-							});
-
 						} ]);
 
 MarginCallCtrl
@@ -309,7 +296,6 @@ MarginCallCtrl
 								enableColumnMenus : false,
 								onRegisterApi : function(gridApi) {
 									$scope.gridApi = gridApi;
-
 									if ($scope.colFilter
 											&& $scope.colFilter.listTerm) {
 										$timeout(function() {
