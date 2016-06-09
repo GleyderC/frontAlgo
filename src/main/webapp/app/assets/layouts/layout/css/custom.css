@@ -141,8 +141,11 @@ i.close-tab-icon:hover {
     cursor: pointer;
 }
 
-img.interest-icon{
+img.action-button-icon{
 	width: 20px;
+}
+div.action-button-container{
+	margin-top:10px;
 }
 
 /* UI GRID STYLES*/
