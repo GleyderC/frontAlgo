@@ -2,11 +2,19 @@
 .page-content {
     padding: 5px;
     margin: 0;
-    margin-top: 15px;
-    background-color: #2F373E;
+    background-color: #616d76;
 }
 
-.page-content.container{
+.page-logo
+{
+    width: 20px;
+}
+
+.page-logo span{
+
+}
+
+.page-content{
     width: 100%;
 }
 .container-fluid .page-content
@@ -55,17 +63,34 @@
 
 .logo img{
     border-radius: 4px;
-    -webkit-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+    /*-webkit-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
     -moz-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
-    box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+    box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);*/
 }
 
-.page-logo img{
-    border-radius: 4px;
+.logo-container{
     margin-left: 20px;
+    /*border-radius: 4px;
     -webkit-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
     -moz-box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
-    box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);
+    box-shadow: 0px 0px 28px 2px rgba(255,255,255,1);*/
+    display: inline-block;
+}
+.logo-container img:first-child
+{
+    width: 30px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px #eee solid;
+}
+
+.logo-container img:last-child
+{
+    width: 300px;
+}
+.page-on-scroll .page-header .navbar-fixed-top{
+    padding-top: 10px;
 }
 
 @media (min-width: 1200px){
@@ -82,8 +107,22 @@
         margin-left: 1px;
     }
 
+    .page-header .topbar-actions {
+        top: 5px;
+    }
+
     .menu-collateral-management{
-        margin-top: 60px !important;
+        margin-top: 3px !important;
+        min-height: 700px;
+    }
+
+    .page-header .navbar-fixed-top {
+        background: #616d76;
+        padding: 9px 25px;
+    }
+
+    .wrapper{
+        margin-top: 0;
     }
 }
 
@@ -113,16 +152,18 @@ i.close-tab-icon:hover {
 
 .menu-collateral-management
 {
-    background-color: white;
-    border-radius: 4px 4px 0px 0px;
-    -moz-border-radius: 4px 4px 0px 0px;
-    -webkit-border-radius: 4px 4px 0px 0px;
-    border: 0px solid #000000;
+    /*background-color: white;*/
 }
 
 .menu-collateral-management .menu-collateral-container{
     padding-left: 0 !important;;
     padding-right: 0 !important;
+    margin-bottom: 4px;
+    background-color: white;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px #eee solid;
 }
 
 .collateral-menu-item .nav-link{
@@ -154,4 +195,11 @@ i.close-tab-icon:hover {
 @keyframes spin {
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
+}
+
+/*FOOTER*/
+
+.copyright
+{
+    color: #eee;
 }

@@ -7,13 +7,13 @@
 <!-- BEGIN HEAD -->
 
 <head>
-    
+
     <!-- bower:css -->
-    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/theme.css" />
-    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" />
-    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="assets/vendor/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/theme.css"/>
+    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="assets/vendor/angular-toastr/dist/angular-toastr.css"/>
     <!-- endbower -->
 
     <title data-ng-bind="'Collateral | ' + $state.current.data.pageTitle"></title>
@@ -104,11 +104,9 @@
     <!-- END PAGE HEAD -->
     <!-- BEGIN PAGE CONTENT -->
     <div class="page-content">
-        <div class="container">
-            <!-- BEGIN ACTUAL CONTENT -->
-            <div ui-view="main-content" class="fade-in-up"></div>
-            <!-- END ACTUAL CONTENT -->
-        </div>
+        <!-- BEGIN ACTUAL CONTENT -->
+        <div ui-view="main-content" class="fade-in-up"></div>
+        <!-- END ACTUAL CONTENT -->
     </div>
     <!-- END PAGE CONTENT -->
 </div>

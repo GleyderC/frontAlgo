@@ -19,9 +19,10 @@
                         </button>
                         <!-- End Toggle Button -->
                         <!-- BEGIN LOGO -->
-                        <a id="index" class="page-logo" ui-sref="home">
-                            <img src="assets/global/img/logo-common.png" alt="Logo" style="width: 270px;" />
-                        </a>
+                        <div class="logo-container">
+                            <img src="assets/global/img/logo-common.png" alt="Logo"/>
+                            <img src="assets/global/img/logo-collateral.png" alt="Logo"/>
+                        </div>
                         <!-- END LOGO -->
                         <!-- BEGIN SEARCH -->
                         <form class="search hide" action="extra_search.html" method="GET">
@@ -210,15 +211,16 @@
                         </div>
                         <!-- END TOPBAR ACTIONS -->
                     </div>
-                    <!-- BEGIN HEADER MENU -->
-                    <div menu-collateral></div>
-                    <!-- END HEADER MENU -->
                 </div>
                 <!--/container-->
             </nav>
         </header>
         <!-- END HEADER -->
+
         <!-- PAGE CONTENT-->
+        <!-- BEGIN HEADER MENU -->
+        <div menu-collateral></div>
+        <!-- END HEADER MENU -->
 
         <%--<div class="container-fluid">
             <div class="page-content">
