@@ -8,21 +8,21 @@
                     <i class="icon-call-in font-dark font-green-haze"></i>
                     <span class="caption-subject bold uppercase font-green-haze"> Margin Call </span>
                     <span class="caption-helper">{{dt | date:'dd/MM/yyyy HH:mm'}}</span>
-
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse"> </a>
                     <a href="" class="fullscreen"> </a>
-                    <a href="javascript:;" class="reload"> </a>
+                </div>
+                <div class="col-md-3">
+                    <div class="btn-group">
+                        <button type="submit" class="btn green">
+                            <i class="fa fa-check"></i> Actions
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="portlet-body">
-
-                <button type="submit" class="btn green">
-                    <i class="fa fa-check"></i> Actions
-                </button>
-                <br>
-                <table  class="table table-striped table-bordered table-hover table-checkable order-column">
+                <table  class="table table-striped table-bordered table-hover table-checkable order-column" >
                 <thead>
                 <tr>
                     <th> Counterparty </th>
@@ -34,11 +34,11 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{currentMarginCall.counterpartyB.name}}</td>
-                    <td>{{currentMarginCall.status}}</td>
-                    <td>{{currentMarginCall.contractType?'Yes':'No'}}</td>
-                    <td>{{currentMarginCall.currency}}</td>
-                    <td></td>
+                    <td style="font-size: 12px;">{{currentMarginCall.counterpartyB.name}}</td>
+                    <td style="font-size: 12px;">{{currentMarginCall.status}}</td>
+                    <td style="font-size: 12px;">{{currentMarginCall.contractType?'Yes':'No'}}</td>
+                    <td style="font-size: 12px;">{{currentMarginCall.currency}}</td>
+                    <td style="font-size: 12px;"></td>
                 </tr>
                 </tbody>
                 </table>
