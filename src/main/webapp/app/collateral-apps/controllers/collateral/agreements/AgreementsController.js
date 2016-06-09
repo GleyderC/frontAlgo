@@ -132,6 +132,27 @@ DashboardApp.controller('AgreementsController',
                 arr["counterpartyB"] = {};
                 arr["counterpartyA"] = {};
                 data.dataResponse.forEach(function(v,k){
+                	if(v.hasOwnProperty("clearingMemberLegalEntity")){
+                		
+                		v["counterpartyA"] 	= {};
+                		v["counterpartyA"]  = v.clearingMemberLegalEntity;
+                		v["counterpartyB"]  = {};
+                		
+                		//v["counterpartyB"]["name"]= v.ccpName;
+                		
+                		//Be careful 
+                		//v["counterpartyB"]["riskProfile"]  = {};
+                		//v["counterpartyB"]["riskProfile"]["SPRating"]  = v.clearingMemberLegalEntity.riskProfile.SPRating;
+                		//
+                	}
+                	if(v.hasOwnProperty("client") && v.hasOwnProperty("clearingBroker")){
+                		v["counterpartyA"] 	= {};
+                		v["counterpartyA"]  = v.client;
+                		v["contractType"] = "CCP Client Clearing"
+                		v["counterpartyB"]  = v.clearingBroker;
+                	}
+                	
+                	//Building ui grid Select for filter
                 	if(v.hasOwnProperty("contractType")){
                 			arr["contractType"][v.contractType] = v.contractType;
                 	}
