@@ -1,6 +1,6 @@
 'use strict'
 DashboardApp.controller('AgreementsController',
-    ['$scope', '$request', '$interval','uiGridConstants', function ($scope, $request, $interval,uiGridConstants) {
+    ['$scope', '$request', '$interval','uiGridConstants','AgreementsService', function ($scope, $request, $interval,uiGridConstants,AgreementsService) {
     
     	$scope.$on('$includeContentLoaded', function () {
     		 	
@@ -124,8 +124,7 @@ DashboardApp.controller('AgreementsController',
             exporterPdfMaxGridWidth: 500,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
         };
-        $request.get('/servlet/CollateralContract/SelectAll')
-            .success(function(data) {
+        AgreementsService.getAll().success(function(data) {
                 $scope.gridOptions.data = data.dataResponse;
                 var arr = {}; 
                 arr["contractType"] = {}; 
@@ -133,7 +132,6 @@ DashboardApp.controller('AgreementsController',
                 arr["counterpartyA"] = {};
                 data.dataResponse.forEach(function(v,k){
                 	if(v.hasOwnProperty("clearingMemberLegalEntity")){//CCPHouseAccount 
-                		
                 		v["counterpartyA"] 	= {};
                 		v["counterpartyA"]  = v.clearingMemberLegalEntity;
                 		v["counterpartyB"]  = {};
@@ -142,7 +140,6 @@ DashboardApp.controller('AgreementsController',
                 		//Be careful 
                 		//v["counterpartyB"]["riskProfile"]  = {};
                 		//v["counterpartyB"]["riskProfile"]["SPRating"]  = v.clearingMemberLegalEntity.riskProfile.SPRating;
-                		//
                 	}
                 	if(v.hasOwnProperty("client") && v.hasOwnProperty("clearingBroker")){
                 		v["counterpartyA"] 	= {};
