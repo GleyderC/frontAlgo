@@ -46,7 +46,7 @@ var MarginCallCtrl = DashboardApp
                             head: {
                                 icon: 'icon-call-in font-dark font-green-haze',
                                 text: 'Margin call ('
-                                + value.counterpartyA.name
+                                + value.contract.counterpartyA.name
                                 + ')',
                             },
                             templateUrl: paths.views
