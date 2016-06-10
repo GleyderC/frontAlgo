@@ -45,7 +45,7 @@ angular.module('DashboardApp').directive('multiselectDual', [function () {
             }
 
             //GET SELECTED ITEMS
-            $scope.multiselectElements.getSeletedElements = function () {
+            $scope.multiselectElements.getSelectedElements = function () {
                 //console.log($scope.multiselectElements.msSelected)
                 return $scope.multiselectElements.msSelected;
             }

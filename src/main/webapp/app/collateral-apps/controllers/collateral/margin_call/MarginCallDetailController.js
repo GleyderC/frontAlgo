@@ -54,9 +54,8 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
     ];
 
 
-    $scope.test = "Test"
+    //$scope.test = "Test"
     $scope.MarginCall = $scope.currentMarginCall;
-        console.log($scope.MarginCall);
     $scope.gridTradesOptions = {
         showGridFooter: true,
         paginationPageSizes: [15, 50, 100, 200, 500],
