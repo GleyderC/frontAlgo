@@ -1,7 +1,6 @@
 angular.module('DashboardApp')
-    .service('MarginCallService',['$q','$request','toastr',function ($q,$request,toastr) {
-        var defered =  $q.defer();
-        var promise = defered.promise;
+    .service('MarginCallService',['$request','toastr',function ($request,toastr) {
+       
         this.getAll = function(){
             return $request.get('/servlet/MarginCall/SelectAll');
         };

@@ -34,30 +34,33 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td style="font-size: 12px;">{{MarginCall.counterpartyB.name}}</td>
-                    <td style="font-size: 12px;">{{MarginCall.status}}</td>
-                    <td style="font-size: 12px;">{{MarginCall.contractType?'Yes':'No'}}</td>
-                    <td style="font-size: 12px;">{{MarginCall.currency}}</td>
-                    <td style="font-size: 12px;"></td>
+                    <td style="font-size: 12px;">{{currentMarginCall.contract.counterpartyB.name}}</td>
+                    <td style="font-size: 12px;">{{currentMarginCall.marginCalls.status}}</td>
+                    <td style="font-size: 12px;">{{currentMarginCall.marginCalls.contractType?'Yes':'No'}}</td>
+                    <td style="font-size: 12px;">{{currentMarginCall.marginCalls.marginCallCalculations.calculationCurrency}}</td>
+                    <td style="font-size: 12px;">{{currentMarginCall.marginCallAmount}}</td>
                 </tr>
                 </tbody>
                 </table>
                 <uib-tabset active="1">
-                    <uib-tab index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
+                    <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
                         <uib-tab-heading>
                             <i class="{{tab.icon}}"></i>{{tab.title}}
                         </uib-tab-heading>
                         <div ng-include=tab.templateUrl></div>
                     </uib-tab>
                 </uib-tabset>
-                <uib-tabset active="1">
-                    <uib-tab index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
-                        <uib-tab-heading>
-                            <i class="{{tab.icon}}"></i>{{tab.title}}
-                        </uib-tab-heading>
-                        <div ng-include=tab.templateUrl></div>
-                    </uib-tab>
-                </uib-tabset>
+                <div ng-controller="MarginCallTradesController">
+                    <uib-tabset active="1">
+                        <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
+                            <uib-tab-heading>
+                                <i class="{{tab.icon}}"></i>{{tab.title}}
+                            </uib-tab-heading>
+                            <div ng-include=tab.templateUrl></div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+
             </div>
         </div>
         <!-- END CHART PORTLET-->

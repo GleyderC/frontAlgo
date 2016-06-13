@@ -211,12 +211,12 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageS
 
 CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',function($rootScope,$http, URL_CONFIG, $log){
 
-    var config_request = {};
-
+    
     var request = {};
 
     request.get = function  (urlRelative, dataRequest)
     {
+        var config_request = {};
         if( !!dataRequest && typeof dataRequest === 'object' ){
             config_request = {
                 params: dataRequest
@@ -241,6 +241,7 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
 
     request.delete = function  (urlRelative, dataRequest)
     {
+        var config_request = {};
         if( !!dataRequest && typeof dataRequest === 'object' ){
             config_request =
             {
@@ -382,7 +383,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/collateral/agreements/AgreementsController.js',
                             /* Margin Call Controller js */
                             'collateral-apps/controllers/collateral/margin_call/MarginCallController.js',
-                            'collateral-apps/controllers/collateral/margin_call/MarginCallDetailController.js'
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallDetailController.js',
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallTradesController.js'
+
 
                         ],
                         serie: true,

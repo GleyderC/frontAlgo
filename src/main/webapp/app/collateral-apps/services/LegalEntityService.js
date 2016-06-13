@@ -1,11 +1,8 @@
 angular.module('DashboardApp')
-    .service('LegalEntityService',['$q','$request','toastr',function ($q,$request,toastr) {
+    .service('LegalEntityService',['$request','toastr',function ($request,toastr) {
         var LegalEntity = {};
 
         var legalEntities = [];
-
-        var defered =  $q.defer();
-        var promise = defered.promise;
 
         this.getAll = function(){
             return $request.get('/servlet/LegalEntity/SelectAll');
