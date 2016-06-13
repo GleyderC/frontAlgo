@@ -84,8 +84,10 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                         $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].resolve.formsData
                         var last_index = $scope.workspaceTabs.tabList.length;
                         var workspace_tab_container = element.find('div[data-tabid=' + $scope.workspaceTabs.id + last_index + '][role="tab-content"]');
+                        
+                        angular.foreach(workspace_tab_container.find("input"), function(el, index){
 
-                        //console.log(workspace_tab_container.find("input"))
+                        });
 
                     }
 
