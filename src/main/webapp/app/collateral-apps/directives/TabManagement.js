@@ -4,28 +4,18 @@
  * WORKSPACE TAB MENU
  */
 
-angular.module('DashboardApp').directive('workspaceTabs', [function () {
+angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
 
     return {
         restrict: "E",
         templateUrl: paths.tpls + "/TabManagementTemplate.html",
         link: function ($scope, element, attrs) {
 
-            if($scope.workspaceTabs == undefined){
+            if ($scope.workspaceTabs == undefined) {
                 $scope.workspaceTabs = new Object();
             }
 
-            element.on('click', function () {
-                //console.log("click")
-            });
-
-            element.on('contexMenu', function (e) {
-                e.preventDefault();
-            });
-
-            $scope.$watch('$apply', function (newVal, oldVal) {
-                //$scope.workspaceTabs.active = ($scope.workspaceTabs.tabList.length - 1)
-            });
+            $scope.workspaceTabs.id = attrs.id;
 
             $scope.workspaceTabs.addTab = function (tabConfig) {
 
@@ -36,6 +26,9 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
                     },
                     content: '',
                     templateUrl: '',
+                    resolve: {
+                        formsData: []
+                    },
                     disabled: false,
                     closable: false
                 };
@@ -66,20 +59,38 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
 
                 $scope.workspaceTabs.tabList.push(globalTabConfig);
 
-                $scope.workspaceTabs.active = $scope.workspaceTabs.tabList.length;
+                //MANAGE REQUEST TEMPLATES
+                var loading_stack = [];
+                $scope.$on('$includeContentRequested', function (event, url) {
+                    loading_stack.push(url)
+                });
 
                 $scope.$on('$includeContentLoaded', function (event, url) {
+                    loading_stack.splice(loading_stack.indexOf(url), 1);
 
-                    $scope.workspaceTabs.active = $scope.workspaceTabs.tabList.length;
+                    if (loading_stack.length === 0) {
 
-                    if (!!tabConfig.head.icon) {
-                        $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = tabConfig.head.icon;
-                    }
-                    else {
-                        $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = '';
+                        //SET LAST TAB ACTIVE
+                        $scope.workspaceTabs.active = $scope.workspaceTabs.tabList.length;
+                        //REMOVE ICON LOADING
+                        if (!!tabConfig.head.icon) {
+                            $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = tabConfig.head.icon;
+                        }
+                        else {
+                            $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = '';
+                        }
+
+                        //RESOLVE
+                        $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].resolve.formsData
+                        var last_index = $scope.workspaceTabs.tabList.length;
+                        var workspace_tab_container = element.find('div[data-tabid=' + $scope.workspaceTabs.id + last_index + '][role="tab-content"]');
+
+                        //console.log(workspace_tab_container.find("input"))
+
                     }
 
                 });
+
 
             }
 
@@ -131,6 +142,28 @@ angular.module('DashboardApp').directive('workspaceTabs', [function () {
                 if ($scope.workspaceTabs.active < ($scope.workspaceTabs.tabList.length - 1))
                     $scope.workspaceTabs.active++;
             }
+
+
+            //SETTING MOUSE FOCUS
+            var x, y, initial_background = '#c3d5e6';
+
+            element
+                .removeAttr('style')
+                .mousemove(function (e) {
+                    // Add highlight effect on inactive tabs
+                    if (!element.hasClass('active')) {
+                        x = e.pageX - this.offsetLeft;
+                        y = e.pageY - this.offsetTop;
+
+                        element
+                            .css({background: '-moz-radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.0) 45px), ' + initial_background})
+                            .css({background: '-webkit-radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.0) 45px), ' + initial_background})
+                            .css({background: 'radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.0) 45px), ' + initial_background});
+                    }
+                })
+                .mouseout(function () {
+                    element.removeAttr('style');
+                });
 
         }
     }

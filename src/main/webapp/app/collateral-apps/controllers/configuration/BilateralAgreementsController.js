@@ -61,14 +61,12 @@ DashboardApp.controller(
 
 DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request', '$interval', 'localStorageService', '$filter', 'LegalEntityService', function ($scope, $request, $interval, $localStorage, $filter, LegalEntityService) {
 
-    console.log($scope)
-
     $scope.BilateralAgreements = {
         contracts: []
     };
 
     $scope.addNewBillateralAgreement = function () {
-        console.log($scope)
+
         $scope.workspaceTabs.addTab({
             head: {
                 icon: 'fa fa-money',
@@ -79,7 +77,9 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
         });
     };
 
-    $scope.editBillateralAgreement = function () {
+    $scope.editRow = function (grid, row) {
+        console.log("editing contract")
+        console.log(row)
 
         $scope.workspaceTabs.tabList.push(
             {
@@ -88,12 +88,13 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
                     text: 'Editing Billateral Agreement (' + ($scope.workspaceTabs.tabList.length) + ')'
                 },
                 templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
+                data: row,
                 closable: true
             }
         );
 
-    };
-
+    }
+    
     //FIRST SEARCH TAB
     $scope.$on('$includeContentLoaded', function (event, url) {
 
@@ -109,12 +110,6 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
     LegalEntityService.getAll().then(function (result) {
         $scope.legalEntities = result.data.dataResponse;
     });
-
-    $scope.editRow = function (grid, row) {
-        console.log("editing contract")
-        console.log(row)
-        $scope.editBillateralAgreement();
-    }
 
     $scope.deleteRow = function (grid, row) {
         console.log("deleting")

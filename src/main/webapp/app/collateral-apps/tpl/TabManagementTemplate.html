@@ -1,11 +1,11 @@
-<uib-tabset active="workspaceTabs.active">
+<uib-tabset id="{{workspaceTabs.id}}" active="workspaceTabs.active">
     <uib-tab index="$index + 1" ng-repeat="tab in workspaceTabs.tabList track by $index" active="tab.active"
              disable="tab.disabled">
         <uib-tab-heading>
             <i class="{{ tab.head.icon }}"></i> {{ tab.head.text }}
             <i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="workspaceTabs.closeTab(this, $event)"></i>
         </uib-tab-heading>
-        <div ng-if="!!tab.content">{{ tab.content }}</div>
-        <div ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>
+        <div data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-plain-content" ng-if="!!tab.content">{{ tab.content }}</div>
+        <div data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-content" ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>
     </uib-tab>
 </uib-tabset>

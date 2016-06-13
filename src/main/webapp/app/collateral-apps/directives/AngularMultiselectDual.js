@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('DashboardApp').directive('multiselectDual', [function () {
+angular.module('DashboardApp').directive('multiselectDual', [function ($filter) {
     return {
         restrict: 'AE',
         replace: true,
@@ -30,6 +30,30 @@ angular.module('DashboardApp').directive('multiselectDual', [function () {
             $scope.multiselectElements.msOptions = $scope.multiselectElements.data;
             $scope.multiselectElements.msSelected = [];
 
+            $scope.$watch(function() {
+
+                return element.attr('selected-elements');
+
+            }, function(newValue, oldValue){
+
+                var elements;
+
+                if(typeof newValue === 'string' && newValue != undefined){
+
+                    elements = $scope.$eval(newValue);
+                }
+                else
+                    return false;
+
+                if(typeof elements === 'object')
+                {
+                    angular.forEach(elements, function(key){
+                        $scope.multiselectElements.selectElementByKey(key)
+                    });
+                }
+                
+            });
+
             //ADD ELEMENTS DYNAMIC
             $scope.multiselectElements.addElement = function (id, name) {
                 $scope.multiselectElements.data.push({
@@ -40,13 +64,13 @@ angular.module('DashboardApp').directive('multiselectDual', [function () {
 
             //GET ALL ELEMENTS
             $scope.multiselectElements.getElements = function () {
-                //console.log($scope.multiselectElements.data)
+                console.log($scope.multiselectElements.data)
                 return $scope.multiselectElements.data;
             }
 
             //GET SELECTED ITEMS
-            $scope.multiselectElements.getSelectedElements = function () {
-                //console.log($scope.multiselectElements.msSelected)
+            $scope.multiselectElements.getSeletedElements = function () {
+                console.log($scope.multiselectElements.msSelected)
                 return $scope.multiselectElements.msSelected;
             }
 
@@ -60,7 +84,7 @@ angular.module('DashboardApp').directive('multiselectDual', [function () {
                     }
                 });
 
-                //console.log(remainingElements);
+                console.log(remainingElements);
 
                 return remainingElements;
             }
@@ -79,6 +103,25 @@ angular.module('DashboardApp').directive('multiselectDual', [function () {
                 );
             }
 
+            //SELECT ITEM BY KEY
+            $scope.multiselectElements.selectElementByKey = function (key) {
+                var skip = false;
+
+                angular.forEach($scope.multiselectElements.msOptions, function (item, index) {
+                    if(skip)
+                    {
+                        return false;
+                    }
+
+                    if (item.hide == undefined || item.hide == false) {
+                        if(item.key == key){
+                            $scope.multiselectElements.selectElement(item, index);
+                            skip = true;
+                        }
+                    }
+                });
+            };
+
             //UNSELECT A ITEM
             $scope.multiselectElements.unselectElement = function (item, $index) {
                 $scope.multiselectElements.msOptions[item.optionIndex].hide = false;
@@ -87,7 +130,7 @@ angular.module('DashboardApp').directive('multiselectDual', [function () {
 
             //SELECT ALL ITEMS IN ARRAY
             $scope.multiselectElements.selectAll = function (element) {
-                //console.log("Seleccionando Todos");
+                console.log("Seleccionando Todos");
                 angular.forEach($scope.multiselectElements.msOptions, function (item, index) {
                     if (item.hide == undefined || item.hide == false) {
                         $scope.multiselectElements.selectElement(item, index);
@@ -97,7 +140,7 @@ angular.module('DashboardApp').directive('multiselectDual', [function () {
 
             //UNSELECT ALL ITEMS IN ARRAY
             $scope.multiselectElements.unselectAll = function (element) {
-                //console.log("Deseleccionando Todos");
+                console.log("Deseleccionando Todos");
                 if ($scope.multiselectElements.msSelected.length == 0)
                     return true;
 
