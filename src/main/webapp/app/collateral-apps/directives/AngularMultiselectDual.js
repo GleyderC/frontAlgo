@@ -30,28 +30,27 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
             $scope.multiselectElements.msOptions = $scope.multiselectElements.data;
             $scope.multiselectElements.msSelected = [];
 
-            $scope.$watch(function() {
+            $scope.$watch(function () {
 
                 return element.attr('selected-elements');
 
-            }, function(newValue, oldValue){
+            }, function (newValue, oldValue) {
 
                 var elements;
 
-                if(typeof newValue === 'string' && newValue != undefined){
+                if (typeof newValue === 'string' && newValue != undefined) {
 
                     elements = $scope.$eval(newValue);
                 }
                 else
                     return false;
 
-                if(typeof elements === 'object')
-                {
-                    angular.forEach(elements, function(key){
+                if (typeof elements === 'object') {
+                    angular.forEach(elements, function (key) {
                         $scope.multiselectElements.selectElementByKey(key)
                     });
                 }
-                
+
             });
 
             //ADD ELEMENTS DYNAMIC
@@ -108,13 +107,12 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
                 var skip = false;
 
                 angular.forEach($scope.multiselectElements.msOptions, function (item, index) {
-                    if(skip)
-                    {
+                    if (skip) {
                         return false;
                     }
 
                     if (item.hide == undefined || item.hide == false) {
-                        if(item.key == key){
+                        if (item.key == key) {
                             $scope.multiselectElements.selectElement(item, index);
                             skip = true;
                         }
@@ -151,4 +149,17 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
             }
         }
     };
-}]);
+}])
+
+angular.module('DashboardApp').filter('highlight', function ($sce) {
+    return function (text, phrase) {
+        
+        if (phrase) {
+
+            text = text.replace(new RegExp('(' + phrase + ')', 'gi'),
+                '<span class="highlighted-text">$1</span>')
+        }
+
+        return $sce.trustAsHtml(text);
+    }
+})

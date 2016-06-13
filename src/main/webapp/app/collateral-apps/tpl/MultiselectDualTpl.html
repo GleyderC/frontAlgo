@@ -1,16 +1,14 @@
 <div class="multiselect-container">
     <style>
 
-        .panel-container
-        {
+        .panel-container {
             margin: 5px;
             float: left;
             overflow: auto;
             text-align: center;
         }
 
-        .panel-container input:first-child
-        {
+        .panel-container input:first-child {
             margin: 3px;
             width: 140px;
             padding-left: 4px;
@@ -20,7 +18,7 @@
             border: 1px solid #969696;
         }
 
-        .panel-multiselect{
+        .panel-multiselect {
             margin-left: auto;
             margin-right: auto;
             width: 140px;
@@ -35,14 +33,13 @@
             box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);*/
         }
 
-        .panel-multiselect ul{
+        .panel-multiselect ul {
             margin: 0;
             list-style-type: none;
             padding: 0;
         }
 
-        .panel-multiselect ul li
-        {
+        .panel-multiselect ul li {
             display: list-item;
             text-align: left;
             width: 100% !important;
@@ -51,28 +48,27 @@
             border-bottom: 1px #eee solid;
         }
 
-        .panel-multiselect ul li:HOVER
-        {
+        .panel-multiselect ul li:HOVER {
             cursor: pointer;
             color: #fff;
             text-decoration: none;
             background-color: #08c;
         }
 
-        .panel-multiselect-center
-        {
+        .panel-multiselect-center {
             width: 20px;
             border: none;
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
             box-shadow: none;
         }
-        .panel-multiselect-center .buttons-actions{
+
+        .panel-multiselect-center .buttons-actions {
             width: 100%;
             padding-top: 90px;
         }
-        .panel-multiselect-center span
-        {
+
+        .panel-multiselect-center span {
             width: 100%;
             margin-left: auto;
             margin-right: auto;
@@ -80,18 +76,24 @@
             transition: all 0.5s ease;
         }
 
-        .panel-multiselect-center span:HOVER
-        {
+        .panel-multiselect-center span:HOVER {
             color: silver;
+        }
+
+        .highlighted-text {
+            font-weight: bold;
+            text-shadow: 0px 0px 1px rgba(0, 0, 0, 1);
         }
 
     </style>
     <div class="panel-container">
-        <input type="text" class="search-input" autocomplete="off" placeholder="Search" ng-model="multiselectElements.inputSearchSelect" ng-if="multiselectElements.searchSelect">
+        <input type="text" class="search-input" autocomplete="off" placeholder="Search"
+               ng-model="multiselectElements.inputSearchSelect" ng-if="multiselectElements.searchSelect">
         <div class="panel-multiselect panel-multiselect-left">
             <ul>
-                <li ng-repeat="item in multiselectElements.msOptions | filter: multiselectElements.inputSearchSelect" ng-click="multiselectElements.selectElement(item, $index)" ng-if="!item.hide">
-                    {{ item.name }}
+                <li ng-repeat="item in multiselectElements.msOptions | filter: multiselectElements.inputSearchSelect"
+                    ng-bind-html="item.name | highlight:multiselectElements.inputSearchSelect"
+                    ng-click="multiselectElements.selectElement(item, $index)" ng-if="!item.hide">
                 </li>
             </ul>
         </div>
@@ -105,11 +107,13 @@
     </div>
 
     <div class="panel-container">
-        <input type="text" class="search-input" autocomplete="off" placeholder="Search" ng-model="multiselectElements.inputSearchSelected" ng-if="multiselectElements.searchSelected">
+        <input type="text" class="search-input" autocomplete="off" placeholder="Search"
+               ng-model="multiselectElements.inputSearchSelected" ng-if="multiselectElements.searchSelected">
         <div class="panel-multiselect panel-multiselect-right">
             <ul>
-                <li ng-repeat="item in multiselectElements.msSelected | filter: multiselectElements.inputSearchSelected" ng-click="multiselectElements.unselectElement(item, $index)">
-                    {{ item.name }}
+                <li ng-repeat="item in multiselectElements.msSelected | filter: multiselectElements.inputSearchSelected"
+                    ng-bind-html="item.name | highlight:multiselectElements.inputSearchSelected"
+                    ng-click="multiselectElements.unselectElement(item, $index)">
                 </li>
             </ul>
         </div>
