@@ -24,12 +24,7 @@ DashboardApp.controller('AgreementsController',
                 {
                     name : 'Principal',
                     field: 'counterpartyA.name',
-                    headerCellClass: $scope.highlightFilteredHeader,
-                    filter: {
-                        type: uiGridConstants.filter.SELECT,
-                        selectOptions: $scope.counterPartyAList
-                       
-                    },
+                    headerCellClass: $scope.highlightFilteredHeader
                 },
                 {
                     name : 'Fund/Clearing Broker',
@@ -40,24 +35,14 @@ DashboardApp.controller('AgreementsController',
                 {
                     name : 'Counterparty',
                     field: 'counterpartyB.name',
-                    filter: {
-                        type: uiGridConstants.filter.SELECT,
-                        selectOptions: $scope.counterPartyBList
-                      
-                    },
+                    headerCellClass: $scope.highlightFilteredHeader
                 },
 
                 {
 
                     name : 'Contract Type',
                     field: 'contractType',
-                    filter: {
-                        type: uiGridConstants.filter.SELECT,
-                        selectOptions: $scope.contractTypeList,
-                        condition: function(searchTerm, cellValue) {
-                            return cellValue === searchTerm;
-                        }
-                    }
+                    headerCellClass: $scope.highlightFilteredHeader
                 },
                 {
                     name : 'Rating',
