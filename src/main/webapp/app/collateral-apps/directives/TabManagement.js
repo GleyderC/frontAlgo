@@ -33,7 +33,8 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                     },
                     disabled: false,
                     closable: false,
-                    callback: function(){}
+                    callback: function () {
+                    }
                 };
 
                 if (!!tabConfig && typeof tabConfig === 'object') {
@@ -100,29 +101,32 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                                 var last_index = $scope.workspaceTabs.tabList.length;
                                 var workspace_tab_container = element.find('div[data-tabid="' + $scope.workspaceTabs.id + last_index + '"][role="tab-content"]');
 
-                                angular.forEach(globalTabConfig.resolve.formData, function (element, index) {
+                                if (workspace_tab_container.length > 0) {
+                                    angular.forEach(globalTabConfig.resolve.formData, function (element, index) {
 
-                                    if (element.type == "text") {
-                                        workspace_tab_container.find("input#" + element.id).val(element.value);
-                                    }
-                                    else if (element.type == "select") {
-                                        workspace_tab_container.find("input#" + element.id).val(element.value);
-                                    }
-                                    else if (element.type == "checkbox") {
-                                        workspace_tab_container.find("input#" + element.id).prop("checked", element.value);
-                                    }
-                                    else if (element.type == "bootstrap-switch") {
-                                        workspace_tab_container.find("input#" + element.id).bootstrapSwitch('state', element.value);
-                                    }
-                                    else if (element.type == "multiselect-dual") {
-                                        workspace_tab_container.find("div#" + element.id).attr("selected-elements", element.value);
-                                        workspace_tab_container.find("div#" + element.id).scope().$apply();
-                                    }
+                                        if (element.type == "text") {
+                                            workspace_tab_container.find("input#" + element.id).val(element.value);
+                                        }
+                                        else if (element.type == "select") {
+                                            workspace_tab_container.find("input#" + element.id).val(element.value);
+                                        }
+                                        else if (element.type == "checkbox") {
+                                            workspace_tab_container.find("input#" + element.id).prop("checked", element.value);
+                                        }
+                                        else if (element.type == "bootstrap-switch") {
+                                            workspace_tab_container.find("input#" + element.id).bootstrapSwitch('state', element.value);
+                                        }
+                                        else if (element.type == "multiselect-dual") {
+                                            workspace_tab_container.find("div#" + element.id).attr("selected-elements", element.value);
+                                            workspace_tab_container.find("div#" + element.id).scope().$apply();
+                                        }
 
-                                });
+                                        //clean array to set form inputs
+                                        globalTabConfig.resolve.formData.splice(index, 1);
 
-                                //clean array to set form inputs
-                                globalTabConfig.resolve.formData = [];
+                                    });
+                                }
+
                             }
                         }
 
@@ -182,12 +186,12 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
             }
 
             $scope.workspaceTabs.backTab = function () {
-                if ($scope.workspaceTabs.active > 0)
+                if ($scope.workspaceTabs.active > 1)
                     $scope.workspaceTabs.active--;
             }
 
             $scope.workspaceTabs.nextTab = function () {
-                if ($scope.workspaceTabs.active < ($scope.workspaceTabs.tabList.length - 1))
+                if ($scope.workspaceTabs.active < ($scope.workspaceTabs.tabList.length))
                     $scope.workspaceTabs.active++;
             }
 
