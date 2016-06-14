@@ -19,7 +19,9 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
 
             $scope.workspaceTabs.addTab = function (tabConfig) {
 
-                var globalTabConfig = {
+                let deferred = $q.defer();
+
+                let globalTabConfig = {
                     head: {
                         icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
                         text: ''
@@ -27,10 +29,11 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                     content: '',
                     templateUrl: '',
                     resolve: {
-                        formsData: []
+                        formData: []
                     },
                     disabled: false,
-                    closable: false
+                    closable: false,
+                    callback: function(){}
                 };
 
                 if (!!tabConfig && typeof tabConfig === 'object') {
@@ -47,12 +50,20 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                         globalTabConfig.templateUrl = tabConfig.templateUrl;
                     }
 
+                    if (!!tabConfig.resolve) {
+                        globalTabConfig.resolve = tabConfig.resolve;
+                    }
+
                     if (!!tabConfig.disabled) {
                         globalTabConfig.disabled = tabConfig.disabled;
                     }
 
                     if (!!tabConfig.closable) {
                         globalTabConfig.closable = tabConfig.closable;
+                    }
+
+                    if (!!tabConfig.callback && tabConfig.callback === 'function') {
+                        globalTabConfig.callback = tabConfig.callback;
                     }
 
                 }
@@ -80,19 +91,54 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                             $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = '';
                         }
 
-                        //RESOLVE
-                        $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].resolve.formsData
-                        var last_index = $scope.workspaceTabs.tabList.length;
-                        var workspace_tab_container = element.find('div[data-tabid=' + $scope.workspaceTabs.id + last_index + '][role="tab-content"]');
-                        
-                        angular.foreach(workspace_tab_container.find("input"), function(el, index){
+                        //RESOLVE SECTION
 
-                        });
+                        if (!!globalTabConfig.resolve) {
 
+                            if (!!globalTabConfig.resolve.formData.length > 0) {
+
+                                var last_index = $scope.workspaceTabs.tabList.length;
+                                var workspace_tab_container = element.find('div[data-tabid="' + $scope.workspaceTabs.id + last_index + '"][role="tab-content"]');
+
+                                angular.forEach(globalTabConfig.resolve.formData, function (element, index) {
+
+                                    if (element.type == "text") {
+                                        workspace_tab_container.find("input#" + element.id).val(element.value);
+                                    }
+                                    else if (element.type == "select") {
+                                        workspace_tab_container.find("input#" + element.id).val(element.value);
+                                    }
+                                    else if (element.type == "checkbox") {
+                                        workspace_tab_container.find("input#" + element.id).prop("checked", element.value);
+                                    }
+                                    else if (element.type == "bootstrap-switch") {
+                                        workspace_tab_container.find("input#" + element.id).bootstrapSwitch('state', element.value);
+                                    }
+                                    else if (element.type == "multiselect-dual") {
+                                        workspace_tab_container.find("div#" + element.id).attr("selected-elements", element.value);
+                                        workspace_tab_container.find("div#" + element.id).scope().$apply();
+                                    }
+
+                                });
+
+                                //clean array to set form inputs
+                                globalTabConfig.resolve.formData = [];
+                            }
+                        }
+
+                        //CALLBACK
+                        if (!!globalTabConfig.callback && typeof globalTabConfig.callback === 'function') {
+                            globalTabConfig.callback();
+                        }
+
+
+                        //RETURN RESOLVE PROMISE
+                        deferred.resolve(globalTabConfig);
                     }
 
                 });
 
+                return deferred.promise;
 
             }
 

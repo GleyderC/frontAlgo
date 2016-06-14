@@ -78,23 +78,28 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
     };
 
     $scope.editRow = function (grid, row) {
-        console.log("editing contract")
-        console.log(row)
 
-        $scope.workspaceTabs.tabList.push(
-            {
+        $scope.workspaceTabs.addTab({
                 head: {
                     icon: '',
                     text: 'Editing Billateral Agreement (' + ($scope.workspaceTabs.tabList.length) + ')'
                 },
                 templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
-                data: row,
-                closable: true
+                closable: true,
+                resolve: {
+                    formData: [
+                        {
+                            type: "text",
+                            id: "le-bilateral-ag-call-issuance",
+                            value: "Demo"
+                        }
+                    ]
+                }
             }
         );
 
     }
-    
+
     //FIRST SEARCH TAB
     $scope.$on('$includeContentLoaded', function (event, url) {
 
