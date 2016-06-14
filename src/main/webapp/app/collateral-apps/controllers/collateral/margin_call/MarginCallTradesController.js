@@ -52,21 +52,30 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             }
         };
         $scope.gridTradesOptions.columnDefs = [
-            {field: 'TradeId', width: 90,
+            {field: 'internalId', name:'TradeId', width: 90,
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
-            {field: 'type'},
-            {field: 'subType'},
+            {field: 'tradeType', name: 'type'},
+            {field: 'tradeSubType', name:'subType'},
             {field: 'description' },
             {field: 'notional' },
             {field: 'currency' },
-            {field: 'npvCurr', name:'npv (Curr)' },
-            {field: 'npvEur', name:'npv (Eur)' },
+            {field: 'npvCurr', name:'Npv (Curr)' },
+            {field: 'npvEur', name:'Npv (Eur)' },
             {field: 'npvCounterParty', name:'npv (Counterparty)'},
-            {field: 'npvCounterParty', name:'Diff (%NPV)'}
+            {field: 'npvCounterParty', name:'Diff (%Npv)'}
 
         ];
+
+        MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
+            $scope.trades = result.data.dataResponse.trades;
+
+            //console.log($scope.trades);
+            $scope.gridTradesOptions.data = $scope.trades;
+
+
+        });
 }]);
