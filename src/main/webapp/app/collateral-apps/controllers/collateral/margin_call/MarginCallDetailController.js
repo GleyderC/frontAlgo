@@ -6,7 +6,7 @@ var DashboardApp = angular.module('DashboardApp');
 DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstants', 'MarginCallService',
     function ($scope, uiGridConstants, MarginCallService) {
 
-        $scope.tabs = [
+        $scope.tabs1 = [
             {
                 id: 'mc-csa-margin',
                 title: 'CSA Margins',
@@ -39,6 +39,20 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
             }
         ];
 
+        $scope.tabs2 = [
+            {
+                id: 'mc-trades',
+                title: 'Trades (underlyings)',
+                templateUrl: 'collateral-apps/views/collateral/margin_call/mc_trades.html',
+                icon: ''
+            },
+            {
+                id: 'mc-collateral-inventory',
+                title: 'Collateral Inventory',
+                templateUrl: 'collateral-apps/views/collateral/margin_call/mc_collateral_inventory.html',
+                icon: ''
+            }
+        ];
 
         //$scope.test = "Test"
         $scope.MarginCall = $scope.currentMarginCall;

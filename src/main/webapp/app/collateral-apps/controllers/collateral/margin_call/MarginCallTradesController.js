@@ -5,23 +5,7 @@ var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstants', 'MarginCallService',
     function ($scope, uiGridConstants, MarginCallService) {
-
-        $scope.tabs = [
-            {
-                id: 'mc-trades',
-                title: 'Trades (underlyings)',
-                templateUrl: 'collateral-apps/views/collateral/margin_call/mc_trades.html',
-                icon: ''
-            },
-            {
-                id: 'mc-collateral-inventory',
-                title: 'Collateral Inventory',
-                templateUrl: 'collateral-apps/views/collateral/margin_call/mc_collateral_inventory.html',
-                icon: ''
-            }
-        ];
-
-
+        
         $scope.gridTradesOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
@@ -52,25 +36,29 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             }
         };
         $scope.gridTradesOptions.columnDefs = [
-            {field: 'internalId', name:'TradeId', width: 90,
+            {field: 'trade.internalId', name:'TradeId', width: 90,
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
-            {field: 'tradeType', name: 'type'},
-            {field: 'tradeSubType', name:'subType'},
-            {field: 'description' },
-            {field: 'notional' },
-            {field: 'currency' },
-            {field: 'npvCurr', name:'Npv (Curr)' },
-            {field: 'npvEur', name:'Npv (Eur)' },
-            {field: 'npvCounterParty', name:'npv (Counterparty)'},
+            {field: 'trade.tradeType', name: 'type'},
+            {field: 'trade.tradeSubType', name:'subType'},
+            {field: 'trade.description' },
+            {field: 'trade.notional' },
+            {field: 'trade.currency' },
+
+            {field: 'ownPricing.price', name:'Npv (Curr)' },
+            {field: 'ownPricing.currency', name:'Npv (Eur)' },
+            {field: 'ownPricing.priceInBaseCurrency', name:'npv (Counterparty)'},
             {field: 'npvCounterParty', name:'Diff (%Npv)'}
 
         ];
 
+        //console.log($scope.MarginCall.marginCalls[0].id);
+
         MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
+            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
             $scope.trades = result.data.dataResponse.trades;
 
             //console.log($scope.trades);

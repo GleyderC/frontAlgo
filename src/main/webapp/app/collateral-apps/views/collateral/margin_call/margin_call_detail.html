@@ -43,24 +43,21 @@
                 </tbody>
                 </table>
                 <uib-tabset active="1">
-                    <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
+                    <uib-tab index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
                         <uib-tab-heading>
                             <i class="{{tab.icon}}"></i>{{tab.title}}
                         </uib-tab-heading>
                         <div ng-include=tab.templateUrl></div>
                     </uib-tab>
                 </uib-tabset>
-                <div ng-controller="MarginCallTradesController">
-                    <uib-tabset active="1">
-                        <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
-                            <uib-tab-heading>
-                                <i class="{{tab.icon}}"></i>{{tab.title}}
-                            </uib-tab-heading>
-                            <div ng-include=tab.templateUrl></div>
-                        </uib-tab>
-                    </uib-tabset>
-                </div>
-
+                <uib-tabset active="1">
+                    <uib-tab index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
+                        <uib-tab-heading>
+                            <i class="{{tab.icon}}"></i>{{tab.title}}
+                        </uib-tab-heading>
+                        <div ng-include=tab.templateUrl></div>
+                    </uib-tab>
+                </uib-tabset>
             </div>
         </div>
         <!-- END CHART PORTLET-->

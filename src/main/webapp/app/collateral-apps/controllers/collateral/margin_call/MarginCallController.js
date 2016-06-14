@@ -41,8 +41,7 @@ var MarginCallCtrl = DashboardApp
                 $scope.viewMarginCall = function (value) {
                     $scope.gridApi.selection.getSelectedRows();
                     $scope.setCurrentMarginCall(value);
-                    $scope.workspaceTabs.tabList
-                        .push({
+                    $scope.workspaceTabs.addTab({
                             head: {
                                 icon: 'icon-call-in font-dark font-green-haze',
                                 text: 'Margin call ('
@@ -51,7 +50,16 @@ var MarginCallCtrl = DashboardApp
                             },
                             templateUrl: paths.views
                             + "/collateral/margin_call/margin_call_detail.html",
-                            closable: true
+                            closable: true,
+                            resolve: {
+                                formData: [
+                                    {
+                                        type: "text",
+                                        id: "le-bilateral-ag-call-issuance",
+                                        value: "Demo"
+                                    }
+                                ]
+                            }
                         });
 
                 };
