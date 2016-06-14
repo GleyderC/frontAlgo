@@ -14,7 +14,7 @@ angular.module('DashboardApp')
         	var  detailParam = {
         			id : marginCallId 
         	};
-        	return $request.get('/servlet/MarginCallAndContract/SelectById',detailParam);
+        	return $request.get('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
         };
     
 
