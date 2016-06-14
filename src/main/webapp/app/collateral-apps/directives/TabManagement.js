@@ -120,6 +120,9 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                                             workspace_tab_container.find("div#" + element.id).attr("selected-elements", element.value);
                                             workspace_tab_container.find("div#" + element.id).scope().$apply();
                                         }
+                                        else if (element.type == "html") {
+                                            workspace_tab_container.find("#" + element.id).html(element.value);
+                                        }
 
                                         //clean array to set form inputs
                                         globalTabConfig.resolve.formData.splice(index, 1);
