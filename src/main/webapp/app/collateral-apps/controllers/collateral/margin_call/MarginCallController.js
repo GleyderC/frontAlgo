@@ -97,7 +97,7 @@ var MarginCallCtrl = DashboardApp
                         },
                         {
                             name: 'Contract Type',
-                            field: 'marginCalls[0].contractType',
+                            field: 'contract.contractType',
                             width: 140,
                             filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
 
@@ -241,26 +241,22 @@ var MarginCallCtrl = DashboardApp
                       	$scope.onResponse(data);
                       });
                 }
-                
                 $scope.onResponse =    function (data) {
-                    $scope.gridOptions.data = data.dataResponse;
+                	console.log(data);
                     var arr = {};
                     arr["contractType"] = {};
                     arr["counterpartyB"] = {};
                     arr["counterpartyA"] = {};
+                    
                     data.dataResponse.forEach(function (v, k) {
-                            if (v.contract
-                                    .hasOwnProperty("clearingMemberLegalEntity")) {// CCPHouseAccount
+                            if (v.contract.hasOwnProperty("clearingMemberLegalEntity")) {// CCPHouseAccount
 
                                 v.contract["counterpartyA"] = {};
                                 v.contract["counterpartyA"] = v.contract.clearingMemberLegalEntity;
                                 v.contract["counterpartyB"] = {};
                                 v.contract["counterpartyB"]["name"] = v.contract.ccpName;
                             }
-                            if (v.contract
-                                    .hasOwnProperty("client")
-                                && v.contract
-                                    .hasOwnProperty("clearingBroker")) {
+                            if (v.contract.hasOwnProperty("client") && v.contract.hasOwnProperty("clearingBroker")) {
                                 v.contract["counterpartyA"] = {};
                                 v.contract["counterpartyA"] = v.client;
                                 v.contract["contractType"] = "CCP Client Clearing";
@@ -270,7 +266,12 @@ var MarginCallCtrl = DashboardApp
                             }
 
                             if (v.contract.hasOwnProperty("contractType")) {
-                                arr["contractType"][v.marginCalls[0].contractType] = v.marginCalls[0].contractType;
+                            	if(v.contract.contractType.toUpperCase()==="BILATERAL"){
+                            		let bilateralContractType = v.contract.bilateralContractType;
+                            		v.contract.contractType =  v.contract.bilateralContractType;
+                            	}
+                            	arr["contractType"][v.marginCalls[0].contractType] = v.marginCalls[0].contractType;
+                            	
                             }
                             if (v.contract.hasOwnProperty("counterpartyA")) {
                                 arr["counterpartyA"][v.contract.counterpartyA.name] = v.contract.counterpartyA;
@@ -279,6 +280,9 @@ var MarginCallCtrl = DashboardApp
                                 arr["counterpartyB"][v.contract.counterpartyB.name] = v.contract.counterpartyB;
                             }
                         });
+                    
+                    $scope.gridOptions.data = data.dataResponse;
+                    
                     if (Object.keys(arr.contractType).length > 0) {
                         Object.keys(arr.contractType).forEach(function (val, k) {
 
@@ -309,6 +313,7 @@ var MarginCallCtrl = DashboardApp
                 MarginCallService.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
                 	$scope.onResponse(data);
                 });
+
             }]);
 
 MarginCallCtrl.controller(

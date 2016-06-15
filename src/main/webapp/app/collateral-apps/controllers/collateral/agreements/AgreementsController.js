@@ -111,6 +111,7 @@ DashboardApp.controller('AgreementsController',
         };
         AgreementsService.getAll().success(function(data) {
                 $scope.gridOptions.data = data.dataResponse;
+                console.log(data);
                 var arr = {}; 
                 arr["contractType"] = {}; 
                 arr["counterpartyB"] = {};
@@ -138,8 +139,12 @@ DashboardApp.controller('AgreementsController',
                 	}
                 	
                 	//Building ui grid Select for filter
-                	if(v.hasOwnProperty("contractType")){
-                			arr["contractType"][v.contractType] = v.contractType;
+                    if (v.hasOwnProperty("contractType")) {
+                    	if(v.contractType.toUpperCase()==="BILATERAL"){
+                    		let bilateralContractType = v.bilateralContractType;
+                    		v.contractType =  v.bilateralContractType;
+                    	}
+                		arr["contractType"][v.contractType] = v.contractType;
                 	}
                 	if(v.hasOwnProperty("counterpartyA")){
                 		arr["counterpartyA"][v.counterpartyA.otherName]= v.counterpartyA; 
