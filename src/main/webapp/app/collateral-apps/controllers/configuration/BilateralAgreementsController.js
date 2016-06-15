@@ -55,7 +55,8 @@ DashboardApp.controller(
                 staticData: {
                     contractType: $localStorage.get("BilateralContractType"),
                     currencies: currenciesList,
-                    financialCalendar: $filter('orderBy')($localStorage.get("FinancialCalendar"), 'name')
+                    financialCalendar: $filter('orderBy')($localStorage.get("FinancialCalendar"), 'name'),
+                    contracts: []
                 }
             };
 
@@ -69,10 +70,6 @@ DashboardApp.controller(
             LegalEntityService.getAll().then(function (result) {
                 $scope.legalEntities = result.data.dataResponse;
             });
-
-            $scope.BilateralAgreements = {
-                contracts: []
-            };
 
         }
     ]);
