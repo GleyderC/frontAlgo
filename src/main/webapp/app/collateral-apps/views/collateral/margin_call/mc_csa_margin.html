@@ -9,16 +9,16 @@
 
                             <label class="control-label col-md-2">Exposure</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure" ui-money-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
                             </div>
 
                             <label class="control-label col-md-2">Netted IAs</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder=""
+                                <input type="text" class="form-control collateral-money" placeholder=""
                                        ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.nettedIaPartyB - currentMarginCall.marginCalls[0].marginCallCalculations.nettedIaPartyA"
-                                       ui-money-mask="2"
+                                       ui-number-mask="2"
                                        ng-if="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure<0">
-                                <input type="text" class="form-control " placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.nettedIaPartyB" ui-money-mask="2"
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.nettedIaPartyB" ui-number-mask="2"
                                        ng-if="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure>=0">
                             </div>
 
@@ -27,35 +27,35 @@
 
                             <label class="control-label col-md-2">Exp+IAs</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder=""  ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.exposurePlusNettedIa" ui-money-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder=""  ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.exposurePlusNettedIa" ui-number-mask="2">
                             </div>
 
                             <label class="control-label col-md-2">C.S. Amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder=""  ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.creditSupportAmmount" ui-money-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder=""  ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.creditSupportAmmount" ui-number-mask="2">
                             </div>
 
                         </div>
                         <div class="row">
                             <label class="control-label col-md-2">Collateral Value</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder=""
-                                       ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.securitiesCollateralValuePartyA" ui-money-mask="2"
+                                <input type="text" class="form-control collateral-money" placeholder=""
+                                       ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.securitiesCollateralValuePartyA" ui-number-mask="2"
                                         ng-if="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure<0">
-                                <input type="text" class="form-control " placeholder=""
-                                       ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.securitiesCollateralValuePartyB" ui-money-mask="2"
+                                <input type="text" class="form-control collateral-money" placeholder=""
+                                       ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.securitiesCollateralValuePartyB" ui-number-mask="2"
                                        ng-if="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure>=0">
                             </div>
 
                             <label class="control-label col-md-2">Net exposure</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.netExposure" ui-money-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.netExposure" ui-number-mask="2">
                             </div>
                         </div>
                         <div class="row">
                             <label class="control-label col-md-2">Margin Amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.marginCallAmount" ui-money-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.marginCallAmount" ui-number-mask="2">
                             </div>
                         </div>
                     </div>
@@ -73,16 +73,16 @@
 
                             <label class="control-label col-md-2">Threshold</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" disabled ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.threshold" ui-money-mask="0">
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled ng-model="currentMarginCall.marginCalls[0].marginCallCalculations.threshold" ui-number-mask="0">
                             </div>
 
                             <label class="control-label col-md-2">M.T.A.</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder=""
-                                       ng-model="currentMarginCall.contract.minimumTransferAmountPartyA" ui-money-mask="0"
+                                <input type="text" class="form-control collateral-money" placeholder=""
+                                       ng-model="currentMarginCall.contract.minimumTransferAmountPartyA" ui-number-mask="0"
                                        ng-if="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure<0">
-                                <input type="text" class="form-control " placeholder=""
-                                       ng-model="currentMarginCall.contract.minimumTransferAmountPartyB" ui-money-mask="0"
+                                <input type="text" class="form-control collateral-money" placeholder=""
+                                       ng-model="currentMarginCall.contract.minimumTransferAmountPartyB" ui-number-mask="0"
                                        ng-if="currentMarginCall.marginCalls[0].marginCallCalculations.ownCalculatedExposure>=0">
                             </div>
 
@@ -91,12 +91,12 @@
 
                             <label class="control-label col-md-2">Rounding</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" disabled ng-model="currentMarginCall.contract.roundingAmount" ui-money-mask="0">
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled ng-model="currentMarginCall.contract.roundingAmount" ui-number-mask="0">
                             </div>
 
                             <label class="control-label col-md-2">Buffer</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" disabled>
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
                             </div>
 
 
@@ -104,18 +104,18 @@
                         <div class="row">
                             <label class="control-label col-md-2">Call Amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" disabled>
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
                             </div>
 
                             <label class="control-label col-md-2">Recall amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" disabled>
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
                             </div>
                         </div>
                         <div class="row">
                             <label class="control-label col-md-2">Call type</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" disabled>
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
                             </div>
                         </div>
 
@@ -135,12 +135,12 @@
 
                             <label class="control-label col-md-2">Dispute status</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="" disabled>
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
                             </div>
 
                             <label class="control-label col-md-2">CrPrty call</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="">
+                                <input type="text" class="form-control collateral-money" placeholder="">
                             </div>
 
                         </div>
@@ -148,11 +148,11 @@
 
                             <label class="control-label col-md-2">Agreed margin</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="">
+                                <input type="text" class="form-control collateral-money" placeholder="">
                             </div>
                             <label class="control-label col-md-2">Tolerance</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control " placeholder="">
+                                <input type="text" class="form-control collateral-money" placeholder="">
                             </div>
 
                         </div>

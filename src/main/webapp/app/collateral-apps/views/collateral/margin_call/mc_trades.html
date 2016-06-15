@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="btn-group">
-                        <button type="submit" class="btn green">
-                            <i class="fa fa-calculator" title="Calculate"></i>
+                        <button type="submit" class="btn green" uib-popover="Calculate" popover-trigger="mouseenter">
+                            <i class="fa fa-calculator"></i>
                         </button>
                     </div>
                 </div>
@@ -14,7 +14,7 @@
                 <form class="form-horizontal" role="form" id="le-general-data">
                     <div class="form-body">
                         <div>
-                            <div ui-grid="gridTradesOptions" ui-grid-exporter ui-grid-auto-resize
+                            <div ui-grid="gridTradesOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
                                  ui-grid-resize-columns ui-grid-selection ui-grid-pagination
                                  class="grid" style="height: 300px;"></div>
                         </div>
