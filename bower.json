@@ -19,10 +19,12 @@
     "oclazyload": "^1.0.9",
     "angular-ui-select": "^0.17.0",
     "select2": "~3.4.5",
+    "selectize": "^0.12.1",
     "multiselect": "jquery-multi-select#^0.9.12",
     "angular-ui-grid": "^3.1.1",
     "pdfmake": "^0.1.20",
-    "angular-toastr": "^1.7.0"
+    "angular-toastr": "^1.7.0",
+    "angular-input-masks": "^2.3.0"
   },
   "devDependencies": {},
   "appPath": "src/main/webapp/app",
