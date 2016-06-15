@@ -38,12 +38,11 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
 
                 var elements;
 
-                if (newValue != undefined && angular.isArray(newValue) && newValue.length > 0) {
-                    elements = newValue;
-                }
-                else if (typeof newValue === 'string' && newValue != undefined) {
-
+                if (angular.isArray($scope.$eval(newValue))) {
                     elements = $scope.$eval(newValue);
+                }
+                else if (typeof newValue !== 'undefined' && newValue.indexOf("[") < 0) {
+                    elements = newValue.split(",");
                 }
                 else
                     return false;

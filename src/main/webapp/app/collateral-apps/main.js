@@ -370,6 +370,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/MarginCallService.js',
                             'collateral-apps/services/AgreementsService.js',
                             'collateral-apps/services/LegalEntityService.js',
+                            'collateral-apps/services/configuration/BilateralContractService.js',
                             'collateral-apps/services/RowEditorModalService.js',
                             'collateral-apps/services/ModalService.js',
 

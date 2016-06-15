@@ -5,13 +5,16 @@ var DashboardApp = angular.module('DashboardApp')
 DashboardApp.controller(
     'BilateralAgreementsController', [
         'LegalEntityService',
+        'BilateralContractService',
         '$scope',
         '$document',
         '$timeout',
         '$request',
         'localStorageService',
         '$filter',
-        function (LegalEntityService,
+        function (
+                  LegalEntityService,
+                  BilateralContractService,
                   $scope,
                   $document,
                   $timeout,
@@ -52,18 +55,47 @@ DashboardApp.controller(
                 staticData: {
                     contractType: $localStorage.get("BilateralContractType"),
                     currencies: currenciesList,
-                    financialCalendar: $localStorage.get("FinancialCalendar")
+                    financialCalendar: $filter('orderBy')($localStorage.get("FinancialCalendar"), 'name')
                 }
+            };
+
+            //main fields
+            $scope.legalEntities = [];
+            $scope.LegalEntity = {};
+            $scope.LegalEntity.BilateralAgreements = {};
+            $scope.LegalEntity.BilateralAgreements.main = {};
+            $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
+
+            LegalEntityService.getAll().then(function (result) {
+                $scope.legalEntities = result.data.dataResponse;
+            });
+
+            $scope.BilateralAgreements = {
+                contracts: []
             };
 
         }
     ]);
 
-DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request', '$interval', 'localStorageService', '$filter', 'LegalEntityService', function ($scope, $request, $interval, $localStorage, $filter, LegalEntityService) {
-
-    $scope.BilateralAgreements = {
-        contracts: []
-    };
+DashboardApp.controller('LEBillateralAgrSearchController',
+    [
+        '$scope',
+        '$request',
+        '$interval',
+        'localStorageService',
+        '$filter',
+        'LegalEntityService',
+        'BilateralContractService',
+        function
+            (
+                $scope,
+                $request,
+                $interval,
+                $localStorage,
+                $filter,
+                LegalEntityService,
+                BilateralContractService
+            ) {
 
     $scope.addNewBillateralAgreement = function () {
 
@@ -103,17 +135,6 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
     //FIRST SEARCH TAB
     $scope.$on('$includeContentLoaded', function (event, url) {
 
-    });
-
-    //main fields
-    $scope.legalEntities = [];
-    $scope.LegalEntity = {};
-    $scope.LegalEntity.BilateralAgreements = {};
-    $scope.LegalEntity.BilateralAgreements.main = {};
-    $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
-
-    LegalEntityService.getAll().then(function (result) {
-        $scope.legalEntities = result.data.dataResponse;
     });
 
     $scope.deleteRow = function (grid, row) {
@@ -179,9 +200,9 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope', '$request'
         }
     };
 
-    $request.get("/servlet/BilateralContract/SelectAll").then(function (response) {
-        $scope.BilateralAgreements.contracts = response.data.dataResponse;
-        $scope.gridOptions.data = $scope.BilateralAgreements.contracts;
+    BilateralContractService.getAll().then(function (result) {
+        $scope.BilateralAgreements.contracts = result.data.dataResponse;
+        $scope.gridOptions.data = result.data.dataResponse;
     });
 
 }]);
