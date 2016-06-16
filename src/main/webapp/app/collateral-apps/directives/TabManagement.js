@@ -4,7 +4,7 @@
  * WORKSPACE TAB MENU
  */
 
-angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
+angular.module('DashboardApp').directive('workspaceTabs', ['$q', 'toastr', function ($q, $toastr) {
 
     return {
         restrict: "E",
@@ -17,9 +17,17 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
 
             $scope.workspaceTabs.id = attrs.id;
 
+
             $scope.workspaceTabs.addTab = function (tabConfig) {
 
                 let deferred = $q.defer();
+
+                if ($scope.workspaceTabs.maxTabs !== undefined && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
+                    $toastr.error("It has reached the maximum allowed tabs", "Error Opening", {closeButton: true})
+                    deferred.reject("limit exceeded tabs");
+                    return false;
+                }
+
 
                 let globalTabConfig = {
                     head: {
@@ -102,7 +110,12 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                                 var workspace_tab_container = element.find('div[data-tabid="' + $scope.workspaceTabs.id + last_index + '"][role="tab-content"]');
 
                                 if (workspace_tab_container.length > 0) {
-                                    angular.forEach(globalTabConfig.resolve.formData, function (element, index) {
+
+                                    let formDataCpy = [];
+
+                                    angular.copy(globalTabConfig.resolve.formData, formDataCpy);
+
+                                    angular.forEach(formDataCpy, function (element, index) {
 
                                         if (element.type == "text") {
                                             workspace_tab_container.find("input#" + element.id).val(element.value);
@@ -117,8 +130,42 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                                             workspace_tab_container.find("input#" + element.id).bootstrapSwitch('state', element.value);
                                         }
                                         else if (element.type == "multiselect-dual") {
-                                            workspace_tab_container.find("div#" + element.id).attr("selected-elements", element.value);
-                                            workspace_tab_container.find("div#" + element.id).scope().$apply();
+                                            let data_multiselect;
+
+                                            if (angular.isArray(element.value)) {
+                                                data_multiselect = JSON.stringify(element.value);
+                                            }
+                                            else if (typeof element.value === 'string') {
+                                                data_multiselect = element.value;
+                                            }
+
+                                            workspace_tab_container.find("div#" + element.id).attr("selected-elements", data_multiselect);
+                                        }
+                                        else if (element.type == "ui-select") {
+
+                                            var ngModel = workspace_tab_container.find("div#" + element.id + ".ui-select-container").attr("ng-model");
+                                            var arrayObjNgModel = ngModel.split(".");
+                                            var elementScope = workspace_tab_container.find("div#" + element.id + ".ui-select-container").scope().$parent;
+
+                                            if (arrayObjNgModel.length > 1) {
+                                                var expEvalObj = "elementScope";
+
+                                                angular.forEach(arrayObjNgModel, function (objName, index) {
+                                                    expEvalObj += '["' + objName + '"]';
+
+                                                    if (eval(expEvalObj) === undefined) {
+                                                        eval(expEvalObj + ' = new Object()');
+                                                    }
+                                                });
+
+                                                eval(expEvalObj + ' = ' + JSON.stringify(element.value))
+                                            }
+                                            else {
+                                                elementScope[arrayObjNgModel[0]] = element.value;
+                                            }
+
+                                            //elementScope.$apply();
+
                                         }
                                         else if (element.type == "html") {
                                             workspace_tab_container.find("#" + element.id).html(element.value);

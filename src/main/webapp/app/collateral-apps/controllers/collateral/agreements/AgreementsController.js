@@ -1,9 +1,9 @@
 'use strict'
-DashboardApp.controller('AgreementsController',
+ var AgreementsCtrl = DashboardApp.controller('AgreementsController',
     ['$scope', '$request', '$interval','uiGridConstants','AgreementsService', function ($scope, $request, $interval,uiGridConstants,AgreementsService) {
     
     	$scope.$on('$includeContentLoaded', function () {
-    		 	
+    	
          });
     	$scope.highlightFilteredHeader = function( row, rowRenderIndex, col, colRenderIndex ) {
             if( col.filters[0].term ){
@@ -15,8 +15,39 @@ DashboardApp.controller('AgreementsController',
         $scope.contractTypeList =[];
         $scope.counterPartyAList =[];
         $scope.counterPartyBList =[];
+//    	$scope.workspaceTabs = {
+//                name: 'agreements-workspace-tabs',
+//                active: true,
+//                tabList: [{
+//                    head: {
+//                        icon: 'fa fa-home',
+//                        text: 'Main'
+//                    },
+//                    templateUrl: paths.views
+//                    + "/collateral/agreements/main.html",
+//                    active: true
+//                },
+//                { 
+//                	head: {
+//                            icon: 'fa fa-phone',
+//                            text: 'Margin call'
+//                        },
+//                        templateUrl: paths.views
+//                        + "/collateral/margin_call/main.html",
+//                        active: false
+//                    },
+//                    { 
+//                    	head: {
+//                                icon: 'fa fa-calculator',
+//                                text: 'Interest'
+//                            },
+//                            templateUrl: paths.views
+//                            + "/collateral/interest/main.html",
+//                            active: false
+//                        }]
+//    	};
         
-        $scope.gridOptions = {
+        $scope.gridAgreements = {
             onRegisterApi: function(gridApi){
                 $scope.gridApi = gridApi;
             },
@@ -110,7 +141,7 @@ DashboardApp.controller('AgreementsController',
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
         };
         AgreementsService.getAll().success(function(data) {
-                $scope.gridOptions.data = data.dataResponse;
+                $scope.gridAgreements.data = data.dataResponse;
                 var arr = {}; 
                 arr["contractType"] = {}; 
                 arr["counterpartyB"] = {};
@@ -138,8 +169,12 @@ DashboardApp.controller('AgreementsController',
                 	}
                 	
                 	//Building ui grid Select for filter
-                	if(v.hasOwnProperty("contractType")){
-                			arr["contractType"][v.contractType] = v.contractType;
+                    if (v.hasOwnProperty("contractType")) {
+                    	if(v.contractType.toUpperCase()==="BILATERAL"){
+                    		let bilateralContractType = v.bilateralContractType;
+                    		v.contractType =  v.bilateralContractType;
+                    	}
+                		arr["contractType"][v.contractType] = v.contractType;
                 	}
                 	if(v.hasOwnProperty("counterpartyA")){
                 		arr["counterpartyA"][v.counterpartyA.otherName]= v.counterpartyA; 
@@ -166,7 +201,10 @@ DashboardApp.controller('AgreementsController',
             	}
             });
         $scope.toggleFiltering = function(){
-            $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
+            $scope.gridAgreements.enableFiltering = !$scope.gridAgreements.enableFiltering;
             $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+        };
+        $scope.viewInterest = function(){
+        	console.log($scope);
         };
  }]);

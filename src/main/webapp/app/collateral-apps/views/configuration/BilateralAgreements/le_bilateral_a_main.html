@@ -9,7 +9,7 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Principal</label>
                         <div class="col-md-9">
-                            <ui-select ng-model="legalEntityPrimary.selected" theme="bootstrap" class="input-medium">
+                            <ui-select id="legalEntityPrimary" ng-model="legalEntityPrimary.selected" theme="select2" class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
                                     {{$select.selected.name}}
@@ -25,7 +25,7 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Counterparty</label>
                         <div class="col-md-9">
-                            <ui-select ng-model="legalEntityCounterparty.selected" theme="bootstrap" class="input-medium">
+                            <ui-select id="legalEntityCounterparty" ng-model="legalEntityCounterparty.selected" theme="select2" class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
                                     {{$select.selected.name}}
@@ -205,7 +205,7 @@
                                 <option value="">-- SELECT HOLIDAY --</option>
                             </select>
                         </div>-->
-                        <multiselect-dual multiselect-elements="holidays"></multiselect-dual>
+                        <multiselect-dual id="BCHolidays" multiselect-elements="holidays"></multiselect-dual>
                     </div>
 
                     <div class="form-group col-md-12">

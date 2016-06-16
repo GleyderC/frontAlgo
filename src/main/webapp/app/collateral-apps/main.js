@@ -371,6 +371,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/MarginCallService.js',
                             'collateral-apps/services/AgreementsService.js',
                             'collateral-apps/services/LegalEntityService.js',
+                            'collateral-apps/services/InterestService.js',
                             'collateral-apps/services/configuration/BilateralContractService.js',
                             'collateral-apps/services/RowEditorModalService.js',
                             'collateral-apps/services/ModalService.js',
@@ -380,7 +381,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /* Bilateral Controller js */
                             'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
-
                             /* Agreements Controller js */
                             'collateral-apps/controllers/collateral/agreements/AgreementsController.js',
                             /* Margin Call Controller js */
@@ -388,7 +388,11 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/collateral/margin_call/MarginCallDetailController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallTradesController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallCsaController.js',
-                            'collateral-apps/controllers/collateral/margin_call/MarginCallInventoryController.js'
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallInventoryController.js',
+
+                         
+                            /* Interest Controller js */
+                            'collateral-apps/controllers/collateral/interest/InterestController.js'
 
                         ],
                         serie: true,

@@ -25,6 +25,7 @@ DashboardApp.controller(
 
             $scope.workspaceTabs = {
                 active: 1,
+                maxTabs: 10,
                 tabList: [
                     {
                         head: {
@@ -121,6 +122,16 @@ DashboardApp.controller('LEBillateralAgrSearchController',
                             type: "text",
                             id: "le-bilateral-ag-call-issuance",
                             value: "Demo"
+                        },
+                        {
+                            type: "ui-select",
+                            id: "legalEntityPrimary",
+                            value: { id: 382453812, name: "Demo Bank"}
+                        },
+                        {
+                            type: "multiselect-dual",
+                            id: "BCHolidays",
+                            value: ['AUME','BEBR','CZPR']
                         }
                     ]
                 }
@@ -264,6 +275,7 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
         searchSelected: true,
         data: $scope.BilateralAgreements.staticData.financialCalendar
     };
+
 }]);
 
 DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
