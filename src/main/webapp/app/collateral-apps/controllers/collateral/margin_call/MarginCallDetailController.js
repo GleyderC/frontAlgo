@@ -54,11 +54,12 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
             }
         ];
 
-        //$scope.test = "Test"
         $scope.MarginCall = $scope.currentMarginCall;
         //console.log($scope.MarginCall);
 
         this.sendMargin = function () {
+
             MarginCallService.sendIssueMarginCall();
+            //$scope.MarginSent = MarginCallService.sendIssueMarginCall();
         }
     }]);
