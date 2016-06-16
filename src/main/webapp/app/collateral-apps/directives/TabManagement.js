@@ -4,7 +4,7 @@
  * WORKSPACE TAB MENU
  */
 
-angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
+angular.module('DashboardApp').directive('workspaceTabs', ['$q', 'toastr', function ($q, $toastr) {
 
     return {
         restrict: "E",
@@ -17,9 +17,17 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
 
             $scope.workspaceTabs.id = attrs.id;
 
+
             $scope.workspaceTabs.addTab = function (tabConfig) {
 
                 let deferred = $q.defer();
+
+                if ($scope.workspaceTabs.maxTabs !== undefined && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
+                    $toastr.error("It has reached the maximum allowed tabs", "Error Opening", {closeButton: true})
+                    deferred.reject("limit exceeded tabs");
+                    return false;
+                }
+
 
                 let globalTabConfig = {
                     head: {
@@ -130,7 +138,7 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', function ($q) {
                                             else if (typeof element.value === 'string') {
                                                 data_multiselect = element.value;
                                             }
-                                            
+
                                             workspace_tab_container.find("div#" + element.id).attr("selected-elements", data_multiselect);
                                         }
                                         else if (element.type == "ui-select") {

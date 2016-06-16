@@ -25,6 +25,7 @@ DashboardApp.controller(
 
             $scope.workspaceTabs = {
                 active: 1,
+                maxTabs: 10,
                 tabList: [
                     {
                         head: {
