@@ -15,6 +15,14 @@ angular.module('DashboardApp')
             };
       		return $request.get('/servlet/SelectByCollateralContractId',param);
       };
+      this.getByDateAndCollateralContractId = function(date,contractId){
+    	  var param =  {
+    			  date : date,
+    			  contractId : contractId
+    	  };
+    	  return $request.post('/servlet/Interest/SelectInterestAndContractBydateAndContractId',param);
+    	  
+      }
     
 
   }]);
