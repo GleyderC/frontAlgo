@@ -23,42 +23,44 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <table  class="table table-striped table-bordered table-hover table-checkable order-column" style="margin-bottom:0">
-                <thead>
-                <tr>
-                    <th> Counterparty </th>
-                    <th> Status </th>
-                    <th> Contract </th>
-                    <th> Currency </th>
-                    <th> Amount </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td style="font-size: 12px;">{{MarginCall.contract.counterpartyB.name}}</td>
-                    <td style="font-size: 12px;"><span class="label label-sm label-success"> {{MarginCall.marginCalls[0].status}}  </span></td>
-                    <td style="font-size: 12px;">{{MarginCall.marginCalls[0].contractType?'Yes':'No'}}</td>
-                    <td style="font-size: 12px;">{{MarginCall.contract.baseCurrency}}</td>
-                    <td style="font-size: 12px;">{{MarginCall.marginCallAmount}}</td>
-                </tr>
-                </tbody>
-                </table>
-                <uib-tabset active="1">
-                    <uib-tab index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
-                        <uib-tab-heading>
-                            <i class="{{tab.icon}}"></i>{{tab.title}}
-                        </uib-tab-heading>
-                        <div ng-include=tab.templateUrl></div>
-                    </uib-tab>
-                </uib-tabset>
-                <uib-tabset active="1">
-                    <uib-tab index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
-                        <uib-tab-heading>
-                            <i class="{{tab.icon}}"></i>{{tab.title}}
-                        </uib-tab-heading>
-                        <div ng-include=tab.templateUrl></div>
-                    </uib-tab>
-                </uib-tabset>
+                <div class="row">
+                    <table  class="table table-striped table-bordered table-hover table-checkable order-column" style="margin-bottom:0">
+                    <thead>
+                    <tr>
+                        <th> Counterparty </th>
+                        <th> Status </th>
+                        <th> Contract </th>
+                        <th> Currency </th>
+                        <th> Amount </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="font-size: 12px;">{{MarginCall.contract.counterpartyB.name}}</td>
+                        <td style="font-size: 12px;"><span class="label label-sm label-success"> {{MarginCall.marginCalls[0].status}}  </span></td>
+                        <td style="font-size: 12px;">{{MarginCall.marginCalls[0].contractType?'Yes':'No'}}</td>
+                        <td style="font-size: 12px;">{{MarginCall.contract.baseCurrency}}</td>
+                        <td style="font-size: 12px;">{{MarginCall.marginCallAmount}}</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <uib-tabset active="1">
+                        <uib-tab index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
+                            <uib-tab-heading>
+                                <i class="{{tab.icon}}"></i>{{tab.title}}
+                            </uib-tab-heading>
+                            <div ng-include=tab.templateUrl></div>
+                        </uib-tab>
+                    </uib-tabset>
+                    <uib-tabset active="1">
+                        <uib-tab index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
+                            <uib-tab-heading>
+                                <i class="{{tab.icon}}"></i>{{tab.title}}
+                            </uib-tab-heading>
+                            <div ng-include=tab.templateUrl></div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
             </div>
         </div>
         <!-- END CHART PORTLET-->
