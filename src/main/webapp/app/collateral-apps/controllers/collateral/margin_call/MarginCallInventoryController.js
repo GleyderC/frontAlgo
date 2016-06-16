@@ -78,7 +78,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             {field: 'currency' },
             {field: 'coupon' },
             {field: 'frequency' },
-            {field: 'quantity' },
+            {field: 'quantity', cellFilter: 'number:0', cellClass:'collateral-money'},
             {field: 'lotSize' },
             {field: 'notional', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money'  },
             {field: 'price', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money' },

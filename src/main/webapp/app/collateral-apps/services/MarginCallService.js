@@ -17,17 +17,19 @@ angular.module('DashboardApp')
         	return $request.get('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
         };
         this.sendIssueMarginCall = function (marginCallId) {
+            var MarginSent = false;
             var params = {
 
                 "id": marginCallId
             };
 
             $request.get('/servlet/MarginCall/ActionIssueMarginCall/')
-
                 .then(function (Response) {
 
-                    toastr.success("Margin Call Send!","Success")
+                    //MarginSent = true;
+                    toastr.success("Margin Call Issuance Sent by e-mail ","Success")
                 });
+            //return MarginSent;
         }
     
 
