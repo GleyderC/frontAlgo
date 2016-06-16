@@ -1,4 +1,4 @@
-<div class="portlet light" ng-controller="MarginCallDetailController">
+<div class="portlet light" ng-controller="MarginCallDetailController as MarginDtCtrl">
 
     <div class="row" du-smooth-scroll du-scrollspy>
         <!-- BEGIN CHART PORTLET-->
@@ -15,14 +15,7 @@
                 </div>
                 <div class="col-md-1">
                     <div class="btn-group">
-                        <button type="submit" class="btn green">
-                            <i class="fa fa-check"></i> Actions
-                        </button>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="btn-group">
-                        <a href="#!" class="">
+                        <a href="#!"  uib-popover="Send" popover-trigger="mouseenter" ng-click="MarginDtCtrl.sendMargin()">
                             <img class="action-button-icon-md" src="assets/pages/icons/message.ico">
                         </a>
                     </div>
