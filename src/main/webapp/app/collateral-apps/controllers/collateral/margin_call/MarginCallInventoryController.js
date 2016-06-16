@@ -73,7 +73,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             {field: 'notional', width: 90 },
             {field: 'price', width: 90 },
             {field: 'amount', width: 90 },
-            {field: 'npvBaseCurrency', name:'Npv ('+$scope.MarginCall.contract.baseCurrency.toLowerCase()+')', width: 90 },
+            {field: 'npvBaseCurrency', name:'Npv ('+ $scope.MarginCall.contract.baseCurrency.toLowerCase()+')', width: 90 },
             {field: 'MoodyRating', name: 'Moody’sRating' },
             {field: 'SPrating', name: 'Moody’sRating' },
             {field: 'issuer' },

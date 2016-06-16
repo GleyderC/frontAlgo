@@ -13,11 +13,18 @@
                     <a href="javascript:;" class="collapse"> </a>
                     <a href="" class="fullscreen"> </a>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-1">
                     <div class="btn-group">
                         <button type="submit" class="btn green">
                             <i class="fa fa-check"></i> Actions
                         </button>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <a href="#!" class="">
+                            <img class="action-button-icon-md" src="assets/pages/icons/message.ico">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -34,11 +41,11 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td style="font-size: 12px;">{{currentMarginCall.contract.counterpartyB.name}}</td>
-                    <td style="font-size: 12px;"><span class="label label-sm label-success"> {{currentMarginCall.marginCalls[0].status}}  </span></td>
-                    <td style="font-size: 12px;">{{currentMarginCall.marginCalls[0].contractType?'Yes':'No'}}</td>
-                    <td style="font-size: 12px;">{{currentMarginCall.contract.baseCurrency}}</td>
-                    <td style="font-size: 12px;">{{currentMarginCall.marginCallAmount}}</td>
+                    <td style="font-size: 12px;">{{MarginCall.contract.counterpartyB.name}}</td>
+                    <td style="font-size: 12px;"><span class="label label-sm label-success"> {{MarginCall.marginCalls[0].status}}  </span></td>
+                    <td style="font-size: 12px;">{{MarginCall.marginCalls[0].contractType?'Yes':'No'}}</td>
+                    <td style="font-size: 12px;">{{MarginCall.contract.baseCurrency}}</td>
+                    <td style="font-size: 12px;">{{MarginCall.marginCallAmount}}</td>
                 </tr>
                 </tbody>
                 </table>

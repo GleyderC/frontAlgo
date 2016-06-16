@@ -144,6 +144,9 @@ i.close-tab-icon:hover {
 img.action-button-icon{
 	width: 20px;
 }
+img.action-button-icon-md{
+    width: 40px;
+}
 div.action-button-container{
 	margin-top:10px;
 }
@@ -177,6 +180,9 @@ div.action-button-container{
     padding: 18px;
 }
 
+.collateral-money {
+    text-align: right;
+}
 /* User Menu */
 
 /* Full Screen Customize*/
