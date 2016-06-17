@@ -84,7 +84,6 @@ var DashboardApp = angular.module('DashboardApp')
                 }).then(function(){
 		                Interest.getByDateAndCollateralContractId(moment().format("YYYY-MM-DD"),$scope.InterestDataContract.internalId)
 		                .success(function(data){
-		                	console.log(data);
 		                	$scope.InterestData   = data.dataResponse;
 		                    $scope.currency   =  $scope.InterestDataContract.baseCurrency;
 		//                	$scope.currency  = Object.keys(data.dataResponse[0].ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")])[0];
@@ -106,7 +105,6 @@ var DashboardApp = angular.module('DashboardApp')
 		                    		 cumulative : $scope.InterestCumulative
 		                    	 })
 		                    });	
-			                    console.log($scope.InterestDataGrid);
 		                    	
 		                });
                 });
