@@ -6,6 +6,16 @@ var DashboardApp = angular.module('DashboardApp');
 DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConstants', 'MarginCallService',
     function ($scope, uiGridConstants, MarginCallService) {
 
+        //console.log($scope.MarginCall.marginCalls[0].id);
+
+        MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
+            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
+            $scope.Inventory = result.data.dataResponse.postedCollateral;
+
+            $scope.gridInventoryOptions.data = $scope.Inventory;
+
+
+        });
         $scope.gridInventoryOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
@@ -67,15 +77,15 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             {field: 'maturity' },
             {field: 'currency' },
             {field: 'coupon' },
-            {field: 'frecuency' },
-            {field: 'quantity' },
+            {field: 'frequency' },
+            {field: 'quantity', cellFilter: 'number:0', cellClass:'collateral-money'},
             {field: 'lotSize' },
-            {field: 'notional', width: 90 },
-            {field: 'price', width: 90 },
-            {field: 'amount', width: 90 },
-            {field: 'npvBaseCurrency', name:'Npv ('+ $scope.MarginCall.contract.baseCurrency.toLowerCase()+')', width: 90 },
-            {field: 'MoodyRating', name: 'Moody’sRating' },
-            {field: 'SPrating', name: 'Moody’sRating' },
+            {field: 'notional', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money'  },
+            {field: 'price', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money' },
+            {field: 'amount', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money'  },
+            {field: 'npvBaseCurrency', name:'Npv ('+ $scope.MarginCall.contract.baseCurrency.toLowerCase()+')',
+                width: 90, cellFilter: 'currency:""', cellClass:'collateral-money' },
+            {field: 'SPrating', name: 'SPrating' },
             {field: 'issuer' },
             {field: 'custody' },
             {field: 'folder' },
@@ -83,14 +93,5 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
 
         ];
 
-        //console.log($scope.MarginCall.marginCalls[0].id);
 
-        MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
-            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
-            $scope.Inventory = result.data.dataResponse.postedCollateral;
-
-            $scope.gridInventoryOptions.data = $scope.Inventory;
-
-
-        });
 }]);
