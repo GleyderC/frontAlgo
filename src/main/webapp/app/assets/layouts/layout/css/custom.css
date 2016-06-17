@@ -221,7 +221,7 @@ div.action-button-container{
 
 .nav-tabs > li > a
 {
-    background: rgba(54, 78, 181, 0.419608);
+    background: rgba(38, 90, 136, 1);
     color: white;
     -webkit-transition: all 300ms ease-in-out;
     -moz-transition: all 300ms ease-in-out;
@@ -231,5 +231,40 @@ div.action-button-container{
 }
 
 .nav-tabs>li>a:hover{
-    color: rgba(54, 78, 181, 0.419608);
+    color: rgba(38, 90, 136, 1);
+}
+
+/*Cell Header Ui-GRID*/
+.ui-grid-top-panel
+{
+    background: rgba(38, 90, 136, 1) !important;
+}
+
+.ui-grid-header-cell-row
+{
+    background: rgba(38, 90, 136, 1);
+    color: white;
+}
+
+.ui-grid-header-cell-row .ui-grid-selection-row-header-buttons
+{
+    color: white;
+}
+
+.ui-grid-menu-button
+{
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -webkit-appearance:button;
+    -moz-appearance:button;
+    -o-appearance:button;
+    -ms-appearance:button;
+    color: black;
+    padding-left: 3px;
+}
+
+.ui-grid-header-cell:last-child .ui-grid-column-resizer.right
+{
+    border-right: 0 !important;
 }
