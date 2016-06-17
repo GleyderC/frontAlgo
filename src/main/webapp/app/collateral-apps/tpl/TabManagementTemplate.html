@@ -1,5 +1,5 @@
-<uib-tabset id="{{workspaceTabs.id}}" active="workspaceTabs.active">
-    <uib-tab index="$index + 1" ng-repeat="tab in workspaceTabs.tabList track by $index" active="tab.active"
+<uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}" active="workspaceTabs.active">
+    <uib-tab index="$index + 1" ng-repeat="tab in workspaceTabs.tabList" active="tab.active"
              disable="tab.disabled">
         <uib-tab-heading>
             <i class="{{ tab.head.icon }}"></i> {{ tab.head.text }}
