@@ -117,6 +117,7 @@ var DashboardApp = angular.module('DashboardApp')
                             {
                                 name: 'Date',
                                 field: 'date',
+                                type : "date",
                                 enableFiltering: false,
                                 headerCellClass: $scope.highlightFilteredHeader
                                 
