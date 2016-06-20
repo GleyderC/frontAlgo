@@ -178,7 +178,7 @@ var DashboardApp = angular.module('DashboardApp')
                                 name: 'Daily accrual',
                                 enableFiltering: false,
                                 field: 'dailyAccrual',
-                                enableCellEditOnfocus: false,
+                                enableCellEdit: false,
                                 headerCellClass: $scope.highlightFilteredHeader,
                                 cellFilter: 'currency:""', 
                                 cellClass:'collateral-money', 
