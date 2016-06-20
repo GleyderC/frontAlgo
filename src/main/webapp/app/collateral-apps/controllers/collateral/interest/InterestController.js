@@ -76,23 +76,32 @@ var DashboardApp = angular.module('DashboardApp')
                 $scope.InterestData = {};
                 $scope.InterestDataGrid = [];
                 $scope.InterestCumulative  = 0 ;
+                $scope.InterestCumulativeAdjustment  = 0 ;
                 $scope.InterestTotal  =  0 ;
                 $scope.startDate = moment().format("YYYY-MM-DD").toString();
 //                $scope.postedAmount;
+                $scope.calculateInterest = function(){
+                	$scope.InterestCumulativeAdjustment = 0 ;
+                	$scope.InterestDataGrid.forEach(function(v,k){
+                		$scope.InterestCumulativeAdjustment += v.dailyAccrual
+                		v.cumulative = $scope.InterestCumulativeAdjustment;
+                	});
+                };
                 Agreements.getAll().success(function(data){
                 		$scope.InterestDataContract=  data.dataResponse[0];
                 }).then(function(){
 		                Interest.getByDateAndCollateralContractId(moment().format("YYYY-MM-DD"),$scope.InterestDataContract.internalId)
 		                .success(function(data){
+
 		                	$scope.InterestData   = data.dataResponse;
 		                    $scope.currency   =  $scope.InterestDataContract.baseCurrency;
-		//                	$scope.currency  = Object.keys(data.dataResponse[0].ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")])[0];
+//		                	$scope.currency  = Object.keys(data.dataResponse[0].ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")])[0];
 //		                    $scope.postedAmount = data.dataResponse.ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")][$scope.currency].postedAmount;
-		                    $scope.dateKeys = Object.keys(data.dataResponse.ownInterestOnPostedCash.interestByStartDateAndCurrency);
-		                    let interestByDate =  data.dataResponse.ownInterestOnPostedCash.interestByStartDateAndCurrency;
+		                    let interestByDate = $scope.InterestData.ownInterestOnPostedCash.interestByStartDateAndCurrency;
+		                    $scope.dateKeys = Object.keys(interestByDate);
 		                    $scope.InterestTotal = data.dataResponse.ownCalculatedTotalPostedInterestByCurrency[$scope.currency]
 		                    $scope.dateKeys.forEach(function(v,k){
-		                    	let ccy = Object.keys(interestByDate[v])[0];
+		                    	let ccy = Object.keys(interestByDate[v])[0];//currency
 		                    	$scope.InterestCumulative += interestByDate[v][ccy].interest;
 		                    	 $scope.InterestDataGrid.push({
 		                    		 date : v, 
@@ -102,7 +111,8 @@ var DashboardApp = angular.module('DashboardApp')
 		                    		 dailyAccrual : interestByDate[v][ccy].interest,
 		                    		 spread : interestByDate[v][ccy].spread,
 		                    		 applied : interestByDate[v][ccy].appliedRate,
-		                    		 cumulative : $scope.InterestCumulative
+		                    		 cumulative : $scope.InterestCumulative,
+		                    		 basisCalculationConvention :interestByDate[v][ccy].basisCalculationConvention 
 		                    	 })
 		                    });	
 		                    	
@@ -119,25 +129,30 @@ var DashboardApp = angular.module('DashboardApp')
                                 field: 'date',
                                 type : "date",
                                 enableFiltering: false,
-                                headerCellClass: $scope.highlightFilteredHeader
+                                headerCellClass: $scope.highlightFilteredHeader,
+                                enableCellEdit: false,
                                 
                             },
                             {
                                 name: 'CCY',
                                 enableFiltering: false,
                                 field: 'currency',
+                                enableCellEdit: false,
                                 headerCellClass: $scope.highlightFilteredHeader
-                            },
+                            },	
                             {
                                 name: 'Balance',
                                 enableFiltering: false,
                                 field: 'balance',
+                                enableCellEditOnFocus : true, 
                                 headerCellClass: $scope.highlightFilteredHeader,
                                 cellFilter: 'currency:""', 
-                                cellClass:'collateral-money' 
+                                cellClass:'collateral-money'
+                                
                             },
                             {
                                 name: 'Benchmark %',
+                                enableCellEditOnFocus : true, 
                                 enableFiltering: false,
                                 field: 'benchmark',
                                 headerCellClass: $scope.highlightFilteredHeader,
@@ -147,37 +162,73 @@ var DashboardApp = angular.module('DashboardApp')
                                 name: 'Spread %',
                                 enableFiltering: false,
                                 field: 'spread',
+                                type:"number",
+                                enableCellEditOnFocus: true,
                                 headerCellClass: $scope.highlightFilteredHeader
                             },
                             {
                                 name: 'Applied',
                                 enableFiltering: false,
                                 field: 'applied',
+                                type:"number",
+                                enableCellEdit: false,
                                 headerCellClass: $scope.highlightFilteredHeader
                             },
                             {
                                 name: 'Daily accrual',
                                 enableFiltering: false,
                                 field: 'dailyAccrual',
+                                enableCellEditOnfocus: false,
                                 headerCellClass: $scope.highlightFilteredHeader,
-                                cellFilter: 'currency:""', cellClass:'collateral-money' 
+                                cellFilter: 'currency:""', 
+                                cellClass:'collateral-money', 
+                                type:"number"
                             },
                             {
                                 name: 'Cumulative',
                                 enableFiltering: false,
                                 field: 'cumulative',
+                                enableCellEdit: false,
                                 headerCellClass: $scope.highlightFilteredHeader,
                                 cellFilter: 'currency:""', cellClass:'collateral-money' 
                             },
                             {
-                                name: 'Action',
-                                	enableFiltering: false,
-                                	cellTemplate : "<div class='text-center'><a href='#!' ><i class='fa fa-pencil'></i></a></div>"
-                                	
+                                name: 'Basis',
+                                enableFiltering: false,
+                                field: 'basisCalculationConvention',
+                                enableCellEditOnFocus: true,	
+                                editDropdownValueLabel: 'basis',
+                                editableCellTemplate: 'ui-grid/dropdownEditor',
+                            	editDropdownOptionsArray: [
+                            	                           { id: 'ACT/360', basis: 'ACT/360' },
+                            	                           { id: 'ACT/365', basis: 'ACT/365' }
+                            	                           ],
+                                headerCellClass: $scope.highlightFilteredHeader
                             }
+//                            {
+//                                name: 'Action',
+//                                	enableFiltering: false,
+//                                	enableCellEdit: false,
+//                                	cellTemplate : "<div class='text-center'><a href='#!' ng-click='grid.appScope.edit(row)'  ><i class='fa fa-pencil'></i></a></div>"
+//                                	
+//                            }
                 ]};
+                $scope.saveRow = function( rowEntity ) {
+//                    $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity, promise.promise );
+                    
+                  };
+                $scope.edit = function(rowHtml){
+                };
                 
-                            
+                $scope.gridInterest.onRegisterApi = function(gridApi){
+                    $scope.gridApi = gridApi;
+//                    $scope.gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+                    gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
+                    	$scope.calculateInterest();
+                    	gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+                      });
+
+                 };          
 
 
-}]);
+            }]);
