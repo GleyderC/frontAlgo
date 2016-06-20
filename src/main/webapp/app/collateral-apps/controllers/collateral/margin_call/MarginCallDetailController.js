@@ -53,19 +53,18 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
                 icon: ''
             }
         ];
-        $scope.MarginCall = $scope.currentMarginCall;
 
-        MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
+        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
             //$scope.marginCallTrade = result.data.dataResponse.marginCall;
             $scope.Trades = result.data.dataResponse.trades;
             $scope.Inventory = result.data.dataResponse.postedCollateral;
-            $scope.MarginCallDetail = result.data.dataResponse.marginCall.marginCallCalculations;
+            $scope.MarginCallDetail = result.data.dataResponse;
+
             console.log(result.data.dataResponse );
 
         });
 
         this.sendMargin = function () {
-
             MarginCallService.sendIssueMarginCall();
             //$scope.MarginSent = MarginCallService.sendIssueMarginCall();
         }

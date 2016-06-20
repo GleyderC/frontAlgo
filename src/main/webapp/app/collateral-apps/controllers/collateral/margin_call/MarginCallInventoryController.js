@@ -75,7 +75,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             {field: 'notional', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money'  },
             {field: 'price', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money' },
             {field: 'amount', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money'  },
-            {field: 'npvBaseCurrency', name:'Npv ('+ $scope.MarginCall.contract.baseCurrency.toLowerCase()+')',
+            {field: 'npvBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 width: 90, cellFilter: 'currency:""', cellClass:'collateral-money' },
             {field: 'SPrating', name: 'SPrating' },
             {field: 'issuer' },

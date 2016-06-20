@@ -46,10 +46,24 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             {field: 'trade.tradeSubType', name:'subType'},
             {field: 'trade.description', name:'Description' },
             {field: 'trade.notional',  name:'Notional', cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'trade.currency', name:'Currency'  },
-
+            {field: 'trade.currency', name:'Currency',
+                filter : {
+                    type : uiGridConstants.filter.SELECT,
+                    selectOptions : [ {
+                        value : 'EUR',
+                        label : 'EUR'
+                    }, {
+                        value : 'USD',
+                        label : 'USD'
+                    } ],
+                    condition : function(
+                        searchTerm, cellValue) {
+                        return cellValue === searchTerm;
+                    }
+                }
+            },
             {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'currency:""', cellClass:'collateral-money' },
-            {field: 'ownPricing.priceInBaseCurrency', name:'Npv ('+$scope.MarginCall.contract.baseCurrency.toLowerCase()+')',
+            {field: 'ownPricing.priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'currency:""', cellClass:'collateral-money'},
             {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellFilter: 'currency:""', cellClass:'collateral-money'},
             {field: 'npvCounterParty', name:'Diff (%Npv)'}
@@ -62,6 +76,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             }
             $scope.gridTradesOptions.data = newTrades;
 
+            $scope.baseCurrency = $scope.MarginCallDetail.contract.baseCurrency
         });
 
     }]);

@@ -268,3 +268,6 @@ div.action-button-container{
 {
     border-right: 0 !important;
 }
+.ui-grid-filter-select {
+    color: black;
+}
