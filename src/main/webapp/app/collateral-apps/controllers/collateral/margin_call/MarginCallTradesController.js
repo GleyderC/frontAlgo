@@ -5,7 +5,7 @@ var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstants', 'MarginCallService',
     function ($scope, uiGridConstants, MarginCallService) {
-        
+
         $scope.gridTradesOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
@@ -56,15 +56,12 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
 
         ];
 
-        //console.log($scope.MarginCall.marginCalls[0].id);
-
-        MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
-            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
-            $scope.trades = result.data.dataResponse.trades;
-
-            //console.log($scope.trades);
-            $scope.gridTradesOptions.data = $scope.trades;
-
+        $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {
+            if (newTrades === oldTrades) {
+                return false;
+            }
+            $scope.gridTradesOptions.data = newTrades;
 
         });
-}]);
+
+    }]);
