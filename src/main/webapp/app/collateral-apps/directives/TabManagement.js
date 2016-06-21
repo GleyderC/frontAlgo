@@ -8,16 +8,24 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', 'toastr', funct
 
     return {
         restrict: "E",
-        templateUrl: paths.tpls + "/TabManagementTemplate.html",
+        scope:  true,
+        templateUrl: "TabManagementTemplate.html",
         link: function ($scope, element, attrs) {
 
             if ($scope.workspaceTabs == undefined) {
                 $scope.workspaceTabs = new Object();
             }
 
-            $scope.workspaceTabs.id = attrs.id;
-
-
+            if(attrs.id !== undefined){
+                $scope.workspaceTabs.id = attrs.id;
+            }
+            else
+            {
+                let hash = parseInt(Date.now()*Math.random()).toString(16); //CREATE HEXADECIMAL HASH
+                element.attr("id", hash);
+                $scope.workspaceTabs.id = hash;
+            }
+            
             $scope.workspaceTabs.addTab = function (tabConfig) {
 
                 let deferred = $q.defer();
@@ -185,7 +193,7 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', 'toastr', funct
                             globalTabConfig.callback();
                         }
 
-
+                        console.log("saludos desde el promise")
                         //RETURN RESOLVE PROMISE
                         deferred.resolve(globalTabConfig);
                     }
@@ -270,4 +278,70 @@ angular.module('DashboardApp').directive('workspaceTabs', ['$q', 'toastr', funct
         }
     }
 
-}]);
+}])
+.run('$templateCache', 'MenuService', function($templateCache, $menuService) {
+    let templateTabs = '';
+    let objMenu = $menuService.MenuTree;
+
+    templateTabs += ''
+        + '<uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}" active="workspaceTabs.active">'
+        +   '<uib-tab index="$index + 1" ng-repeat="tab in workspaceTabs.tabList" active="tab.active" disable="tab.disabled">'
+        +       '<uib-tab-heading>'
+        +           '<i class="{{ tab.head.icon }}"></i> {{ tab.head.text }}'
+        +           '<i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="workspaceTabs.closeTab(this, $event)"></i>'
+        +       '</uib-tab-heading>'
+        +       '<div class="container-fluid">'
+        +           '<div class="page-content">'
+        +               '<div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-plain-content" ng-if="!!tab.content">{{ tab.content }}</div>'
+        +               '<div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-content" ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>'
+
+    var depth = 0;
+    
+    this.iterateTree = function(obj, template, depth)
+    {
+
+        for (var property in obj) {
+
+            if (typeof obj.child === 'object' && obj.hasOwnProperty('childrenTabs')) {
+                depth++;
+                template = ''
+                    + '<div class="children-tabs-container">'
+                    + '<uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}" active="workspaceTabs.active">'
+                    + '<uib-tab index="$index + 1" ng-repeat="tab in workspaceTabs.tabList" active="tab.active" disable="tab.disabled">'
+                    + '<uib-tab-heading>'
+                    + '<i class="{{ tab.head.icon }}"></i> {{ tab.head.text }}'
+                    + '<i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="workspaceTabs.closeTab(this, $event)"></i>'
+                    + '</uib-tab-heading>'
+                    + '<div class="container-fluid">'
+                    + '<div class="page-content">'
+                    + '<div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-plain-content" ng-if="!!tab.content">{{ tab.content }}</div>'
+                    + '<div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-content" ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>'
+
+                return this.iterateTree(obj.child, template, depth);
+            }
+            else {
+                for (let i = 0; i < depth; i++) {
+                    template += '   </div>'
+                        + '</div>'
+                        + '</uib-tab>'
+                        + '</uib-tabset>'
+                        + '</div>';
+                }
+
+                template += '   </div>'
+                    + '</div>'
+                    + '</uib-tab>'
+                    + '</uib-tabset>';
+            }
+        }
+
+        return {
+            'template': template,
+            'depth': depth
+        }
+    }
+
+    console.log(this.iterateTree(this.tree, this.template, depth));
+
+    $templateCache.put('TabManagementTemplate.html', templateTabs);
+});
