@@ -228,12 +228,7 @@ DashboardApp.controller(
                   $request,
                   $localStorage) {
 
-            $scope.$on('$includeContentLoaded', function (event, url) {
-
-            });
-
-            $scope.workspaceTabs = {
-                active: 1,
+            this.workspaceTabs = {
                 tabList: [
                     {
                         head: {
