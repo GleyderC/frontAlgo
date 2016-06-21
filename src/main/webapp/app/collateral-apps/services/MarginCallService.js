@@ -15,7 +15,7 @@ angular.module('DashboardApp')
         };
 
         this.getDetail = function(marginCallId){
-
+            console.log(marginCallId);
         	var  detailParam = {
         			id : marginCallId 
         	};

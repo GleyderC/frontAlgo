@@ -36,14 +36,14 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
             }
         };
         $scope.gridMessagesOptions.columnDefs = [
-            {field: 'typeOfMessage', name:'type', width: 90,
+            {field: 'messageType', name:'type', width: 90,
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
-            {field: 'date', name: 'date'},
-            {field: 'status'}
+            {field: 'date.dateMessage', name: 'date'},
+            {field: 'sentReceived', name: 'status'}
 
         ];
 
@@ -51,7 +51,12 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
             if (newMessages === oldMessages) {
                 return false;
             }
+            
+            newMessages.forEach(function (message) {
+                message.date.dateMessage = new Date(message.date.iMillis);
+            });
             $scope.gridMessagesOptions.data = newMessages;
+            console.log(newMessages);
 
         });
 
