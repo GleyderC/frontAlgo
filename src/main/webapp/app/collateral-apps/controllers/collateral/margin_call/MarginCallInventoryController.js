@@ -8,14 +8,6 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
 
         //console.log($scope.MarginCall.marginCalls[0].id);
 
-        MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
-            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
-            $scope.Inventory = result.data.dataResponse.postedCollateral;
-
-            $scope.gridInventoryOptions.data = $scope.Inventory;
-
-
-        });
         $scope.gridInventoryOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
@@ -83,7 +75,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             {field: 'notional', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money'  },
             {field: 'price', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money' },
             {field: 'amount', width: 90, cellFilter: 'currency:""', cellClass:'collateral-money'  },
-            {field: 'npvBaseCurrency', name:'Npv ('+ $scope.MarginCall.contract.baseCurrency.toLowerCase()+')',
+            {field: 'npvBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 width: 90, cellFilter: 'currency:""', cellClass:'collateral-money' },
             {field: 'SPrating', name: 'SPrating' },
             {field: 'issuer' },
@@ -93,5 +85,10 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
 
         ];
 
-
+        $scope.$watchCollection('$parent.Inventory', function (newInventory, oldInventory) {
+            if (newInventory === oldInventory) {
+                return false;
+            }
+            $scope.gridInventoryOptions.data = newInventory;
+        });
 }]);

@@ -40,6 +40,8 @@ var MarginCallCtrl = DashboardApp
 								$scope.currentMarginCall = MarginCallEntity;
 							};
 							$scope.viewMarginCall = function(value) {
+								var ccp = (value.marginCalls[0].contractType === 'BILATERAL') ?  value.contract.counterpartyB.name : value.contract.counterpartyA.name;
+
 								$scope.gridApi.selection.getSelectedRows();
 								$scope.setCurrentMarginCall(value);
 								$scope.workspaceTabs
@@ -47,7 +49,7 @@ var MarginCallCtrl = DashboardApp
 											head : {
 												icon : 'icon-call-in font-dark font-green-haze',
 												text : 'Margin call ('
-														+ value.contract.counterpartyA.name
+														+ ccp
 														+ ')',
 											},
 											templateUrl : paths.views

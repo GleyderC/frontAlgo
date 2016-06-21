@@ -5,7 +5,7 @@ var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstants', 'MarginCallService',
     function ($scope, uiGridConstants, MarginCallService) {
-        
+
         $scope.gridTradesOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
@@ -46,25 +46,37 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             {field: 'trade.tradeSubType', name:'subType'},
             {field: 'trade.description', name:'Description' },
             {field: 'trade.notional',  name:'Notional', cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'trade.currency', name:'Currency'  },
-
+            {field: 'trade.currency', name:'Currency',
+                filter : {
+                    type : uiGridConstants.filter.SELECT,
+                    selectOptions : [ {
+                        value : 'EUR',
+                        label : 'EUR'
+                    }, {
+                        value : 'USD',
+                        label : 'USD'
+                    } ],
+                    condition : function(
+                        searchTerm, cellValue) {
+                        return cellValue === searchTerm;
+                    }
+                }
+            },
             {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'currency:""', cellClass:'collateral-money' },
-            {field: 'ownPricing.priceInBaseCurrency', name:'Npv ('+$scope.MarginCall.contract.baseCurrency.toLowerCase()+')',
+            {field: 'ownPricing.priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'currency:""', cellClass:'collateral-money'},
             {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellFilter: 'currency:""', cellClass:'collateral-money'},
             {field: 'npvCounterParty', name:'Diff (%Npv)'}
 
         ];
 
-        //console.log($scope.MarginCall.marginCalls[0].id);
+        $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {
+            if (newTrades === oldTrades) {
+                return false;
+            }
+            $scope.gridTradesOptions.data = newTrades;
 
-        MarginCallService.getDetail($scope.MarginCall.marginCalls[0].id).then(function (result) {
-            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
-            $scope.trades = result.data.dataResponse.trades;
-
-            //console.log($scope.trades);
-            $scope.gridTradesOptions.data = $scope.trades;
-
-
+            $scope.baseCurrency = $scope.MarginCallDetail.contract.baseCurrency
         });
-}]);
+
+    }]);

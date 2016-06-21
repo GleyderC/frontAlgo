@@ -2,21 +2,28 @@ angular.module('DashboardApp')
     .service('MarginCallService',['$request','toastr',function ($request,toastr) {
        
         this.getAll = function(){
+
             return $request.get('/servlet/MarginCall/SelectAll');
         };
+
         this.getByDate = function(date){
+
         	var dateParam = {
             		date:date
             };
         	return $request.get('/servlet/MarginCallAndContract/SelectByDate',dateParam);
         };
+
         this.getDetail = function(marginCallId){
+            console.log(marginCallId);
         	var  detailParam = {
         			id : marginCallId 
         	};
-        	return $request.get('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
+        	return $request.post('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
         };
+
         this.sendIssueMarginCall = function (marginCallId) {
+
             var MarginSent = false;
             var params = {
 

@@ -259,13 +259,13 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             //LegalEntityService.set(legalEntity, $scope.isEditLegal);
 
-            if($scope.holidays.getSelectedElements().length > 0){
+            /*if($scope.holidays.getSelectedElements().length > 0){
                 //console.log($scope.holidays.getSelectedElements());
                 //legalEntity.financialCalendarList = $scope.holidays.getSelectedElements();
                 //console.log(legalEntity.financialCalendarList);
                 $scope.holidays.unselectAll();
 
-            }
+            }*/
 
             if(!$scope.isEditLegal) {
                 $scope.gridLegalEntityOptions.data.push(legalEntity);
