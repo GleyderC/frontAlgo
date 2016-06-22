@@ -30,18 +30,10 @@ var DashboardApp = angular.module('DashboardApp')
                     name: 'interest-tabs',
                     active: true,
                     tabList: [{
-//                        head: {
-//                            icon: 'fa fa-home',
-//                            text: 'Main'
-//                        },
-//                        templateUrl: paths.views
-//                        + "/collateral/interest/main.html",
-//                        active: true
-//                    	},
-//                    	{
+
                     	head: {
-                        icon: 'fa ',
-                        text: "Demo"
+                        icon: 'fa fa-home',
+                        text: "Main"
                     },
                     templateUrl: paths.views
                     + "/collateral/interest/interest_detail.html",
@@ -50,28 +42,145 @@ var DashboardApp = angular.module('DashboardApp')
                     ]
                 };
                 
-                $scope.addInterestTab = function (value) {
+                
+                $scope.addInterestTab = function () {
                     $scope.workspaceTabs.addTab({
                             head: {
                                 icon: 'icon-call-in font-dark font-green-haze',
-                                text: 'Interest',
+                                text: 'Interest Detail',
                             },
                             templateUrl: paths.views
-                            + "/collateral/interest/index.html",
+                            + "/collateral/interest/interest_detail.html",
                             closable: true
-//                            resolve: {
-//                                formData: [
-//                                    {
-//                                        type: "text",
-//                                        id: "le-bilateral-ag-call-issuance",
-//                                        value: "Demo"
-//                                    }
-//                                ]
-//                            }
                         });
 
                 };
+              
+                $scope.gridMainInterests = {
+                        onRegisterApi: function(gridApi){
+                            $scope.gridApi = gridApi;
+                        },
+                        columnDefs: [
+                            {
+                                name : 'Principal',
+                                field: 'counterpartyA.name',
+                                headerCellClass: $scope.highlightFilteredHeader
+                            },
+                            {
+                                name : 'Fund/Clearing Broker',
+                                field: 'ccpName',
+                                enableFiltering:false	
+                                
+                            },
+                            {
+                                name : 'Counterparty',
+                                field: 'counterpartyB.name',
+                                headerCellClass: $scope.highlightFilteredHeader
+                            },
 
+                            {
+
+                                name : 'Contract Type',
+                                field: 'contractType',
+                                headerCellClass: $scope.highlightFilteredHeader
+                            },
+                            {
+                                name : 'Rating',
+                                field: 'counterpartyB.riskProfile.SPRating',
+                                enableFiltering: true,
+                                width: 80
+                            },
+                            {
+                                name : 'Margin Freq',
+                                field: 'marginFrequency',
+                                enableFiltering:false,
+                                width: 80
+
+                            },
+//                            {
+//                                field : "exposure",
+//                                name: 'Exposure (EUR)',
+//                                headerCellClass: $scope.highlightFilteredHeader,
+//                                filter: {
+//                                    term: '1',	
+//                                    type: uiGridConstants.filter.SELECT,
+//                                    selectOptions: [
+//                                        { value: '1', label: 'EUR' },
+//                                        { value: '2', label: 'USD' }
+            //
+//                                    ]
+//                                }
+//                            },
+                            {
+                                name : 'Exposure / Collateral',
+                                 enableFiltering: false,
+                             }  
+                 ]
+                };
+                
+                
+                Agreements.getAll().success(function(data) {
+                    $scope.gridMainInterests.data = data.dataResponse;
+                    var arr = {}; 
+                    arr["contractType"] = {}; 
+                    arr["counterpartyB"] = {};
+                    arr["counterpartyA"] = {};
+                    data.dataResponse.forEach(function(v,k){
+                    	if(v.hasOwnProperty("clearingMemberLegalEntity")){//CCPHouseAccount 
+                    		v["counterpartyA"] 	= {};
+                    		v["counterpartyA"]  = v.clearingMemberLegalEntity;
+                    		v["counterpartyB"]  = {};
+                    		v["counterpartyB"]["name"]= v.ccpName;
+                    		v.ccpName  = "";
+                    		//Be careful 
+                    		//v["counterpartyB"]["riskProfile"]  = {};
+                    		//v["counterpartyB"]["riskProfile"]["SPRating"]  = v.clearingMemberLegalEntity.riskProfile.SPRating;
+                    	}
+                    	if(v.hasOwnProperty("client") && v.hasOwnProperty("clearingBroker")){
+                    		v["counterpartyA"] 	= {};
+                    		v["counterpartyA"]  = v.client;
+                    		v["contractType"] = "CCP Client Clearing"
+//                    		v["clearingBroker"]  = v.clearingBroker;
+                    		v["ccpName"]  = v.clearingBroker.name;
+                    		v["counterpartyB"]  = {}; 
+                    		v["counterpartyB"]["name"] =  v.accountName;
+                    		v["counterpartyB"]["otherName"] =  v.accountName;
+                    	}
+                    	
+                    	//Building ui grid Select for filter
+                        if (v.hasOwnProperty("contractType")) {
+                        	if(v.contractType.toUpperCase()==="BILATERAL"){
+                        		let bilateralContractType = v.bilateralContractType;
+                        		v.contractType =  v.bilateralContractType;
+                        	}
+                    		arr["contractType"][v.contractType] = v.contractType;
+                    	}
+                    	if(v.hasOwnProperty("counterpartyA")){
+                    		arr["counterpartyA"][v.counterpartyA.otherName]= v.counterpartyA; 
+                    	}
+                    	if(v.hasOwnProperty("counterpartyB")){
+                    		arr["counterpartyB"][v.counterpartyB.otherName] = v.counterpartyB; 
+                    	}
+                    });
+//                    if(Object.keys(arr.contractType).length>0){
+//                    	Object.keys(arr.contractType).forEach(function(val,k){
+//                    		
+//                    		$scope.contractTypeList.push({value:arr.contractType[val] , label: arr.contractType[val] })
+//                    	});
+//                	}
+//                    if(Object.keys(arr.counterpartyA).length>0){
+//                    	Object.keys(arr.counterpartyA).forEach(function(val,k){
+//                    		$scope.counterPartyAList.push({value:arr.counterpartyA[val].name , label : arr.counterpartyA[val].name })
+//                    	});
+//                	}
+//                    if(Object.keys(arr.counterpartyB).length>0){
+//                    	Object.keys(arr.counterpartyB).forEach(function(val,k){
+//                    		$scope.counterPartyBList.push({value:arr.counterpartyB[val].name , label : arr.counterpartyB[val].name })
+//                    	});
+//                	}
+                });
+                //                
+                /// Detail
                 $scope.InterestDataContract = {};
                 $scope.InterestData = {};
                 $scope.InterestDataGrid = [];
@@ -98,9 +207,9 @@ var DashboardApp = angular.module('DashboardApp')
 //		                	$scope.currency  = Object.keys(data.dataResponse[0].ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")])[0];
 //		                    $scope.postedAmount = data.dataResponse.ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")][$scope.currency].postedAmount;
 		                    let interestByDate = $scope.InterestData.ownInterestOnPostedCash.interestByStartDateAndCurrency;
-		                    $scope.dateKeys = Object.keys(interestByDate);
-		                    $scope.InterestTotal = data.dataResponse.ownCalculatedTotalPostedInterestByCurrency[$scope.currency]
-		                    $scope.dateKeys.forEach(function(v,k){
+		                    let dateKeys = Object.keys(interestByDate);
+		                    $scope.InterestTotal = data.dataResponse.ownCalculatedTotalPostedInterestByCurrency[$scope.currency];
+		                    dateKeys.forEach(function(v,k){
 		                    	let ccy = Object.keys(interestByDate[v])[0];//currency
 		                    	$scope.InterestCumulative += interestByDate[v][ccy].interest;
 		                    	 $scope.InterestDataGrid.push({
@@ -131,6 +240,11 @@ var DashboardApp = angular.module('DashboardApp')
                                 enableFiltering: false,
                                 headerCellClass: $scope.highlightFilteredHeader,
                                 enableCellEdit: false,
+                                sort: {
+                                    direction: 'asc',
+                                    priority: 0
+                                },
+                                enableSorting:false
                                 
                             },
                             {
@@ -181,7 +295,6 @@ var DashboardApp = angular.module('DashboardApp')
                                 enableCellEdit: false,
                                 headerCellClass: $scope.highlightFilteredHeader,
                                 cellFilter: 'currency:""', 
-                                cellClass:'collateral-money', 
                                 type:"number"
                             },
                             {
@@ -214,7 +327,7 @@ var DashboardApp = angular.module('DashboardApp')
 //                            }
                 ]};
                 $scope.saveRow = function( rowEntity ) {
-//                    $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity, promise.promise );
+                    $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity );
                     
                   };
                 $scope.edit = function(rowHtml){
@@ -222,13 +335,18 @@ var DashboardApp = angular.module('DashboardApp')
                 
                 $scope.gridInterest.onRegisterApi = function(gridApi){
                     $scope.gridApi = gridApi;
-//                    $scope.gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+                    gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+
                     gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
                     	$scope.calculateInterest();
+                    	colDef.cellClass = 'cell-modified';
+                    	console.log(colDef);
+                    	$scope.$apply();
+                    	$scope.gridApi.core.refresh();
                     	gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
                       });
 
                  };          
-
+                 	
 
             }]);
