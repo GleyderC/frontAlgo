@@ -11,11 +11,21 @@ angular.module('DashboardApp')
             restrict: "E",
             scope: true,
             controller: function ($scope) {
-                $scope.hasSelectTab = function($event){
-                    console.log($event)
+                $scope.findWorkspace = function(workspace, coord){
+
+                    let wst = workspace.tabList[coord];
+
+                    if(!wst){
+                        console.log("Error in coord");
+                        return false;
+                    }
+                    else
+                    {
+                        return wst;
+                    }
                 }
             },
-            templateUrl: "TabsMgTpl.html",
+            templateUrl: paths.tpls + "/TabManagementTemplate.html",
             link: function ($scope, element, attrs) {
 
                 if ($scope.workspaceTabs == undefined) {
@@ -31,7 +41,15 @@ angular.module('DashboardApp')
                     $scope.workspaceTabs.id = hash;
                 }
 
-                $scope.workspaceTabs.addTab = function (tabConfig) {
+                $scope.workspaceTabs = $scope.$eval(attrs.workspaceInfo);
+
+                $scope.workspaceTabs.loadTabContent = function(tab){
+                    //console.log(tab)
+                }
+
+                //$scope.workspace.tabList[0].childWorkspace.active = 2;
+
+                $scope.workspaceTabs.addTab = function (tabConfig, coordinates) {
 
                     let deferred = $q.defer();
 
@@ -60,7 +78,7 @@ angular.module('DashboardApp')
 
                     if (!!tabConfig && typeof tabConfig === 'object') {
 
-                        if (!!tabConfig.head.text) {
+                        if (!!tabConfig.head && !!tabConfig.head.text) {
                             globalTabConfig.head.text = tabConfig.head.text;
                         }
 
@@ -90,8 +108,40 @@ angular.module('DashboardApp')
 
                     }
 
-                    $scope.workspaceTabs.tabList.push(globalTabConfig);
+                    if(coordinates.length > 0)
+                    {
+                        let rootNode = null;
+                        let workspaceChild = null;
+                        angular.forEach(coordinates, function(coord, index){
 
+                            if(!rootNode) {
+                                rootNode = $scope.findWorkspace($scope.workspaceTabs, coord);
+                               // console.log(rootNode)
+                                return true;
+                            }
+                            else if(!workspaceChild){
+                                    workspaceChild = $scope.findWorkspace(rootNode, coord);
+                                    //console.log(workspaceChild)
+                                }
+                            else {
+                                //console.log(workspaceChild)
+                                workspaceChild = $scope.findWorkspace(workspaceChild, coord);
+                            }
+
+                            //console.log(workspace)
+                        });
+
+                        console.log("##############################")
+                        console.log(workspaceChild)
+                        //$scope.workspaceTabs.tabList.push(globalTabConfig);
+
+                    }
+                    else
+                    {
+                        $scope.workspaceTabs.tabList.push(globalTabConfig);
+                    }
+
+                    return false;
                     //MANAGE REQUEST TEMPLATES
                     var loading_stack = [];
                     $scope.$on('$includeContentRequested', function (event, url) {
@@ -284,67 +334,3 @@ angular.module('DashboardApp')
         }
 
     }])
-    .run(['$templateCache', 'MenuService', function ($templateCache, MenuService) {
-
-        let templateTabs = '';
-        let objMenu = MenuService.MenuTree;
-        let depth = 0;
-
-        templateTabs += ''
-            + '<uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}">';
-
-        var iterateTree = function (tabList) {
-
-            angular.forEach(tabList, function (tab, index) {
-
-                templateTabs += ''
-                    + '<uib-tab index="' + (index + 1) + '" disable="tab.disabled" select="hasSelectTab(this)">'
-                    + ' <uib-tab-heading>'
-                    + '     <i class="{{ tab.head.icon }}"></i> ' + tab.head.text
-                    + '     <i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="workspaceTabs.closeTab(this, $event)"></i>'
-                    + ' </uib-tab-heading>'
-                    + ' <div class="container-fluid">'
-                    + '     <div class="page-content">'
-                    + '         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + (' + (index + 1) + ' + 1)}}" role="tab-plain-content" ng-if="!!tab.content">{{ tab.content }}</div>'
-                    + '         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + (' + (index + 1) + ' + 1)}}" role="tab-content" ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>'
-
-                if (typeof tab.childrenTabs === 'object' && tab.hasOwnProperty('childrenTabs') && tab.childrenTabs.length > 0) {
-
-                    depth++;
-
-                    templateTabs += ''
-                        + '      <div class="children-tabs-container">'
-                        + '         <uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}" >';
-
-                    iterateTree(tab.childrenTabs);
-
-                    templateTabs += ''
-                        + '         </uib-tabset>'
-                        + '      </div>'
-                        + '    </div>'
-                        + '  </div>'
-                        + '</uib-tab>';
-
-                }else
-                {
-                    templateTabs += ''
-                        + '     </div>'
-                        + '    </div>'
-                        + '</uib-tab>';
-                }
-
-            });
-
-
-
-        }
-
-
-        iterateTree(objMenu);
-
-        templateTabs += ''
-            + '</uib-tabset>';
-
-        $templateCache.put('TabsMgTpl.html', templateTabs);
-
-    }]);
