@@ -10,8 +10,10 @@ angular.module('DashboardApp')
         return {
             restrict: "E",
             scope: true,
-            controller: function () {
-
+            controller: function ($scope) {
+                $scope.hasSelectTab = function($event){
+                    console.log($event)
+                }
             },
             templateUrl: "TabsMgTpl.html",
             link: function ($scope, element, attrs) {
@@ -289,22 +291,22 @@ angular.module('DashboardApp')
         let depth = 0;
 
         templateTabs += ''
-            + '<uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}" active="workspaceTabs.active">';
+            + '<uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}">';
 
         var iterateTree = function (tabList) {
 
             angular.forEach(tabList, function (tab, index) {
 
                 templateTabs += ''
-                    + '<uib-tab index="$index + 1" active="tab.active" disable="tab.disabled">'
+                    + '<uib-tab index="' + (index + 1) + '" disable="tab.disabled" select="hasSelectTab(this)">'
                     + ' <uib-tab-heading>'
                     + '     <i class="{{ tab.head.icon }}"></i> ' + tab.head.text
                     + '     <i ng-show="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign" ng-click="workspaceTabs.closeTab(this, $event)"></i>'
                     + ' </uib-tab-heading>'
                     + ' <div class="container-fluid">'
                     + '     <div class="page-content">'
-                    + '         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-plain-content" ng-if="!!tab.content">{{ tab.content }}</div>'
-                    + '         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-content" ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>'
+                    + '         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + (' + (index + 1) + ' + 1)}}" role="tab-plain-content" ng-if="!!tab.content">{{ tab.content }}</div>'
+                    + '         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + (' + (index + 1) + ' + 1)}}" role="tab-content" ng-if="!!tab.templateUrl" ng-include="tab.templateUrl"></div>'
 
                 if (typeof tab.childrenTabs === 'object' && tab.hasOwnProperty('childrenTabs') && tab.childrenTabs.length > 0) {
 
@@ -312,26 +314,18 @@ angular.module('DashboardApp')
 
                     templateTabs += ''
                         + '      <div class="children-tabs-container">'
-                        + '         <uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}" active="workspaceTabs.active">';
+                        + '         <uib-tabset class="workspace-tabs" id="{{workspaceTabs.id}}" >';
 
                     iterateTree(tab.childrenTabs);
 
-                }
+                    templateTabs += ''
+                        + '         </uib-tabset>'
+                        + '      </div>'
+                        + '    </div>'
+                        + '  </div>'
+                        + '</uib-tab>';
 
-                if(depth > 0)
-                {
-                    for (let i = 0; i < depth; i++) {
-                        templateTabs += ''
-                            + '         </uib-tabset>'
-                            + '      </div>'
-                            + '     </div>'
-                            + '    </div>'
-                            + '</uib-tab>';
-                    }
-
-                    depth = 0;
-                }
-                else
+                }else
                 {
                     templateTabs += ''
                         + '     </div>'
@@ -341,14 +335,15 @@ angular.module('DashboardApp')
 
             });
 
-            templateTabs += ''
-                + '</uib-tabset>';
+
 
         }
 
+
         iterateTree(objMenu);
 
-        console.log(templateTabs)
+        templateTabs += ''
+            + '</uib-tabset>';
 
         $templateCache.put('TabsMgTpl.html', templateTabs);
 
