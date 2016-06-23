@@ -9,6 +9,7 @@ angular.module('CollateralApp').controller('DashboardController',
             $scope.workspace = {};
             $scope.workspace.tabList = [
                 {
+                    active:1,
                     head: {
                         icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
                         text: 'Root Tab 1'
@@ -59,6 +60,7 @@ angular.module('CollateralApp').controller('DashboardController',
                             }
                         },
                             {
+                                active: 1,
                                 head: {
                                     icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
                                     text: 'Tab Father 2'
@@ -73,6 +75,7 @@ angular.module('CollateralApp').controller('DashboardController',
                                 callback: function () {
                                 },
                                 childWorkspace: {
+                                    active: 1,
                                     tabList: [{
                                         head: {
                                             icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
