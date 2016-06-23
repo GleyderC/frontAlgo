@@ -58,7 +58,6 @@ angular.module('DashboardApp')
                         return false;
                     }
 
-
                     let globalTabConfig = {
                         head: {
                             icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
@@ -108,10 +107,24 @@ angular.module('DashboardApp')
                     }
 
                     let ws = $scope.workspaceTabs.getWorkspaceTabs(coordinates);
-                    ws.tabList.push(globalTabConfig);
-                    $timeout(function(){
-                        $scope.workspaceTabs.setWorkspaceTabFocus(coordinates,ws.tabList.length);
-                    });
+
+                    if (coordinates.length === 1) {
+                        ws.childWorkspace.tabList.push(globalTabConfig);
+
+                        $timeout(function () {
+                            coordinates.push( ws.childWorkspace.tabList.length - 1 );
+                            $scope.workspaceTabs.setWorkspaceTabFocus(coordinates);
+                        });
+                    }
+                    else if (coordinates.length > 1) {
+                        ws.tabList.push(globalTabConfig);
+
+                        $timeout(function () {
+                            coordinates.push( ws.tabList.length - 1 );
+                            $scope.workspaceTabs.setWorkspaceTabFocus(coordinates);
+                        });
+                    }
+
 
                     //MANAGE REQUEST TEMPLATES
                     var loading_stack = [];
@@ -303,30 +316,51 @@ angular.module('DashboardApp')
                 //GETTING A WOARKSPACE TABS BY COORDINATES
                 $scope.workspaceTabs.getWorkspaceTabs = function (coordinates) {
 
-                    if (coordinates.length == 1) {
-                        let tab = $scope.workspaceTabs.tabList[coordinates[0]];
-                        if(!tab){
-                            console.log("Bad Coord!")
-                            return false;
-                        }
-                        else
-                            return tab.childWorkspace;
+                    if (!angular.isArray(coordinates) && !!coordinates) {
+                        console.error("Bad Coord!");
+                        return false;
+                    }
+
+                    let rootWorkspace = $scope.workspaceTabs;
+
+                    if (!rootWorkspace) {
+                        console.error("Bad Coord!");
+                        return false;
+                    }
+
+                    if (coordinates === undefined) {
+
+                        return rootWorkspace;
+
+                    }
+                    else if (coordinates.length == 1) {
+
+                        return rootWorkspace.tabList[coordinates[0]];
 
                     }
                     else if (coordinates.length > 1) {
+
                         let rootNode = null;
                         let workspaceChild = null;
                         let badCoord = false;
 
                         angular.forEach(coordinates, function (coord, index) {
 
-                            if(badCoord){
+                            if (badCoord) {
                                 return true;
                             }
 
                             if (!rootNode) {
-                                rootNode = $scope.workspaceTabs.tabList[coord];
+
+                                rootNode = rootWorkspace.tabList[coord];
+
+                                if (!rootNode) {
+                                    badCoord = true;
+                                    console.error("Bad Coord!")
+                                }
+
                                 return true;
+
                             }
                             else if (!workspaceChild) {
 
@@ -334,47 +368,80 @@ angular.module('DashboardApp')
 
                             }
                             else {
-                                //console.log(workspaceChild)
+
                                 workspaceChild = workspaceChild.childWorkspace.tabList[coord];
+
                             }
 
-                            if(!workspaceChild)
-                            {
+                            if (!workspaceChild) {
                                 badCoord = true;
-                                console.log("Bad Coord!")
+                                console.error("Bad Coord!")
                             }
 
                         });
 
-                        if(!!workspaceChild)
+                        if (!!workspaceChild)
                             return workspaceChild.childWorkspace;
                         else
                             return false;
 
                     }
-                    else {
-                        return $scope.workspaceTabs;
-                    }
 
                 };
 
                 //SET FOCUS BY COORDINATES
-                $scope.workspaceTabs.setWorkspaceTabFocus = function (coordinates, numTabActive) {
-                    let tempCoord = [];
+                $scope.workspaceTabs.setWorkspaceTabFocus = function (coordinates) {
+
                     let workspace = null;
+                    let rootWorkspace = null;
 
-                    angular.forEach(coordinates, function(coord){
-                        tempCoord.push(coord);
-                        workspace = $scope.workspaceTabs.getWorkspaceTabs(tempCoord);
-                        if(workspace != false) {
-                            workspace.active = coord + 1;
-                            console.log("############")
-                        }
-                        console.log(workspace)
-                    });
+                    if (angular.isArray(coordinates) && coordinates.length == 1) {
 
-                    //if(workspace != false)
-                       // workspace.active = numTabActive;
+                        workspace = $scope.workspaceTabs.getWorkspaceTabs();
+
+                    }
+                    else if (angular.isArray(coordinates) && coordinates.length > 1) {
+
+                        angular.forEach(coordinates, function (coord, index) {
+
+                            if (workspace === false) {
+                                return true;
+                            }
+
+                            if (index === 0) {
+
+                                workspace = $scope.workspaceTabs.getWorkspaceTabs();
+
+                                if (workspace != false) {
+
+                                    workspace.active = coord + 1;
+                                    workspace = workspace.tabList[coord];
+
+                                }
+                                else {
+                                    console.error("Bad coord");
+                                }
+
+                                return true;
+
+                            }
+                            else {
+
+                                workspace = workspace.childWorkspace;
+
+                                if (!!workspace) {
+                                    workspace.active = coord + 1;
+                                    workspace = workspace.tabList[coord];
+                                }
+                                else {
+                                    console.error("Bad coord");
+                                }
+
+                            }
+
+                        });
+                    }
+
                 };
 
             }
