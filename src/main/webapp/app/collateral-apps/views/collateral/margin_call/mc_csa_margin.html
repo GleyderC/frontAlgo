@@ -9,17 +9,17 @@
 
                             <label class="control-label col-md-2">Exposure</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
                             </div>
 
                             <label class="control-label col-md-2">Netted IAs</label>
                             <div class="col-md-4">
                                 <input type="text" class="form-control collateral-money" placeholder=""
-                                       ng-model="MarginCallDetail.marginCall.marginCallCalculations.nettedIaPartyB - MarginCallDetail.marginCall.marginCallCalculations.nettedIaPartyA"
+                                       ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.nettedIaPartyB - MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.nettedIaPartyA"
                                        ui-number-mask="2"
-                                       ng-if="MarginCallDetail.marginCall.marginCallCalculations.ownCalculatedExposure<0">
-                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallCalculations.nettedIaPartyB" ui-number-mask="2"
-                                       ng-if="MarginCallDetail.marginCall.marginCallCalculations.ownCalculatedExposure>=0">
+                                       ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure<0">
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.nettedIaPartyB" ui-number-mask="2"
+                                       ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure>=0">
                             </div>
 
                         </div>
@@ -27,12 +27,12 @@
 
                             <label class="control-label col-md-2">Exp+IAs</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder=""  ng-model="MarginCallDetail.marginCall.marginCallCalculations.exposurePlusNettedIa" ui-number-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder=""  ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.exposurePlusNettedIa" ui-number-mask="2">
                             </div>
 
                             <label class="control-label col-md-2">C.S. Amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder=""  ng-model="MarginCallDetail.marginCall.marginCallCalculations.creditSupportAmmount" ui-number-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder=""  ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.creditSupportAmmount" ui-number-mask="2">
                             </div>
 
                         </div>
@@ -40,22 +40,22 @@
                             <label class="control-label col-md-2">Collateral Value</label>
                             <div class="col-md-4">
                                 <input type="text" class="form-control collateral-money" placeholder=""
-                                       ng-model="MarginCallDetail.marginCall.marginCallCalculations.securitiesCollateralValuePartyA" ui-number-mask="2"
-                                        ng-if="MarginCallDetail.marginCall.marginCallCalculations.ownCalculatedExposure<0">
+                                       ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.securitiesCollateralValuePartyA" ui-number-mask="2"
+                                        ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure<0">
                                 <input type="text" class="form-control collateral-money" placeholder=""
-                                       ng-model="MarginCallDetail.marginCall.marginCallCalculations.securitiesCollateralValuePartyB" ui-number-mask="2"
-                                       ng-if="MarginCallDetail.marginCall.marginCallCalculations.ownCalculatedExposure>=0">
+                                       ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.securitiesCollateralValuePartyB" ui-number-mask="2"
+                                       ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure>=0">
                             </div>
 
                             <label class="control-label col-md-2">Net exposure</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallCalculations.netExposure" ui-number-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.netExposure" ui-number-mask="2">
                             </div>
                         </div>
                         <div class="row">
                             <label class="control-label col-md-2">Margin Amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallCalculations.marginCallAmount" ui-number-mask="2">
+                                <input type="text" class="form-control collateral-money" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount" ui-number-mask="2">
                             </div>
                         </div>
                     </div>
@@ -73,17 +73,17 @@
 
                             <label class="control-label col-md-2">Threshold</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" disabled ng-model="MarginCallDetail.marginCall.marginCallCalculations.threshold" ui-number-mask="0">
+                                <input type="text" class="form-control collateral-money" placeholder="" disabled ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.threshold" ui-number-mask="0">
                             </div>
 
                             <label class="control-label col-md-2">M.T.A.</label>
                             <div class="col-md-4">
                                 <input type="text" class="form-control collateral-money" placeholder=""
                                        ng-model="MarginCall.contract.minimumTransferAmountPartyA" ui-number-mask="0"
-                                       ng-if="MarginCallDetail.marginCall.marginCallCalculations.ownCalculatedExposure<0">
+                                       ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure<0">
                                 <input type="text" class="form-control collateral-money" placeholder=""
                                        ng-model="MarginCall.contract.minimumTransferAmountPartyB" ui-number-mask="0"
-                                       ng-if="MarginCallDetail.marginCall.marginCallCalculations.ownCalculatedExposure>=0">
+                                       ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure>=0">
                             </div>
 
                         </div>
