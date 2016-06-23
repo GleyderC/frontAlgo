@@ -1,7 +1,16 @@
-<div class="row" ng-controller="MarginCallMessagingController">
+<div class="row" ng-controller="MarginCallMessagingController ">
     <div class="col-md-6">
         <div class="portlet light bordered" style="margin-bottom:0">
             <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="btn-group">
+                            <button type="submit" class="btn green" uib-popover="Refresh Messages" popover-trigger="mouseenter" ng-click="getNewMessages()">
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div ui-grid="gridMessagesOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
                          ui-grid-resize-columns ui-grid-selection ui-grid-pagination
@@ -13,13 +22,14 @@
     <div class="col-md-6">
         <div class="portlet light bordered" style="margin-bottom:0">
             <div class="note note-success">
-                <h4 class="block">"Margin Call Notice CSA Margined - 1MYL - Demo Bank - 1"
+                <h4 class="block">{{messageSelected.email.subject}}</h4>
+                <span class="timeline-body-time font-blue-soft">{{messageSelected.date.dateMessage}}</span>
+                <br>
+                <span class="timeline-body-time font-grey-mint">To: {{messageSelected.email.senderName}} ({{messageSelected.email.senderEmail}})</span>
+                <br>
+                <span class="timeline-body-time font-grey-mint">From: {{messageSelected.email.receiverName}} ({{messageSelected.email.receiverEmail}})</span>
 
-                </h4>
-                <span class="timeline-body-time font-grey-mint">To:</span>
-                <p>"Please find Attached a Margin Call Notice from Demo Bank Thanks and Regards Collateral Management Operations Team Group E-mail address: demobankcollateral@gmail.com Telephone Number 6567787596976"
-
-                </p>
+                <p>{{messageSelected.email.body}}</p>
             </div>
         </div>
     </div>

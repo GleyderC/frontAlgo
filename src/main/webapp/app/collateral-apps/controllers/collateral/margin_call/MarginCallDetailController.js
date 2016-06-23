@@ -61,12 +61,12 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
             $scope.Messages = result.data.dataResponse.marginCall.messages;
             $scope.MarginCallDetail = result.data.dataResponse;
 
-            console.log(result.data.dataResponse);
+            //console.log(result.data.dataResponse);
 
         });
 
         this.sendMargin = function () {
-            MarginCallService.sendIssueMarginCall();
+            var MarginSent = MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA");
             //$scope.MarginSent = MarginCallService.sendIssueMarginCall();
         }
     }]);
