@@ -91,27 +91,14 @@ var DashboardApp = angular.module('DashboardApp');
                             },
                             {
                             	name:"Collateral Type",
-                            	field: 'contractType',
+                            	field: 'bilateralContractType',
                                 headerCellClass: $scope.highlightFilteredHeader
                             },
                             {
                                 name : 'Currency',
-                                field: 'counterpartyB.riskProfile.SPRating',
+                                field: 'eligibleCurrencyConfig.baseCurrency',
                                 enableFiltering: true,
                                 width: 80
-                            },
-                            {
-                                name : 'Rating',
-                                field: 'counterpartyB.riskProfile.SPRating',
-                                enableFiltering: true,
-                                width: 80
-                            },
-                            {
-                                name : 'Margin Freq',
-                                field: 'marginFrequency',
-                                enableFiltering:false,
-                                width: 80
-
                             },
 //                            {
 //                                field : "exposure",
@@ -128,7 +115,8 @@ var DashboardApp = angular.module('DashboardApp');
 //                                }
 //                            },
                             {
-                                name : 'Exposure / Collateral',
+                                name : 'Status',
+                                field: "status",
                                  enableFiltering: false,
                              }  ,
                             {
