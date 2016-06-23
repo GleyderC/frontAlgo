@@ -31,8 +31,33 @@
             </uib-tabset>
 
         </uib-tab>
-
         <uib-tab index="2" class="collateral-menu-item">
+            <uib-tab-heading>
+                <i class="fa fa-user"></i> User Messages
+            </uib-tab-heading>
+            <uib-tabset active="1">
+                <uib-tab index="1">
+                    <uib-tab-heading>
+                        <i class="fa fa-envelope-o"></i> Messages
+                    </uib-tab-heading>
+
+                    <!-- TAB CONTENT BEGIN -->
+                    <div class="container-fluid">
+                        <div class="page-content">
+                            <!-- BEGIN PAGE BASE CONTENT -->
+
+                            <div ng-include="'collateral-apps/views/user_message/messages.html'"
+                                 class="fade-in-up"></div>
+
+                            <!-- END PAGE BASE CONTENT -->
+                        </div>
+                    </div>
+                    <!-- TAB CONTENT END -->
+
+                </uib-tab>
+			</uib-tabset>
+        </uib-tab>
+        <uib-tab index="3" class="collateral-menu-item">
             <uib-tab-heading>
                 <i class="fa fa-cogs"></i> Configuration
             </uib-tab-heading>
@@ -78,6 +103,9 @@
                 </uib-tab>
             </uib-tabset>
         </uib-tab>
+    
+
+
     </uib-tabset>
 
 </div>
