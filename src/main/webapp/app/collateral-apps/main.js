@@ -392,9 +392,12 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/collateral/margin_call/MarginCallMessagingRepository.js',
                             /* Interest Controller js */
                             'collateral-apps/controllers/collateral/interest/InterestController.js',
+                            'collateral-apps/controllers/collateral/interest/InterestDetailController.js',
+                            
                             /*UserMessage Controller*/
-                            'collateral-apps/controllers/user_message/UserMessageController.js'
-
+                            'collateral-apps/controllers/user_message/UserMessageController.js',
+                            /*UserMessage Controller*/
+                            'collateral-apps/controllers/NotificationsController.js'
                         ],
                         serie: true,
                         cache: false

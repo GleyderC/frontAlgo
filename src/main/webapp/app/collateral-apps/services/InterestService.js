@@ -9,11 +9,12 @@ angular.module('DashboardApp')
             };
         	return $request.get('/servlet/Interest/SelectByDate',dateParam);
         };
-      this.getByCollateralContract = function(collateralContractId){
+      this.getByCollateralContract = function(date,collateralContractId){
       		var param = {
-            		id: collateralContractId
+            		id: collateralContractId,
+            		date:date
             };
-      		return $request.get('/servlet/SelectByCollateralContractId',param);
+      		return $request.post('/servlet/Interest/SelectByCollateralContractId',param);
       };
       this.getByDateAndCollateralContractId = function(date,contractId){
     	  var param =  {
@@ -22,7 +23,13 @@ angular.module('DashboardApp')
     	  };
     	  return $request.post('/servlet/Interest/SelectInterestAndContractBydateAndContractId',param);
     	  
-      }
-    
-
+      },
+      this.getInterest  = function(){
+    	  var param =  {
+    			  date : date,
+    			  contractId : contractId
+    	  };
+    	  return $request.post('/servlet/Interest/SelectInterestAndContractBydateAndContractIdAndCurrencyAndLiabilityType ',param);
+    	  
+      };
   }]);
