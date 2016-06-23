@@ -145,7 +145,6 @@ var DashboardApp = angular.module('DashboardApp');
                 
                 Agreements.getAll().success(function(data) {
                     $scope.gridMainInterests.data = data.dataResponse;
-                    console.log(data);
                     var arr = {}; 
                     arr["contractType"] = {}; 
                     arr["counterpartyB"] = {};

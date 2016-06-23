@@ -3,7 +3,6 @@
 InterestCtrl.controller('InterestDetailController', 
 		[ '$scope','uiGridConstants','AgreementsService','InterestService',
 		function($scope, uiGridConstants,Agreements,Interest) {
-			console.log($scope.currentContract);
 			
 			 /// Detail
             $scope.InterestDataContract = {};
@@ -13,7 +12,6 @@ InterestCtrl.controller('InterestDetailController',
             $scope.InterestCumulativeAdjustment  = 0 ;
             $scope.InterestTotal  =  0 ;
             $scope.startDate = moment().format("YYYY-MM-DD").toString();
-//            $scope.postedAmount;
             $scope.calculateInterest = function(){
             	$scope.InterestCumulativeAdjustment = 0 ;
             	$scope.InterestDataGrid.forEach(function(v,k){
@@ -24,8 +22,6 @@ InterestCtrl.controller('InterestDetailController',
          
 	                Interest.getByCollateralContract(moment().format("YYYY-MM-DD"),$scope.currentContract.internalId)
 	                .success(function(data){
-	                	console.log(data);
-	                	
 	                	$scope.InterestData   = data.dataResponse;
 	                    $scope.currency   =  $scope.InterestDataContract.baseCurrency;
 //	                	$scope.currency  = Object.keys(data.dataResponse[0].ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")])[0];
