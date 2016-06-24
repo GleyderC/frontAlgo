@@ -120,6 +120,12 @@ angular.module('DashboardApp')
 
                     let ws = $scope.workspaceTabs.getWorkspaceTabs(coordinates);
 
+                    if (!ws) {
+                        $toastr.error("There was an error calling the tab!", "Opps", {closeButton: true})
+                        deferred.reject("error loading tab");
+                        return false;
+                    }
+
                     if (coordinates.length === 1) {
                         ws.childWorkspace.tabList.push(globalTabConfig);
 
@@ -354,18 +360,24 @@ angular.module('DashboardApp')
                             }
                             else if (!workspaceChild) {
 
+                                if(!rootNode.childWorkspace)
+                                {
+                                    badCoord = true;
+                                    console.error("Bad Coord!");
+                                    return false;
+                                }
                                 workspaceChild = rootNode.childWorkspace.tabList[coord];
 
                             }
                             else {
 
+                                if (!workspaceChild.childWorkspace) {
+                                    badCoord = true;
+                                    console.error("Bad Coord!")
+                                    return false;
+                                }
                                 workspaceChild = workspaceChild.childWorkspace.tabList[coord];
 
-                            }
-
-                            if (!workspaceChild) {
-                                badCoord = true;
-                                console.error("Bad Coord!")
                             }
 
                         });

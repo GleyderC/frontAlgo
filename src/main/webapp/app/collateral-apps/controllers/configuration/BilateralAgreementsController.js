@@ -123,7 +123,7 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
                 templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
                 closable: true,
                 autoload: true
-            },[2,2]);
+            },[3,2]);
         };
 
         $scope.editRow = function (grid, row) {
@@ -136,7 +136,7 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
                 templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
                 closable: true,
                 autoload: true
-            },[2,2]);
+            },[3,2]);
 
         }
 
