@@ -1,7 +1,7 @@
 <uib-tabset class="workspace-tabs menu-collateral-container" active="workspaceTabs.active">
     <uib-tab class="collateral-menu-item" index="$index + 1" ng-repeat="tab in workspaceTabs.tabList"
              data-url="tab.templateUrl" select="workspaceTabs.loadTabContent(tab)"
-             disable="tab.disabled">
+             disable="tab.disabled" tab-highlight>
         <uib-tab-heading>
             <i class="{{ tab.head.icon }}"></i> {{ tab.head.text }}
             <i ng-if="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign"
@@ -10,10 +10,10 @@
         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}" role="tab-plain-content"
              ng-if="!!tab.content">{{ tab.content }}
         </div>
-        <div class="fade-in-up slide-animate-container" data-tabId="{{ workspaceTabs.id + ($index + 1)}}"
+        <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}"
              role="tab-content"
              ng-if="tab.autoload">
-            <div class="slide-animate" ng-include="tab.templateUrl" ></div>
+            <div class="slide-animate" ng-include="tab.templateUrl" onload='loadParameters(tab.parameters)'></div>
         </div>
         <div class="tabs-container" ng-if="tab.childWorkspace.tabList.length > 0">
             <workspace-Tabs id=" {{ 'InternalTabManager' + $index }} "

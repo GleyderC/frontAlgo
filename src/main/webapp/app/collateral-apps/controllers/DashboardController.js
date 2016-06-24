@@ -115,10 +115,11 @@ angular.module('CollateralApp').controller('DashboardController',
                                                             text: 'Tab son of son 2'
                                                         },
                                                         content: 'el content del tab son of son 2',
-                                                        templateUrl: paths.tpls + '',
+                                                        templateUrl: paths.views + '/configuration/legal_entity.html',
                                                         resolve: {
                                                             formData: []
                                                         },
+                                                        parameters: {},
                                                         autoload: false,
                                                         disabled: false,
                                                         closable: true,

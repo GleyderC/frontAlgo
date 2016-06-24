@@ -44,6 +44,7 @@ angular.module('DashboardApp')
 
                 $scope.workspaceTabs.loadTabContent = function (tab) {
                     //console.log(tab)
+                    tab.autoload = true;
                 }
 
                 //$scope.workspace.tabList[0].childWorkspace.active = 2;
@@ -112,7 +113,7 @@ angular.module('DashboardApp')
                         ws.childWorkspace.tabList.push(globalTabConfig);
 
                         $timeout(function () {
-                            coordinates.push( ws.childWorkspace.tabList.length - 1 );
+                            coordinates.push(ws.childWorkspace.tabList.length - 1);
                             $scope.workspaceTabs.setWorkspaceTabFocus(coordinates);
                         });
                     }
@@ -120,7 +121,7 @@ angular.module('DashboardApp')
                         ws.tabList.push(globalTabConfig);
 
                         $timeout(function () {
-                            coordinates.push( ws.tabList.length - 1 );
+                            coordinates.push(ws.tabList.length - 1);
                             $scope.workspaceTabs.setWorkspaceTabFocus(coordinates);
                         });
                     }
@@ -291,28 +292,6 @@ angular.module('DashboardApp')
                         $scope.workspaceTabs.active++;
                 }
 
-
-                //SETTING MOUSE FOCUS
-                var x, y, initial_background = '#c3d5e6';
-
-                element
-                    .removeAttr('style')
-                    .mousemove(function (e) {
-                        // Add highlight effect on inactive tabs
-                        if (!element.hasClass('active')) {
-                            x = e.pageX - this.offsetLeft;
-                            y = e.pageY - this.offsetTop;
-
-                            element
-                                .css({background: '-moz-radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.0) 45px), ' + initial_background})
-                                .css({background: '-webkit-radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.0) 45px), ' + initial_background})
-                                .css({background: 'radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.4) 0px, rgba(255,255,255,0.0) 45px), ' + initial_background});
-                        }
-                    })
-                    .mouseout(function () {
-                        element.removeAttr('style');
-                    });
-
                 //GETTING A WOARKSPACE TABS BY COORDINATES
                 $scope.workspaceTabs.getWorkspaceTabs = function (coordinates) {
 
@@ -444,7 +423,52 @@ angular.module('DashboardApp')
 
                 };
 
-            }
+                $scope.loadParameters = function (parameters) {
+
+                    $scope.parameters = {};
+
+                    for (var key in parameters) {
+
+                        if (parameters.hasOwnProperty(key)) {
+
+                            if(!!parameters[key])
+                                $scope.parameters[key] = parameters[key];
+
+                        }
+
+                    }
+
+                }
+
+            } // END LINK FUNCTION
         }
 
     }])
+
+    .directive('tabHighlight', [function () {
+        return {
+            restrict: 'A',
+            link: function (scope, element) {
+                var x, y, initial_background = '#c3d5e6';
+
+                element
+                    .removeAttr('style')
+                    .mousemove(function (e) {
+                        // Add highlight effect on inactive tabs
+                        if (!element.hasClass('active')) {
+                            x = e.pageX - this.offsetLeft;
+                            y = e.pageY - this.offsetTop;
+                            let rgb = '255,255,255';
+                            element
+                                .css({background: '-moz-radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(' + rgb + ',0.5) 0px, rgba(' + rgb + ',0.0) 45px), ' + initial_background})
+                                .css({background: '-webkit-radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(' + rgb + ',0.5) 0px, rgba(' + rgb + ',0.0) 45px), ' + initial_background})
+                                .css({background: 'radial-gradient(circle at ' + x + 'px ' + y + 'px, rgba(' + rgb + ',0.5) 0px, rgba(' + rgb + ',0.0) 45px), ' + initial_background});
+                        }
+                    })
+                    .mouseout(function () {
+                        element.removeAttr('style');
+                    });
+            }
+        };
+    }]);
+
