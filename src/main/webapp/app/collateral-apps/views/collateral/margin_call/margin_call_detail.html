@@ -37,10 +37,10 @@
                     <tbody>
                     <tr>
                         <td style="font-size: 12px;">{{MarginCallDetail.contract.counterpartyB.name}}</td>
-                        <td style="font-size: 12px;"><span class="label label-sm label-success"> {{MarginCallDetail.marginCall.status}}  </span></td>
+                        <td style="font-size: 12px;"><span class="label label-sm label-success"> {{MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.status}}  </span></td>
                         <td style="font-size: 12px;">{{MarginCallDetail.contract.contractType}}</td>
                         <td style="font-size: 12px;">{{MarginCallDetail.contract.baseCurrency}}</td>
-                        <td style="font-size: 12px;">{{MarginCallDetail.marginCallAmount}}</td>
+                        <td style="font-size: 12px;">{{MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount}}</td>
                     </tr>
                     </tbody>
                     </table>

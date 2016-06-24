@@ -221,20 +221,21 @@ div.action-button-container{
 
 .nav-tabs > li > a
 {
-    background: rgba(38, 90, 136, 1);
-    color: white;
-    -webkit-transition: all 300ms ease-in-out;
-    -moz-transition: all 300ms ease-in-out;
-    -ms-transition: all 300ms ease-in-out;
-    -o-transition: all 300ms ease-in-out;
-    transition: all 300ms ease-in-out;
+    /*background: rgba(38, 90, 136, 1);
+    color: white;*/
+    -webkit-transition: all 250ms ease-in-out;
+    -moz-transition: all 250ms ease-in-out;
+    -ms-transition: all 250ms ease-in-out;
+    -o-transition: all 250ms ease-in-out;
+    transition: all 250ms ease-in-out;
 }
 
 .nav-tabs>li>a:hover{
-    color: rgba(38, 90, 136, 1);
+    /*color: rgba(38, 90, 136, 1);*/
 }
 
-/*Cell Header Ui-GRID*/
+/* UI GRID */
+/*Cell Header*/
 .ui-grid-top-panel
 {
     background: rgba(38, 90, 136, 1) !important;
