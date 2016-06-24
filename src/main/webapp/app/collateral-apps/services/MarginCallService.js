@@ -22,15 +22,18 @@ angular.module('DashboardApp')
         	return $request.post('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
         };
 
-        this.sendIssueMarginCall = function (marginCallId) {
+        this.sendIssueMarginCall = function (marginCallId,collateralLiabilityType) {
 
-            var MarginSent = false;
+            console.log(marginCallId);
+            console.log(collateralLiabilityType);
+            //var MarginSent = false;
             var params = {
 
-                "id": marginCallId
+                "marginCallId": marginCallId,
+                "collateralLiabilityType": collateralLiabilityType
             };
 
-            $request.get('/servlet/MarginCall/ActionIssueMarginCall/')
+            $request.post('/servlet/MarginCall/ActionIssueMarginCall/',params)
                 .then(function (Response) {
 
                     //MarginSent = true;

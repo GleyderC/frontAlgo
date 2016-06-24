@@ -1,4 +1,4 @@
-<div class="portlet light">
+<div class="portlet light" ng-controller="InterestDetailController as InterestDtCtrl">
 
 	<div class="row" du-smooth-scroll du-scrollspy>
 		<div class="portlet light bordered">
@@ -59,7 +59,7 @@
 				<div class="row">
 					<div ui-grid="gridInterest" ui-grid-exporter ui-grid-auto-resize
 						 ui-grid-resize-columns ui-grid-selection
-						ui-grid-pagination ui-grid-edit class="grid"></div>
+						ui-grid-edit ui-grid-row-edit  class="grid"></div>
 				</div>
 				<br />
 				<div class="row">
@@ -78,7 +78,10 @@
 								</tr>
 								<tr>
 									<td>Statement Total</td>
-									<td>{{InterestTotal - InterestCumulativeAdjustment | currency : 'EUR '}}</td>
+									<td>
+									<span ng-if="InterestCumulativeAdjustment>0" class="animate-if">
+									{{InterestTotal - InterestCumulativeAdjustment | currency : 'EUR '}}</td>
+											</span>									
 								</tr>
 							</tbody>
 					</table>

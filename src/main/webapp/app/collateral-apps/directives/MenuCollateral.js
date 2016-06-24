@@ -50,6 +50,13 @@ DashboardApp.service('MenuService', function () {
             },
             {
                 head: {
+                    icon: 'fa fa-envelope-o',
+                    text: 'User Messages'
+                },
+                templateUrl: paths.views + '/user_message/messages.html'
+            },
+            {
+                head: {
                     icon: 'fa fa-cogs',
                     text: 'Configuration'
                 },

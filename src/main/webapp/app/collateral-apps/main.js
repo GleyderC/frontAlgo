@@ -372,13 +372,13 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/AgreementsService.js',
                             'collateral-apps/services/LegalEntityService.js',
                             'collateral-apps/services/InterestService.js',
-                            'collateral-apps/services/configuration/BilateralContractService.js',
                             'collateral-apps/services/RowEditorModalService.js',
+                            'collateral-apps/services/configuration/BilateralContractService.js',
+                            'collateral-apps/services/UserMessageService.js',
                             'collateral-apps/services/ModalService.js',
 
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/configuration/LegalEntityController.js',
-
                             /* Bilateral Controller js */
                             'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
                             /* Agreements Controller js */
@@ -390,11 +390,14 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/collateral/margin_call/MarginCallCsaController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallInventoryController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallMessagingRepository.js',
-
-                         
                             /* Interest Controller js */
-                            'collateral-apps/controllers/collateral/interest/InterestController.js'
-
+                            'collateral-apps/controllers/collateral/interest/InterestController.js',
+                            'collateral-apps/controllers/collateral/interest/InterestDetailController.js',
+                            
+                            /*UserMessage Controller*/
+                            'collateral-apps/controllers/user_message/UserMessageController.js',
+                            /*UserMessage Controller*/
+                            'collateral-apps/controllers/NotificationsController.js'
                         ],
                         serie: true,
                         cache: false

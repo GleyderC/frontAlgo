@@ -43,7 +43,15 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
                 }
             },
             {field: 'date.dateMessage', name: 'date'},
-            {field: 'sentReceived', name: 'status'}
+            {field: 'sentReceived', name: 'direction'},
+            {
+                name : 'Action buttons',
+                cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></button> </div>',
+                enableColumnMenu : false,
+                width : 120,
+                enableFiltering : false,
+                enableSorting : false
+            }
 
         ];
 
@@ -56,8 +64,25 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
                 message.date.dateMessage = new Date(message.date.iMillis);
             });
             $scope.gridMessagesOptions.data = newMessages;
-            console.log(newMessages);
+            //console.log(newMessages);
 
         });
+        
+        $scope.getNewMessages = function (MarginCallId) {
+            MarginCallService.getDetail($scope.MarginCallDetail.marginCall.id).then(function (result) {
+                //$scope.marginCallTrade = result.data.dataResponse.marginCall;
+                $scope.Messages = result.data.dataResponse.marginCall.messages;
 
+                $scope.Messages.forEach(function (message) {
+                    message.date.dateMessage = new Date(message.date.iMillis);
+                });
+                console.log($scope.Messages);
+                $scope.gridMessagesOptions.data = $scope.Messages;
+            });;
+        }
+
+        $scope.viewMessage = function(row) {
+            $scope.messageSelected = row;
+            console.log($scope.messageSelected);
+        }
     }]);
