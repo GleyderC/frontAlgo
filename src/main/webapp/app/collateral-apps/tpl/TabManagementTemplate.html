@@ -1,6 +1,6 @@
 <uib-tabset class="workspace-tabs menu-collateral-container" active="workspaceTabs.active">
     <uib-tab class="collateral-menu-item" index="$index + 1" ng-repeat="tab in workspaceTabs.tabList"
-             data-url="tab.templateUrl" select="workspaceTabs.loadTabContent(tab)"
+             data-url="tab.templateUrl" ng-click="workspaceTabs.loadTabContent(tab)"
              disable="tab.disabled" tab-highlight>
         <uib-tab-heading>
             <i class="{{ tab.head.icon }}"></i> {{ tab.head.text }}

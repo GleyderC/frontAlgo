@@ -9,8 +9,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();
         });
-
-        console.log($scope.workspace)
+        
         $scope.legalEntities = [];
 
         var financialCalendar = localStorageService.get('FinancialCalendar');

@@ -25,7 +25,7 @@ var DashboardApp = angular.module('DashboardApp')
                 $scope.$on('$includeContentLoaded', function () {
                 	
                 });
-                $scope.workspaceTabs = 
+                $scope.interestWorkspaceTabs =
                 {
                     name: 'interest-tabs',
                     active: true,
@@ -51,7 +51,7 @@ var DashboardApp = angular.module('DashboardApp')
                 };
                 
                 $scope.addInterestTab = function (value) {
-                    $scope.workspaceTabs.addTab({
+                    $scope.interestWorkspaceTabs.addTab({
                             head: {
                                 icon: 'icon-call-in font-dark font-green-haze',
                                 text: 'Interest',

@@ -12,8 +12,7 @@ DashboardApp.controller(
         '$request',
         'localStorageService',
         '$filter',
-        function (
-                  LegalEntityService,
+        function (LegalEntityService,
                   BilateralContractService,
                   $scope,
                   $document,
@@ -21,22 +20,6 @@ DashboardApp.controller(
                   $request,
                   $localStorage,
                   $filter) {
-
-
-            $scope.workspaceTabs = {
-                active: 1,
-                maxTabs: 10,
-                tabList: [
-                    {
-                        head: {
-                            icon: 'fa fa-money',
-                            text: 'Search Billateral Agreement'
-                        },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_add_search.html",
-                        active: true
-                    }
-                ]
-            };
 
             var currenciesList = [];
 
@@ -72,196 +55,161 @@ DashboardApp.controller(
                 $scope.legalEntities = result.data.dataResponse;
             });
 
-        }
-    ]);
-
-DashboardApp.controller('LEBillateralAgrSearchController',
-    [
-        '$scope',
-        '$request',
-        '$interval',
-        'localStorageService',
-        '$filter',
-        'LegalEntityService',
-        'BilateralContractService',
-        function
-            (
-                $scope,
-                $request,
-                $interval,
-                $localStorage,
-                $filter,
-                LegalEntityService,
-                BilateralContractService
-            ) {
-
-    $scope.addNewBillateralAgreement = function () {
-
-        $scope.workspaceTabs.addTab({
-            head: {
-                icon: 'fa fa-money',
-                text: 'New Billateral Agreement(' + ($scope.workspaceTabs.tabList.length) + ')'
-            },
-            templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
-            closable: true
-        });
-    };
-
-    $scope.editRow = function (grid, row) {
-
-        $scope.workspaceTabs.addTab({
-                head: {
-                    icon: '',
-                    text: 'Editing Billateral Agreement (' + ($scope.workspaceTabs.tabList.length) + ')'
-                },
-                templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilteral_a_tabs_container.html",
-                closable: true,
-                resolve: {
-                    formData: [
-                        {
-                            type: "text",
-                            id: "le-bilateral-ag-call-issuance",
-                            value: "Demo"
-                        },
-                        {
-                            type: "ui-select",
-                            id: "legalEntityPrimary",
-                            value: { id: 382453812, name: "Demo Bank"}
-                        },
-                        {
-                            type: "multiselect-dual",
-                            id: "BCHolidays",
-                            value: ['AUME','BEBR','CZPR']
-                        }
-                    ]
-                }
-            }
-        );
-
-    }
-
-    //FIRST SEARCH TAB
-    $scope.$on('$includeContentLoaded', function (event, url) {
-
-    });
-
-    $scope.deleteRow = function (grid, row) {
-        console.log("deleting")
-    }
-
-    $scope.gridOptions = {
-        columnDefs: [
-            {
-                //field: 'contract_name',
-                cellTemplate: '<div>Demo Contract Name</div>',
-                name: 'Contract name'
-            },
-            {
-                field: 'counterpartyA.name',
-                name: 'Counter Party A'
-            },
-            {
-                field: 'counterpartyB.name',
-                name: 'Counter Party B'
-            },
-            {
-                field: 'bilateralContractType',
-                name: 'Contract type',
-                groupable: true
-            },
-            {
-                name: 'Actions',
-                cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
-                enableColumnMenu: false,
-                enableFiltering: false,
-                enableSorting: false,
-                width: 160
-            }
-        ],
-        data: [],
-        rowHeight: 35, // set height to each row
-        enableGridMenu: true,
-        enableFiltering: true,
-        exporterCsvFilename: 'Bilateral_Agreements.csv',
-        exporterPdfDefaultStyle: {fontSize: 9},
-        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-        exporterPdfHeader: {text: "Bilateral Agreements", style: 'headerStyle'},
-        exporterPdfFooter: function (currentPage, pageCount) {
-            return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
-        },
-        exporterPdfCustomFormatter: function (docDefinition) {
-            docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
-            docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
-            return docDefinition;
-        },
-        exporterPdfOrientation: 'portrait',
-        exporterPdfPageSize: 'LETTER',
-        exporterPdfMaxGridWidth: 500,
-        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-        onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
-            // call resize every 500 ms for 5 s after modal finishes opening
-            $interval(function () {
-                $scope.gridApi.core.handleWindowResize();
-            }, 1000, 10);
-        }
-    };
-
-    BilateralContractService.getAll().then(function (result) {
-        $scope.BilateralAgreements.contracts = result.data.dataResponse;
-        $scope.gridOptions.data = result.data.dataResponse;
-    });
-
-}]);
-
-DashboardApp.controller(
-    'BAFormController', [
-        '$scope',
-        '$document',
-        '$timeout',
-        '$request',
-        'localStorageService',
-        function ($scope,
-                  $document,
-                  $timeout,
-                  $request,
-                  $localStorage) {
-
-            this.workspaceTabs = {
+            $scope.bilateralAgrWorkspaceTabs = {
                 tabList: [
                     {
                         head: {
                             icon: 'glyphicon glyphicon-blackboard',
                             text: 'Main'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_main.html"
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_main.html",
+                        autoload: true
                     },
                     {
                         head: {
                             icon: 'glyphicon glyphicon-list-alt',
                             text: 'CSA Margin'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_csa_margins.html"
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_csa_margins.html",
+                        autoload: true
                     },
                     {
                         head: {
                             icon: 'glyphicon glyphicon-piggy-bank',
                             text: 'Eligible currencies'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_currencies.html"
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_currencies.html",
+                        autoload: true
                     },
                     {
                         head: {
                             icon: 'glyphicon glyphicon-eye-open',
                             text: 'Eligible securities'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_securities.html"
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_securities.html",
+                        autoload: true
                     }
                 ]
             };
 
         }]);
+
+DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
+    '$request',
+    '$interval',
+    'localStorageService',
+    '$filter',
+    'LegalEntityService',
+    'BilateralContractService',
+    function
+        ($scope,
+         $request,
+         $interval,
+         $localStorage,
+         $filter,
+         LegalEntityService,
+         BilateralContractService) {
+
+        if (!$scope.BilateralAgreements)
+            $scope.BilateralAgreements = new Object();
+
+        $scope.addNewBillateralAgreement = function () {
+
+            $scope.$workspaceTabsMgm.addTab({
+                head: {
+                    icon: 'fa fa-thumbs-o-up',
+                    text: 'New Billateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs().tabList.length + 1) +')',
+                },
+                templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                closable: true,
+                autoload: true
+            },[2,2]);
+        };
+
+        $scope.editRow = function (grid, row) {
+
+            $scope.$workspaceTabsMgm.addTab({
+                head: {
+                    icon: 'fa fa-thumbs-o-up',
+                    text: 'New Billateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs().tabList.length + 1) +')'
+                },
+                templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                closable: true,
+                autoload: true
+            },[2,2]);
+
+        }
+
+        $scope.deleteRow = function (grid, row) {
+            console.log("deleting")
+        }
+
+        $scope.gridOptions = {
+            columnDefs: [
+                {
+                    //field: 'contract_name',
+                    cellTemplate: '<div>Demo Contract Name</div>',
+                    name: 'Contract name'
+                },
+                {
+                    field: 'counterpartyA.name',
+                    name: 'Counter Party A'
+                },
+                {
+                    field: 'counterpartyB.name',
+                    name: 'Counter Party B'
+                },
+                {
+                    field: 'bilateralContractType',
+                    name: 'Contract type',
+                    groupable: true
+                },
+                {
+                    name: 'Actions',
+                    cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                    enableColumnMenu: false,
+                    enableFiltering: false,
+                    enableSorting: false,
+                    width: 160
+                }
+            ],
+            data: [],
+            rowHeight: 35, // set height to each row
+            enableGridMenu: true,
+            enableFiltering: true,
+            exporterCsvFilename: 'Bilateral_Agreements.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Bilateral Agreements", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 500,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+                // call resize every 500 ms for 5 s after modal finishes opening
+                $interval(function () {
+                    $scope.gridApi.core.handleWindowResize();
+                }, 1000, 10);
+            }
+        };
+
+        BilateralContractService.getAll().then(function (result) {
+            $scope.BilateralAgreements.contracts = result.data.dataResponse;
+            $scope.gridOptions.data = result.data.dataResponse;
+        });
+
+    }]);
+
 
 //BILATERAL AGREEMENT MAIN TAB CONTROLLER
 DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {

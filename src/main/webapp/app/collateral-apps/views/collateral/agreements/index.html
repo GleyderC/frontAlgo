@@ -1,66 +1,72 @@
 <div ng-controller="AgreementsController as agreementsCtrl">
-<uib-tabset >
+    <uib-tabset>
 
-<uib-tab index="1"> <!-- TAB CONTENT BEGIN -->
-<uib-tab-heading><i class="fa fa-home	"></i>Main </uib-tab-heading> <!-- TAB CONTENT BEGIN -->
+        <uib-tab index="1"> <!-- TAB CONTENT BEGIN -->
+            <uib-tab-heading><i class="fa fa-home	"></i>Main</uib-tab-heading> <!-- TAB CONTENT BEGIN -->
 
-<div class="container-fluid">
-	<div class="page-content">
-		<!-- BEGIN PAGE BASE CONTENT -->
+            <div class="container-fluid">
+                <div class="page-content">
+                    <!-- BEGIN PAGE BASE CONTENT -->
 
-		<div class="portlet light">
-			<div class="row portlet light bordered" id="collateral-agreements">
-				<div class="portlet-title">
-					<div class="caption" col-md-3>
-						<i class="fa fa- font-dark font-green-haze"></i> <span
-							class="caption-subject bold uppercase font-green-haze">
+                    <div class="portlet light">
+                        <div class="row portlet light bordered" id="collateral-agreements">
+                            <div class="portlet-title">
+                                <div class="caption" col-md-3>
+                                    <i class="fa fa- font-dark font-green-haze"></i> <span
+                                        class="caption-subject bold uppercase font-green-haze">
 							Collateral Agreements</span>
-					</div>
-					<div class="tools">
-						<a href="javascript:;" class="collapse"> </a> <a
-							href="javascript:;" class="fullscreen"> </a>
-					</div>
-				</div>
-				<!-- BEGIN EXAMPLE TABLE PORTLET-->
-				<div class="portlet-body">
-					<div ui-grid="gridAgreements" ui-grid-exporter ui-grid-auto-resize
-						ui-grid-edit ui-grid-resize-columns ui-grid-selection
-						ui-grid-pagination class="grid"></div>
-				</div>
-				<!-- END EXAMPLE TABLE PORTLET-->
-			</div>
-			<!-- END ROW -->
-		</div>
-		<!-- END PAGE BASE CONTENT -->
-	</div>
-</div>
-<!-- TAB CONTENT END --> </uib-tab> <uib-tab index="2"> <uib-tab-heading>
-<i class="fa fa-phone"></i>Margin Call </uib-tab-heading> <!-- TAB CONTENT BEGIN -->
-<div class="container-fluid" >
-	<div class="page-content">
-		<!-- BEGIN PAGE BASE CONTENT -->
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"> </a> <a
+                                        href="javascript:;" class="fullscreen"> </a>
+                                </div>
+                            </div>
+                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                            <div class="portlet-body">
+                                <div ui-grid="gridAgreements" ui-grid-exporter ui-grid-auto-resize
+                                     ui-grid-edit ui-grid-resize-columns ui-grid-selection
+                                     ui-grid-pagination class="grid"></div>
+                            </div>
+                            <!-- END EXAMPLE TABLE PORTLET-->
+                        </div>
+                        <!-- END ROW -->
+                    </div>
+                    <!-- END PAGE BASE CONTENT -->
+                </div>
+            </div>
+        </uib-tab>
+        <!-- TAB CONTENT END -->
+        <!--<uib-tab index="2"> <uib-tab-heading>
+    <i class="fa fa-phone"></i>Margin Call </uib-tab-heading> &lt;!&ndash; TAB CONTENT BEGIN &ndash;&gt;-->
+        <!--<div class="container-fluid" >-->
+        <!--<div class="page-content">-->
+        <!--&lt;!&ndash; BEGIN PAGE BASE CONTENT &ndash;&gt;-->
 
-		<div
-			ng-include="'collateral-apps/views/collateral/margin_call/index.html'"
-			class="fade-in-up"></div>
+        <!--<div-->
+        <!--ng-include="'collateral-apps/views/collateral/margin_call/index.html'"-->
+        <!--class="fade-in-up"></div>-->
 
-		<!-- END PAGE BASE CONTENT -->
-	</div>
-</div>
-<!-- TAB CONTENT END --> </uib-tab> <uib-tab index="3"> <uib-tab-heading>
-<i class="fa fa-calculator"></i>Interest </uib-tab-heading> <!-- TAB CONTENT BEGIN -->
-<div class="container-fluid">
-	<div class="page-content">
-		<!-- BEGIN PAGE BASE CONTENT -->
-		<div
-			ng-include="'collateral-apps/views/collateral/interest/index.html'"
-			class="fade-in-up"></div>
+        <!--&lt;!&ndash; END PAGE BASE CONTENT &ndash;&gt;-->
+        <!--</div>-->
+        <!--</div>-->
+        </uib-tab>
+        <!-- TAB CONTENT END -->
 
-		<!-- END PAGE BASE CONTENT -->
-	</div>
-</div>
-<!-- TAB CONTENT END --> 
-</uib-tab> 
-</uib-tabset>
+        <!--<uib-tab index="3"> <uib-tab-heading>
+    <i class="fa fa-calculator"></i>Interest </uib-tab-heading> &lt;!&ndash; TAB CONTENT BEGIN &ndash;&gt;-->
+        <!--<div class="container-fluid">-->
+        <!--<div class="page-content">-->
+        <!--&lt;!&ndash; BEGIN PAGE BASE CONTENT &ndash;&gt;-->
+        <!--<div-->
+        <!--ng-include="'collateral-apps/views/collateral/interest/index.html'"-->
+        <!--class="fade-in-up"></div>-->
+
+        <!--&lt;!&ndash; END PAGE BASE CONTENT &ndash;&gt;-->
+        <!--</div>-->
+        <!--</div>
+        </uib-tab> -->
+        <!-- TAB CONTENT END -->
+
+    </uib-tabset>
 
 </div>

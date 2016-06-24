@@ -27,9 +27,11 @@ angular.module('DashboardApp')
             templateUrl: paths.tpls + "/TabManagementTemplate.html",
             link: function ($scope, element, attrs) {
 
-                if ($scope.workspaceTabs == undefined) {
+                if (!$scope.workspaceTabs) {
                     $scope.workspaceTabs = new Object();
                 }
+
+                $scope.workspaceTabs = $scope.$eval(attrs.workspaceInfo);
 
                 if (attrs.id !== undefined) {
                     $scope.workspaceTabs.id = attrs.id;
@@ -40,10 +42,8 @@ angular.module('DashboardApp')
                     $scope.workspaceTabs.id = hash;
                 }
 
-                $scope.workspaceTabs = $scope.$eval(attrs.workspaceInfo);
-
                 $scope.workspaceTabs.loadTabContent = function (tab) {
-                    //console.log(tab)
+                    //  console.log(tab)
                     tab.autoload = true;
                 }
 
@@ -53,7 +53,7 @@ angular.module('DashboardApp')
 
                     let deferred = $q.defer();
 
-                    if ($scope.workspaceTabs.maxTabs !== undefined && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
+                    if (!!$scope.workspaceTabs.maxTabs && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
                         $toastr.error("It has reached the maximum allowed tabs", "Error Opening", {closeButton: true})
                         deferred.reject("limit exceeded tabs");
                         return false;
@@ -101,11 +101,22 @@ angular.module('DashboardApp')
                             globalTabConfig.closable = tabConfig.closable;
                         }
 
+                        if (!!tabConfig.autoload) {
+                            globalTabConfig.autoload = tabConfig.autoload;
+                        }
+
                         if (!!tabConfig.callback && tabConfig.callback === 'function') {
                             globalTabConfig.callback = tabConfig.callback;
                         }
 
+                        if (!!tabConfig.head.icon) {
+                            globalTabConfig.head.icon = tabConfig.head.icon;
+                        }
+
                     }
+
+                    if(!coordinates)
+                        coordinates = [];
 
                     let ws = $scope.workspaceTabs.getWorkspaceTabs(coordinates);
 
@@ -113,15 +124,15 @@ angular.module('DashboardApp')
                         ws.childWorkspace.tabList.push(globalTabConfig);
 
                         $timeout(function () {
-                            coordinates.push(ws.childWorkspace.tabList.length - 1);
+                            coordinates.push(ws.childWorkspace.tabList.length);
                             $scope.workspaceTabs.setWorkspaceTabFocus(coordinates);
                         });
                     }
-                    else if (coordinates.length > 1) {
+                    else if (coordinates.length === 0 || coordinates.length > 1) {
                         ws.tabList.push(globalTabConfig);
 
                         $timeout(function () {
-                            coordinates.push(ws.tabList.length - 1);
+                            coordinates.push(ws.tabList.length);
                             $scope.workspaceTabs.setWorkspaceTabFocus(coordinates);
                         });
                     }
@@ -138,14 +149,13 @@ angular.module('DashboardApp')
 
                         if (loading_stack.length === 0) {
 
-                            //SET LAST TAB ACTIVE
                             //REMOVE ICON LOADING
-                            if (!!tabConfig.head.icon) {
+                            /*if (!!tabConfig.head.icon) {
                                 $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = tabConfig.head.icon;
                             }
                             else {
                                 $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = '';
-                            }
+                            }*/
 
                             //RESOLVE SECTION
 
@@ -232,7 +242,6 @@ angular.module('DashboardApp')
                                 globalTabConfig.callback();
                             }
 
-                            console.log("saludos desde el promise")
                             //RETURN RESOLVE PROMISE
                             deferred.resolve(globalTabConfig);
                         }
@@ -307,14 +316,14 @@ angular.module('DashboardApp')
                         return false;
                     }
 
-                    if (coordinates === undefined) {
+                    if (!coordinates || coordinates.length === 0) {
 
                         return rootWorkspace;
 
                     }
                     else if (coordinates.length == 1) {
 
-                        return rootWorkspace.tabList[coordinates[0]];
+                        return rootWorkspace.tabList[coordinates[0]--];
 
                     }
                     else if (coordinates.length > 1) {
@@ -324,6 +333,8 @@ angular.module('DashboardApp')
                         let badCoord = false;
 
                         angular.forEach(coordinates, function (coord, index) {
+
+                            coord--;
 
                             if (badCoord) {
                                 return true;
@@ -374,9 +385,11 @@ angular.module('DashboardApp')
                     let workspace = null;
                     let rootWorkspace = null;
 
+
                     if (angular.isArray(coordinates) && coordinates.length == 1) {
 
                         workspace = $scope.workspaceTabs.getWorkspaceTabs();
+                        workspace.active = coordinates[0];
 
                     }
                     else if (angular.isArray(coordinates) && coordinates.length > 1) {
@@ -393,7 +406,8 @@ angular.module('DashboardApp')
 
                                 if (workspace != false) {
 
-                                    workspace.active = coord + 1;
+                                    workspace.active = coord;
+                                    coord--;
                                     workspace = workspace.tabList[coord];
 
                                 }
@@ -409,7 +423,8 @@ angular.module('DashboardApp')
                                 workspace = workspace.childWorkspace;
 
                                 if (!!workspace) {
-                                    workspace.active = coord + 1;
+                                    workspace.active = coord;
+                                    coord--;
                                     workspace = workspace.tabList[coord];
                                 }
                                 else {
@@ -449,7 +464,7 @@ angular.module('DashboardApp')
         return {
             restrict: 'A',
             link: function (scope, element) {
-                var x, y, initial_background = '#c3d5e6';
+                var x, y, initial_background = 'rgba(211, 227, 245, 0.64)';
 
                 element
                     .removeAttr('style')
