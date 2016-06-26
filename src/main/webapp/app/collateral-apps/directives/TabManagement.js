@@ -43,8 +43,9 @@ angular.module('DashboardApp')
                 }
 
                 $scope.workspaceTabs.loadTabContent = function (tab) {
-                    //  console.log(tab)
+
                     tab.autoload = true;
+                    
                 }
 
                 //$scope.workspace.tabList[0].childWorkspace.active = 2;
@@ -376,16 +377,33 @@ angular.module('DashboardApp')
                                     console.error("Bad Coord!")
                                     return false;
                                 }
+                                if(!workspaceChild.childWorkspace)
+                                {
+                                    workspaceChild.childWorkspace= {};
+                                }
                                 workspaceChild = workspaceChild.childWorkspace.tabList[coord];
 
                             }
 
                         });
 
-                        if (!!workspaceChild)
+                        if (!!workspaceChild) {
+
+                            if(!workspaceChild.childWorkspace)
+                            {
+                                workspaceChild.childWorkspace = {
+                                    active: 1,
+                                    tabList: []
+                                };
+                            }
+
                             return workspaceChild.childWorkspace;
-                        else
+                        }
+                        else{
+
                             return false;
+
+                        }
 
                     }
 
