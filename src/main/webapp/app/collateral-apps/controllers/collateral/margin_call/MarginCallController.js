@@ -44,7 +44,7 @@ var MarginCallCtrl = DashboardApp
 
                     $scope.gridApi.selection.getSelectedRows();
                     $scope.setCurrentMarginCall(value);
-                    $scope.marginCallWorkspaceTabs
+                    $scope.$workspaceTabsMgm
                         .addTab({
                             head: {
                                 icon: 'icon-call-in font-dark font-green-haze',
@@ -55,14 +55,10 @@ var MarginCallCtrl = DashboardApp
                             templateUrl: paths.views
                             + "/collateral/margin_call/margin_call_detail.html",
                             closable: true,
-                            resolve: {
-                                formData: [{
-                                    type: "text",
-                                    id: "le-bilateral-ag-call-issuance",
-                                    value: "Demo"
-                                }]
-                            }
-                        });
+                            autoload:true,
+                            parameters: value
+                            
+                        },[1,2]);
 
                 };
                 $scope.contractTypeList = [];

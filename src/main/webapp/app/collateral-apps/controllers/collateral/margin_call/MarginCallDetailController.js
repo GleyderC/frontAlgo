@@ -7,7 +7,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
     function ($scope, uiGridConstants, MarginCallService, $timeout) {
 
         $scope.sendFlag = false;
-
+        $scope.currentMarginCall = $scope.parameters;
         $scope.tabs1 = [
             {
                 id: 'mc-csa-margin',

@@ -44,9 +44,11 @@ DashboardApp.service('MenuService', function () {
                                                  text: 'Main'
                                              },
                                              templateUrl: paths.views + '/collateral/margin_call/main.html',
+                                             autoload:true
                                          },
                             	]
-                            }
+                            },
+                            autoload:true
                         },
                         {
                             head: {
