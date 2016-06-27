@@ -3,8 +3,10 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstants', 'MarginCallService',
-    function ($scope, uiGridConstants, MarginCallService) {
+DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout',
+    function ($scope, uiGridConstants, MarginCallService, $timeout) {
+
+        $scope.sendFlag = false;
 
         $scope.tabs1 = [
             {
@@ -66,7 +68,12 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
         });
 
         this.sendMargin = function () {
-            var MarginSent = MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA");
-            //$scope.MarginSent = MarginCallService.sendIssueMarginCall();
+            $scope.sendFlag = true;
+            console.log($scope.sendFlag);
+            MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA")
+                .then(function () {
+                    $scope.sendFlag = false;
+                });
+
         }
     }]);

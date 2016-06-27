@@ -1,5 +1,5 @@
 angular.module('DashboardApp')
-    .service('MarginCallService',['$request','toastr',function ($request,toastr) {
+    .service('MarginCallService',['$request','toastr','$q',function ($request, toastr, $q) {
        
         this.getAll = function(){
 
@@ -24,9 +24,11 @@ angular.module('DashboardApp')
 
         this.sendIssueMarginCall = function (marginCallId,collateralLiabilityType) {
 
-            console.log(marginCallId);
-            console.log(collateralLiabilityType);
-            //var MarginSent = false;
+            //console.log(marginCallId);
+            var MarginSent = "";
+            var defered = $q.defer();
+            var promise = defered.promise;
+
             var params = {
 
                 "marginCallId": marginCallId,
@@ -35,11 +37,12 @@ angular.module('DashboardApp')
 
             $request.post('/servlet/MarginCall/ActionIssueMarginCall/',params)
                 .then(function (Response) {
-
-                    //MarginSent = true;
-                    toastr.success("Margin Call Issuance Sent by e-mail ","Success")
+                    MarginSent = "sent";
+                    toastr.success("Margin Call Issuance Sent by e-mail ","Success");
+                    defered.resolve(MarginSent);
                 });
-            //return MarginSent;
+
+            return promise;
         }
     
 
