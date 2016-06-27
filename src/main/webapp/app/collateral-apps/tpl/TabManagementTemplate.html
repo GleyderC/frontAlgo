@@ -13,7 +13,7 @@
         <div class="fade-in-up" data-tabId="{{ workspaceTabs.id + ($index + 1)}}"
              role="tab-content"
              ng-if="tab.autoload">
-            <div class="slide-animate" ng-include="tab.templateUrl" onload='loadParameters(tab.parameters)'></div>
+            <div class="slide-animate" ng-include="tab.templateUrl"></div>
         </div>
         <div class="tabs-container" ng-if="tab.childWorkspace.tabList.length > 0">
             <workspace-Tabs id=" {{ 'InternalTabManager' + $index }} "

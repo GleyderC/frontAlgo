@@ -118,9 +118,14 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
             $scope.$workspaceTabsMgm.addTab({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
-                    text: 'New Billateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs().tabList.length + 1) +')',
+                    text: 'New Billateral Agreement',
                 },
                 templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                parameters: {
+                    id: 1,
+                    name: "test",
+                    lastName: "lastTest"
+                },
                 closable: true,
                 autoload: true
             },[3,2]);
@@ -213,6 +218,7 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
 
 //BILATERAL AGREEMENT MAIN TAB CONTROLLER
 DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+
     $scope.holidays = {
         searchSelect: true,
         searchSelected: true,

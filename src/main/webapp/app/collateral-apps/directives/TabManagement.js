@@ -42,12 +42,6 @@ angular.module('DashboardApp')
                     $scope.workspaceTabs.id = hash;
                 }
 
-                $scope.workspaceTabs.loadTabContent = function (tab) {
-
-                    tab.autoload = true;
-                    
-                }
-
                 //$scope.workspace.tabList[0].childWorkspace.active = 2;
 
                 $scope.workspaceTabs.addTab = function (tabConfig, coordinates) {
@@ -112,6 +106,11 @@ angular.module('DashboardApp')
 
                         if (!!tabConfig.head.icon) {
                             globalTabConfig.head.icon = tabConfig.head.icon;
+                        }
+
+                        if (!!tabConfig.parameters) {
+                            globalTabConfig.parameters = tabConfig.parameters;
+                            $scope.parameters = tabConfig.parameters;
                         }
 
                     }
@@ -482,6 +481,12 @@ angular.module('DashboardApp')
                         }
 
                     }
+
+                }
+
+                $scope.workspaceTabs.loadTabContent = function (tab) {
+
+                    tab.autoload = true;
 
                 }
 

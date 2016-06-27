@@ -1,3 +1,4 @@
+'use strict';
 angular.module('DashboardApp')
     .service('UserMessageService',['$q','$request','toastr',function ($q,$request,toastr) {
         var defered =  $q.defer();
