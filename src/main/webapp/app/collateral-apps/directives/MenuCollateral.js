@@ -36,14 +36,35 @@ DashboardApp.service('MenuService', function () {
                                 icon: 'fa fa-phone',
                                 text: 'Margin Call'
                             },
-                            templateUrl: paths.views + '/collateral/margin_call/index.html'
+                            childWorkspace : {
+                            	tabList:[
+                            	         {
+                                             head: {
+                                                 icon: 'fa fa-home',
+                                                 text: 'Main'
+                                             },
+                                             templateUrl: paths.views + '/collateral/margin_call/main.html',
+                                         },
+                            	]
+                            }
                         },
                         {
                             head: {
                                 icon: 'fa fa-calculator',
                                 text: 'Interest'
                             },
-                            templateUrl: paths.views + '/collateral/interest/index.html'
+//                            templateUrl: paths.views + '/collateral/interest/index.html'
+                            childWorkspace : {
+                            	tabList:[
+                            	         {
+                                             head: {
+                                                 icon: 'fa fa-home',
+                                                 text: 'Main'
+                                             },
+                                             templateUrl: paths.views + '/collateral/interest/main.html',
+                                         },
+                            	]
+                            }
                         }
                     ]
                 }
@@ -53,7 +74,8 @@ DashboardApp.service('MenuService', function () {
                     icon: 'fa fa-envelope-o',
                     text: 'User Messages'
                 },
-                templateUrl: paths.views + '/user_message/messages.html'
+                templateUrl: paths.views + '/user_message/messages.html',
+                autoload: true
             },
             {
                 head: {
