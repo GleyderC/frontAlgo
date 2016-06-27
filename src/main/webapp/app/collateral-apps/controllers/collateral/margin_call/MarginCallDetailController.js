@@ -69,9 +69,14 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
 
         this.sendMargin = function () {
             $scope.sendFlag = true;
-            console.log($scope.sendFlag);
-            MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA")
-                .then(function () {
+            //console.log($scope.sendFlag);
+            var result = MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA").
+                then(function (result) {
+                    //console.log(result);
+                    $scope.sendFlag = false;
+            },
+                function (error) {
+                    console.error(error);
                     $scope.sendFlag = false;
                 });
 

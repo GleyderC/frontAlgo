@@ -48,9 +48,10 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
                 name : 'Action buttons',
                 cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></button> ' +
                                     '<button class="btn btn-sm btn-danger uigrid-btn" ng-click="grid.appScope.downloadPdf(row.entity)" ><i class="fa fa-file-pdf-o"></i></button>' +
+                                    ' <button class="btn btn-sm green-jungle uigrid-btn" ng-click="grid.appScope.downloadExcel(row.entity)" ><i class="fa fa-file-excel-o"></i></button>' +
                                 '</div>',
                 enableColumnMenu : false,
-                width : 120,
+                width : 160,
                 enableFiltering : false,
                 enableSorting : false
             }
@@ -58,12 +59,14 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
         ];
 
         $scope.$watchCollection('$parent.Messages', function (newMessages, oldMessages) {
-            if (newMessages === oldMessages) {
+            if (newMessages === oldMessages ||  newMessages == undefined) {
                 return false;
             }
             
             newMessages.forEach(function (message) {
-                message.date.dateMessage = new Date(message.date.iMillis);
+
+                if(message.date != undefined)
+                    message.date.dateMessage = new Date(message.date.iMillis);
             });
             $scope.gridMessagesOptions.data = newMessages;
             //console.log(newMessages);

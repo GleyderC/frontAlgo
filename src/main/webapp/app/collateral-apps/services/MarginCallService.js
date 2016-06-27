@@ -15,7 +15,7 @@ angular.module('DashboardApp')
         };
 
         this.getDetail = function(marginCallId){
-            console.log(marginCallId);
+            //console.log(marginCallId);
         	var  detailParam = {
         			id : marginCallId 
         	};
@@ -40,7 +40,11 @@ angular.module('DashboardApp')
                     MarginSent = "sent";
                     toastr.success("Margin Call Issuance Sent by e-mail ","Success");
                     defered.resolve(MarginSent);
+                },
+                function (error) {
+                    defered.reject(error);
                 });
+
 
             return promise;
         }
