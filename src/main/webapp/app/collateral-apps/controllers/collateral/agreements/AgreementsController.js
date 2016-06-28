@@ -15,38 +15,47 @@
         $scope.contractTypeList =[];
         $scope.counterPartyAList =[];
         $scope.counterPartyBList =[];
-//    	$scope.workspaceTabs = {
-//                name: 'agreements-workspace-tabs',
-//                active: true,
-//                tabList: [{
-//                    head: {
-//                        icon: 'fa fa-home',
-//                        text: 'Main'
-//                    },
-//                    templateUrl: paths.views
-//                    + "/collateral/agreements/main.html",
-//                    active: true
-//                },
-//                { 
-//                	head: {
-//                            icon: 'fa fa-phone',
-//                            text: 'Margin call'
-//                        },
-//                        templateUrl: paths.views
-//                        + "/collateral/margin_call/main.html",
-//                        active: false
-//                    },
-//                    { 
-//                    	head: {
-//                                icon: 'fa fa-calculator',
-//                                text: 'Interest'
-//                            },
-//                            templateUrl: paths.views
-//                            + "/collateral/interest/main.html",
-//                            active: false
-//                        }]
-//    	};
         
+        $scope.viewInterest = function(entity){
+        	
+        	$scope.$workspaceTabsMgm.addTab({
+	        		head :  {
+	        			icon : "fa fa-calculator",
+	        			text : "Interest Detail"
+	        		},
+	        		
+        		  templateUrl: paths.views + "/collateral/interest/interest_detail.html",
+                  closable: true,
+                  parameters  : entity,
+                  autoload: true
+        	},[1,3]);
+        	
+        };
+        $scope.viewMarginCall = function(entity){
+        	$scope.$workspaceTabsMgm.addTab({
+	        		head :  {
+	        			icon : "fa fa-calculator",
+	        			text : "Margin Call Detail"
+	        		},
+        		  templateUrl: paths.views + "/collateral/margin_call/margin_call_detail.html",
+                  closable: true,
+                  parameters : entity,
+                  autoload: true
+        	},[1,2]);
+        	
+        };
+        $scope.editBilateralContract = function(entity){
+        	$scope.$workspaceTabsMgm.addTab({
+	        		head :  {
+	        			icon : "fa fa-calculator",
+	        			text : "Edit "
+	        		},
+	                templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                  closable: true,
+                  autoload: true
+        	},[3,2]);
+        	
+        };
         $scope.gridAgreements = {
             onRegisterApi: function(gridApi){
                 $scope.gridApi = gridApi;
@@ -88,20 +97,6 @@
                     width: 80
 
                 },
-//                {
-//                    field : "exposure",
-//                    name: 'Exposure (EUR)',
-//                    headerCellClass: $scope.highlightFilteredHeader,
-//                    filter: {
-//                        term: '1',	
-//                        type: uiGridConstants.filter.SELECT,
-//                        selectOptions: [
-//                            { value: '1', label: 'EUR' },
-//                            { value: '2', label: 'USD' }
-//
-//                        ]
-//                    }
-//                },
                 {
                     name : 'Exposure / Collateral',
                      enableFiltering: false,
@@ -204,7 +199,5 @@
             $scope.gridAgreements.enableFiltering = !$scope.gridAgreements.enableFiltering;
             $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
         };
-        $scope.viewInterest = function(){
-        	console.log($scope);
-        };
+
  }]);

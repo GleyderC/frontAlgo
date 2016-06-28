@@ -55,7 +55,6 @@ DashboardApp.service('MenuService', function () {
                                 icon: 'fa fa-calculator',
                                 text: 'Interest'
                             },
-//                            templateUrl: paths.views + '/collateral/interest/index.html'
                             childWorkspace : {
                             	tabList:[
                             	         {
@@ -64,9 +63,11 @@ DashboardApp.service('MenuService', function () {
                                                  text: 'Main'
                                              },
                                              templateUrl: paths.views + '/collateral/interest/main.html',
+                                             autoload : true 
                                          },
                             	]
-                            }
+                            },
+                            
                         }
                     ]
                 }

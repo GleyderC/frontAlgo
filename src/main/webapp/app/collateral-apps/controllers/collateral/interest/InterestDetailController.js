@@ -3,47 +3,52 @@
 InterestCtrl.controller('InterestDetailController', 
 		[ '$scope','uiGridConstants','AgreementsService','InterestService',
 		function($scope, uiGridConstants,Agreements,Interest) {
-			
+
+			   $scope.$on('$includeContentLoaded', function () {
+
+               });
+			   $scope.currentContract = $scope.parameters;
 			 /// Detail
-            $scope.InterestDataContract = {};
+            $scope.InterestDataContract = $scope.currentContract.collateralContract;
             $scope.InterestData = {};
             $scope.InterestDataGrid = [];
             $scope.InterestCumulative  = 0 ;
             $scope.InterestCumulativeAdjustment  = 0 ;
             $scope.InterestTotal  =  0 ;
-            $scope.startDate = moment().format("YYYY-MM-DD").toString();
+            $scope.startDate = new Date($scope.currentContract.interestCall.ownInterestOnCashCollateral[0].day.iLocalMillis);
+            
+            
             $scope.calculateInterest = function(){
             	$scope.InterestCumulativeAdjustment = 0 ;
             	$scope.InterestDataGrid.forEach(function(v,k){
             		$scope.InterestCumulativeAdjustment += v.dailyAccrual
             		v.cumulative = $scope.InterestCumulativeAdjustment;
             	});
-            };
-         
-	                Interest.getByCollateralContract(moment().format("YYYY-MM-DD"),$scope.currentContract.internalId)
+            };	
+            
+            
+            Interest.getInterest(moment().format("YYYY-MM-DD"),
+            					$scope.currentContract.collateralContract.internalId,
+            					$scope.currentContract.collateralContract.eligibleCurrencyConfig.baseCurrency,
+            					$scope.currentContract.collateralLiabilityType)
+	            			  
 	                .success(function(data){
-	                	$scope.InterestData   = data.dataResponse;
-	                    $scope.currency   =  $scope.InterestDataContract.baseCurrency;
-//	                	$scope.currency  = Object.keys(data.dataResponse[0].ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")])[0];
-//	                    $scope.postedAmount = data.dataResponse.ownInterestOnPostedCash.interestByStartDateAndCurrency[moment().format("YYYY-MM-DD")][$scope.currency].postedAmount;
-	                    let interestByDate = $scope.InterestData.ownInterestOnPostedCash.interestByStartDateAndCurrency;
-	                    let dateKeys = Object.keys(interestByDate);
-	                    $scope.InterestTotal = data.dataResponse.ownCalculatedTotalPostedInterestByCurrency[$scope.currency];
-	                    dateKeys.forEach(function(v,k){
-	                    	let ccy = Object.keys(interestByDate[v])[0];//currency
-	                    	$scope.InterestCumulative += interestByDate[v][ccy].interest;
-	                    	 $scope.InterestDataGrid.push({
-	                    		 date : v, 
-	                    		 currency : ccy ,
-	                    		 balance:  interestByDate[v][ccy].postedAmount,
-	                    		 benchmark  :  interestByDate[v][ccy].appliedRate -( interestByDate[v][ccy].spread * 0.01),
-	                    		 dailyAccrual : interestByDate[v][ccy].interest,
-	                    		 spread : interestByDate[v][ccy].spread,
-	                    		 applied : interestByDate[v][ccy].appliedRate,
+	                	$scope.InterestData   = data.dataResponse.ownInterestOnCashCollateral;
+	                	$scope.InterestCumulative = 0;
+	                	$scope.InterestData.forEach(function(v,k){
+	                    	$scope.InterestCumulative += v.interest;
+	                		 $scope.InterestDataGrid.push({
+	                    		 date : new Date(v.day.iLocalMillis), 
+	                    		 currency : v.currency ,
+	                    		 balance:  v.postedAmount,
+	                    		 benchmark  :  v.appliedRate -( v.spread * 0.01),
+	                    		 dailyAccrual : v.interest,
+	                    		 spread : v.spread,
+	                    		 applied : v.appliedRate,
 	                    		 cumulative : $scope.InterestCumulative,
-	                    		 basisCalculationConvention :interestByDate[v][ccy].basisCalculationConvention 
+	                    		 basisCalculationConvention :v.basisCalculationConvention 
 	                    	 })
-	                    });	
+	                	});
 	                    	
             });
             
@@ -63,8 +68,8 @@ InterestCtrl.controller('InterestDetailController',
                                 direction: 'asc',
                                 priority: 0
                             },
+                            cellFilter: "date:'yyyy-MM-dd'", 
                             enableSorting:false
-                            
                         },
                         {
                             name: 'CCY',
@@ -136,30 +141,21 @@ InterestCtrl.controller('InterestDetailController',
                         	                           { id: 'ACT/365', basis: 'ACT/365' }
                         	                           ],
                             headerCellClass: $scope.highlightFilteredHeader
-                        },
-                        {
-                            name: 'Action',
-                            	enableFiltering: false,
-                            	enableCellEdit: false,
-                            	cellTemplate : "<div class='text-center'><a href='#!' ng-click='grid.appScope.edit(row)'  ><i class='fa fa-pencil'></i></a></div>"
-                            	
                         }
             ]};
             $scope.saveRow = function( rowEntity ) {
-                $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity );
+//                $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity );
                 
               };
-            $scope.edit = function(rowHtml){
-            };
-            
+              $scope.isEdit   = false ;
             $scope.gridInterest.onRegisterApi = function(gridApi){
                 $scope.gridApi = gridApi;
-                gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+//                gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
 
                 gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
                 	$scope.calculateInterest();
                 	colDef.cellClass = 'cell-modified';
-                	console.log(colDef);
+                	$scope.isEdit  = true; 
                 	$scope.$apply();
                 	$scope.gridApi.core.refresh();
                 	gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);

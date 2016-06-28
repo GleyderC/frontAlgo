@@ -5,10 +5,10 @@
 			<div class="portlet-title">
 				<div class="caption">
 					<i class="fa fa-calculator font-dark font-green-haze"></i> <span
-						class="caption-subject bold uppercase font-green-haze">
-						{{InterestDataContract.counterpartyA.name}}</span> <span class="caption-helper"></span>
+						class="caption-subject bold uppercase font-green-haze" id="titleCounterPartyAName">
+						</span> <span class="caption-helper"></span>
 				</div>
-				
+				<!-- <p>{{InterestDataContract.counterpartyA.name}}</p> -->
 				<div class="dropdown col-md-3">
 					<button class="btn green dropdown-toggle" type="button"
 						data-toggle="dropdown">
@@ -36,20 +36,20 @@
 									<th>Start date</th>
 									<th>End date</th>
 									<th>Status</th>
-									<th>Contract</th>
+									<th>Collateral Liability Type</th>
 									<th>Currency</th>
 									<th>Amount</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td style="font-size: 12px;">{{InterestDataContract.counterpartyA.name}}</td>
-									<td style="font-size: 12px;">{{startDate}}</td>
-									<td style="font-size: 12px;">{{""}}</td>
-									<td style="font-size: 12px;">{{InterestData.status}}</td>
-									<td style="font-size: 12px;">{{InterestDataContract.bilateralContractType}}</td>
-									<td style="font-size: 12px;">{{currency}}</td>
-									<td style="font-size: 12px;">{{InterestTotal | currency : ''}}</td>
+									<td style="font-size: 12px;" id="counterPartyAName" >{{InterestDataContract.counterpartyA.name}}</td>
+									<td style="font-size: 12px;" id="startDate" >{{startDate |date:'yyyy-MM-dd' }}</td>
+									<td style="font-size: 12px;" id="endDate" >{{""}}</td>
+									<td style="font-size: 12px;" id="status" >{{currentContract.collateralContract.status}}</td>
+									<td style="font-size: 12px;" id="" >{{currentContract.collateralLiabilityType}}</td>
+									<td style="font-size: 12px;" id="currency">{{currentContract.currency}}</td>
+									<td style="font-size: 12px;" id="interestTotal">{{InterestTotal | currency : ''}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -59,8 +59,14 @@
 				<div class="row">
 					<div ui-grid="gridInterest" ui-grid-exporter ui-grid-auto-resize
 						 ui-grid-resize-columns ui-grid-selection
-						ui-grid-edit ui-grid-row-edit  class="grid"></div>
+						ui-grid-edit  class="grid"></div>
 				</div>
+				<br />
+					<div class="row">
+						<div class="col-md-4 pull-right">
+							<button class="btn btn green"  ng-show="isEdit" >Save</button>
+						</div>
+					</div>
 				<br />
 				<div class="row">
 				<div class="col-md-4 pull-right">		
