@@ -54,21 +54,27 @@
 			<br />
 			<div class="row">
 				<div class="col-md-5">
-					<div class="portlet light bordered" style="margin-bottom:0">
-						<div class="portlet-body">
-							<div class="row">
-								<div google-chart chart="pieChartMarginCall" style="height:303px; width:100%;"></div>
+					<div class="portlet light bordered">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class=" icon-layers font-green"></i>
+								<span class="caption-subject font-green bold uppercase">Today Magin Call</span>
 							</div>
+							<div class="tools">
+								<a href="javascript:;" class="collapse"> </a> <a href="javascript:;"
+																				 class="fullscreen"> </a>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div id="gchart_pie_margincall" style="height:320px;"></div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-7">
 					<div class="portlet light bordered" style="margin-bottom:0">
 						<div class="portlet-body">
-							<div class="row">
-								<div ui-grid="gridMarginCall" ui-grid-selection ui-grid-exporter
-									 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 300px;"></div>
-							</div>
+							<div ui-grid="gridMarginCall" ui-grid-selection ui-grid-exporter
+								 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 370px;"></div>
 						</div>
 					</div>
 				</div>

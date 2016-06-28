@@ -7,10 +7,8 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
     function ($scope, uiGridConstants, MarginCallService) {
 
         $scope.gridMessagesOptions = {
-            showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
             paginationPageSize: 5,
-            enableColumnResizing: true,
             enableFiltering: true,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
@@ -45,13 +43,13 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
             {field: 'date.dateMessage', name: 'date'},
             {field: 'sentReceived', name: 'direction'},
             {
-                name : 'Action buttons',
+                name : 'Action',
                 cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></button> ' +
                                     '<button class="btn btn-sm btn-danger uigrid-btn" ng-click="grid.appScope.downloadPdf(row.entity)" ><i class="fa fa-file-pdf-o"></i></button>' +
                                     ' <button class="btn btn-sm green-jungle uigrid-btn" ng-click="grid.appScope.downloadExcel(row.entity)" ><i class="fa fa-file-excel-o"></i></button>' +
                                 '</div>',
                 enableColumnMenu : false,
-                width : 160,
+                width : 140,
                 enableFiltering : false,
                 enableSorting : false
             }

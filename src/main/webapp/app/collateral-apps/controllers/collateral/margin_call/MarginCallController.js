@@ -54,7 +54,27 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
         $scope.counterPartyBList = [];
         $scope.gridMarginCall = {
 
+            paginationPageSizes: [15, 50, 100, 200, 500],
+            paginationPageSize: 7,
             enableFiltering: true,
+            exporterCsvFilename: 'margin-call-messaging.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Margin Call - messaging", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 450,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+
             data: $scope.gridData,
             columnDefs: [
                 {
@@ -317,7 +337,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         });
             }
 
-            $scope.drawPieChart(statusArray);
+            google.setOnLoadCallback($scope.drawPieChart(statusArray));
         };
         MarginCallService.getByDate(moment().format("YYYY-MM-DD"))
             .success(function (data) {
@@ -326,60 +346,30 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
 
         $scope.drawPieChart = function (statusArray) {
             var newStatusArray = ArrayService.ArrayDuplicateCounter(statusArray);
-            //console.log(newStatusArray);
+
             //PieChart Data
-            $scope.pieChartMarginCall = {};
 
-            $scope.pieChartMarginCall.type = "PieChart";
+            var data = google.visualization.arrayToDataTable([
+                ['Status', 'MarginCall'],
+                [newStatusArray[0].value, newStatusArray[0].count],
+                [newStatusArray[1].value, newStatusArray[1].count],
+                [newStatusArray[2].value, newStatusArray[2].count],
+                [newStatusArray[3].value, newStatusArray[3].count],
+                [newStatusArray[4].value, newStatusArray[4].count]
+            ]);
 
-            $scope.onions = [
-                {v: "Onions"},
-                {v: 3},
-            ];
-
-            $scope.pieChartMarginCall.data = {
-                "cols": [
-                    {id: "status", label: "Status", type: "string"},
-                    {id: "MarginCall", label: "MarginCall", type: "number"}
-                ], "rows": [
-                    {
-                        c: [
-                            {v: newStatusArray[0].value},
-                            {v: newStatusArray[0].count},
-                        ]
-                    },
-                    {
-                        c: [
-                            {v: newStatusArray[1].value},
-                            {v: newStatusArray[1].count},
-                        ]
-                    },
-                    {
-                        c: [
-                            {v: newStatusArray[2].value},
-                            {v: newStatusArray[2].count},
-                        ]
-                    },
-                    {
-                        c: [
-                            {v: newStatusArray[3].value},
-                            {v: newStatusArray[3].count},
-                        ]
-                    },
-                    {
-                        c: [
-                            {v: newStatusArray[4].value},
-                            {v: newStatusArray[4].count},
-                        ]
-                    }
-
-                ]
+            var options = {
+                title: 'Margin Call Status',
+                is3D: true,
+                'height': 320,
+                backgroundColor: '#e9edef',
+                legend: { position: 'top',
+                    alignment:'start', maxLines:10}
             };
 
-            $scope.pieChartMarginCall.options = {
-                'title': 'Today Margin Call Status',
-                is3D: true
-            };
+            var chart = new google.visualization.PieChart(document.getElementById('gchart_pie_margincall'));
+            chart.draw(data, options);
+
         }
     }
 
