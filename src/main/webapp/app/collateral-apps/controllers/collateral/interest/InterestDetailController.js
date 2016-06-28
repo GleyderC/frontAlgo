@@ -18,7 +18,7 @@ InterestCtrl.controller('InterestDetailController',
             $scope.startDate = new Date($scope.currentContract.interestCall.ownInterestOnCashCollateral[0].day.iLocalMillis);
             
             
-            $scope.calculateInterest = function(){
+            $scope.reCalculateInterest = function(){
             	$scope.InterestCumulativeAdjustment = 0 ;
             	$scope.InterestDataGrid.forEach(function(v,k){
             		$scope.InterestCumulativeAdjustment += v.dailyAccrual
@@ -37,12 +37,23 @@ InterestCtrl.controller('InterestDetailController',
 	                	$scope.InterestCumulative = 0;
 	                	$scope.InterestData.forEach(function(v,k){
 	                    	$scope.InterestCumulative += v.interest;
+	                    	if(v.isCompounding){
+//	                    		   Interest(dailyAccrual) = AppliedRate  *  numDeDías(siempre 1) * (1/360 o 1/365) * (amount + acumuladoHastaLaFecha)
+	                    		if(v.basisCalculationConvetion==="ACT_360"){
+	                    			basis =  1/360; 
+	                    		}else{
+	                    			basis = 1/365;
+	                    		}
+	                    		var interest =  v.appliedRate  * 1 *(basis) *  (v.postedAmount + $scope.InterestAcumulative);
+	                    	}else{
+	                    		var interest =  v.interest;
+	                    	}
 	                		 $scope.InterestDataGrid.push({
 	                    		 date : new Date(v.day.iLocalMillis), 
 	                    		 currency : v.currency ,
 	                    		 balance:  v.postedAmount,
 	                    		 benchmark  :  v.appliedRate -( v.spread * 0.01),
-	                    		 dailyAccrual : v.interest,
+	                    		 dailyAccrual : interest,
 	                    		 spread : v.spread,
 	                    		 applied : v.appliedRate,
 	                    		 cumulative : $scope.InterestCumulative,
@@ -143,17 +154,11 @@ InterestCtrl.controller('InterestDetailController',
                             headerCellClass: $scope.highlightFilteredHeader
                         }
             ]};
-            $scope.saveRow = function( rowEntity ) {
-//                $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity );
-                
-              };
-              $scope.isEdit   = false ;
+            $scope.isEdit   = false ;
             $scope.gridInterest.onRegisterApi = function(gridApi){
                 $scope.gridApi = gridApi;
-//                gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
-
                 gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
-                	$scope.calculateInterest();
+                	$scope.reCalculateInterest();
                 	colDef.cellClass = 'cell-modified';
                 	$scope.isEdit  = true; 
                 	$scope.$apply();
