@@ -12,7 +12,8 @@ var CollateralApp = angular.module("CollateralApp", [
     "ngCookies",
     "LocalStorageModule",
     "toastr",
-    'ui.utils.masks'
+    "ui.utils.masks",
+    "googlechart"
 ]);
 
 var paths = {
@@ -331,8 +332,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                         name: 'DashboardApp',
                         insertBefore: '#ng_load_plugins_before', // load dependencies before load page inside the element
                         files: [
-                            /* datatable css*/
-                            //'assets/vendor/DataTables-net/datatables.min.css',
 
                             /* select css*/
                             'assets/vendor/select2/select2.css',
@@ -340,20 +339,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'assets/vendor/angular-ui-select/dist/select.min.css',
                             'assets/vendor/multiselect/css/multi-select.css',
 
-                            /* form css */
-                            //'assets/vendor/bootstrap-fileinput/css/fileinput.min.css',
-
-                            /* datatable js
-                            'assets/vendor/DataTables-net/datatables.min.js',
-                            'assets/vendor/angular-datatables/dist/angular-datatables.min.js',*/
-
                             /* select js*/
                             //'assets/vendor/select2/dist/js/select2.full.min.js',
                             'assets/vendor/angular-ui-select/dist/select.min.js',
                             'assets/vendor/multiselect/js/jquery.multi-select.js',
-
-                            /* form js */
-                            //'assets/vendor/bootstrap-fileinput/js/fileinput.min.js',
 
                             /* Dashboard */
                             'collateral-apps/modules/DashboardModule.js',
@@ -368,6 +357,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /* Services */
                             'collateral-apps/services/DashboardService.js',
+                            'collateral-apps/services/ArrayService.js',
                             'collateral-apps/services/MarginCallService.js',
                             'collateral-apps/services/AgreementsService.js',
                             'collateral-apps/services/LegalEntityService.js',

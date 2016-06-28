@@ -87,8 +87,8 @@
 <script src="assets/vendor/microplugin/src/microplugin.js"></script>
 <script src="assets/vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
 <script src="assets/vendor/angular-input-masks/angular-input-masks-standalone.js"></script>
+<script src="assets/vendor/angular-google-chart/ng-google-chart.js"></script>
 <!-- endbower -->
-
 <!-- BEGIN PAGE SPINNER -->
 <div collateral-spinner-bar class="page-spinner-bar">
     <div class="bounce1"></div>

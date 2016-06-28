@@ -53,11 +53,26 @@
 			</div>
 			<br />
 			<div class="row">
-				<div ui-grid="gridMarginCall" ui-grid-selection ui-grid-exporter
-					ui-grid-auto-resize  ui-grid-pagination class="grid"></div>
-
+				<div class="col-md-5">
+					<div class="portlet light bordered" style="margin-bottom:0">
+						<div class="portlet-body">
+							<div class="row">
+								<div google-chart chart="pieChartMarginCall" style="height:303px; width:100%;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="portlet light bordered" style="margin-bottom:0">
+						<div class="portlet-body">
+							<div class="row">
+								<div ui-grid="gridMarginCall" ui-grid-selection ui-grid-exporter
+									 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 300px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-
 		</div>
 	</div>
-	</div>
+</div>
