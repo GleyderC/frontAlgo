@@ -112,6 +112,10 @@ angular.module('DashboardApp')
                             globalTabConfig.parameters = tabConfig.parameters;
                             $scope.parameters = tabConfig.parameters;
                         }
+                        else
+                        {
+                            $scope.parameters = {};
+                        }
 
                     }
 
