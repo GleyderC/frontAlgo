@@ -94,7 +94,7 @@ DashboardApp.controller(
 
         }]);
 
-DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
+DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
     '$request',
     '$interval',
     'localStorageService',
@@ -113,19 +113,14 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
         if (!$scope.BilateralAgreements)
             $scope.BilateralAgreements = new Object();
 
-        $scope.addNewBillateralAgreement = function () {
+        $scope.addNewBilateralAgreement = function () {
 
             $scope.$workspaceTabsMgm.addTab({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
-                    text: 'New Billateral Agreement',
+                    text: 'New Bilateral Agreement',
                 },
                 templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
-                parameters: {
-                    id: 1,
-                    name: "test",
-                    lastName: "lastTest"
-                },
                 closable: true,
                 autoload: true
             },[3,2]);
@@ -136,9 +131,12 @@ DashboardApp.controller('LEBillateralAgrSearchController', ['$scope',
             $scope.$workspaceTabsMgm.addTab({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
-                    text: 'New Billateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs().tabList.length + 1) +')'
+                    text: 'Edit Bilateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs([1,2]).tabList.length) +')'
                 },
                 templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                parameters: {
+                    BilateralContract: row.entity
+                },
                 closable: true,
                 autoload: true
             },[3,2]);
@@ -225,9 +223,29 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
         data: $scope.BilateralAgreements.staticData.financialCalendar
     };
 
+    //EDIT INFO
+    if(!!$scope.parameters && !!$scope.parameters.BilateralContract){
+        let BilContract = $scope.parameters.BilateralContract;
+
+        this.legalEntityPrimary = BilContract.counterpartyA.id
+        this.legalEntityCounterparty = BilContract.counterpartyB.id
+        this.baseCurrency = BilContract.baseCurrency
+        this.contractType = BilContract.contractType
+        this.autoSendTime = {};
+        this.autoSendTime.iLocalMillis = BilContract.autoSendTime[0].iLocalMillis
+        this.autoSendTime.iChronology = BilContract.autoSendTime[0].iChronology.iBase.iMinDaysInFirstWeek;
+
+
+        this.callFrequency = BilContract.marginFrequency;
+        this.callOffset = BilContract.callOffset;
+
+        //this.holidays.msSelected = BilContract.counterpartyA.financialCalendarList
+
+    }
+
 }]);
 
-DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
+DashboardApp.controller('LEBilateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
 
     var currenciesList = $filter('orderBy')($scope.BilateralAgreements.staticData.currencies, 'codigo');
 
@@ -320,7 +338,7 @@ DashboardApp.controller('LEBillateralAgrEligibleCurrenciesController', ['ModalSe
 
 }]);
 
-DashboardApp.controller('LEBillateralAgrEligibleSecuritiesController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+DashboardApp.controller('LEBilateralAgrEligibleSecuritiesController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
 
     $scope.gridOptions = {
 
