@@ -1,4 +1,4 @@
-<div ng-controller="BAMainController" class="portlet light bordered">
+<div ng-controller="BAMainController as BAMainCtrl" class="portlet light bordered">
     <div class="portlet-body form">
         <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
             <div class="form-body row">
@@ -12,6 +12,7 @@
                         <div class="col-md-9">
 
                             <input type="text" class="form-control input-medium" id="contract-code"
+                                   ng-model="BAMainCtrl.contractCode"
                                    maxlength="20">
                         </div>
                     </div>
@@ -19,7 +20,8 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Principal</label>
                         <div class="col-md-9">
-                            <ui-select id="legalEntityPrimary" ng-model="legalEntityPrimary.selected" theme="select2" class="input-medium">
+                            <ui-select id="legalEntityPrimary" ng-model="BAMainCtrl.legalEntityPrimary" theme="select2"
+                                       class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
                                     {{$select.selected.name}}
@@ -35,7 +37,8 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Counterparty</label>
                         <div class="col-md-9">
-                            <ui-select id="legalEntityCounterparty" ng-model="legalEntityCounterparty.selected" theme="select2" class="input-medium">
+                            <ui-select id="legalEntityCounterparty" ng-model="BAMainCtrl.legalEntityCounterparty"
+                                       theme="select2" class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
                                     {{$select.selected.name}}
@@ -54,7 +57,7 @@
                             <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
                                     class="form-control input-medium"
                                     ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="LegalEntity.BilateralAgreements.currencies.selected">
+                                    ng-model="BAMainCtrl.baseCurrency">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
                         </div>
@@ -66,7 +69,7 @@
                             <select id="le-bilateral-ag-contract-type" name="contract-type-select[]"
                                     class="form-control input-medium"
                                     ng-options="contractType as contractType.codigo for contractType in LegalEntity.BilateralAgreements.contractType.list track by contractType.id"
-                                    ng-model="LegalEntity.BilateralAgreements.contractType.selected">
+                                    ng-model="BAMainCtrl.contractType">
                                 <option value="">-- SELECT CONTRACT TYPE --</option>
                             </select>
                         </div>
@@ -77,8 +80,9 @@
                             section 7, chapter 4
                             ?</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.LegEnforceableAgreement"/>
+                            <input bs-switch ng-model="BAMainCtrl.callIssuanceAuto" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="normal"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
 
@@ -89,7 +93,7 @@
                         <label class="control-label col-md-3">Call issuance</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control input-medium" id="le-bilateral-ag-call-issuance"
-                                   ng-disabled="false">
+                                   ng-model="BAMainCtrl.callIssuance" ng-disabled="false">
                         </div>
                     </div>
 
@@ -97,7 +101,7 @@
                         <label class="control-label col-md-3">Auto Send Time</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control input-medium" id="le-bilateral-ag-auto-send-time"
-                                   ng-disabled="false">
+                                   ng-model="BAMainCtrl.autoSendTime.iLocalMillis" ng-disabled="false">
                         </div>
                     </div>
 
@@ -105,7 +109,7 @@
                         <label class="control-label col-md-3">Auto Send Tol</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control input-medium" id="le-bilateral-ag-auto-send-x"
-                                   ng-disabled="false">
+                                   ng-model="BAMainCtrl.autoSendTime.iChronology" ng-disabled="false">
                         </div>
                     </div>
 
@@ -135,7 +139,7 @@
                         <label class="control-label col-md-3">Call Frequency</label>
                         <div class="col-md-9">
                             <select class="form-control input-medium"
-                                    ng-model="LegalEntity.BilateralAgreements.main.callFrequency">
+                                    ng-model="BAMainCtrl.callFrequency">
                                 <option value="daily" selected>Daily</option>
                                 <option value="week">Weekly</option>
                                 <option value="month">Monthly</option>
@@ -148,7 +152,7 @@
                          ng-if="LegalEntity.BilateralAgreements.main.callFrequency == 'week'">
                         <label class="control-label col-md-3">Call Day</label>
                         <div class="col-md-9">
-                            <select class="form-control input-medium">
+                            <select class="form-control input-medium" ng-model="BAMainCtrl.callDay">
                                 <option value="mon">Monday</option>
                                 <option value="tue">Tuesday</option>
                                 <option value="wed">Wednesday</option>
@@ -178,7 +182,7 @@
                         <label class="control-label col-md-3">Call Offset</label>
                         <div class="col-md-9">
                             <input type="number" class="form-control input-medium" id="le-bilateral-ag-calloffset"
-                                   value="0" min="0" max="10">
+                                   ng-model="BAMainCtrl.callOffset" value="0" min="0" max="10">
                         </div>
                     </div>
 
@@ -208,14 +212,7 @@
 
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Holidays</label>
-                        <!--<div class="col-md-9">
-                            <select multiple="multiple" id="holidays-select" name="holidays-select[]"
-                                    ng-options="holiday as holiday.codigo for holiday in LegalEntity.BilateralAgreements.holidays.list track by holiday.id"
-                                    ng-model="LegalEntity.BilateralAgreements.holidays.selectedList">
-                                <option value="">-- SELECT HOLIDAY --</option>
-                            </select>
-                        </div>-->
-                        <multiselect-dual id="BCHolidays" multiselect-elements="holidays"></multiselect-dual>
+                        <multiselect-dual id="BCHolidays" multiselect-elements="this.holidays"></multiselect-dual>
                     </div>
 
                     <div class="form-group col-md-12">
