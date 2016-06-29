@@ -21,10 +21,10 @@ angular.module('DashboardApp')
                 }
 
                 if (myCount > 0) {
-                    var a = new Object();
-                    a.value = original[i];
-                    a.count = myCount;
-                    compressed.push(a);
+                    var array = new Object();
+                    array.name = original[i];
+                    array.y = myCount;
+                    compressed.push(array);
                 }
             }
 

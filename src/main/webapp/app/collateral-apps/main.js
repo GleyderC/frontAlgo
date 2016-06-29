@@ -2,12 +2,6 @@
 Collateral AngularJS App Main Script
 ***/
 
-// GOOGLE CHARTS INIT
-google.load('visualization', '1', {
-    packages: ['corechart', 'bar', 'line']
-});
-
-
 /* Collateral App */
 var CollateralApp = angular.module("CollateralApp", [
     "ui.router",

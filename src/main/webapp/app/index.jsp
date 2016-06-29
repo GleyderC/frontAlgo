@@ -87,7 +87,6 @@
 <script src="assets/vendor/microplugin/src/microplugin.js"></script>
 <script src="assets/vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
 <script src="assets/vendor/angular-input-masks/angular-input-masks-standalone.js"></script>
-<script src="assets/vendor/angular-google-chart/ng-google-chart.js"></script>
 <!-- endbower -->
 <!-- BEGIN PAGE SPINNER -->
 <div collateral-spinner-bar class="page-spinner-bar">
@@ -145,8 +144,6 @@
 <script src="assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
 <script src="assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/horizontal-timeline/horozontal-timeline.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
@@ -169,6 +166,17 @@
 <script src="assets/vendor/angular-ui-grid/ui-grid.min.js" type="text/javascript"></script>
 <link href="assets/vendor/angular-ui-grid/ui-grid.min.css" rel="stylesheet" type="text/css"/>
 <!-- UI GRID PLUGIN END -->
+
+<!-- HiGHT CHART -->
+<script src="assets/global/plugins/highcharts/js/highcharts.js" type="text/javascript"></script>
+<script src="assets/global/plugins/highcharts/js/highcharts-3d.js" type="text/javascript"></script>
+<script src="assets/global/plugins/highcharts/js/highcharts-more.js" type="text/javascript"></script>
+<script src="assets/global/plugins/highcharts/js/modules/exporting.js" type="text/javascript"></script>
+<script src="assets/global/plugins/highcharts/js/modules/offline-exporting.js" type="text/javascript"></script>
+
+
+
+<!-- HiGHT END -->
 
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>

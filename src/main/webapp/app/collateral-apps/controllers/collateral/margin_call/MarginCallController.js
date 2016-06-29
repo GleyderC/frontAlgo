@@ -85,7 +85,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         type: uiGridConstants.filter.SELECT,
                         selectOptions: $scope.counterPartyAList
                     },
-                    width: 100
+                    width: 85
                 },
                 {
                     name: 'Fund/Clearing Broker',
@@ -100,12 +100,12 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         type: uiGridConstants.filter.SELECT,
                         selectOptions: $scope.counterPartyBList
                     },
-                    width: 100
+                    width: 85
                 },
                 {
                     name: 'Contract Type',
                     field: 'contract.contractType',
-                    width: 100,
+                    width: 85,
                     filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
 
                 },
@@ -125,13 +125,13 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                             return cellValue === searchTerm;
                         }
                     },
-                    width: 70
+                    width: 55
                 },
                 {
                     name: 'Status',
                     field: "marginCalls[0].marginCallElementsByLiabilityType.CSA.status",
                     filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-status></div></div>',
-                    width: 100
+                    width: 80
 
                 },
                 {
@@ -147,7 +147,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     name: 'Action',
                     cellTemplate: '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity)" ><i class="fa fa-eye"></i></button> </div>',
                     enableColumnMenu: false,
-                    width: 70,
+                    width: 65,
                     enableFiltering: false,
                     enableSorting: false
                 }
@@ -337,7 +337,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         });
             }
 
-            google.setOnLoadCallback($scope.drawPieChart(statusArray));
+            $scope.drawPieChart(statusArray);
         };
         MarginCallService.getByDate(moment().format("YYYY-MM-DD"))
             .success(function (data) {
@@ -348,28 +348,48 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             var newStatusArray = ArrayService.ArrayDuplicateCounter(statusArray);
 
             //PieChart Data
-
-            var data = google.visualization.arrayToDataTable([
-                ['Status', 'MarginCall'],
-                [newStatusArray[0].value, newStatusArray[0].count],
-                [newStatusArray[1].value, newStatusArray[1].count],
-                [newStatusArray[2].value, newStatusArray[2].count],
-                [newStatusArray[3].value, newStatusArray[3].count],
-                [newStatusArray[4].value, newStatusArray[4].count]
-            ]);
-
-            var options = {
-                title: 'Margin Call Status',
-                is3D: true,
-                'height': 320,
-                backgroundColor: '#e9edef',
-                legend: { position: 'top',
-                    alignment:'start', maxLines:10}
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('gchart_pie_margincall'));
-            chart.draw(data, options);
-
+            if(newStatusArray.length > 0){
+                $('#gchart_pie_margincall').highcharts({
+                    chart: {
+                        type: 'pie',
+                        options3d: {
+                            enabled: true,
+                            alpha: 45,
+                            beta: 0
+                        },
+                        plotShadow: true
+                    },
+                    title: {
+                        text: 'Margin Call Status'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            depth: 35,
+                            showInLegend: true
+                        }
+                    },
+                    legend: {
+                        enabled: true,
+                        layout: 'horizontal',
+                        verticalAlign: 'bottom',
+                        useHTML: true,
+                        labelFormatter: function () {
+                            //console.log(this);
+                            return '<div style="text-align: left; width:130px;float:left;">' + this.name + '</div><div style="width:40px; float:left;text-align:right;">' + this.y + '</div>';
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Status',
+                        data: newStatusArray
+                    }]
+                });
+            }
         }
     }
 
