@@ -24,7 +24,8 @@
     "angular-ui-grid": "^3.1.1",
     "pdfmake": "^0.1.20",
     "angular-toastr": "^1.7.0",
-    "angular-input-masks": "^2.3.0"
+    "angular-input-masks": "^2.3.0",
+    "angular-websocket": "^2.0.0"
   },
   "devDependencies": {},
   "appPath": "src/main/webapp/app",
