@@ -40,6 +40,7 @@ DashboardApp.controller(
                     contractType: $localStorage.get("BilateralContractType"),
                     currencies: currenciesList,
                     financialCalendar: $filter('orderBy')($localStorage.get("FinancialCalendar"), 'name'),
+                    marginFrequency: $localStorage.get("MarginFrequencyEnum"),
                     contracts: []
                 }
             };
@@ -49,7 +50,6 @@ DashboardApp.controller(
             $scope.LegalEntity = {};
             $scope.LegalEntity.BilateralAgreements = {};
             $scope.LegalEntity.BilateralAgreements.main = {};
-            $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
 
             LegalEntityService.getAll().then(function (result) {
                 $scope.legalEntities = result.data.dataResponse;
@@ -246,6 +246,10 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
 
 }]);
 
+DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
+
+}]);
+
 DashboardApp.controller('LEBilateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
 
     var currenciesList = $filter('orderBy')($scope.BilateralAgreements.staticData.currencies, 'codigo');
@@ -341,7 +345,12 @@ DashboardApp.controller('LEBilateralAgrEligibleCurrenciesController', ['ModalSer
         }
     };
 
-    this.gridOptions.data = $scope.parameters.BilateralContract.eligibleCurrencyConfig.eligibleCurrenciesPartyAList;
+    this.gridOptions.data = [];
+
+    if(!!$scope.parameters && !!$scope.parameters.BilateralContract)
+    {
+        this.gridOptions.data = $scope.parameters.BilateralContract.eligibleCurrencyConfig.eligibleCurrenciesPartyAList;
+    }
 
 }]);
 

@@ -1,4 +1,4 @@
-<div class="portlet light bordered">
+<div ng-controller="BACSAMarginsController as BACSA" class="portlet light bordered">
     <div class="portlet-body form">
         <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
             <div class="form-body row">
@@ -11,8 +11,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Party A pays collateral?</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.LegEnforceableAgreement"/>
+                            <input bs-switch id="le-bilateral-ag-payCollateral" ng-model="BACSA.LegEnforceableAgreement" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
 

@@ -32,10 +32,9 @@
                                 <label class="control-label">Compounding</label>
                             </div>
                             <div class="col-md-5">
-                                <input type="checkbox" class="make-switch form-control" data-size="small"
-                                       data-on-text="Yes"
-                                       data-off-text="No"
-                                       ng-model="eligibleCurrencies.compounding"/>
+                                <input bs-switch ng-model="eligibleCurrencies.compounding" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
 
@@ -44,10 +43,9 @@
                                 <label class="control-label">Include Interest to Position</label>
                             </div>
                             <div class="col-md-5">
-                                <input type="checkbox" class="make-switch form-control" data-size="small"
-                                       data-on-text="Yes"
-                                       data-off-text="No"
-                                       ng-model="eligibleCurrencies.includeInterestPosition"/>
+                                <input bs-switch ng-model="eligibleCurrencies.includeInterestPosition" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
 
@@ -56,10 +54,9 @@
                                 <label class="control-label">Adjustment Currency</label>
                             </div>
                             <div class="col-md-5">
-                                <input type="checkbox" class="make-switch form-control" data-size="small"
-                                       data-on-text="Yes"
-                                       data-off-text="No"
-                                       ng-model="eligibleCurrencies.adjustmentCurrency"/>
+                                <input bs-switch ng-model="eligibleCurrencies.adjustmentCurrency" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
                     </div>
@@ -69,10 +66,9 @@
                                 <label class="control-label">Project Interest to Position</label>
                             </div>
                             <div class="col-md-5">
-                                <input type="checkbox" class="make-switch form-control" data-size="small"
-                                       data-on-text="Yes"
-                                       data-off-text="No"
-                                       ng-model="eligibleCurrencies.projectInterestPosition"/>
+                                <input bs-switch ng-model="eligibleCurrencies.projectInterestPosition" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
 
@@ -90,10 +86,9 @@
                                 <label class="control-label">Inverse</label>
                             </div>
                             <div class="col-md-5">
-                                <input type="checkbox" class="make-switch form-control" data-size="small"
-                                       data-on-text="Yes"
-                                       data-off-text="No"
-                                       ng-model="eligibleCurrencies.inverse"/>
+                                <input bs-switch ng-model="eligibleCurrencies.inverse" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
                     </div>
@@ -159,7 +154,9 @@
                                     <label class="control-label">Floor</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input class="form-control make-switch" type="checkbox"/>
+                                    <input bs-switch ng-model="eligibleCurrencies.floor" type="checkbox"
+                                           switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                           ng-true-value="true" ng-false-value="false">
                                 </div>
                                 <div class="col-md-9">
                                     <input type="number" class="form-control input-small"
@@ -229,9 +226,9 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-3">Interest Date Rule Only</label>
                             <div class="col-md-9">
-                                <input type="checkbox" class="make-switch form-control" data-on-text="Yes"
-                                       data-off-text="No"
-                                       ng-model="LegalEntity.BilateralAgreements.eligibleCurrencies.interestDateRuleOnly"/>
+                                <input bs-switch ng-model="eligibleCurrencies.interestDateRuleOnly" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
                     </div>
@@ -240,9 +237,9 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-3">Roll Interest to Principal</label>
                             <div class="col-md-9">
-                                <input type="checkbox" class="make-switch form-control" data-on-text="Yes"
-                                       data-off-text="No"
-                                       ng-model="LegalEntity.BilateralAgreements.eligibleCurrencies.interestDateRuleOnly"/>
+                                <input bs-switch ng-model="eligibleCurrencies.interestPricipal" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
