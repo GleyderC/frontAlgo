@@ -24,7 +24,7 @@
                                        class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
-                                    {{$select.selected.name}}
+                                    {{$select.selected.id}}
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
@@ -41,7 +41,7 @@
                                        theme="select2" class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
-                                    {{$select.selected.name}}
+                                    {{$select.selected.id}}
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
@@ -56,7 +56,7 @@
                         <div class="col-md-9">
                             <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
                                     class="form-control input-medium"
-                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
+                                    ng-options="currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
                                     ng-model="BAMainCtrl.baseCurrency">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
@@ -68,7 +68,7 @@
                         <div class="col-md-9">
                             <select id="le-bilateral-ag-contract-type" name="contract-type-select[]"
                                     class="form-control input-medium"
-                                    ng-options="contractType as contractType.codigo for contractType in LegalEntity.BilateralAgreements.contractType.list track by contractType.id"
+                                    ng-options="contractType.name for contractType in BilateralAgreements.staticData.contractType track by contractType.key"
                                     ng-model="BAMainCtrl.contractType">
                                 <option value="">-- SELECT CONTRACT TYPE --</option>
                             </select>

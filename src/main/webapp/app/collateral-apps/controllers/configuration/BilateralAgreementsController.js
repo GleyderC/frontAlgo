@@ -225,12 +225,14 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
 
     //EDIT INFO
     if(!!$scope.parameters && !!$scope.parameters.BilateralContract){
+
         let BilContract = $scope.parameters.BilateralContract;
 
-        this.legalEntityPrimary = BilContract.counterpartyA.id
-        this.legalEntityCounterparty = BilContract.counterpartyB.id
-        this.baseCurrency = BilContract.baseCurrency
-        this.contractType = BilContract.contractType
+        this.contractCode = BilContract.contractCode;
+        this.legalEntityPrimary = { id: BilContract.counterpartyA.id };
+        this.legalEntityCounterparty = { id: BilContract.counterpartyB.id };
+        this.baseCurrency = { id: BilContract.baseCurrency }
+        this.contractType = { key: BilContract.bilateralContractType };
         this.autoSendTime = {};
         this.autoSendTime.iLocalMillis = BilContract.autoSendTime[0].iLocalMillis
         this.autoSendTime.iChronology = BilContract.autoSendTime[0].iChronology.iBase.iMinDaysInFirstWeek;
@@ -240,7 +242,6 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
         this.callOffset = BilContract.callOffset;
 
         //this.holidays.msSelected = BilContract.counterpartyA.financialCalendarList
-
     }
 
 }]);
@@ -287,18 +288,24 @@ DashboardApp.controller('LEBilateralAgrEligibleCurrenciesController', ['ModalSer
         console.log("deleting")
     }
 
-    $scope.gridOptions = {
+    this.gridOptions = {
         columnDefs: [
-            {name: 'Currency'},
-            {name: 'Fixed Rate'},
-            {name: 'Index'},
-            {name: 'Tenor'},
-            /*{name: 'Source'},
-             {name: 'Factor'},
-             {name: 'Compound'},
-             {name: 'Included'},
-             {name: 'Projected'},
-             {name: 'Adjustment Currency'},*/
+            {
+                field: 'currency',
+                name: 'Currency'
+            },
+            {
+                field: 'fixedRate',
+                name: 'Fixed Rate'
+            },
+            {
+                field: 'index',
+                name: 'Index'
+            },
+            {
+                field: 'tenor',
+                name: 'Tenor'
+            },
             {
                 name: 'Actions',
                 cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
@@ -334,7 +341,7 @@ DashboardApp.controller('LEBilateralAgrEligibleCurrenciesController', ['ModalSer
         }
     };
 
-    $scope.gridOptions.data = [];
+    this.gridOptions.data = $scope.parameters.BilateralContract.eligibleCurrencyConfig.eligibleCurrenciesPartyAList;
 
 }]);
 
