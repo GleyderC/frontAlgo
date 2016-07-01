@@ -209,8 +209,22 @@ div.action-button-container{
 {
     border-right: 0 !important;
 }
+
 .ui-grid-filter-select {
     color: black;
+    background-color: white;
+    border-radius: 3px !important;;
+    -moz-border-radius: 3px !important;;
+    -webkit-border-radius: 3px !important;;
+}
+
+input[type="text"].ui-grid-filter-input
+{
+    color:black;
+    border-radius: 3px !important;
+    -moz-border-radius: 3px !important;;
+    -webkit-border-radius: 3px !important;;
+    padding: 3px 0 3px 4px !important;;
 }
 
 /* NG-INLUCDE TEMPLATE STYLE*/
