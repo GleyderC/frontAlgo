@@ -227,6 +227,17 @@ input[type="text"].ui-grid-filter-input
     padding: 3px 0 3px 4px !important;;
 }
 
+div.ui-grid-cell input[type="text"] {
+    padding: 3px 0 3px 4px;
+}
+
+div.ui-grid-cell select {
+    height: 90%;
+    width: 98%;
+    margin-left: 4px;
+    padding: 0 0 0 4px;
+}
+
 /* NG-INLUCDE TEMPLATE STYLE*/
 .slide-animate-container {
     position:relative;

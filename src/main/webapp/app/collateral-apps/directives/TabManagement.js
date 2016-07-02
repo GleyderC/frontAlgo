@@ -471,6 +471,68 @@ angular.module('DashboardApp')
 
                 };
 
+                //SET ENABLE/DISABLE BY COORDINATES
+                $scope.workspaceTabs.setWorkspaceTabDisabled = function (coordinates, disabled) {
+
+                    let workspace = null;
+
+                    if (angular.isArray(coordinates) && coordinates.length == 1) {
+
+                        workspace = $scope.workspaceTabs.getWorkspaceTabs();
+                        workspace.tabList[coordinates[0]].disabled = disabled;
+
+                    }
+                    else if (angular.isArray(coordinates) && coordinates.length > 1) {
+
+                        angular.forEach(coordinates, function (coord, index) {
+
+                            if (workspace === false) {
+                                return true;
+                            }
+
+                            if (index === 0) {
+
+                                workspace = $scope.workspaceTabs.getWorkspaceTabs();
+
+                                if (workspace != false) {
+
+                                    //workspace.active = coord;
+                                    coord--;
+                                    workspace = workspace.tabList[coord];
+
+                                }
+                                else {
+                                    console.error("Bad coord");
+                                    workspace = false;
+                                }
+
+                                return true;
+
+                            }
+                            else {
+
+                                workspace = workspace.childWorkspace;
+
+                                if (!!workspace) {
+                                    //workspace.active = coord;
+                                    coord--;
+                                    workspace = workspace.tabList[coord];
+                                }
+                                else {
+                                    console.error("Bad coord");
+                                    workspace = false;
+                                    return true;
+                                }
+
+                            }
+
+                        });
+                    }
+
+                    workspace.disabled = disabled;
+
+                };
+
                 $scope.loadParameters = function (parameters) {
 
                     $scope.parameters = {};
