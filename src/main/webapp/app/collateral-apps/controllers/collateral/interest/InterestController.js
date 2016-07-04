@@ -25,23 +25,7 @@ var DashboardApp = angular.module('DashboardApp');
                 $scope.$on('$includeContentLoaded', function () {
 
                 });
-          
-//                $scope.interestWorkspaceTabs =
-//                {
-//                    name: 'interest-tabs',
-//                    active: true,
-//                    tabList: [{
-//
-//                    	head: {
-//                        icon: 'fa fa-home',
-//                        text: "Main"
-//                    },
-//                    templateUrl: paths.views
-//                    + "/collateral/interest/main.html",
-//                    autoload:true,
-//                }
-//                    ]
-//                };
+     
               
                 $scope.viewInterestDetail = function(entity){
     				$scope.currentContract= entity;
@@ -124,15 +108,11 @@ var DashboardApp = angular.module('DashboardApp');
                     		v["counterpartyB"]  = {};
                     		v["counterpartyB"]["name"]= v.ccpName;
                     		v.ccpName  = "";
-                    		//Be careful 
-                    		//v["counterpartyB"]["riskProfile"]  = {};
-                    		//v["counterpartyB"]["riskProfile"]["SPRating"]  = v.clearingMemberLegalEntity.riskProfile.SPRating;
                     	}
                     	if(v.collateralContract.hasOwnProperty("client") && v.collateralContract.hasOwnProperty("clearingBroker")){
                     		v.collateralContract["counterpartyA"] 	= {};
                     		v.collateralContract["counterpartyA"]  = v.collateralContract.client;
                     		v.collateralContract["contractType"] = "CCP Client Clearing"
-//                    		v["clearingBroker"]  = v.clearingBroker;
                     		v.collateralContract["ccpName"]  = v.collateralContract.clearingBroker.name;
                     		v.collateralContract["counterpartyB"]  = {}; 
                     		v.collateralContract["counterpartyB"]["name"] =  v.collateralContract.accountName;
@@ -147,8 +127,4 @@ var DashboardApp = angular.module('DashboardApp');
                     	}
                     });
                 });
-                //                
-                  
-                 	
-
             }]);
