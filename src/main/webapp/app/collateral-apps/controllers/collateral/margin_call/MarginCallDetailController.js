@@ -2,7 +2,6 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-
 DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout',
     function ($scope, uiGridConstants, MarginCallService, $timeout) {
 
@@ -40,7 +39,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
                 icon: ''
             }
         ];
-
+ 
         $scope.tabs2 = [
             {
                 id: 'mc-trades',
@@ -62,8 +61,6 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
             $scope.Inventory = result.data.dataResponse.postedCollateral;
             $scope.Messages = result.data.dataResponse.marginCall.messages;
             $scope.MarginCallDetail = result.data.dataResponse;
-
-            //console.log(result.data.dataResponse);
 
         });
 
