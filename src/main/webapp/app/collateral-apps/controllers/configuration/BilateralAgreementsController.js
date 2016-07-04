@@ -40,6 +40,7 @@ DashboardApp.controller(
                     contractType: $localStorage.get("BilateralContractType"),
                     currencies: currenciesList,
                     financialCalendar: $filter('orderBy')($localStorage.get("FinancialCalendar"), 'name'),
+                    marginFrequency: $localStorage.get("MarginFrequencyEnum"),
                     contracts: []
                 }
             };
@@ -49,7 +50,6 @@ DashboardApp.controller(
             $scope.LegalEntity = {};
             $scope.LegalEntity.BilateralAgreements = {};
             $scope.LegalEntity.BilateralAgreements.main = {};
-            $scope.LegalEntity.BilateralAgreements.main.callFrequency = "daily";
 
             LegalEntityService.getAll().then(function (result) {
                 $scope.legalEntities = result.data.dataResponse;
@@ -114,7 +114,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
             $scope.BilateralAgreements = new Object();
 
         $scope.addNewBilateralAgreement = function () {
-
+            
             $scope.$workspaceTabsMgm.addTab({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
@@ -123,7 +123,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                 templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
                 closable: true,
                 autoload: true
-            },[3,2]);
+            }, [3, 2]);
         };
 
         $scope.editRow = function (grid, row) {
@@ -131,7 +131,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
             $scope.$workspaceTabsMgm.addTab({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
-                    text: 'Edit Bilateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs([1,2]).tabList.length) +')'
+                    text: 'Edit Bilateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs([1, 2]).tabList.length) + ')'
                 },
                 templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
                 parameters: {
@@ -139,7 +139,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                 },
                 closable: true,
                 autoload: true
-            },[3,2]);
+            }, [3, 2]);
 
         }
 
@@ -224,25 +224,31 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
     };
 
     //EDIT INFO
-    if(!!$scope.parameters && !!$scope.parameters.BilateralContract){
+    if (!!$scope.parameters && !!$scope.parameters.BilateralContract) {
 
         let BilContract = $scope.parameters.BilateralContract;
 
         this.contractCode = BilContract.contractCode;
-        this.legalEntityPrimary = { id: BilContract.counterpartyA.id };
-        this.legalEntityCounterparty = { id: BilContract.counterpartyB.id };
-        this.baseCurrency = { id: BilContract.baseCurrency }
-        this.contractType = { key: BilContract.bilateralContractType };
+        this.legalEntityPrimary = {id: BilContract.counterpartyA.id};
+        this.legalEntityCounterparty = {id: BilContract.counterpartyB.id};
+        this.baseCurrency = {id: BilContract.baseCurrency}
+        this.contractType = {key: BilContract.bilateralContractType};
         this.autoSendTime = {};
         this.autoSendTime.iLocalMillis = BilContract.autoSendTime[0].iLocalMillis
         this.autoSendTime.iChronology = BilContract.autoSendTime[0].iChronology.iBase.iMinDaysInFirstWeek;
 
 
-        this.callFrequency = BilContract.marginFrequency;
+        this.callFrequency = {key: BilContract.marginFrequency};
         this.callOffset = BilContract.callOffset;
 
-        //this.holidays.msSelected = BilContract.counterpartyA.financialCalendarList
+        //Multiselect
+        this.holidays = $scope.holidays;
+        this.holidays.msSelected = BilContract.counterpartyA.financialCalendarList
     }
+
+}]);
+
+DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
 
 }]);
 
@@ -341,13 +347,17 @@ DashboardApp.controller('LEBilateralAgrEligibleCurrenciesController', ['ModalSer
         }
     };
 
-    this.gridOptions.data = $scope.parameters.BilateralContract.eligibleCurrencyConfig.eligibleCurrenciesPartyAList;
+    this.gridOptions.data = [];
+
+    if (!!$scope.parameters && !!$scope.parameters.BilateralContract) {
+        this.gridOptions.data = $scope.parameters.BilateralContract.eligibleCurrencyConfig.eligibleCurrenciesPartyAList;
+    }
 
 }]);
 
-DashboardApp.controller('LEBilateralAgrEligibleSecuritiesController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+DashboardApp.controller('LEBilateralAgrEligibleSecuritiesController', ['$scope', '$request', '$interval', '$log', function ($scope, $request, $interval, $log) {
 
-    $scope.gridOptions = {
+    this.gridOptions = {
 
         columnDefs: [
             {
@@ -355,18 +365,21 @@ DashboardApp.controller('LEBilateralAgrEligibleSecuritiesController', ['$scope',
                 name: 'Collateral Type'
             },
             {
+                field: 'haircut',
                 name: 'Haircut',
-                cellTemplate: '<input type="text" />',
+                cellTemplate: '<input type="text" ng-model="MODEL_COL_FIELD" ng-disabled="!row.entity.disabled"/>',
                 enableColumnMenu: false
             },
             {
+                field: 'haircutType',
                 name: 'Haircut Type',
                 cellTemplate: '' +
-                '<select id="le-bilateral-ag-eleg-security-haircutType"' +
-                'name="" class="form-control"' +
-                'ng-model="LegalEntity.BilateralAgreements.elegibleSecurity.partyA.haircutType.selected">' +
-                '<option value="regular" selected>REGULAR</option>' +
-                '<option value="inverse">INVERSE</option>' +
+                '<select id="le-bilateral-ag-eleg-security-haircutType" ' +
+                    'ng-disabled="!row.entity.disabled" ' +
+                    'name="" class="form-control" ' +
+                    'ng-model="MODEL_COL_FIELD"> ' +
+                  '<option value="regular">REGULAR</option>' +
+                  '<option value="inverse">INVERSE</option>' +
                 '</select>',
                 enableColumnMenu: false
             }
@@ -397,29 +410,44 @@ DashboardApp.controller('LEBilateralAgrEligibleSecuritiesController', ['$scope',
                 $scope.gridApi.core.handleWindowResize();
             }, 1000, 10);
 
+            gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                row.entity.disabled = row.isSelected
+                //$log.log(row);
+            });
+
         }
     };
 
-    $scope.gridOptions.data = [
+    this.gridOptions.data = [
         {
             selected: false,
             collateralType: "USA Bonds",
+            haircut: '',
+            haircutType: 'regular',
         },
         {
             selected: false,
             collateralType: "France Bonds",
+            haircut: '',
+            haircutType: 'regular',
         },
         {
             selected: false,
             collateralType: "Equity Options",
+            haircut: '',
+            haircutType: 'regular',
         },
         {
             selected: false,
             collateralType: "MBS",
+            haircut: '',
+            haircutType: 'regular',
         },
         {
             selected: false,
             collateralType: "European Equity",
+            haircut: '',
+            haircutType: 'regular',
         }
     ];
 

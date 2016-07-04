@@ -21,9 +21,6 @@ angular.module('DashboardApp')
                 return false;
             }
 
-            console.log("***")
-            console.log(ModalService.Options.resolve)
-            console.log("***")
             modalInstance = $uibModal.open({
                 animation: ModalService.Options.animationsEnabled,
                 templateUrl: ModalService.Options.templateUrl,
@@ -36,7 +33,7 @@ angular.module('DashboardApp')
             modalInstance.result.then(function (selectedItem) {
                 ModalService.selected = selectedItem;
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+                //$log.info('Modal dismissed at: ' + new Date());
             });
 
             modalInstance.opened.then(ModalService.Options.opened);

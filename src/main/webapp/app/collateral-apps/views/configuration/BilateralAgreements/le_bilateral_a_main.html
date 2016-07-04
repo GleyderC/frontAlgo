@@ -116,9 +116,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Acacia Soft</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" class="form-control input-medium"
-                                   id="le-bilateral-ag-acasia-soft"
-                                   ng-disabled="false">
+                            <input bs-switch id="le-bilateral-ag-acasia-soft" ng-model="eligibleCurrencies.bilateralAcasiaSoft" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
 
@@ -139,11 +139,8 @@
                         <label class="control-label col-md-3">Call Frequency</label>
                         <div class="col-md-9">
                             <select class="form-control input-medium"
+                                    ng-options="mcFreq.name for mcFreq in BilateralAgreements.staticData.marginFrequency track by mcFreq.key"
                                     ng-model="BAMainCtrl.callFrequency">
-                                <option value="daily" selected>Daily</option>
-                                <option value="week">Weekly</option>
-                                <option value="month">Monthly</option>
-                                <option value="end-of-month">End of Month</option>
                             </select>
                         </div>
                     </div>
@@ -218,7 +215,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Status</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Open" data-off-text="Close">
+                            <input bs-switch ng-model="BAMainCtrl.callIssuanceAuto" type="checkbox"
+                                   switch-on-text="Open" switch-off-text="Close" switch-size="normal"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
 

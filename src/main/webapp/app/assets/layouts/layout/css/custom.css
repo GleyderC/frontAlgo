@@ -209,8 +209,33 @@ div.action-button-container{
 {
     border-right: 0 !important;
 }
+
 .ui-grid-filter-select {
     color: black;
+    background-color: white;
+    border-radius: 3px !important;;
+    -moz-border-radius: 3px !important;;
+    -webkit-border-radius: 3px !important;;
+}
+
+input[type="text"].ui-grid-filter-input
+{
+    color:black;
+    border-radius: 3px !important;
+    -moz-border-radius: 3px !important;;
+    -webkit-border-radius: 3px !important;;
+    padding: 3px 0 3px 4px !important;;
+}
+
+div.ui-grid-cell input[type="text"] {
+    padding: 3px 0 3px 4px;
+}
+
+div.ui-grid-cell select {
+    height: 90%;
+    width: 98%;
+    margin-left: 4px;
+    padding: 0 0 0 4px;
 }
 
 /* NG-INLUCDE TEMPLATE STYLE*/

@@ -1,4 +1,4 @@
-<div class="portlet light bordered">
+<div ng-controller="BACSAMarginsController as BACSA" class="portlet light bordered">
     <div class="portlet-body form">
         <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
             <div class="form-body row">
@@ -11,8 +11,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Party A pays collateral?</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.LegEnforceableAgreement"/>
+                            <input bs-switch id="le-bilateral-ag-payCollateral" ng-model="BACSA.LegEnforceableAgreement" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
 
@@ -20,14 +21,14 @@
                         <label class="control-label col-md-3">Threshold</label>
                         <div class="col-md-6">
                             <input type="text" class="form-control input-medium" id="le-bilateral-ag-threshold-partyA"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.active"
+                                   ng-model="BACSA.partyA.threshold"
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
                                     name="base-currency-select[]" class="form-control input-small"
                                     ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.currencies.selected">
+                                    ng-model="BACSA.partyA.thresholdBaseCrrency">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
                         </div>
@@ -38,14 +39,14 @@
                         <div class="col-md-6">
                             <input type="text" class="form-control input-medium"
                                    id="le-bilateral-ag-transfAmount-partyA"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.transfAmount"
+                                   ng-model="BACSA.partyA.minTransfAmount"
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-csa-partyA-transfAmount-baseCurrency"
                                     name="base-currency-select[]" class="form-control input-small"
                                     ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="LegalEntity.BilateralAgreements.csa.partyA.transfAmount.currencies.selected">
+                                    ng-model="BACSA.partyA.transfAmountBaseCurrency">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
                         </div>
@@ -54,8 +55,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Independent Amount</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.independentAmount"/>
+                            <input bs-switch ng-model="BACSA.partyA.independentAmount" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                             <button type="button" class="btn btn-info">Configure</button>
                         </div>
                     </div>
@@ -64,7 +66,7 @@
                         <label class="control-label col-md-3">Rounding</label>
                         <div class="col-md-4">
                             <select class="form-control input-small"
-                                    ng-model="LegalEntity.BilateralAgreements.csa.partyA.roundingType">
+                                    ng-model="BACSA.partyA.roundingType">
                                 <option value="">-- SELECT ROUNDING --</option>
                                 <option value="NEAREST">NEAREST</option>
                                 <option value="UP">UP</option>
@@ -75,7 +77,7 @@
                         <div class="col-md-5">
                             <input type="text" class="form-control input-medium"
                                    id="le-bilateral-ag-partyA-rounding-amount"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.roundingAmount"
+                                   ng-model="BACSA.partyA.roundingAmount"
                                    ng-disabled="false">
                         </div>
                     </div>
@@ -83,8 +85,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Configuration based on ratings</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.config.ratings"/>
+                            <input bs-switch ng-model="BACSA.partyA.ratings" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                             <button type="button" class="btn btn-info">Configure</button>
                         </div>
                     </div>
@@ -92,8 +95,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Rehipotecation</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyA.rehipotecation"/>
+                            <input bs-switch ng-model="BACSA.partyA.rehipotecation" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
 
@@ -107,8 +111,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Party B pays collateral?</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.LegEnforceableAgreement"/>
+                            <input bs-switch ng-model="BACSA.partyB.LegEnforceableAgreement" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
 
@@ -116,14 +121,14 @@
                         <label class="control-label col-md-3">Threshold</label>
                         <div class="col-md-6">
                             <input type="text" class="form-control input-medium" id="le-bilateral-ag-threshold-partyB"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.threshold.active"
+                                   ng-model="BACSA.partyB.threshold"
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-csa-partyB-threshold-baseCurrency" name="base-currency-select[]"
                                     class="form-control input-small"
                                     ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="LegalEntity.BilateralAgreements.csa.partyB.threshold.currencies.selected">
+                                    ng-model="BACSA.partyB.threshold">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
                         </div>
@@ -134,14 +139,14 @@
                         <div class="col-md-6">
                             <input type="text" class="form-control input-medium"
                                    id="le-bilateral-ag-transfAmount-partyB"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.transfAmount"
+                                   ng-model="BACSA.partyB.minTransfAmount"
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
                             <select id="le-bilateral-ag-csa-partyB-transfAmount-baseCurrency"
                                     name="base-currency-select[]" class="form-control input-small"
                                     ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="LegalEntity.BilateralAgreements.csa.partyB.transfAmount.currencies.selected">
+                                    ng-model="BACSA.partyB.transfAmountBaseCurrency">
                                 <option value="">-- SELECT BASE CURRENCY --</option>
                             </select>
                         </div>
@@ -150,8 +155,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Independent Amount</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.independentAmount"/>
+                            <input bs-switch ng-model="BACSA.partyB.independentAmount" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                             <button type="button" class="btn btn-info">Configure</button>
                         </div>
                     </div>
@@ -160,7 +166,7 @@
                         <label class="control-label col-md-3">Rounding</label>
                         <div class="col-md-4">
                             <select class="form-control input-small"
-                                    ng-model="LegalEntity.BilateralAgreements.csa.partyB.roundingType">
+                                    ng-model="BACSA.partyB.roundingType">
                                 <option value="">-- SELECT ROUNDING --</option>
                                 <option value="NEAREST">NEAREST</option>
                                 <option value="UP">UP</option>
@@ -171,7 +177,7 @@
                         <div class="col-md-5">
                             <input type="text" class="form-control input-medium"
                                    id="le-bilateral-ag-partyB-rounding-amount"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.roundingAmount"
+                                   ng-model="BACSA.partyB.roundingAmount"
                                    ng-disabled="false">
                         </div>
                     </div>
@@ -179,8 +185,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Configuration based on ratings</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.config.ratings"/>
+                            <input bs-switch ng-model="BACSA.partyB.ratings" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                             <button type="button" class="btn btn-info">Configure</button>
                         </div>
                     </div>
@@ -188,8 +195,9 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Rehipotecation</label>
                         <div class="col-md-9">
-                            <input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No"
-                                   ng-model="LegalEntity.BilateralAgreements.csa.partyB.rehipotecation"/>
+                            <input bs-switch ng-model="BACSA.partyB.rehipotecation" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                   ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
                 </div>
