@@ -10,6 +10,7 @@ var CollateralApp = angular.module("CollateralApp", [
     "ngSanitize",
     "duScroll",
     "ngCookies",
+    'ngWebSocket',
     "LocalStorageModule",
     "toastr",
     "ui.utils.masks"
@@ -259,6 +260,14 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
 
 }]);
 
+/*Web socket connection */
+CollateralApp.factory('$socket',['$websocket','$rootScope','$http','URL_CONFIG','$log',
+                         function($websocket,$rootScope,$http, URL_CONFIG, $log){
+	var ws  =$websocket(URL_CONFIG.WS_URL);
+		ws.send(JSON.stringify({signal : "SGN_USER_NAME" , userName : 'pepito'}));
+		
+	return ws ;
+}]),
 /*Default Setup $http Service*/
 CollateralApp.config(['$httpProvider', function($httpProvider){
 

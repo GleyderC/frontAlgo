@@ -3,9 +3,10 @@ angular.module('CollateralApp').controller('DashboardController',
         '$rootScope',
         '$scope',
         '$request',
+        '$socket',
         'localStorageService',
         'MenuService',
-        function ($rootScope, $scope, $request, localStorageService, $menuService) {
+        function ($rootScope, $scope, $request,$socket, localStorageService, $menuService) {
 
             $scope.$workspaceTabsMgm = $menuService.MenuTree;
 

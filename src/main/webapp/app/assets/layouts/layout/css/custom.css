@@ -124,6 +124,9 @@
 img.action-button-icon{
 	width: 20px;
 }
+img.action-button-icon-sm{
+	width: 25px;
+}
 img.action-button-icon-md{
     width: 40px;
 }

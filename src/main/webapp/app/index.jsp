@@ -174,7 +174,8 @@
 <script src="assets/global/plugins/highcharts/js/modules/exporting.js" type="text/javascript"></script>
 <script src="assets/global/plugins/highcharts/js/modules/offline-exporting.js" type="text/javascript"></script>
 
-
+<!--Angular Web Socket  -->
+<script src="assets/vendor/angular-websocket/dist/angular-websocket.min.js" type="text/javascript"></script>
 
 <!-- HiGHT END -->
 
