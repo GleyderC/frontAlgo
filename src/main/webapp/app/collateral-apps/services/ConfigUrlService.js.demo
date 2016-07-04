@@ -4,5 +4,6 @@
  */
 angular.module('CollateralApp').constant('URL_CONFIG', {
     API_URL: "http://api-url/api",
+    WS_URL  : "ws://ws-url/websocket",
     SERVICE_LOGIN_URL: "http://api-url/api"
 });
