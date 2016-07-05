@@ -263,9 +263,12 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
 /*Web socket connection */
 CollateralApp.factory('$socket',['$websocket','$rootScope','$http','URL_CONFIG','$log',
                          function($websocket,$rootScope,$http, URL_CONFIG, $log){
-	var ws  =$websocket(URL_CONFIG.WS_URL);
-		ws.send(JSON.stringify({signal : "SGN_USER_NAME" , userName : 'pepito'}));
-		
+	var ws  = new WebSocket(URL_CONFIG.WS_URL);
+
+		ws.onopen = function(){
+            		console.debug("Socket Connected");
+            		ws.send(JSON.stringify({signal : "SGN_USER_NAME" , userName : 'pepito'}));
+            };
 	return ws ;
 }]),
 /*Default Setup $http Service*/
@@ -386,6 +389,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/collateral/margin_call/MarginCallDetailController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallTradesController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallCsaController.js',
+                            'collateral-apps/controllers/collateral/margin_call/MarginCallPoolController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallInventoryController.js',
                             'collateral-apps/controllers/collateral/margin_call/MarginCallMessagingRepository.js',
                             /* Interest Controller js */

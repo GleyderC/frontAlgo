@@ -56,11 +56,4 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 			              ]
 			
 	};
-	
-	
-	MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).success(function(result){
-		
-		$scope.gridMCCsaAllocPosted.data = result.dataResponse.postedCollateral;
-		$scope.gridMCCsaAllocReceived.data = result.dataResponse.receivedCollateral;
-	}) ;
 }]);

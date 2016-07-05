@@ -9,7 +9,11 @@ angular.module('CollateralApp').controller('DashboardController',
         function ($rootScope, $scope, $request,$socket, localStorageService, $menuService) {
 
             $scope.$workspaceTabsMgm = $menuService.MenuTree;
-
+            console.log($socket);
+            $socket.onmessage= function(msg){
+            	console.log(msg);
+            };
+          
             //GET STATIC DATA FROM THE SERVER
             $request.get("/servlet/StaticData/SelectAll").then(function (response) {
                 angular.forEach(response.data.dataResponse, function (obj, key) {

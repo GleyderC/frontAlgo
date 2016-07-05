@@ -5,34 +5,13 @@ var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConstants', 'MarginCallService',
     function ($scope, uiGridConstants, MarginCallService) {
-
-        //console.log($scope.MarginCall.marginCalls[0].id);
-
         $scope.gridInventoryOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
             paginationPageSize: 5,
             enableColumnResizing: true,
-            enableFiltering: true,
+            enableFiltering: false,
             rowHeight: 35, // set height to each row
-            enableGridMenu: true,
-            exporterCsvFilename: 'margin-call-inventory.csv',
-            exporterPdfDefaultStyle: {fontSize: 9},
-            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: {text: "Margin Call - inventory", style: 'headerStyle'},
-            exporterPdfFooter: function (currentPage, pageCount) {
-                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
-            },
-            exporterPdfCustomFormatter: function (docDefinition) {
-                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
-                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
-                return docDefinition;
-            },
-            exporterPdfOrientation: 'portrait',
-            exporterPdfPageSize: 'LETTER',
-            exporterPdfMaxGridWidth: 450,
-            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
             }
@@ -57,7 +36,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
              Custody
              Folder
              Sense
-             Coll Type*/
+             Coll Type
             {field: 'isin', width: 70,
                 sort: {
                     direction: uiGridConstants.ASC,
@@ -82,13 +61,33 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             {field: 'custody' },
             {field: 'folder' },
             {field: 'sense' }
-
+            */
+            { name: "isin",  field : "isin" } ,
+{	 name: "currency",  field : "currency" } ,
+{ name: "sense",  field : "sense" } ,
+{ name: "description",  field : "description" } ,
+//{ name: "date",  field : "date" } ,
+//{ name: "maturity",  field : "maturity" } ,
+{ name: "coupon",  field : "coupon" } ,
+{ name: "frequency",  field : "frequency" } ,
+{ name: "quantity",  field : "quantity" } ,
+{ name: "lotSize",  field : "lotSize" } ,
+{ name: "notional",  field : "notional" } ,
+{ name: "price",  field : "price" } ,
+{ name: "amount",  field : "amount" } ,
+{ name: "npvBaseCurrency",  field : "npvBaseCurrency" } ,
+{ name: "baseCurrrency",  field : "baseCurrrency" } ,
+{ name: "SPrating",  field : "SPrating" } ,
+//{ name: "issuer",  field : "issuer" } ,
+//{ name: "custody",  field : "custody" } ,
+//{ name: "folder",  field : "folder" },
+{ name: "Action",  cellTemplate : '<div class="text-center"> <a href="#!"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i> </a>' },
         ];
-
         $scope.$watchCollection('$parent.Inventory', function (newInventory, oldInventory) {
             if (newInventory === oldInventory) {
                 return false;
+                
             }
-            $scope.gridInventoryOptions.data = newInventory;
+            $scope.gridInventoryOptions.data  = newInventory;
         });
 }]);

@@ -13,12 +13,12 @@
                     <a href="javascript:;" class="collapse"> </a>
                     <a href="" class="fullscreen"> </a>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-1">	
                     <div class="btn-group">
 
-                        <button type="submit" class="btn" uib-popover="IssueMarginCall" popover-trigger="mouseenter" ng-click="MarginDtCtrl.sendMargin()" ng-disabled="sendFlag">
+                        <a type="submit" class="btn" uib-popover="IssueMarginCall" popover-trigger="mouseenter" ng-click="MarginDtCtrl.sendMargin()" ng-disabled="sendFlag">
                             <img class="action-button-icon-md" src="assets/pages/icons/message.ico">
-                        </button>
+                        </a>
 
                     </div>
                 </div>
@@ -45,16 +45,16 @@
                     </tr>
                     </tbody>
                     </table>
-                    <uib-tabset active="1">
-                        <uib-tab index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
+                    <uib-tabset >
+                        <uib-tab  ng-click="tabClicked(tab)" index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
                             <uib-tab-heading>
                                 <i class="{{tab.icon}}"></i>{{tab.title}}
                             </uib-tab-heading>
                             <div ng-include=tab.templateUrl></div>
                         </uib-tab>
                     </uib-tabset>
-                    <uib-tabset active="1">
-                        <uib-tab index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
+                    <uib-tabset active="tab2Active">
+                        <uib-tab  index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
                             <uib-tab-heading>
                                 <i class="{{tab.icon}}"></i>{{tab.title}}
                             </uib-tab-heading>
