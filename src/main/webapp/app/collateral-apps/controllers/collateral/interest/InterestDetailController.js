@@ -35,6 +35,7 @@ InterestCtrl.controller('InterestDetailController',
 	                .success(function(data){
 	                	$scope.InterestData   = data.dataResponse.ownInterestOnCashCollateral;
 	                	$scope.InterestCumulative = 0;
+	                	$scope.InterestTotal  = data.dataResponse.ownCalculatedTotalInterest
 	                	$scope.InterestData.forEach(function(v,k){
 	                    	$scope.InterestCumulative += v.interest;
 	                    	if(v.isCompounding){
