@@ -395,7 +395,8 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                             beta: 0
                         },
                         plotShadow: true,
-                        margin: 0
+                        margin: 0,
+                        height: 470
                     },
                     title: {
                         text: '<span id="titleMargin"> Margin Call Status </span>'
@@ -415,7 +416,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         enabled: true,
                         layout: 'horizontal',
                         verticalAlign: 'bottom',
-                        y: 35,
+                        y: 15,
                         useHTML: true,
                         labelFormatter: function () {
                             //console.log(this);
