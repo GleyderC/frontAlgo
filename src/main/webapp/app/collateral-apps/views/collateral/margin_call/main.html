@@ -17,7 +17,28 @@
 						</ul>
 					</div>
 
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-3 text-right">Date</label>
+					<div class="col-md-8">
+
+						<div class="input-group">
+							<input placeholder="Date" type="text" class="form-control"
+								   placeholer="Date" uib-datepicker-popup ng-model="dt"
+								   is-open="popup.opened" datepicker-options="dateOptions"
+								   ng-required="true" close-text="Close" ng-change="dateChange(this)" /> <span
+								class="input-group-btn">
+									<button type="button" class="btn btn-default"
+											ng-click="openDatePicker()">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+						</div>
+
+					</div>
 				</div>
+			</div>
 			<div class="tools">
 				<a href="javascript:;" class="collapse"> </a> <a href="javascript:;"
 					class="fullscreen"> </a>
@@ -26,58 +47,29 @@
 
 		<div class="portlet-body">
 
-			<div class="row">
+			<div class="row" style="position: relative">
+				<button class="btn green dropdown-toggle" ng-click="refreshStatus()"
+						uib-popover="Refresh" popover-trigger="mouseenter"
+						style="position: absolute;top: 0px;left: 10px;z-index: 999;">
+					<i class="fa fa-refresh"></i>
+				</button>
+				<split-pane style="height: 600px;">
 
-				<div class="col-md-4 col-md-offset-4">
-					<div class="form-group">
-						<label class="control-label col-md-3 text-right">Date</label>
-						<div class="col-md-8">
+					<split-pane-component width="40%" class="col-sm-12">
+						<div id="gchart_pie_margincall" style="text-align: center"></div>
+					</split-pane-component>
 
-							<div class="input-group">
-								<input placeholder="Date" type="text" class="form-control"
-									placeholer="Date" uib-datepicker-popup ng-model="dt"
-									is-open="popup.opened" datepicker-options="dateOptions"
-									ng-required="true" close-text="Close" ng-change="dateChange(this)" /> <span
-									class="input-group-btn">
-									<button type="button" class="btn btn-default"
-										ng-click="openDatePicker()">
-										<i class="glyphicon glyphicon-calendar"></i>
-									</button>
-								</span>
-							</div>
-	
-						</div>
-					</div>
-				</div>
-				
-			</div>
-			<br />
-			<div class="row">
-				<div class="col-md-6">
-					<div class="portlet light bordered">
-						<div class="portlet-title">
-							<div class="caption">
-								<i class=" icon-layers font-green"></i>
-								<span class="caption-subject font-green bold uppercase">Today Magin Call</span>
-							</div>
-							<div class="tools">
-								<a href="javascript:;" class="collapse"> </a> <a href="javascript:;"
-																				 class="fullscreen"> </a>
+					<split-pane-divider width="5px"></split-pane-divider>
+
+					<split-pane-component class="col-sm-12">
+						<div class="row" style="margin-left: 10px;margin-right: 10px;">
+							<div class="portlet-body">
+								<div ui-grid="gridMarginCall" ui-grid-selection ui-grid-exporter
+									 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 575px;"></div>
 							</div>
 						</div>
-						<div class="portlet-body">
-							<div id="gchart_pie_margincall" style="height:325px;"></div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="portlet light bordered" style="margin-bottom:0">
-						<div class="portlet-body">
-							<div ui-grid="gridMarginCall" ui-grid-selection ui-grid-exporter
-								 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 380px;"></div>
-						</div>
-					</div>
-				</div>
+					</split-pane-component>
+				</split-pane>
 			</div>
 		</div>
 	</div>

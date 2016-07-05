@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="assets/vendor/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="assets/vendor/split-pane/split-pane.css" />
     <!-- endbower -->
 
 
@@ -31,6 +32,11 @@
     <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN SPLIT PANE -->
+    <link href="assets/global/css/pretty-split-pane.css" rel="stylesheet" type="text/css"/>
+    <!-- END SPLIT PANE -->
+
 
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <link href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet"
@@ -88,6 +94,9 @@
 <script src="assets/vendor/microplugin/src/microplugin.js"></script>
 <script src="assets/vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
 <script src="assets/vendor/angular-input-masks/angular-input-masks-standalone.js"></script>
+<script src="assets/vendor/angular-websocket/dist/angular-websocket.js"></script>
+<script src="assets/vendor/split-pane/split-pane.js"></script>
+<script src="assets/vendor/angular-split-pane/angular-split-pane.js"></script>
 <!-- endbower -->
 
 <!-- BEGIN PAGE SPINNER -->
