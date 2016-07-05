@@ -13,7 +13,8 @@ var CollateralApp = angular.module("CollateralApp", [
     'ngWebSocket',
     "LocalStorageModule",
     "toastr",
-    "ui.utils.masks"
+    "ui.utils.masks",
+    "shagstrom.angular-split-pane"
 ]);
 
 var paths = {

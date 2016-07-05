@@ -1,6 +1,12 @@
 'use strict';
 
-var DashboardApp = angular.module('DashboardApp')
+var DashboardApp = angular.module('DashboardApp');
+
+DashboardApp.filter('statusArrayFilter', function() {
+    return function (status) {
+        return status;
+    };
+});
 var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', '$document', '$timeout', '$request',
     '$interval', 'localStorageService', 'elementService', 'uiGridConstants', 'MarginCallService','ArrayService',
     function ($scope, $document, $timeout, $request, $interval, $localStorage, elementService,
@@ -55,7 +61,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
         $scope.gridMarginCall = {
 
             paginationPageSizes: [15, 50, 100, 200, 500],
-            paginationPageSize: 7,
+            paginationPageSize: 8,
             enableFiltering: true,
             exporterCsvFilename: 'margin-call-messaging.csv',
             exporterPdfDefaultStyle: {fontSize: 9},
@@ -84,13 +90,11 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     filter: {
                         type: uiGridConstants.filter.SELECT,
                         selectOptions: $scope.counterPartyAList
-                    },
-                    width: 85
+                    }
                 },
                 {
                     name: 'Fund/Clearing Broker',
-                    field: 'ccpName',
-                    enableFiltering: false
+                    field: 'ccpName'
 
                 },
                 {
@@ -99,14 +103,12 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     filter: {
                         type: uiGridConstants.filter.SELECT,
                         selectOptions: $scope.counterPartyBList
-                    },
-                    width: 85
+                    }
                 },
                 {
                     name: 'Contract Type',
-                    field: 'contract.contractType',
-                    width: 85,
-                    filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
+                    field: 'contract.contractType'
+                    //filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-types></div></div>'
 
                 },
                 {
@@ -124,32 +126,28 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         condition: function (searchTerm, cellValue) {
                             return cellValue === searchTerm;
                         }
-                    },
-                    width: 55
+                    }
                 },
                 {
                     name: 'Status',
-                    field: "marginCalls[0].marginCallElementsByLiabilityType.CSA.status",
-                    filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-status></div></div>',
-                    width: 80
-
+                    field: "statusName",
+                    cellFilter: 'statusArrayFilter'
+                    //filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><div modal-status></div></div>',
                 },
                 {
                     name: 'VM',
                     field: 'marginCallAmount',
-                    enableFiltering: false
+                    width: 50
+
                 },
-                {
-                    name: 'IM',
-                    enableFiltering: false
-                },
+                { name: 'IM', width: 50 },
                 {
                     name: 'Action',
                     cellTemplate: '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity)" ><i class="fa fa-eye"></i></button> </div>',
                     enableColumnMenu: false,
-                    width: 65,
-                    enableFiltering: false,
-                    enableSorting: false
+                    enableSorting: false,
+                    enabledFilter: false,
+                    width: 65
                 }
 
             ],
@@ -157,7 +155,34 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             enableGridMenu: true,
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
+                $scope.gridApi.grid.registerRowsProcessor( $scope.statusFilter, 200 );
             }
+        };
+
+        $scope.filterMargin = function() {
+            $scope.gridApi.grid.refresh();
+        };
+
+        $scope.statusFilter = function( renderableRows ){
+            var matcher = new RegExp($scope.filterValue);
+            if(renderableRows != undefined || renderableRows.length >0 ){
+                renderableRows.forEach( function( row ) {
+                    var match = false;
+                    ['statusName'].forEach(function( field ){
+                        //console.log(row.entity[field]);
+                        if ( row.entity[field] ){
+                            if ( row.entity[field].match(matcher) ){
+                                match = true;
+                            }
+                        }
+                    });
+                    if ( !match ){
+                        row.visible = false;
+                    }
+                });
+            }
+
+            return renderableRows;
         };
 
         $scope.today = function () {
@@ -258,7 +283,8 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             arr["contractType"] = {};
             arr["counterpartyB"] = {};
             arr["counterpartyA"] = {};
-            var statusArray = [];
+            let statusArray = [];
+            let statusMarginCall = $localStorage.get("MarginCallStatusEnum");
 
             data.dataResponse.forEach(function (v, k) {
                 if (v.contract.hasOwnProperty("clearingMemberLegalEntity")) {// CCPHouseAccount
@@ -293,8 +319,14 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     arr["counterpartyB"][v.contract.counterpartyB.name] = v.contract.counterpartyB;
                 }
 
-                if(v.marginCalls[0].hasOwnProperty("marginCallElementsByLiabilityType"))
-                    statusArray.push(v.marginCalls[0].marginCallElementsByLiabilityType.CSA.status);
+                if(v.marginCalls[0].hasOwnProperty("marginCallElementsByLiabilityType")) {
+                    statusMarginCall.filter(function (status) {
+                        if(status.key == v.marginCalls[0].marginCallElementsByLiabilityType.CSA.status) {
+                            statusArray.push(status.name);
+                            v.statusName = status.name;
+                        }
+                    });
+                }
             });
 
             $scope.gridMarginCall.data = data.dataResponse;
@@ -343,7 +375,12 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             .success(function (data) {
                 $scope.onResponse(data);
             });
-
+        
+        $scope.refreshStatus = function(){
+            $scope.filterValue = "";
+            $scope.filterMargin();
+        }
+        
         $scope.drawPieChart = function (statusArray) {
             var newStatusArray = ArrayService.ArrayDuplicateCounter(statusArray);
 
@@ -357,10 +394,11 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                             alpha: 45,
                             beta: 0
                         },
-                        plotShadow: true
+                        plotShadow: true,
+                        margin: 0
                     },
                     title: {
-                        text: 'Margin Call Status'
+                        text: '<span id="titleMargin"> Margin Call Status </span>'
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -371,12 +409,13 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                             cursor: 'pointer',
                             depth: 35,
                             showInLegend: true
-                        }
+                        },
                     },
                     legend: {
                         enabled: true,
                         layout: 'horizontal',
                         verticalAlign: 'bottom',
+                        y: 35,
                         useHTML: true,
                         labelFormatter: function () {
                             //console.log(this);
@@ -386,8 +425,18 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     series: [{
                         type: 'pie',
                         name: 'Status',
-                        data: newStatusArray
-                    }]
+                        data: newStatusArray,
+                        point:{
+                            events:{
+                                click: function (event) {
+                                    $scope.filterValue = this.name;
+                                    $scope.filterMargin();
+                                    //console.log(this);
+                                }
+                            }
+                        }
+                    }],
+                    exporting: { enabled: false }
                 });
             }
         }
@@ -413,13 +462,10 @@ MarginCallCtrl
                         enableColumnMenus: false,
                         onRegisterApi: function (gridApi) {
                             $scope.gridApi = gridApi;
-                            if ($scope.colFilter
-                                && $scope.colFilter.listTerm) {
+                            if ($scope.colFilter && $scope.colFilter.listTerm) {
                                 $timeout(function () {
-                                    $scope.colFilter.listTerm
-                                        .forEach(function (type) {
-                                            var entities = $scope.gridOptionsContractType.data
-                                                .filter(function (row) {
+                                    $scope.colFilter.listTerm.forEach(function (type) {
+                                            var entities = $scope.gridOptionsContractType.data.filter(function (row) {
                                                     return row.type === type;
                                                 });
                                             if (entities.length > 0) {
