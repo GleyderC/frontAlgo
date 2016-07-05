@@ -58,16 +58,19 @@
 						style="position: absolute;top: 0px;left: 10px;z-index: 999;">
 					<i class="fa fa-refresh"></i>
 				</button>
-				<split-pane style="height: 500px;">
-					<split-pane-component width="50%">
-						<div id="gchart_pie_margincall"></div>
+				<split-pane style="height: 600px;">
+
+					<split-pane-component width="50%" class="col-sm-12">
+						<div id="gchart_pie_margincall" style="text-align: center"></div>
 					</split-pane-component>
+
 					<split-pane-divider width="5px"></split-pane-divider>
-					<split-pane-component>
+
+					<split-pane-component class="col-sm-12">
 						<div class="row" style="margin-left: 10px;margin-right: 10px;">
 							<div class="portlet-body">
 								<div ui-grid="gridMarginCall" ui-grid-selection ui-grid-exporter
-									 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 475px;"></div>
+									 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 575px;"></div>
 							</div>
 						</div>
 					</split-pane-component>

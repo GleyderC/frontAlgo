@@ -61,7 +61,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
         $scope.gridMarginCall = {
 
             paginationPageSizes: [15, 50, 100, 200, 500],
-            paginationPageSize: 8,
+            paginationPageSize: 10,
             enableFiltering: true,
             exporterCsvFilename: 'margin-call-messaging.csv',
             exporterPdfDefaultStyle: {fontSize: 9},
@@ -396,7 +396,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         },
                         plotShadow: true,
                         margin: 0,
-                        height: 470
+                        height: 550
                     },
                     title: {
                         text: '<span id="titleMargin"> Margin Call Status </span>'
