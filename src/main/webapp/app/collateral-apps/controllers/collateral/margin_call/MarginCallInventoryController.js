@@ -81,8 +81,25 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
 //{ name: "issuer",  field : "issuer" } ,
 //{ name: "custody",  field : "custody" } ,
 //{ name: "folder",  field : "folder" },
-{ name: "Action",  cellTemplate : '<div class="text-center"> <a href="#!"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i> </a>' },
+{ name: "Action",  cellTemplate : '<div class="text-center"> <a ng-click="grid.appScope.post(row.entity)" href="#!"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i> </a>' },
         ];
+        
+        $scope.postEntity = {};
+        $scope.recEntity = {};
+        $scope.post = function(entity){
+        	var index = $scope.gridInventoryOptions.data.indexOf(entity);
+        	$scope.gridInventoryOptions.data.splice(index, 1);
+        	
+        	if(entity.sense==="POSTED"){ 
+        		entity.sense = "RECEIVE";
+        		$scope.$parent.post.push(entity);
+        	}
+        	if(entity.sense==="RECEIVED"){
+        		
+        		entity.sense = "PAY";
+        		$scope.$parent.receive.push(entity);
+        	}
+        };
         $scope.$watchCollection('$parent.Inventory', function (newInventory, oldInventory) {
             if (newInventory === oldInventory) {
                 return false;
