@@ -8,6 +8,8 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
         $scope.sendFlag = false;
         $scope.currentMarginCall = $scope.parameters;
         $scope.tab2Active = 2;
+        $scope.post = [];
+        $scope.receive = [];
         $scope.tabClicked   =function(tab){
         	if(tab.id=="mc-csa-allocations"){
         		  $scope.tabs2[0].disabled = true;

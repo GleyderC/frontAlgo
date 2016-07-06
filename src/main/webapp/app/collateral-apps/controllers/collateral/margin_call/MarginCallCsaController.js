@@ -56,4 +56,16 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 			              ]
 			
 	};
+	$scope.$watchCollection('$parent.post',function(newV,oldV){
+			if(oldV == newV){
+				return false;
+			}
+			$scope.gridMCCsaAllocPosted.data = newV;
+	});
+	$scope.$watchCollection('$parent.receive',function(newV,oldV){
+		if(oldV == newV){
+			return false;
+		}
+		$scope.gridMCCsaAllocReceived.data = newV;
+});
 }]);
