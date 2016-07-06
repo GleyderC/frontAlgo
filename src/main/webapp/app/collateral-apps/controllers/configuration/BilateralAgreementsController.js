@@ -235,8 +235,8 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
         let BilContract = $scope.parameters.BilateralContract;
 
         this.contractCode = BilContract.contractCode;
-        this.legalEntityPrimary = {name: BilContract.counterpartyA.name};
-        this.legalEntityCounterparty = {name: BilContract.counterpartyB.name};
+        this.legalEntityPrimary = {id: BilContract.counterpartyA.id, name: BilContract.counterpartyA.name};
+        this.legalEntityCounterparty = {id:  BilContract.counterpartyB.id, name: BilContract.counterpartyB.name};
         this.baseCurrency = {id: BilContract.baseCurrency}
         this.contractType = {key: BilContract.bilateralContractType};
         this.autoSendTime = {};

@@ -1,3 +1,4 @@
+'use strict';
 angular.module('DashboardApp')
     .service('ModalService', ['$uibModal', '$log', function ($uibModal, $log) {
 
