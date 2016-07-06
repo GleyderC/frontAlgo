@@ -4,8 +4,39 @@
     
     	$scope.$on('$includeContentLoaded', function () {
          });
+    	$scope.gridUserMessages = {
+    			columnDefs : [
+//				{ field : "hasBeenRead"},
+				{ 	name:"From",
+//					width : 80 , 
+					field : "hasBeenSentByEmail"
+				},
+				{ name: "Title ", 
+//					width : 80 , 
+					field : "messageContentBasic"},
+//				{ field : "messageContentExtendes"} ,
+				{
+					name :"Action",
+//					width : 50 , 
+					cellTemplate : "<div class='text-center' > <button class='btn btn-sm btn-primary uigrid-btn'  ng-click='grid.appScope.viewMessage(row.entity)'> <i class='fa fa-eye'></i></button></div>"
+						
+				}
+    			          ],
+    	} ;
+    	
+    	$scope.messageContent  = {} ;
+    	$scope.viewMessage = function(entity){
+    		$scope.messageContent  =  entity;	
+    	};
     	$scope.messagesList = [];
-    	UserMessage.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
-    		$scope.messagesList	   = data.dataResponse;
-    	});
+    	
+    	$scope.getNewMessages = function(){
+    		alert("hh") ;
+	    	UserMessage.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
+	    		$scope.messagesList	   = data.dataResponse;
+	    		$scope.gridUserMessages.data = data.dataResponse ;
+	    	});
+    	};
+    	$scope.getNewMessages();
+    
 }]);
