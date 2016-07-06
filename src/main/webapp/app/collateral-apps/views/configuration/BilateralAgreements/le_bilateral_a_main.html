@@ -24,11 +24,14 @@
                                        class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
-                                    {{$select.selected.id}}
+                                    {{$select.selected.name}}
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
                                     <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
+                                    <small>
+                                        otherName: <span ng-bind-html="legalEntity.otherName | highlight: $select.search"></span>
+                                    </small>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
@@ -41,11 +44,14 @@
                                        theme="select2" class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
-                                    {{$select.selected.id}}
+                                    {{$select.selected.name}}
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
                                     <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
+                                    <small>
+                                        otherName: <span ng-bind-html="legalEntity.otherName | highlight: $select.search"></span>
+                                    </small>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
