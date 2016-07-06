@@ -1,4 +1,4 @@
-<div ng-controller="LEBilateralAgrEligibleCurrenciesController as EligibCurrencyCtrl">
+<div ng-controller="BAEligibleCurrenciesController as EligibCurrencyCtrl">
     <!-- TEMPLATE TO ADD CURRENCY BEGIN-->
     <script type="text/ng-template" id="modalAddCurrency.html">
         <div class="modal-header">
@@ -11,12 +11,18 @@
                 <div class="form-group col-md-6">
                     <label class="control-label col-md-4">Base Currency</label>
                     <div class="col-md-8">
-                        <select id="adding-eligible-currency" name="eligible-currencies-select[]"
-                                class="form-control input-medium"
-                                ng-options="currency as currency.codigo for currency in currenciesList track by currency.id"
-                                ng-model="EligibCurrencyCtrl.baseCurrency">
-                            <option value="">-- BASE CURRENCY --</option>
-                        </select>
+                        <ui-select id="adding-eligible-currency" ng-model="baseCurrency"
+                                   theme="select2"
+                                   class="input-medium">
+                            <ui-select-match
+                                    placeholder="Select or search a Currency...">
+                                {{$select.selected.id}}
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="currency in currenciesList | filter: $select.search track by currency.id">
+                                <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
                 </div>
                 <div class="col-md-offset-6"></div>
@@ -32,7 +38,7 @@
                                 <label class="control-label">Compounding</label>
                             </div>
                             <div class="col-md-5">
-                                <input bs-switch ng-model="EligibCurrencyCtrl.compounding" type="checkbox"
+                                <input bs-switch ng-model="compounding" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -43,7 +49,7 @@
                                 <label class="control-label">Include Interest to Position</label>
                             </div>
                             <div class="col-md-5">
-                                <input bs-switch ng-model="EligibCurrencyCtrl.includeInterestPosition" type="checkbox"
+                                <input bs-switch ng-model="includeInterestPosition" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -54,7 +60,7 @@
                                 <label class="control-label">Adjustment Currency</label>
                             </div>
                             <div class="col-md-5">
-                                <input bs-switch ng-model="EligibCurrencyCtrl.adjustmentCurrency" type="checkbox"
+                                <input bs-switch ng-model="adjustmentCurrency" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -66,7 +72,7 @@
                                 <label class="control-label">Project Interest to Position</label>
                             </div>
                             <div class="col-md-5">
-                                <input bs-switch ng-model="EligibCurrencyCtrl.projectInterestPosition" type="checkbox"
+                                <input bs-switch ng-model="projectInterestPosition" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -77,7 +83,8 @@
                                 <label class="control-label">HairCut (100%)</label>
                             </div>
                             <div class="col-md-5">
-                                <input type="text" class="form-control input-xsmall"/>
+                                <input type="text" class="form-control input-xsmall"
+                                       ng-model="hairCut"/>
                             </div>
                         </div>
 
@@ -86,7 +93,7 @@
                                 <label class="control-label">Inverse</label>
                             </div>
                             <div class="col-md-5">
-                                <input bs-switch ng-model="EligibCurrencyCtrl.inverse" type="checkbox"
+                                <input bs-switch ng-model="inverse" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -110,11 +117,13 @@
                         Rate</label>
 
                     <div class="form-group" ng-show="EligCurRate == 'fixed'">
-                        <label class="control-label">Interest Date Rule Only</label>
-                        <input type="number" class="form-control input-small" placeholder="Fixed Rate"
-                               ng-model="EligCurRateFixed" min="0"
-                               max="100"
-                               maxlength="3">
+                        <div class="col-md-12">
+                            <label class="control-label">Interest Date Rule Only</label>
+                            <input type="number" class="form-control input-small" placeholder="Fixed Rate"
+                                   ng-model="interestDateRuleOnlyFixedRate" min="0"
+                                   max="100" step="0.01"
+                                   maxlength="3">
+                        </div>
                     </div>
 
                     <div class="form-group" ng-show="EligCurRate == 'floating'">
@@ -122,19 +131,29 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="control-label">Index</label>
-                                <select class="form-control input-medium">
-                                    <option>--Index--</option>
-                                </select>
+                                <ui-select ng-model="index"
+                                           theme="select2"
+                                           class="input-medium">
+                                    <ui-select-match
+                                            placeholder="Select Index...">
+                                        {{$select.selected.key}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="index in supportedindexesList | filter: $select.search track by index.key">
+                                        <div ng-bind-html="index.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                             <div class="col-md-4">
                                 <label class="control-label">Tenor</label>
-                                <select class="form-control input-medium">
-                                    <option>--Tenor--</option>
+                                <select class="form-control input-medium" ng-model="tenor">
+                                    <option value="">--Tenor--</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label class="control-label">Spread</label>
                                 <input type="number" class="form-control input-medium" placeholder="Spread"
+                                       ng-model="spread"
                                        min="0"
                                        max="100"
                                        maxlength="3">
@@ -145,6 +164,7 @@
                             <div class="col-md-4">
                                 <label class="control-label">Factor</label>
                                 <input type="number" class="form-control input-medium" placeholder="Factor"
+                                       ng-model="factor"
                                        min="0"
                                        max="100"
                                        maxlength="3">
@@ -154,7 +174,7 @@
                                     <label class="control-label">Floor</label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input bs-switch ng-model="EligibCurrencyCtrl.floor" type="checkbox"
+                                    <input bs-switch ng-model="floor" type="checkbox"
                                            switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                            ng-true-value="true" ng-false-value="false">
                                 </div>
@@ -171,11 +191,9 @@
                 </div>
             </div>
         </div>
-
-        </div>
         <div class="modal-footer">
             <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-            <button class="btn btn-primary" type="button" ng-click="ok()">Save</button>
+            <button class="btn btn-primary" type="button" ng-click="save()">Save</button>
         </div>
     </script>
     <!-- TEMPLATE TO ADD CURRENCY END -->
@@ -192,12 +210,18 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-3">Base Currency</label>
                             <div class="col-md-9">
-                                <select id="le-bilateral-a-eligible-currencies" name="eligible-currencies-select[]"
-                                        class="form-control input-medium"
-                                        ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                        ng-model="EligibCurrencyCtrl.baseCurrency">
-                                    <option value="">-- SELECT BASE CURRENCY --</option>
-                                </select>
+                                <ui-select id="le-bilateral-a-eligible-currencies" ng-model="EligibCurrencyCtrl.baseCurrency"
+                                           theme="select2"
+                                           class="input-medium">
+                                    <ui-select-match
+                                            placeholder="Select or search a Currency...">
+                                        {{$select.selected.id}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                                        <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -217,9 +241,9 @@
                             <div class="col-md-9">
                                 <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
                                         class="form-control input-medium"
-                                        ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
+                                        ng-options="interestDateRule as interestDateRule.name for interestDateRule in EligibCurrencyCtrl.interestDateRulesList track by interestDateRule.key"
                                         ng-model="EligibCurrencyCtrl.interestDateRule">
-                                    <option value="">-- SELECT BASE CURRENCY --</option>
+                                    <option value="">-- SELECT RULE --</option>
                                 </select>
                             </div>
                         </div>
@@ -237,7 +261,7 @@
                         <div class="form-group col-md-6">
                             <label class="control-label col-md-3">Roll Interest to Principal</label>
                             <div class="col-md-9">
-                                <input bs-switch ng-model="EligibCurrencyCtrl.interestPricipal" type="checkbox"
+                                <input bs-switch ng-model="EligibCurrencyCtrl.rollInterestPricipal" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -256,13 +280,14 @@
                     <div class="row">
 
                         <div class="col-md-12" style="margin-bottom: 10px;">
-                            <button class="btn btn-primary" ng-click="EligibCurrencyCtrl.modal.open()">Add New
+                            <button class="btn btn-primary" ng-click="EligibCurrencyCtrl.modalAddCurrencty()">Add New
                                 Currency
                             </button>
                         </div>
 
                         <div class="col-md-12">
-                            <div ui-grid="EligibCurrencyCtrl.gridOptions" ui-grid-selection ui-grid-exporter ui-grid-auto-resize
+                            <div ui-grid="EligibCurrencyCtrl.gridOptions" ui-grid-selection ui-grid-exporter
+                                 ui-grid-auto-resize
                                  class="grid"></div>
 
                         </div>

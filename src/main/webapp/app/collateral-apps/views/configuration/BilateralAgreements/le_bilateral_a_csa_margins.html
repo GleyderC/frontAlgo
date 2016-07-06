@@ -1,4 +1,31 @@
 <div ng-controller="BACSAMarginsController as BACSA" class="portlet light bordered">
+
+    <script type="text/ng-template" id="modalConfigIndependentAmount.html">
+        <div class="modal-header">
+            <h4 class="modal-title">Independent Amount</h4>
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="save()">Save</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="modalConfigBasedOnRatings.html">
+        <div class="modal-header">
+            <h4 class="modal-title">Configuration Based on Ratings</h4>
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="save()">Save</button>
+        </div>
+    </script>
+
     <div class="portlet-body form">
         <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
             <div class="form-body row">
@@ -11,7 +38,8 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Party A pays collateral?</label>
                         <div class="col-md-9">
-                            <input bs-switch id="le-bilateral-ag-payCollateral" ng-model="BACSA.LegEnforceableAgreement" type="checkbox"
+                            <input bs-switch id="le-bilateral-ag-payCollateral"
+                                   ng-model="BACSA.partyA.LegEnforceableAgreement" type="checkbox"
                                    switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                    ng-true-value="true" ng-false-value="false">
                         </div>
@@ -25,12 +53,19 @@
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
-                            <select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
-                                    name="base-currency-select[]" class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="BACSA.partyA.thresholdBaseCrrency">
-                                <option value="">-- SELECT BASE CURRENCY --</option>
-                            </select>
+                            <ui-select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
+                                       ng-model="BACSA.partyA.thresholdBaseCrrency"
+                                       theme="select2"
+                                       class="input-small">
+                                <ui-select-match
+                                        placeholder="Select Currency">
+                                    {{$select.selected.id}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                                    <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
 
@@ -43,12 +78,19 @@
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
-                            <select id="le-bilateral-ag-csa-partyA-transfAmount-baseCurrency"
-                                    name="base-currency-select[]" class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="BACSA.partyA.transfAmountBaseCurrency">
-                                <option value="">-- SELECT BASE CURRENCY --</option>
-                            </select>
+                            <ui-select id="le-bilateral-ag-csa-partyA-transfAmount-baseCurrency"
+                                       ng-model="BACSA.partyA.transfAmountBaseCurrency"
+                                       theme="select2"
+                                       class="input-small">
+                                <ui-select-match
+                                        placeholder="Select Currency">
+                                    {{$select.selected.id}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                                    <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
 
@@ -58,7 +100,7 @@
                             <input bs-switch ng-model="BACSA.partyA.independentAmount" type="checkbox"
                                    switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                    ng-true-value="true" ng-false-value="false">
-                            <button type="button" class="btn btn-info">Configure</button>
+                            <button type="button" class="btn btn-info" ng-click="BACSA.modalConfigIndAmount()">Configure</button>
                         </div>
                     </div>
 
@@ -88,7 +130,7 @@
                             <input bs-switch ng-model="BACSA.partyA.ratings" type="checkbox"
                                    switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                    ng-true-value="true" ng-false-value="false">
-                            <button type="button" class="btn btn-info">Configure</button>
+                            <button type="button" class="btn btn-info" ng-click="BACSA.modalConfigBasedOnRatings()">Configure</button>
                         </div>
                     </div>
 
@@ -125,12 +167,19 @@
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
-                            <select id="le-bilateral-ag-csa-partyB-threshold-baseCurrency" name="base-currency-select[]"
-                                    class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="BACSA.partyB.threshold">
-                                <option value="">-- SELECT BASE CURRENCY --</option>
-                            </select>
+                            <ui-select id="le-bilateral-ag-csa-partyB-threshold-baseCurrency"
+                                       ng-model="BACSA.partyB.threshold"
+                                       theme="select2"
+                                       class="input-small">
+                                <ui-select-match
+                                        placeholder="Select Currency">
+                                    {{$select.selected.id}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                                    <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
 
@@ -143,12 +192,19 @@
                                    ng-disabled="false">
                         </div>
                         <div class="col-md-3">
-                            <select id="le-bilateral-ag-csa-partyB-transfAmount-baseCurrency"
-                                    name="base-currency-select[]" class="form-control input-small"
-                                    ng-options="currency as currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="BACSA.partyB.transfAmountBaseCurrency">
-                                <option value="">-- SELECT BASE CURRENCY --</option>
-                            </select>
+                            <ui-select id="le-bilateral-ag-csa-partyB-transfAmount-baseCurrency"
+                                       ng-model="BACSA.partyB.transfAmountBaseCurrency"
+                                       theme="select2"
+                                       class="input-small">
+                                <ui-select-match
+                                        placeholder="Select Currency">
+                                    {{$select.selected.id}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                                    <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
 
@@ -158,7 +214,7 @@
                             <input bs-switch ng-model="BACSA.partyB.independentAmount" type="checkbox"
                                    switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                    ng-true-value="true" ng-false-value="false">
-                            <button type="button" class="btn btn-info">Configure</button>
+                            <button type="button" class="btn btn-info" ng-click="BACSA.modalConfigIndAmount()">Configure</button>
                         </div>
                     </div>
 
@@ -188,7 +244,7 @@
                             <input bs-switch ng-model="BACSA.partyB.ratings" type="checkbox"
                                    switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                    ng-true-value="true" ng-false-value="false">
-                            <button type="button" class="btn btn-info">Configure</button>
+                            <button type="button" class="btn btn-info" ng-click="BACSA.modalConfigBasedOnRatings()">Configure</button>
                         </div>
                     </div>
 

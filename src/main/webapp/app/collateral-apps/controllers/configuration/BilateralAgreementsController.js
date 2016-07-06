@@ -41,7 +41,8 @@ DashboardApp.controller(
                     currencies: currenciesList,
                     financialCalendar: $filter('orderBy')($localStorage.get("FinancialCalendar"), 'name'),
                     marginFrequency: $localStorage.get("MarginFrequencyEnum"),
-                    contracts: []
+                    contracts: [],
+                    supportedindexes: $filter('orderBy')($localStorage.get("Supportedindexes"), 'name'),
                 }
             };
 
@@ -114,7 +115,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
             $scope.BilateralAgreements = new Object();
 
         $scope.addNewBilateralAgreement = function () {
-            
+
             $scope.$workspaceTabsMgm.addTab({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
@@ -217,6 +218,11 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
 //BILATERAL AGREEMENT MAIN TAB CONTROLLER
 DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
 
+    //SETTING DEFAULT INFO
+    this.callIssuanceAuto = false;
+    this.bilateralAcasiaSoft = false;
+    this.status = true;
+
     $scope.holidays = {
         searchSelect: true,
         searchSelected: true,
@@ -250,41 +256,168 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
 
 DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
 
+    this.partyA = {};
+    this.partyA.LegEnforceableAgreement = false;
+    this.partyA.independentAmount = false;
+    this.partyA.ratings = false;
+    this.partyA.rehipotecation = false;
+
+    this.partyB = {};
+    this.partyB.LegEnforceableAgreement = false;
+    this.partyB.independentAmount = false;
+    this.partyB.ratings = false;
+    this.partyB.rehipotecation = false;
+
+    //MODALS
+    this.modalConfigIndAmount = function () {
+        ModalService.open({
+            templateUrl: "modalConfigIndependentAmount.html",
+            size: 'lg',
+            rendered: function () {
+                App.initComponents();
+            },
+            controllerAs: 'mdlConfigIndAmountCtrl',
+            controller: function (toastr, $scope, $uibModalInstance) {
+
+                $scope.save = function () {
+                    //console.log("Press Ok")
+                    $uibModalInstance.close();
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            },
+            resolve: {}
+        });
+    }
+
+    this.modalConfigBasedOnRatings = function () {
+        ModalService.open({
+            templateUrl: "modalConfigBasedOnRatings.html",
+            size: 'lg',
+            rendered: function () {
+                App.initComponents();
+            },
+            controllerAs: 'mdlConfigIndAmountCtrl',
+            controller: function (toastr, $scope, $uibModalInstance) {
+
+                $scope.save = function () {
+                    //console.log("Press Ok")
+                    $uibModalInstance.close();
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            },
+            resolve: {}
+        });
+    };
+
 }]);
 
-DashboardApp.controller('LEBilateralAgrEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
+DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
 
+    var _that = this;
     var currenciesList = $filter('orderBy')($scope.BilateralAgreements.staticData.currencies, 'codigo');
+    var supportedindexes = $scope.BilateralAgreements.staticData.supportedindexes;
 
-    this.modal = ModalService;
-    this.modal.Options = {
-        templateUrl: "modalAddCurrency.html",
-        size: 'lg',
-        rendered: function () {
-            App.initComponents();
+    //clean index array
+    angular.forEach(supportedindexes, function(index, key){
+       if(!index.key){
+           supportedindexes.splice(key,1);
+       }
+    });
+
+    var interestDateRules = [
+        {
+            key: 'FBD',
+            name: 'Monthly, first business date'
         },
-        controller: function ($scope, $uibModalInstance, currencies) {
+    ]
 
-            $scope.currenciesList = currencies;
+    this.interestDateRulesList = interestDateRules;
+    this.interestDateRule = {key: 'FBD'};
+    this.interestDateRuleOnly = true;
+    this.rollInterestPricipal = true;
 
-            $scope.ok = function () {
-                console.log("Press Ok")
-                $uibModalInstance.close();
-            };
+    this.modalAddCurrencty = function(){
+        ModalService.open({
+            templateUrl: "modalAddCurrency.html",
+            size: 'lg',
+            rendered: function () {
+                App.initComponents();
+            },
+            bindToController: true,
+            controllerAs: 'modalAddCurrencyCtrl',
+            controller: function (toastr, $scope, $uibModalInstance) {
 
-            $scope.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
-            };
+                //SETTING DEFAULT VALUES
+                $scope.compounding = false;
+                $scope.includeInterestPosition = false;
+                $scope.adjustmentCurrency = false;
+                $scope.projectInterestPosition = false;
+                $scope.inverse = false;
+                $scope.floor = false;
+                $scope.supportedindexesList = supportedindexes;
+                $scope.currenciesList = currenciesList;
+                $scope.tenor = '';
 
-            $scope.EligCurRate = 'fixed';
+                $scope.save = function () {
+                    //console.log("Press Ok")
 
-        },
-        resolve: {
-            currencies: function () {
-                return currenciesList;
+                    if(!$scope.baseCurrency)
+                    {
+                        toastr.error("Please, fill all fields");
+                        return false;
+                    }
+
+                    if($scope.EligCurRate == 'fixed'){
+                        if(!$scope.index) {
+                            $scope.index = {
+                                key: '',
+                                name: ''
+                            }
+                        }
+                    }
+
+                    _that.gridOptions.data.push({
+                        currency: $scope.baseCurrency.codigo,
+                        type: $scope.EligCurRate,
+                        fixedRate: $scope.interestDateRuleOnlyFixedRate,
+                        index: $scope.index.key,
+                        tenor: $scope.tenor,
+                        source: "",
+                        spread: $scope.spread,
+                        factor: $scope.factor,
+                        floor: $scope.floor,
+                        floorAmount: $scope.floorAmount,
+                        compounding: $scope.compounding,
+                        included: $scope.includeInterestPosition,
+                        projected: $scope.projectInterestPosition,
+                        adjustmentCurrency: $scope.adjustmentCurrency,
+                        hairCut: $scope.hairCut,
+                        hairCutMethod: $scope.inverse == false ? "REGULAR" : "INVERSE",
+                        basisConvention: $scope.basisConvention
+
+                    });
+
+                    $uibModalInstance.close();
+                };
+
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+
+                $scope.EligCurRate = 'fixed';
+
+            },
+            resolve: {
+
             }
-        }
-    }
+        });
+    };
 
     $scope.editRow = function (grid, row) {
         console.log("editing")
@@ -375,11 +508,11 @@ DashboardApp.controller('LEBilateralAgrEligibleSecuritiesController', ['$scope',
                 name: 'Haircut Type',
                 cellTemplate: '' +
                 '<select id="le-bilateral-ag-eleg-security-haircutType" ' +
-                    'ng-disabled="!row.entity.disabled" ' +
-                    'name="" class="form-control" ' +
-                    'ng-model="MODEL_COL_FIELD"> ' +
-                  '<option value="regular">REGULAR</option>' +
-                  '<option value="inverse">INVERSE</option>' +
+                'ng-disabled="!row.entity.disabled" ' +
+                'name="" class="form-control" ' +
+                'ng-model="MODEL_COL_FIELD"> ' +
+                '<option value="regular">REGULAR</option>' +
+                '<option value="inverse">INVERSE</option>' +
                 '</select>',
                 enableColumnMenu: false
             }

@@ -54,12 +54,18 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Base Currency</label>
                         <div class="col-md-9">
-                            <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
-                                    class="form-control input-medium"
-                                    ng-options="currency.codigo for currency in BilateralAgreements.staticData.currencies track by currency.id"
-                                    ng-model="BAMainCtrl.baseCurrency">
-                                <option value="">-- SELECT BASE CURRENCY --</option>
-                            </select>
+                            <ui-select id="le-bilateral-ag-base-currency" ng-model="BAMainCtrl.baseCurrency"
+                                       theme="select2"
+                                       class="input-medium">
+                                <ui-select-match
+                                        placeholder="Select or search a Currency...">
+                                    {{$select.selected.id}}
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                                    <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
 
@@ -93,7 +99,7 @@
                         <label class="control-label col-md-3">Call issuance</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control input-medium" id="le-bilateral-ag-call-issuance"
-                                   ng-model="BAMainCtrl.callIssuance" ng-disabled="false">
+                                   ng-model="BAMainCtrl.callIssuance">
                         </div>
                     </div>
 
@@ -101,7 +107,7 @@
                         <label class="control-label col-md-3">Auto Send Time</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control input-medium" id="le-bilateral-ag-auto-send-time"
-                                   ng-model="BAMainCtrl.autoSendTime.iLocalMillis" ng-disabled="false">
+                                   ng-model="BAMainCtrl.autoSendTime.iLocalMillis">
                         </div>
                     </div>
 
@@ -116,7 +122,8 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Acacia Soft</label>
                         <div class="col-md-9">
-                            <input bs-switch id="le-bilateral-ag-acasia-soft" ng-model="eligibleCurrencies.bilateralAcasiaSoft" type="checkbox"
+                            <input bs-switch id="le-bilateral-ag-acasia-soft" ng-model="BAMainCtrl.bilateralAcasiaSoft"
+                                   type="checkbox"
                                    switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                    ng-true-value="true" ng-false-value="false">
                         </div>
@@ -141,6 +148,7 @@
                             <select class="form-control input-medium"
                                     ng-options="mcFreq.name for mcFreq in BilateralAgreements.staticData.marginFrequency track by mcFreq.key"
                                     ng-model="BAMainCtrl.callFrequency">
+                                <option value="">-- Call Frequency --</option>
                             </select>
                         </div>
                     </div>
@@ -215,7 +223,7 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Status</label>
                         <div class="col-md-9">
-                            <input bs-switch ng-model="BAMainCtrl.callIssuanceAuto" type="checkbox"
+                            <input bs-switch ng-model="BAMainCtrl.status" type="checkbox"
                                    switch-on-text="Open" switch-off-text="Close" switch-size="normal"
                                    ng-true-value="true" ng-false-value="false">
                         </div>
