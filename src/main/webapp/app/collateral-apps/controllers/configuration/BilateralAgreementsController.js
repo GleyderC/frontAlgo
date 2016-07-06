@@ -235,8 +235,8 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
         let BilContract = $scope.parameters.BilateralContract;
 
         this.contractCode = BilContract.contractCode;
-        this.legalEntityPrimary = {id: BilContract.counterpartyA.id};
-        this.legalEntityCounterparty = {id: BilContract.counterpartyB.id};
+        this.legalEntityPrimary = {name: BilContract.counterpartyA.name};
+        this.legalEntityCounterparty = {name: BilContract.counterpartyB.name};
         this.baseCurrency = {id: BilContract.baseCurrency}
         this.contractType = {key: BilContract.bilateralContractType};
         this.autoSendTime = {};
@@ -337,8 +337,17 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
         },
     ]
 
+    var collateralPolicies = [
+        {
+            key: 'CSA_DISCOUNTING',
+            name: 'CSA Discounting'
+        },
+    ]
+
     this.interestDateRulesList = interestDateRules;
     this.interestDateRule = {key: 'FBD'};
+    this.collateralPolicyList = collateralPolicies;
+    this.collateralPolicy = {key: 'CSA_DISCOUNTING'};
     this.interestDateRuleOnly = true;
     this.rollInterestPricipal = true;
 

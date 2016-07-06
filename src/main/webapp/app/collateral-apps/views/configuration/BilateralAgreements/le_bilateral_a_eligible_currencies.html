@@ -235,6 +235,7 @@
                             <label class="control-label col-md-3">Collateral Policy</label>
                             <div class="col-md-9">
                                 <select class="form-control input-medium"
+                                        ng-options="collateralPolicy.name for collateralPolicy in EligibCurrencyCtrl.collateralPolicyList track by collateralPolicy.key"
                                         ng-model="EligibCurrencyCtrl.collateralPolicy">
                                     <option value="">-- SELECT C. POLICY --</option>
                                 </select>
@@ -248,7 +249,7 @@
                             <div class="col-md-9">
                                 <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
                                         class="form-control input-medium"
-                                        ng-options="interestDateRule as interestDateRule.name for interestDateRule in EligibCurrencyCtrl.interestDateRulesList track by interestDateRule.key"
+                                        ng-options="interestDateRule.name for interestDateRule in EligibCurrencyCtrl.interestDateRulesList track by interestDateRule.key"
                                         ng-model="EligibCurrencyCtrl.interestDateRule">
                                     <option value="">-- SELECT RULE --</option>
                                 </select>

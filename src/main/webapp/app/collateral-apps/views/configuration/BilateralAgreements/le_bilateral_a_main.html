@@ -24,7 +24,7 @@
                                        class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
-                                    {{$select.selected.id}}
+                                    {{$select.selected.name}}
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
@@ -41,7 +41,7 @@
                                        theme="select2" class="input-medium">
                                 <ui-select-match
                                         placeholder="Select or search a Legal Entity...">
-                                    {{$select.selected.id}}
+                                    {{$select.selected.name}}
                                 </ui-select-match>
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
