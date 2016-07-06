@@ -314,40 +314,40 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
         {
             id: 'le-general-data',
             title: 'General Data',
-            templateUrl: 'collateral-apps/views/configuration/le_general_data.html',
+            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_general_data.html',
             icon: 'icon-note'
         },
         {
             id: 'le-contact-info',
             title: 'Contact info',
-            templateUrl: 'collateral-apps/views/configuration/le_contact_info.html',
+            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_contact_info.html',
             icon: 'icon-user'
         },
         {
             id: 'le-regulatory',
             title: 'Regulatory Settings',
-            templateUrl: 'collateral-apps/views/configuration/le_regulatory.html',
+            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_regulatory.html',
             icon: ''
         },
         {
             id: 'le-risk-profile',
             title: 'Risk Profiles',
-            templateUrl: 'collateral-apps/views/configuration/le_risk_profile.html',
+            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_risk_profile.html',
             icon: ''
         },
         {
             id: 'le-billateral-a',
             title: 'Bilateral agreements',
-            templateUrl: 'collateral-apps/views/configuration/le_billateral_a.html',
+            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_billateral_a.html',
             icon: ''
         },
         {
             id: 'le-clearing-a',
             title: 'Clearing agreements',
-            templateUrl: 'collateral-apps/views/configuration/le_clearing_a.html',
+            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_clearing_a.html',
             icon: ''
         },
-        {id: 'le-sdi', title: 'SDI', templateUrl: 'collateral-apps/views/configuration/le_sdi.html', icon: ''}
+        {id: 'le-sdi', title: 'SDI', templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_sdi.html', icon: ''}
     ];
 
 }]);
