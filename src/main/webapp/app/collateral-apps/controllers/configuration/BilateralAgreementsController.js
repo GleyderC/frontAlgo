@@ -349,11 +349,10 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
             rendered: function () {
                 App.initComponents();
             },
-            bindToController: true,
-            controllerAs: 'modalAddCurrencyCtrl',
             controller: function (toastr, $scope, $uibModalInstance) {
 
                 //SETTING DEFAULT VALUES
+                //$scope.baseCurrency = { id: '' };
                 $scope.compounding = false;
                 $scope.includeInterestPosition = false;
                 $scope.adjustmentCurrency = false;
@@ -411,9 +410,6 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
                 };
 
                 $scope.EligCurRate = 'fixed';
-
-            },
-            resolve: {
 
             }
         });

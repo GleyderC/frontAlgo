@@ -11,7 +11,11 @@
                 <div class="form-group col-md-6">
                     <label class="control-label col-md-4">Base Currency</label>
                     <div class="col-md-8">
-                        <ui-select id="adding-eligible-currency" ng-model="baseCurrency"
+                        <select ng-model="baseCurrency" class="form-control input-medium"
+                                ng-options="currency.codigo for currency in currenciesList track by currency.id">
+                            <option value="">--Select Currency--</option>
+                        </select>
+                        <!--<ui-select id="adding-eligible-currency" ng-model="baseCurrency"
                                    theme="select2"
                                    class="input-medium">
                             <ui-select-match
@@ -22,7 +26,7 @@
                                     repeat="currency in currenciesList | filter: $select.search track by currency.id">
                                 <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
                             </ui-select-choices>
-                        </ui-select>
+                        </ui-select>-->
                     </div>
                 </div>
                 <div class="col-md-offset-6"></div>
@@ -120,9 +124,7 @@
                         <div class="col-md-12">
                             <label class="control-label">Interest Date Rule Only</label>
                             <input type="number" class="form-control input-small" placeholder="Fixed Rate"
-                                   ng-model="interestDateRuleOnlyFixedRate" min="0"
-                                   max="100" step="0.01"
-                                   maxlength="3">
+                                   ng-model="interestDateRuleOnlyFixedRate" step="0.01">
                         </div>
                     </div>
 
@@ -131,7 +133,11 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="control-label">Index</label>
-                                <ui-select ng-model="index"
+                                <select ng-model="index" class="form-control input-medium"
+                                        ng-options="index.name for index in supportedindexesList track by index.key">
+                                    <option value="">--Select Index--</option>
+                                </select>
+                                <!--<ui-select ng-model="index"
                                            theme="select2"
                                            class="input-medium">
                                     <ui-select-match
@@ -143,6 +149,7 @@
                                         <div ng-bind-html="index.name | highlight: $select.search"></div>
                                     </ui-select-choices>
                                 </ui-select>
+                                -->
                             </div>
                             <div class="col-md-4">
                                 <label class="control-label">Tenor</label>
