@@ -264,14 +264,17 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
 /*Web socket connection */
 CollateralApp.factory('$socket',['$websocket','$rootScope','$http','URL_CONFIG','$log',
                          function($websocket,$rootScope,$http, URL_CONFIG, $log){
-	var ws  = new WebSocket(URL_CONFIG.WS_URL);
-
-		ws.onopen = function(){
+		var ws  = $websocket(URL_CONFIG.WS_URL);
+		ws.onOpen(function(){
             		console.debug("Socket Connected");
             		ws.send(JSON.stringify({signal : "SGN_USER_NAME" , userName : 'pepito'}));
-            };
+            		ws.onMessage(function(rsp){
+            				console.debug("Se ha recibido un mensaje");
+            		});
+            });
+		
 	return ws ;
-}]),
+}]);
 /*Default Setup $http Service*/
 CollateralApp.config(['$httpProvider', function($httpProvider){
 
