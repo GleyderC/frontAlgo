@@ -92,7 +92,7 @@ DashboardApp.service('MenuService', function () {
                                 icon: 'fa fa-bank',
                                 text: 'Legal Entity'
                             },
-                            templateUrl: paths.views + '/configuration/legal_entity.html',
+                            templateUrl: paths.views + '/configuration/LegalEntity/legal_entity.html',
                             autoload: true
                         },
                         {
@@ -107,7 +107,7 @@ DashboardApp.service('MenuService', function () {
                                             icon: 'fa fa-thumbs-o-up',
                                             text: 'Search Bilateral Agreements'
                                         },
-                                        templateUrl: paths.views + '/configuration/BilateralAgreements/le_bilateral_a_add_search.html',
+                                        templateUrl: paths.views + '/configuration/BilateralAgreements/bilateral_a_add_search.html',
                                         autoload: true
                                     }
                                 ]

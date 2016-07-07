@@ -35,7 +35,7 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
             views: {
                 'content@home':
                 {
-                    templateUrl: paths.views + "/configuration/legal_entity.html",
+                    templateUrl: paths.views + "/configuration/LegalEntity/legal_entity.html",
                 }
             },
             resolve: {
