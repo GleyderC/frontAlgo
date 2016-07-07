@@ -59,7 +59,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope','$socket', 'u
             {
                 name : 'Action',
                 cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></button> ' +
-                                    '<a ng-href="{{row.entity.pdfURL}}" class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
+                                    '<a ng-click="grid.appScope.getPDF(row.entity.pdfURL)"  class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
                                     ' <a  ng-href="{{row.entity.excelURL}}" class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></button>' +
                                 '</div>',
                 enableColumnMenu : false,
@@ -93,9 +93,29 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope','$socket', 'u
                 });
                 //console.log($scope.Messages);
                 $scope.gridMessagesOptions.data = $scope.Messages;
-            });;
-        }
-
+            });
+        };
+        $scope.getPDF  = function(url){
+        	MarginCallService.getFile(url).then(function(result){
+        			console.log(result);
+        	});
+        };
+//        	$.fileDownload('/File/Select', 
+//        		    {
+//        		        httpMethod : "POST",
+//        		        data : {
+//        		            fileName : url
+//        		        }
+//        		    }).done(function(e, response)
+//        		    {
+//        		     // success
+//        		    	console.log(response);
+//        		    
+//        		    }).fail(function(e, response)
+//        		    {
+//        		     // failure
+//        		    });
+//        };
         $scope.viewMessage = function(row) {
             $scope.messageSelected = row;
         };
