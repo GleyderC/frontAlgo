@@ -1,10 +1,10 @@
 'use strict'
  var UserMessageCtrl = DashboardApp.controller('UserMessageController',
-    ['$scope', '$request', '$interval','uiGridConstants','UserMessageService', function ($scope, $request, $interval,uiGridConstants,UserMessage) {
+    ['$scope', '$rootScope', '$request', '$interval','uiGridConstants','UserMessageService', function ($scope, $rootScope, $request, $interval,uiGridConstants,UserMessage) {
     
     	$scope.$on('$includeContentLoaded', function () {
          });
-    	$scope.gridUserMessages = {
+    	$rootScope.gridUserMessages = {
     			columnDefs : [
 				{ 	name:"From",
 					field : "hasBeenSentByEmail"
@@ -19,18 +19,18 @@
     			          ],
     	} ;
     	
-    	$scope.messageContent  = {} ;
-    	$scope.viewMessage = function(entity){
-    		$scope.messageContent  =  entity;	
+    	$rootScope.messageContent  = {} ;
+    	$rootScope.viewMessage = function(entity){
+    		$rootScope.messageContent  =  entity;	
     	};
-    	$scope.messagesList = [];
+    	$rootScope.messagesList = [];
     	
-    	$scope.getNewMessages = function(){
+    	$rootScope.getNewMessages = function(){
  	    	UserMessage.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
-	    		$scope.messagesList	   = data.dataResponse;
-	    		$scope.gridUserMessages.data = data.dataResponse ;
+ 	    		$rootScope.messagesList	   = data.dataResponse;
+ 	    		$rootScope.gridUserMessages.data = data.dataResponse ;
 	    	});
     	};
-    	$scope.getNewMessages();
+    	$rootScope.getNewMessages();
     
 }]);
