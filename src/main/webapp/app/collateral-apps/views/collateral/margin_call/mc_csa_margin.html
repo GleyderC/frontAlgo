@@ -79,11 +79,7 @@
                             <label class="control-label col-md-2">M.T.A.</label>
                             <div class="col-md-4">
                                 <input type="text" class="form-control collateral-money" placeholder=""
-                                       ng-model="MarginCall.contract.minimumTransferAmountPartyA" ui-number-mask="0"
-                                       ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure<0">
-                                <input type="text" class="form-control collateral-money" placeholder=""
-                                       ng-model="MarginCall.contract.minimumTransferAmountPartyB" ui-number-mask="0"
-                                       ng-if="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure>=0">
+                                       ng-model="minimumTransferAmount" ui-number-mask="0">
                             </div>
 
                         </div>
