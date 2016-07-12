@@ -60,45 +60,6 @@
     </div>
     <!-- END ROW -->
 
-    <div class="row" id="legal-entity-tabs" du-smooth-scroll du-scrollspy>
-        <!-- BEGIN CHART PORTLET-->
-        <div class="portlet light bordered">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-bank font-dark font-green-haze"></i>
-                    <span class="caption-subject bold uppercase font-green-haze" ng-bind="legalEntity.name"> </span>
-                    <span class="caption-helper" ng-if="legalEntity.id!=-1" ng-bind="legalEntity.id"> </span>
 
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse"> </a>
-                    <a href="" class="fullscreen"> </a>
-                    <a href="javascript:;" class="reload"> </a>
-                </div>
-            </div>
-            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <div class="portlet-body" ng-controller="TabsLegalEntityController">
-                <uib-tabset active="1">
-                    <uib-tab index="$index + 1" ng-repeat="tab in tabs" active="tab.active" disable="tab.disabled">
-                        <uib-tab-heading>
-                            <i class="{{tab.icon}}"></i>{{tab.title}}
-                        </uib-tab-heading>
-                        <div ng-include=tab.templateUrl></div>
-                    </uib-tab>
-                </uib-tabset>
-                <div class="row">
-                    <div class="form-actions">
-                        <div class="col-md-offset-5 col-md-7">
-                            <button type="submit" class="btn green" ng-click="saveLegalEntity(legalEntity)">Save</button>
-                            <button type="button" class="btn default" ng-click="cancel()">Cancel</button>
-                        </div>
-                    </div>
-                    <!--/form-actions-->
-                </div>
-                <!--</div> row-->
-            </div>
-        </div>
-        <!-- END CHART PORTLET-->
-    </div>
     <!-- END ROW -->
 </div>

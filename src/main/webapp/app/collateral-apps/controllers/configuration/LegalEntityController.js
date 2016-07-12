@@ -209,18 +209,39 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             //elementService.collapsePortlet('legal-entity-table');
             //elementService.expandPortlet(element);
             //var offset = $("#" + element).offset().top;
-            elementService.scrollToElement(element, 80);
+            //elementService.scrollToElement(element, 80);
 
             $scope.setFocusInput('le-general-data');
 
-            buildLegalData();
+            $scope.$workspaceTabsMgm.addTab({
+                head: {
+                    icon: 'fa fa-bank',
+                    text: 'New Legal Entity',
+                },
+                templateUrl: paths.views + "/configuration/le_form_container.html",
+                closable: true,
+                autoload: true
+            }, [3, 1]);
+
+            //buildLegalData();
+
 
         }
 
         // Edit legalEntity
         $scope.editRow = function (grid, row) {
 
-            elementService.scrollToElement("legal-entity-tabs", 80);
+            $scope.$workspaceTabsMgm.addTab({
+                head: {
+                    icon: 'fa fa-bank',
+                    text: 'Editing Legal Entity',
+                },
+                templateUrl: paths.views + "/configuration/le_form_container.html",
+                closable: true,
+                autoload: true
+            }, [3, 1]);
+
+            //elementService.scrollToElement("legal-entity-tabs", 80);
 
             $scope.setFocusInput('le-general-data');
 

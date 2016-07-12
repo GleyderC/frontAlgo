@@ -92,8 +92,18 @@ DashboardApp.service('MenuService', function () {
                                 icon: 'fa fa-bank',
                                 text: 'Legal Entity'
                             },
-                            templateUrl: paths.views + '/configuration/legal_entity.html',
-                            autoload: true
+                            childWorkspace: {
+                                tabList:[
+                                    {
+                                        head: {
+                                            icon: 'fa fa-search',
+                                            text: 'Search Legal Entity'
+                                        },
+                                        templateUrl: paths.views + '/configuration/legal_entity.html',
+                                        autoload: true
+                                    }]
+                            },
+
                         },
                         {
                             head: {

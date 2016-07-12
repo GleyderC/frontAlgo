@@ -254,7 +254,7 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
 
 }]);
 
-DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
+DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$request', '$interval', '$filter', 'toastr', function (ModalService, $scope, $request, $interval, $filter, toastr) {
 
     this.partyA = {};
     this.partyA.LegEnforceableAgreement = false;
@@ -314,6 +314,11 @@ DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$r
             resolve: {}
         });
     };
+
+
+    this.saveBilateralAgr = function(){
+        toastr.success("Info Saved","Good")
+    }
 
 }]);
 
