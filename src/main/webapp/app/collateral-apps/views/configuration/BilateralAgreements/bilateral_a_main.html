@@ -29,6 +29,9 @@
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
                                     <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
+                                    <small>
+                                        otherName: <span ng-bind-html="legalEntity.otherName | highlight: $select.search"></span>
+                                    </small>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
@@ -46,6 +49,9 @@
                                 <ui-select-choices
                                         repeat="legalEntity in legalEntities | filter: $select.search track by legalEntity.id">
                                     <div ng-bind-html="legalEntity.name | highlight: $select.search"></div>
+                                    <small>
+                                        otherName: <span ng-bind-html="legalEntity.otherName | highlight: $select.search"></span>
+                                    </small>
                                 </ui-select-choices>
                             </ui-select>
                         </div>

@@ -63,7 +63,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-blackboard',
                             text: 'Main'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_main.html",
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_main.html",
                         autoload: true
                     },
                     {
@@ -71,7 +71,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-list-alt',
                             text: 'CSA Margin'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_csa_margins.html",
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_csa_margins.html",
                         autoload: true
                     },
                     {
@@ -79,7 +79,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-piggy-bank',
                             text: 'Eligible currencies'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_currencies.html",
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_eligible_currencies.html",
                         autoload: true
                     },
                     {
@@ -87,7 +87,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-eye-open',
                             text: 'Eligible securities'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/le_bilateral_a_eligible_securities.html",
+                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_eligible_securities.html",
                         autoload: true
                     }
                 ]
@@ -235,8 +235,8 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
         let BilContract = $scope.parameters.BilateralContract;
 
         this.contractCode = BilContract.contractCode;
-        this.legalEntityPrimary = {name: BilContract.counterpartyA.name};
-        this.legalEntityCounterparty = {name: BilContract.counterpartyB.name};
+        this.legalEntityPrimary = {id: BilContract.counterpartyA.id, name: BilContract.counterpartyA.name};
+        this.legalEntityCounterparty = {id:  BilContract.counterpartyB.id, name: BilContract.counterpartyB.name};
         this.baseCurrency = {id: BilContract.baseCurrency}
         this.contractType = {key: BilContract.bilateralContractType};
         this.autoSendTime = {};

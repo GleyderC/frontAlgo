@@ -1,37 +1,35 @@
-<div class="row" ng-controller="UserMessageController">
-	<div ng-repeat="message in messagesList">
-		<div class="col-md-6">
-			<!-- BEGIN CHART PORTLET-->
-<a href="#">
-			<div class="portlet light bordered">
-				<div class="portlet-title">
-					<div class="caption" col-md-3>
-						<i class="fa fa- font-dark font-green-haze"></i> 
-						<span class="caption-subject bold uppercase font-green-haze">
-						{{message.messageContentBasic}}
-						</span>
-					</div>
-
+<div class="row" ng-controller="UserMessageController as userMessageCtrl">
+	<div class="col-md-6">		
+		<div class="portlet light bordered" style="margin-bottom: 0">
+		
+		<div class="row">
+                    <div class="col-md-3">
+                        <div class="btn-group">
+                            <button type="submit" class="btn green" uib-popover="Refresh Messages" popover-trigger="mouseenter" ng-click="getNewMessages()">
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+		
+			<div ui-grid="$root.gridUserMessages" ui-grid-auto-resize
+				ui-grid-resize-columns class="grid" style="height: 300px;"></div>
 				</div>
-				<!-- BEGIN EXAMPLE TABLE PORTLET-->
-				<div class="portlet-body">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="btn-group">
-							<a href="#">
-									<i ng-class="!message.hasBeenRead ? 'fa-circle' : 'fa-circle-thin'" class="fa   "></i>
-									</a>
-									
-							</div>
-								{{message.messageContentExtendes}}
-						</div>
-					</div>
-					<br>
-					<!--uib-pagination boundary-links="true" total-items="gridApi.pagination.getTotalPages(gridApi)" ng-model="gridApi.pagination.getPage()" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination-->
-				</div>
-				<!-- END EXAMPLE TABLE PORTLET-->
+				
+	</div>
+	<div class="col-md-6">
+		<div class="portlet light bordered" style="margin-bottom: 0">
+			<div class="note note-success">
+				<h4 class="block">Title: {{messageContent.messageContentBasic}}</h4>
+				 <span class="timeline-body font-grey-mint">From:
+						{{messageContent.hasBeenSentByEmail}}
+					</span>
+					<br />
+					 <span class="timeline-body-time font-grey-mint">Content
+						
+					</span>
+				<p>{{messageContent.messageContentExtendes}}</p>
 			</div>
-			</a>
 		</div>
 	</div>
 </div>

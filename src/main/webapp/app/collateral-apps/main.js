@@ -262,16 +262,30 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
 }]);
 
 /*Web socket connection */
-CollateralApp.factory('$socket',['$websocket','$rootScope','$http','URL_CONFIG','$log',
+CollateralApp.factory('$socket',['$websocket', '$rootScope','$http','URL_CONFIG','$log',
                          function($websocket,$rootScope,$http, URL_CONFIG, $log){
-	var ws  = new WebSocket(URL_CONFIG.WS_URL);
-
-		ws.onopen = function(){
+		var ws  = $websocket("ws://localhost:8080/CCM/websocketback");
+		ws.onOpen(function(){
             		console.debug("Socket Connected");
+            		//alert("websocket connected!");
             		ws.send(JSON.stringify({signal : "SGN_USER_NAME" , userName : 'pepito'}));
-            };
+            		
+            });
+		
+		ws.onMessage(function(rsp){
+			//console.debug("Se ha recibido un mensaje");
+
+			data = [{id : 1, userMessageType : 'INTEREST_STATEMENT_CORRECTED', hasBeenRead : false, messageContentBasic : 'MC1 Margin Call Entry', 
+				messageContentExtendes : 'Margin Call entry for contract abcdef', hasBeenSentByEmail : true}];
+			$rootScope.messagesList = data.concat($rootScope.messagesList);
+			$rootScope.gridUserMessages.data = data.concat($rootScope.gridUserMessages.data);
+			$rootScope.unReadMessages = data.concat($rootScope.unReadMessages); 
+			$rootScope.qtyMessages =   $rootScope.unReadMessages.length;
+			alert("Mensaje recibido");
+	});
+		
 	return ws ;
-}]),
+}]);
 /*Default Setup $http Service*/
 CollateralApp.config(['$httpProvider', function($httpProvider){
 

@@ -89,6 +89,8 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
         ];
 
         $scope.Inventory = {} ;
+        $scope.threshold = 0;
+        $scope.minimumTransferAmount = 0; 
         MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
             //$scope.marginCallTrade = result.data.dataResponse.marginCall;
             $scope.Trades = result.data.dataResponse.trades;
@@ -98,6 +100,14 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
             $scope.MarginCallDetail = result.data.dataResponse;
             $scope.Inventory  =  $scope.posted.concat($scope.received);
             $scope.pool  =  result.data.dataResponse.poolDisplays;
+            if($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.exposurePlusNettedIa > 0 ){
+            	$scope.threshold  = $scope.MarginCallDetail.contract.partyBThreshold;
+            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyB; 
+            	
+            }else{
+            	$scope.threshold  = $scope.MarginCallDetail.contract.partyAThreshold;
+            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyA; 
+            }
         });
 
         this.sendMargin = function () {

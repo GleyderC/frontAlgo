@@ -3,9 +3,23 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConstants', 'MarginCallService',
-    function ($scope, uiGridConstants, MarginCallService) {
-
+DashboardApp.controller('MarginCallMessagingController', ['$scope','$socket', 'uiGridConstants', 'MarginCallService',
+    function ($scope,$socket ,uiGridConstants, MarginCallService) {
+		
+		$socket.onMessage(function(msg){
+			$scope.newMessage= JSON.parse(msg.data);
+			console.log($scope.newMessage);
+			if($scope.newMessage.hasOwnProperty("signal" )&& $scope.newMessage.signal == "SGN_MC1_MESSAGE_RECEIVED"){
+				if($scope.$parent.Messages.length==0){
+					$scope.$parent.Messages  = $scope.newMessage.marginCall.messages ;
+				}else{
+					$scope.$parent.Messages.push($scope.newMessage.marginCall.messages[$scope.newMessage.marginCall.messages.length-1]);
+				}
+			}
+		});
+		
+		
+		
         $scope.gridMessagesOptions = {
             paginationPageSizes: [15, 50, 100, 200, 500],
             paginationPageSize: 5,
@@ -18,7 +32,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
             exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
             exporterPdfHeader: {text: "Margin Call - messaging", style: 'headerStyle'},
             exporterPdfFooter: function (currentPage, pageCount) {
-                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+                return	 {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
             },
             exporterPdfCustomFormatter: function (docDefinition) {
                 docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
@@ -40,13 +54,13 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
                     priority: 0
                 }
             },
-            {field: 'date.dateMessage', name: 'date'},
+            {field: 'date.dateMessage', name: 'date', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'", },
             {field: 'sentReceived', name: 'direction'},
             {
                 name : 'Action',
                 cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></button> ' +
-                                    '<button class="btn btn-sm btn-danger uigrid-btn" ng-click="grid.appScope.downloadPdf(row.entity)" ><i class="fa fa-file-pdf-o"></i></button>' +
-                                    ' <button class="btn btn-sm green-jungle uigrid-btn" ng-click="grid.appScope.downloadExcel(row.entity)" ><i class="fa fa-file-excel-o"></i></button>' +
+                                    '<a ng-click="grid.appScope.getPDF(row.entity.pdfURL)"  class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
+                                    ' <a  ng-href="{{row.entity.excelURL}}" class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></button>' +
                                 '</div>',
                 enableColumnMenu : false,
                 width : 140,
@@ -55,7 +69,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
             }
 
         ];
-
+        
         $scope.$watchCollection('$parent.Messages', function (newMessages, oldMessages) {
             if (newMessages === oldMessages ||  newMessages == undefined) {
                 return false;
@@ -67,8 +81,6 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
                     message.date.dateMessage = new Date(message.date.iMillis);
             });
             $scope.gridMessagesOptions.data = newMessages;
-            //console.log(newMessages);
-
         });
         
         $scope.getNewMessages = function (MarginCallId) {
@@ -81,11 +93,30 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope', 'uiGridConst
                 });
                 //console.log($scope.Messages);
                 $scope.gridMessagesOptions.data = $scope.Messages;
-            });;
-        }
-
+            });
+        };
+        $scope.getPDF  = function(url){
+        	MarginCallService.getFile(url).then(function(result){
+        			console.log(result);
+        	});
+        };
+//        	$.fileDownload('/File/Select', 
+//        		    {
+//        		        httpMethod : "POST",
+//        		        data : {
+//        		            fileName : url
+//        		        }
+//        		    }).done(function(e, response)
+//        		    {
+//        		     // success
+//        		    	console.log(response);
+//        		    
+//        		    }).fail(function(e, response)
+//        		    {
+//        		     // failure
+//        		    });
+//        };
         $scope.viewMessage = function(row) {
             $scope.messageSelected = row;
-            //console.log($scope.messageSelected);
-        }
+        };
     }]);
