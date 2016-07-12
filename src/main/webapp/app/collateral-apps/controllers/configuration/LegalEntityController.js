@@ -2,6 +2,172 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
+
+DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$scope', 'elementService',
+    '$timeout', 'localStorageService', 'uiGridConstants',
+    function (LegalEntityService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
+
+        /* Cargando datos en legal entity ui-grid*/
+
+        $scope.gridLegalEntityOptions = {
+            showGridFooter: true,
+            paginationPageSizes: [12, 50, 100, 200, 500],
+            paginationPageSize: 12,
+            enableColumnResizing: true,
+            enableFiltering: true,
+            rowHeight: 35, // set height to each row
+            enableGridMenu: true,
+            exporterCsvFilename: 'legal_entity.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Legal Entity", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 450,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+                /*$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                 console.log('row selected ' + row.isSelected);
+
+                 });*/
+                /*gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+                 //console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue );
+                 if(newValue!=oldValue)
+                 LegalEntityService.set(rowEntity, true);
+
+                 $scope.$apply();
+                 });*/
+            },
+            columnDefs: [
+                {field: 'id', enableCellEdit: false, width: 90,},
+                {
+                    field: 'name', enableCellEdit: false,
+                    sort: {
+                        direction: uiGridConstants.ASC,
+                        priority: 0
+                    }
+                },
+                {field: 'otherName', enableCellEdit: false},
+                {
+                    field: 'isBranch', name: 'Branch', enableCellEdit: false, width: 70,
+                    cellTemplate: "<div>{{grid.appScope.booleanValue(row)}}</div>",
+                    filter: {
+                        type: uiGridConstants.filter.SELECT,
+                        selectOptions: [{value: true, label: 'Yes'}, {value: false, label: 'No'}]
+                    },
+
+                },
+                {field: 'namemotherLegalEntity', name: 'Mother', enableCellEdit: false},
+                /*{   name: 'Country',
+                 field: 'countryId.name',
+                 editModelField: 'countryId',
+                 editableCellTemplate: paths.tpls + '/UiSelect.html',
+                 editDropdownOptionsArray : $scope.countries
+                 },*/
+                {field: 'LEI', enableCellEdit: false},
+                {field: 'BIC', enableCellEdit: false},
+                {
+                    field: 'rolList',
+                    displayName: 'Roles',
+                    cellFilter: 'stringArrayFilter',
+                    enableCellEdit: false
+                },
+                {
+                    name: 'Actions',
+                    cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                    enableColumnMenu: false,
+                    enableCellEdit: false,
+                    width: 120,
+                    enableFiltering: false
+                }
+            ]
+        };
+
+        LegalEntityService.getAll().then(function (result) {
+            $scope.legalEntities = result.data.dataResponse;
+            /*$scope.legalEntities.forEach(function(legal){
+             var country = $scope.countries.filter(function (country) {
+             return country.key == legal.countryId;
+             });
+             legal.countryId = country[0];
+             });*/
+            $scope.legalEntities.forEach(function (legalEntity) {
+
+                //Insert mother Legal Entity
+                var MotherLegal = $scope.legalEntities.filter(function (legal) {
+                    if (legal.id == legalEntity.motherLegalEntity)
+                        return legal.name;
+                    else return "";
+
+                });
+
+                if (MotherLegal[0]) {
+                    legalEntity.namemotherLegalEntity = MotherLegal[0].name;
+                }
+            });
+            $scope.gridLegalEntityOptions.data = $scope.legalEntities;
+
+        });
+
+        $scope.addLegalEntity = function (element) {
+
+            if (!element) {
+                //toastr.warning('Your computer is about to explode!', 'Warning', {closeButton: true});
+                console.log("Problemas al recibir el elemento");
+                return false;
+            }
+
+            //elementService.collapsePortlet('legal-entity-table');
+            //elementService.expandPortlet(element);
+            //var offset = $("#" + element).offset().top;
+            //elementService.scrollToElement(element, 80);
+
+
+            $scope.$workspaceTabsMgm.addTab({
+                head: {
+                    icon: 'fa fa-bank',
+                    text: 'New Legal Entity',
+                },
+                templateUrl: paths.views + "/configuration/le_form_container.html",
+                closable: true,
+                autoload: true
+            }, [3, 1]);
+
+            //buildLegalData();
+
+        }
+
+        // Edit legalEntity
+        $scope.editRow = function (grid, row) {
+
+            $scope.$workspaceTabsMgm.addTab({
+                head: {
+                    icon: 'fa fa-bank',
+                    text: 'Editing Legal Entity',
+                },
+                templateUrl: paths.views + "/configuration/le_form_container.html",
+                parameters: {
+                    legalEntity: row.entity
+                },
+                closable: true,
+                autoload: true
+            }, [3, 1]);
+
+            //elementService.scrollToElement("legal-entity-tabs", 80);
+        };
+
+    }]);
+
 DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope', 'elementService',
     '$timeout', 'localStorageService', 'uiGridConstants',
     function (LegalEntityService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
@@ -9,26 +175,42 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();
         });
-        
+
         $scope.legalEntities = [];
 
         var financialCalendar = localStorageService.get('FinancialCalendar');
         var i = 0;
-        //console.log($('#holidays-select').multiSelect());
-        /*financialCalendar.forEach(function (holiday) {
-
-            $('#holidays-select').multiSelect('addOption', { value: holiday.key, text: holiday.name, index: i, nested: 'optgroup_label' });
-            i++;
-        });*/
 
         $scope.holidays = {
             searchSelect: true,
             searchSelected: true,
             data: financialCalendar
         };
+        //console.log($('#holidays-select').multiSelect());
+        /*financialCalendar.forEach(function (holiday) {
 
+         $('#holidays-select').multiSelect('addOption', { value: holiday.key, text: holiday.name, index: i, nested: 'optgroup_label' });
+         i++;
+         });*/
 
-        $scope.rols = ['COUNTERPARTY', 'PO', 'ISSUER', 'CCP'];
+        $scope.setFocusInput = function (element) {
+            //console.log("#"+element+" input:first:not([readonly])");
+            $("#" + element + " input:first:not([readonly])").focus();
+        }
+
+        $scope.setFocusInput('le-general-data');
+
+        $scope.rols =
+        {
+            searchSelect: true,
+            searchSelected: true,
+            data: [
+                { key: 'COUNTERPARTY', name: 'COUNTERPARTY' },
+                { key: 'PO', name: 'PO' },
+                { key: 'ISSUER', name: 'ISSUER' },
+                { key: 'CCP', name: 'CCP' }
+            ]
+        };
         $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
         $scope.country = {};
         $scope.countries = localStorageService.get('CountryEnum');
@@ -39,9 +221,9 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         function buildLegalData() {
 
-            $scope.legalEntityMother = { selected: { id: -1}};
+            $scope.legalEntityMother = {selected: {id: -1}};
 
-            $scope.country = { selected: { id: -1}};
+            $scope.country = {selected: {id: -1}};
 
             $scope.legalEntity =
             {
@@ -76,204 +258,18 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         }
 
-        /* Cargando datos en legal entity ui-grid*/
-
-        $scope.gridLegalEntityOptions = {
-            showGridFooter: true,
-            paginationPageSizes: [12, 50, 100, 200, 500],
-            paginationPageSize: 12,
-            enableColumnResizing: true,
-            enableFiltering: true,
-            rowHeight: 35, // set height to each row
-            enableGridMenu: true,
-            exporterCsvFilename: 'legal_entity.csv',
-            exporterPdfDefaultStyle: {fontSize: 9},
-            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: {text: "Legal Entity", style: 'headerStyle'},
-            exporterPdfFooter: function (currentPage, pageCount) {
-                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
-            },
-            exporterPdfCustomFormatter: function (docDefinition) {
-                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
-                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
-                return docDefinition;
-            },
-            exporterPdfOrientation: 'portrait',
-            exporterPdfPageSize: 'LETTER',
-            exporterPdfMaxGridWidth: 450,
-            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-            onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
-                /*$scope.gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    console.log('row selected ' + row.isSelected);
-
-                });*/
-                /*gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
-                    //console.log('edited row id:' + rowEntity.id + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue );
-                    if(newValue!=oldValue)
-                        LegalEntityService.set(rowEntity, true);
-
-                    $scope.$apply();
-                });*/
-            }
-        };
-
-        $scope.booleanValue = function(row){
+        $scope.booleanValue = function (row) {
             return row.entity.isBranch ? 'Yes' : 'No';
-        };
-
-
-        $scope.gridLegalEntityOptions.columnDefs = [
-            {field: 'id', enableCellEdit : false, width: 90,},
-            {field: 'name', enableCellEdit : false,
-                sort: {
-                    direction: uiGridConstants.ASC,
-                    priority: 0
-                }
-            },
-            {field: 'otherName', enableCellEdit : false },
-            {
-                field: 'isBranch', name: 'Branch',enableCellEdit : false, width: 70,
-                cellTemplate: "<div>{{grid.appScope.booleanValue(row)}}</div>",
-                    filter: {
-                        type: uiGridConstants.filter.SELECT,
-                        selectOptions: [{value: true, label: 'Yes'}, {value: false, label: 'No'}]
-                    },
-
-            },
-            {field:'namemotherLegalEntity',name:'Mother', enableCellEdit : false},
-            /*{   name: 'Country',
-                field: 'countryId.name',
-                editModelField: 'countryId',
-                editableCellTemplate: paths.tpls + '/UiSelect.html',
-                editDropdownOptionsArray : $scope.countries
-            },*/
-            {field: 'LEI', enableCellEdit : false },
-            {field: 'BIC', enableCellEdit : false },
-            {field: 'rolList',
-                displayName: 'Roles',
-                cellFilter: 'stringArrayFilter',
-                enableCellEdit : false
-            },
-            {
-                name: 'Actions',
-                cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
-                enableColumnMenu: false,
-                enableCellEdit : false,
-                width: 120,
-                enableFiltering: false
-            }
-        ];
-
-        LegalEntityService.getAll().then(function (result) {
-            $scope.legalEntities = result.data.dataResponse;
-            /*$scope.legalEntities.forEach(function(legal){
-                var country = $scope.countries.filter(function (country) {
-                    return country.key == legal.countryId;
-                });
-                legal.countryId = country[0];
-            });*/
-            $scope.legalEntities.forEach(function(legalEntity){
-
-                //Insert mother Legal Entity
-                var MotherLegal = $scope.legalEntities.filter(function (legal) {
-                    if(legal.id == legalEntity.motherLegalEntity)
-                        return legal.name;
-                    else return "";
-
-                });
-
-                if(MotherLegal[0]) {
-                    legalEntity.namemotherLegalEntity = MotherLegal[0].name;
-                }
-            });
-            $scope.gridLegalEntityOptions.data = $scope.legalEntities;
-
-
-        });
-
-        $scope.setFocusInput = function (element) {
-            //console.log("#"+element+" input:first:not([readonly])");
-            $("#" + element + " input:first:not([readonly])").focus();
-        }
-
-        $scope.addLegalEntity = function (element) {
-
-            if (!element) {
-                //toastr.warning('Your computer is about to explode!', 'Warning', {closeButton: true});
-                console.log("Problemas al recibir el elemento");
-                return false;
-            }
-
-            //elementService.collapsePortlet('legal-entity-table');
-            //elementService.expandPortlet(element);
-            //var offset = $("#" + element).offset().top;
-            //elementService.scrollToElement(element, 80);
-
-            $scope.setFocusInput('le-general-data');
-
-            $scope.$workspaceTabsMgm.addTab({
-                head: {
-                    icon: 'fa fa-bank',
-                    text: 'New Legal Entity',
-                },
-                templateUrl: paths.views + "/configuration/le_form_container.html",
-                closable: true,
-                autoload: true
-            }, [3, 1]);
-
-            //buildLegalData();
-
-
-        }
-
-        // Edit legalEntity
-        $scope.editRow = function (grid, row) {
-
-            $scope.$workspaceTabsMgm.addTab({
-                head: {
-                    icon: 'fa fa-bank',
-                    text: 'Editing Legal Entity',
-                },
-                templateUrl: paths.views + "/configuration/le_form_container.html",
-                closable: true,
-                autoload: true
-            }, [3, 1]);
-
-            //elementService.scrollToElement("legal-entity-tabs", 80);
-
-            $scope.setFocusInput('le-general-data');
-
-            $scope.legalEntity = row.entity;
-
-            $scope.legalEntityMother = { selected: { id: -1}};
-            if($scope.legalEntity.motherLegalEntity != -1){
-                LegalEntityService.getById($scope.legalEntity.motherLegalEntity).then(function (result) {
-                    var legalEntityMother = result.data.dataResponse;
-                    //console.log(legalEntityMother);
-                    $scope.legalEntityMother.selected = legalEntityMother;
-                });
-            }
-
-            $scope.country = { selected: { id: -1}};
-            var country = $scope.countries.filter(function (country) {
-                return country.key == $scope.legalEntity.countryId;
-            });
-            $scope.country.selected = country[0];
-
-            $scope.isEditLegal = true;
-
         };
 
         $scope.saveLegalEntity = function (legalEntity) {
 
-            if($scope.legalEntityMother.selected){
+            if ($scope.legalEntityMother.selected) {
                 legalEntity.motherLegalEntity = $scope.legalEntityMother.selected.id;
                 legalEntity.namemotherLegalEntity = $scope.legalEntityMother.selected.name;
 
             }
-            if($scope.country.selected){
+            if ($scope.country.selected) {
                 //console.log($scope.country.selected);
                 legalEntity.countryId = $scope.country.selected.key;
             }
@@ -281,14 +277,14 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             //LegalEntityService.set(legalEntity, $scope.isEditLegal);
 
             /*if($scope.holidays.getSelectedElements().length > 0){
-                //console.log($scope.holidays.getSelectedElements());
-                //legalEntity.financialCalendarList = $scope.holidays.getSelectedElements();
-                //console.log(legalEntity.financialCalendarList);
-                $scope.holidays.unselectAll();
+             //console.log($scope.holidays.getSelectedElements());
+             //legalEntity.financialCalendarList = $scope.holidays.getSelectedElements();
+             //console.log(legalEntity.financialCalendarList);
+             $scope.holidays.unselectAll();
 
-            }*/
+             }*/
 
-            if(!$scope.isEditLegal) {
+            if (!$scope.isEditLegal) {
                 $scope.gridLegalEntityOptions.data.push(legalEntity);
             }
             LegalEntityService.set(legalEntity, $scope.isEditLegal);
@@ -309,20 +305,43 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             buildLegalData();
         }
 
+        //editing
+        if(!$scope.parameters.legalEntity)
+            return false;
+
+        $scope.legalEntity = $scope.parameters.legalEntity;
+
+        $scope.legalEntityMother = {selected: {id: -1}};
+        if ($scope.legalEntity.motherLegalEntity != -1) {
+            LegalEntityService.getById($scope.legalEntity.motherLegalEntity).then(function (result) {
+                var legalEntityMother = result.data.dataResponse;
+                //console.log(legalEntityMother);
+                $scope.legalEntityMother.selected = legalEntityMother;
+            });
+        }
+
+        $scope.country = {selected: {id: -1}};
+        var country = $scope.countries.filter(function (country) {
+            return country.key == $scope.legalEntity.countryId;
+        });
+        $scope.country.selected = country[0];
+
+        $scope.isEditLegal = true;
+
     }]);
 
-DashboardApp.filter('stringArrayFilter', function() {
+DashboardApp.filter('stringArrayFilter', function () {
     return function (myArray) {
         return myArray.join(', ');
     };
 });
-DashboardApp.filter('mapBranch', function() {
+DashboardApp.filter('mapBranch', function () {
     var branchHash = {
         1: 'Yes',
         2: 'No'
     };
-    return function(input) {
-        if (!input){
+    return function (input) {
+        if (!input) {
             return '';
         } else {
             return branchHash[input];
@@ -368,13 +387,18 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
             templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_clearing_a.html',
             icon: ''
         },
-        {id: 'le-sdi', title: 'SDI', templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_sdi.html', icon: ''}
+        {
+            id: 'le-sdi',
+            title: 'SDI',
+            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_sdi.html',
+            icon: ''
+        }
     ];
 
 }]);
 
-DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'RowEditorModalService','uiGridConstants',
-    function ($scope, $log, toastr, RowEditorModalService,uiGridConstants) {
+DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'RowEditorModalService', 'uiGridConstants',
+    function ($scope, $log, toastr, RowEditorModalService, uiGridConstants) {
 
         $scope.$watchCollection('$parent.legalEntity.contactPersonList', function (newContactPerson, oldContactPerson) {
             if (newContactPerson === oldContactPerson) {
@@ -409,7 +433,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                 "telex": "",
                 "title": "",
                 "zipCode": ""
-        };
+            };
             var rowTmp = {};
             rowTmp.entity = newContact;
             $scope.editRow($scope.gridContactPersonOptions, rowTmp);
@@ -455,7 +479,8 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         };
 
         $scope.gridContactPersonOptions.columnDefs = [
-            {field: 'lastName',
+            {
+                field: 'lastName',
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
@@ -472,7 +497,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                 name: 'Actions',
                 cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
                 enableColumnMenu: false,
-                enableCellEdit : false,
+                enableCellEdit: false,
                 width: 120,
                 enableFiltering: false
             }

@@ -41,8 +41,8 @@
                                 <label class="control-label col-md-3">Is a Branch</label>
                                 <div class="col-md-9">
                                     <input bs-switch ng-model="legalEntity.isBranch" type="checkbox"
-                                            switch-on-text="Yes" switch-off-text="No" switch-size="normal"
-                                            ng-true-value="true"  ng-false-value="false">
+                                           switch-on-text="Yes" switch-off-text="No" switch-size="normal"
+                                           ng-true-value="true" ng-false-value="false">
                                     <!--input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No" ng-model="legalEntity.isBranch"-->
                                 </div>
                             </div>
@@ -50,18 +50,51 @@
                                 <label class="control-label col-md-3">Mother Legal Entity:</label>
                                 <div class="col-md-9">
 
-                                    <ui-select ng-model="legalEntityMother.selected" theme="select2" style="min-width: 250px;height:30px;" title="Choose a Legal Entity Mother">
-                                        <ui-select-match placeholder="Select name or othername...">{{$select.selected.name}}</ui-select-match>
-                                        <ui-select-choices repeat="legalEntityMother in legalEntities | filter: {name: $select.search, otherName: $select.search, id :  '!' +legalEntity.id} ">
+                                    <ui-select ng-model="legalEntityMother.selected" theme="select2"
+                                               style="min-width: 250px;height:30px;"
+                                               title="Choose a Legal Entity Mother">
+                                        <ui-select-match placeholder="Select name or othername...">
+                                            {{$select.selected.name}}
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="legalEntityMother in legalEntities | filter: {name: $select.search, otherName: $select.search, id :  '!' +legalEntity.id} ">
                                             <div ng-bind-html="legalEntityMother.name | highlight: $select.search"></div>
                                             <small>
-                                                otherName: <span ng-bind-html="''+legalEntityMother.otherName | highlight: $select.search"></span>
+                                                otherName: <span
+                                                    ng-bind-html="''+legalEntityMother.otherName | highlight: $select.search"></span>
                                             </small>
                                         </ui-select-choices>
                                     </ui-select>
 
                                 </div>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-3">Holidays</label>
+                                <!--<div class="col-md-9">
+                                    <select multiple="multiple" id="holidays-select" name="holidays-select[]">
+                                        <option value='elem_1'>elem 1</option>
+                                        <option value='elem_2'>elem 2</option>
+                                        <option value='elem_3'>elem 3</option>
+                                        <option value='elem_4'>elem 4</option>
+                                        <option value='elem_100'>elem 100</option>
+                                    </select>
+                                </div>-->
+                                <multiselect-dual multiselect-elements="holidays"></multiselect-dual>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-md-3">Rol</label>
+                                <div class="col-md-9">
+                                    <!--<select multiple class="form-control input-medium"
+                                            id="legal-entity-rols" name="legal-entity-rols[]"
+                                            ng-options="rol for rol in rols" ng-model="legalEntity.rolList">
+                                    </select>
+                                    -->
+                                    <multiselect-dual multiselect-elements="rols"></multiselect-dual>
+                                </div>
+                            </div>
+                        </div>
+                        <!--END </div> row-->
+                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="col-md-3 control-label">Country</label>
                                 <div class="col-md-9">
@@ -75,37 +108,6 @@
                                     </ui-select>
 
                                 </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label col-md-3">Rol</label>
-                                <div class="col-md-9">
-                                    <select multiple class="form-control input-medium"
-                                            id="legal-entity-rols" name="legal-entity-rols[]"
-                                            ng-options="rol for rol in rols" ng-model="legalEntity.rolList">
-                                    </select>
-                                    <!--select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
-                                            name="base-currency-select[]" class="form-control input-small"
-                                            ng-options="currency as currency.codigo for currency in LegalEntity.BilateralAgreements.currencies.list track by currency.id"
-                                            ng-model="LegalEntity.BilateralAgreements.csa.partyA.threshold.currencies.selected">
-                                        <option value="">-- SELECT BASE CURRENCY --</option-->
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <!--END </div> row-->
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="control-label col-md-3">Holidays</label>
-                                <!--<div class="col-md-9">
-                                    <select multiple="multiple" id="holidays-select" name="holidays-select[]">
-                                        <option value='elem_1'>elem 1</option>
-                                        <option value='elem_2'>elem 2</option>
-                                        <option value='elem_3'>elem 3</option>
-                                        <option value='elem_4'>elem 4</option>
-                                        <option value='elem_100'>elem 100</option>
-                                    </select>
-                                </div>-->
-                                <multiselect-dual multiselect-elements="holidays"></multiselect-dual>
                             </div>
                         </div>
                         <!--END </DIV> ROW-->

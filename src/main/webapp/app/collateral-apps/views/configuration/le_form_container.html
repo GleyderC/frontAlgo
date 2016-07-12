@@ -1,10 +1,10 @@
-<div id="legal-entity-tabs" du-smooth-scroll du-scrollspy>
+<div id="legal-entity-tabs" ng-controller="LegalEntityController" du-smooth-scroll du-scrollspy>
     <!-- BEGIN CHART PORTLET-->
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
                 <i class="fa fa-bank font-dark font-green-haze"></i>
-                <span class="caption-subject bold uppercase font-green-haze" ng-bind="legalEntity.name"> </span>
+                <span class="caption-subject bold uppercase font-green-haze" ng-bind="legalEntity.name || 'New Legal Entity'"> </span>
                 <span class="caption-helper" ng-if="legalEntity.id!=-1" ng-bind="legalEntity.id"> </span>
 
             </div>
