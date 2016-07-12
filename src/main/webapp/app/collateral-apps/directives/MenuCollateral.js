@@ -99,12 +99,10 @@ DashboardApp.service('MenuService', function () {
                                             icon: 'fa fa-search',
                                             text: 'Search Legal Entity'
                                         },
-                                        templateUrl: paths.views + '/configuration/legal_entity.html',
+                                        templateUrl: paths.views + '/configuration/LegalEntity/legal_entity.html',
                                         autoload: true
                                     }]
-                            },
-                            templateUrl: paths.views + '/configuration/LegalEntity/legal_entity.html',
-                            autoload: true
+                            }
                         },
                         {
                             head: {
