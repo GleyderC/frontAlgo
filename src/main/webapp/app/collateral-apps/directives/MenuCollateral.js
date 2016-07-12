@@ -125,6 +125,49 @@ DashboardApp.service('MenuService', function () {
                     ]
                 }
             },
+            {
+                head: {
+                    icon: 'fa fa-warning',
+                    text: 'Risk'
+                },
+                childWorkspace : {
+                    tabList:[
+                        {
+                            head: {
+                                icon: '',
+                                text: 'Issuer Risk'
+                            },
+                            templateUrl: paths.views + '/collateral/risk/issuer_risk.html',
+                            autoload : true
+                        },
+                        {
+                            head: {
+                                icon: '',
+                                text: 'Sovereign Risk'
+                            },
+                            templateUrl: paths.views + '/collateral/risk/sovereign_risk.html',
+                            autoload : true
+                        },
+                        {
+                            head: {
+                                icon: '',
+                                text: 'CounterParty Risk'
+                            },
+                            templateUrl: paths.views + '/collateral/risk/counterparty_risk.html',
+                            autoload : true
+                        },
+                        {
+                            head: {
+                                icon: '',
+                                text: 'FX Risk'
+                            },
+                            templateUrl: paths.views + '/collateral/risk/fx_risk.html',
+                            autoload : true
+                        }
+                    ]
+                },
+
+            }
         ]
     }
 });

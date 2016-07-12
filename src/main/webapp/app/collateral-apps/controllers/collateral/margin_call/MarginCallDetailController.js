@@ -22,6 +22,58 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
         		  $scope.tabs2[0].disabled = false;
         	}
         };
+        /*$scope.MarginCallTabs1 = {
+            tabList: [
+                {
+                    head: {
+                        icon: 'icon-call-in',
+                        text: 'CSA Margins'
+                    },
+                    templateUrl: paths.views + "/collateral/margin_call/mc_csa_margin.html",
+                    autoload: true
+                },
+                {
+                    head: {
+                        icon: '',
+                        text: 'CSA Allocations'
+                    },
+                    templateUrl: paths.views + "/collateral/margin_call/mc_csa_allocations.html",
+                    autoload: true
+                },
+                {
+                    head: {
+                        icon: '',
+                        text:  'IM Collateral Allocations',
+                    },
+                    templateUrl: paths.views + "/collateral/margin_call/mc_im_collateral_allocations.html",
+                    autoload: true
+                },
+                {
+                    head: {
+                        icon: '',
+                        text: 'VM Collateral Allocations',
+                    },
+                    templateUrl: paths.views + "/collateral/margin_call/mc_vm_collateral_allocations.html",
+                    autoload: true
+                },
+                {
+                    head: {
+                        icon: '',
+                        text: 'Collateral Substitution',
+                    },
+                    templateUrl: paths.views + "/collateral/margin_call/mc_collateral_substitution.html",
+                    autoload: true
+                },
+                {
+                    head: {
+                        icon: '',
+                        text: 'VM Collateral Allocations',
+                    },
+                    templateUrl: paths.views + "/collateral/margin_call/mc_messaging_repository.html",
+                    autoload: true
+                }
+            ]
+        };*/
         $scope.tabs1 = [
             {
                 id: 'mc-csa-margin',
