@@ -10,6 +10,8 @@
 
 angular.module('CollateralApp')
 
-    .controller('LoginController',['$scope','$state', function ($scope, $state) {
-        
-    }])
+    .controller('LoginController',['$scope','$state','localStorageService', function ($scope, $state,localStorage) {
+        $scope.submit = function(){
+        	localStorage.set("userName",$scope.username);
+        };
+    }]);

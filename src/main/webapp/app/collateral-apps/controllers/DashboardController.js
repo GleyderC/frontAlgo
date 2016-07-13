@@ -4,12 +4,13 @@ angular.module('CollateralApp').controller('DashboardController',
         '$scope',
         '$request',
         '$socket',
+        'toastr',
         'localStorageService',
         'MenuService',
-        function ($rootScope, $scope, $request,$socket, localStorageService, $menuService) {
+        function ($rootScope, $scope, $request,$socket, toastr,localStorageService, $menuService) {
 
             $scope.$workspaceTabsMgm = $menuService.MenuTree;
-          
+           
             //GET STATIC DATA FROM THE SERVER
             $request.get("/servlet/StaticData/SelectAll").then(function (response) {
                 angular.forEach(response.data.dataResponse, function (obj, key) {
@@ -21,6 +22,36 @@ angular.module('CollateralApp').controller('DashboardController',
                 App.initAjax();
                 $(".go2top").show();
             });
+            
+            
+            $scope.gridUserMessagesData  = [];
+            /* Socket Management */
+        	$socket.onMessage(function(msg){
+        		newMessage= JSON.parse(msg.data);
+    			if(newMessage.signal == "SGN_MC1_MESSAGE_RECEIVED"){
+    				toastr.info("New MC1 Margin Call Entry ","Message Received",{closeButton: true});
+    				if($scope.Messages.length==0){
+    					$scope.Messages  =  newMessage.marginCall.messages ;
+    				}else{
+    					$scope.Messages.push(newMessage.marginCall.messages[newMessage.marginCall.messages.length-1]);
+    				}
+    			}
+    			if(newMessage.signal == "SGN_NEW_USER_MESSAGE"){
+    				newMessage = [newMessage];
+    				toastr.info("New user message ","Message Received",{closeButton: true});
+    				data = [{
+    						id : 1, 
+    						userMessageType : 'INTEREST_STATEMENT_CORRECTED', 
+    						hasBeenRead : false, 
+    						messageContentBasic : 'MC1 Margin Call Entry', 
+    						messageContentExtendes : 'Margin Call entry for contract abcdef', 
+    						hasBeenSentByEmail : true
+    				}];
+	    			$scope.unReadMessages 		=   data.concat($scope.unReadMessages); 
+	    			$scope.qtyMessages 			=   $scope.unReadMessages.length;
+	    			$scope.gridUserMessagesData =   data.concat($scope.gridUserMessagesData);
+    			}
+    		});
 
             // set sidebar closed and body solid layout mode
             $rootScope.settings.layout.pageContentWhite = true;

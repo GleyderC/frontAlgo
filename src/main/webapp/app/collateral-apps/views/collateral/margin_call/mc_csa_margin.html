@@ -100,18 +100,19 @@
                         <div class="row">
                             <label class="control-label col-md-2">Call Amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" disabled ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount" ui-number-mask="0">
+                                <input type="text" ng-model="callAmount"  class="form-control collateral-money" placeholder="" disabled ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount" ui-number-mask="0">
                             </div>
 
                             <label class="control-label col-md-2">Recall amount</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
+                                <input type="text" ng-model="reCallAmount"  class="form-control collateral-money" placeholder="" disabled>
                             </div>
                         </div>
                         <div class="row">
                             <label class="control-label col-md-2">Call type</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
+                            <label class="control-label ">{{marginCallType}}</label>
+                                
                             </div>
                         </div>
 

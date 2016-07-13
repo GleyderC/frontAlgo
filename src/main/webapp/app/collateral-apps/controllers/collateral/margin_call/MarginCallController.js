@@ -384,6 +384,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
         $scope.drawPieChart = function (statusArray) {
             var newStatusArray = ArrayService.ArrayDuplicateCounter(statusArray);
 
+            console.log(newStatusArray);
             //PieChart Data
             if(newStatusArray.length > 0){
                 $('#gchart_pie_margincall').highcharts({

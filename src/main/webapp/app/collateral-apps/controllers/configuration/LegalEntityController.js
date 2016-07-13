@@ -71,7 +71,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 /*{   name: 'Country',
                  field: 'countryId.name',
                  editModelField: 'countryId',
-                 editableCellTemplate: paths.tpls + '/UiSelect.html',
+                 editableCellTemplate: paths.tpls + '/UiSelect.html'$scope.country.selected,
                  editDropdownOptionsArray : $scope.countries
                  },*/
                 {field: 'LEI', enableCellEdit: false},

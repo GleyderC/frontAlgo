@@ -2,8 +2,8 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout',
-    function ($scope, uiGridConstants, MarginCallService, $timeout) {
+DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageService', 'uiGridConstants', 'MarginCallService','$timeout',
+    function ($scope, localStorage,uiGridConstants, MarginCallService, $timeout) {
 
         $scope.sendFlag = false;
         $scope.currentMarginCall = $scope.parameters;
@@ -22,58 +22,6 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
         		  $scope.tabs2[0].disabled = false;
         	}
         };
-        /*$scope.MarginCallTabs1 = {
-            tabList: [
-                {
-                    head: {
-                        icon: 'icon-call-in',
-                        text: 'CSA Margins'
-                    },
-                    templateUrl: paths.views + "/collateral/margin_call/mc_csa_margin.html",
-                    autoload: true
-                },
-                {
-                    head: {
-                        icon: '',
-                        text: 'CSA Allocations'
-                    },
-                    templateUrl: paths.views + "/collateral/margin_call/mc_csa_allocations.html",
-                    autoload: true
-                },
-                {
-                    head: {
-                        icon: '',
-                        text:  'IM Collateral Allocations',
-                    },
-                    templateUrl: paths.views + "/collateral/margin_call/mc_im_collateral_allocations.html",
-                    autoload: true
-                },
-                {
-                    head: {
-                        icon: '',
-                        text: 'VM Collateral Allocations',
-                    },
-                    templateUrl: paths.views + "/collateral/margin_call/mc_vm_collateral_allocations.html",
-                    autoload: true
-                },
-                {
-                    head: {
-                        icon: '',
-                        text: 'Collateral Substitution',
-                    },
-                    templateUrl: paths.views + "/collateral/margin_call/mc_collateral_substitution.html",
-                    autoload: true
-                },
-                {
-                    head: {
-                        icon: '',
-                        text: 'VM Collateral Allocations',
-                    },
-                    templateUrl: paths.views + "/collateral/margin_call/mc_messaging_repository.html",
-                    autoload: true
-                }
-            ]
-        };*/
         $scope.tabs1 = [
             {
                 id: 'mc-csa-margin',
@@ -142,7 +90,28 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
 
         $scope.Inventory = {} ;
         $scope.threshold = 0;
-        $scope.minimumTransferAmount = 0; 
+        $scope.minimumTransferAmount = 0;
+        $scope.marginCallType  = "";
+         $scope.callAmount      = "" ;
+        $scope.reCallAmount    =  "";
+        
+        
+        
+        $scope.setMarginCallType = function(marginCallType){
+        	let marginTypeList = {}; 
+        	$scope.marginCallType = localStorage.get("MarginCallType");
+        	$scope.marginCallType.forEach(function(v,k){
+        		marginTypeList[v.key] =  v.name; 
+        	});
+        	$scope.marginCallType =  marginTypeList[marginCallType];
+        };
+        $scope.setCallAmount = function(marginCallType,Amount){
+        	if(marginCallType.toUpperCase().indexOf("RECALL")!=-1){
+        		 $scope.reCallAmount = Amount;
+        	}else{
+        		 $scope.callAmount  = Amount;
+        	}
+        };
         MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
             //$scope.marginCallTrade = result.data.dataResponse.marginCall;
             $scope.Trades = result.data.dataResponse.trades;
@@ -152,6 +121,12 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
             $scope.MarginCallDetail = result.data.dataResponse;
             $scope.Inventory  =  $scope.posted.concat($scope.received);
             $scope.pool  =  result.data.dataResponse.poolDisplays;
+            
+			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallType);
+			
+			$scope.setCallAmount($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallType,$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount);
+
+			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallType);
             if($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.exposurePlusNettedIa > 0 ){
             	$scope.threshold  = $scope.MarginCallDetail.contract.partyBThreshold;
             	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyB; 
@@ -161,7 +136,6 @@ DashboardApp.controller('MarginCallDetailController', ['$scope', 'uiGridConstant
             	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyA; 
             }
         });
-
         this.sendMargin = function () {
             $scope.sendFlag = true;
             //console.log($scope.sendFlag);

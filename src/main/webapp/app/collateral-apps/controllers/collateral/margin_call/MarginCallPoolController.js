@@ -17,7 +17,7 @@ DashboardApp.controller('MarginCallPoolController', ['$scope', 'uiGridConstants'
 				{ name :"lotSize", field : "lotSize"},
 				{ name :"notional", field : "notional",cellFilter: 'number:0', cellClass:'collateral-money' },
 				{ name :"price", field : "price",cellFilter: 'number:0', cellClass:'collateral-money' },
-				{ name :"amount", field : "amount",cellFilter: 'number:0', cellClass:'collateral-money' },
+				{ name :"Amount", field : "valueInBaseCurrency",cellFilter: 'number:0', cellClass:'collateral-money' },
 				{ name :"moodysRating", field : "moodysRating"}
 	],
 	onRegisterApi  : function(gridApi){
