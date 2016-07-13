@@ -384,14 +384,21 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /* Services */
                             'collateral-apps/services/DashboardService.js',
                             'collateral-apps/services/ArrayService.js',
-                            'collateral-apps/services/MarginCallService.js',
-                            'collateral-apps/services/AgreementsService.js',
-                            'collateral-apps/services/LegalEntityService.js',
-                            'collateral-apps/services/InterestService.js',
                             'collateral-apps/services/RowEditorModalService.js',
-                            'collateral-apps/services/configuration/BilateralContractService.js',
-                            'collateral-apps/services/UserMessageService.js',
                             'collateral-apps/services/ModalService.js',
+
+
+                            'collateral-apps/services/collateral/MarginCallService.js',
+                            'collateral-apps/services/collateral/AgreementsService.js',
+                            'collateral-apps/services/collateral/InterestService.js',
+
+                            'collateral-apps/services/configuration/LegalEntityService.js',
+                            'collateral-apps/services/configuration/BilateralContractService.js',
+
+                            'collateral-apps/services/user_message/UserMessageService.js',
+
+                            'collateral-apps/services/risk/IssuerRiskService.js',
+
 
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/configuration/LegalEntityController.js',
@@ -414,7 +421,11 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /*UserMessage Controller*/
                             'collateral-apps/controllers/user_message/UserMessageController.js',
                             /*UserMessage Controller*/
-                            'collateral-apps/controllers/NotificationsController.js'
+                            'collateral-apps/controllers/NotificationsController.js',
+
+                            /*IssuerRisk Controller*/
+                            'collateral-apps/controllers/risk/IssuerRiskController.js'
+
                         ],
                         serie: true,
                         cache: false

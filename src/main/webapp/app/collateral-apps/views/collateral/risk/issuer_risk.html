@@ -1,0 +1,62 @@
+<div class="portlet light" ng-controller="IssuerRiskController">
+    <div class="portlet light bordered" id="collateral-agreements">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="col-md-4 control-label">Legal Entity Point Of View</label>
+                <div class="col-md-8">
+                    <ui-select ng-model="legalEntityPO.selected" theme="select2" class="input-medium">
+                        <ui-select-match placeholder="Select an option...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="legalEntityPO in legalEntitiesPO | filter: $select.search">
+                            <div ng-bind-html="legalEntityPO.name | highlight: $select.search"></div>
+                            <small>OtherName:
+                                <span bind-html="''+legalEntityPO.otherName | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-md-4 control-label">Filter By CounterParty</label>
+                <div class="col-md-8">
+                    <ui-select ng-model="legalEntityCounterParty.selected" theme="select2" class="input-medium">
+                        <ui-select-match placeholder="Select an option...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="legalEntityCounterParty in legalEntitiesCounterParty | filter: $select.search">
+                            <div ng-bind-html="legalEntityCounterParty.name | highlight: $select.search"></div>
+                            <small>OtherName:
+                                <span bind-html="''+legalEntityCounterParty.otherName | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="col-md-3 control-label">Currency</label>
+                <div class="col-md-9">
+                    <ui-select ng-model="currency.selected" theme="select2" class="input-medium">
+                        <ui-select-match placeholder="Select an option...">{{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="currency in currencies | filter: $select.search">
+                            <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+
+            <div class="col-md-4"></div>
+
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
