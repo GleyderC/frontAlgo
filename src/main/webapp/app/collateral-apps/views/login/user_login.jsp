@@ -12,7 +12,7 @@
     <!-- BEGIN LOGIN -->
     <div class="content">
         <!-- BEGIN LOGIN FORM -->
-        <form name="loginForm" class="login-form" action="#home" method="post">
+        <form name="loginForm" ng-submit="submit()" class="login-form" action="#home" method="post">
             <h3 class="form-title font-green">Sign In</h3>
             <div class="alert alert-danger display-hide">
                 <button class="close" data-close="alert"></button>
@@ -56,7 +56,7 @@
         </form>
         <!-- END LOGIN FORM -->
         <!-- BEGIN FORGOT PASSWORD FORM -->
-        <form class="forget-form" action="index.html" method="post">
+        <form class="forget-form"  action="index.html" method="post">
             <h3 class="font-green">Forget Password ?</h3>
             <p> Enter your e-mail address below to reset your password. </p>
             <div class="form-group">
