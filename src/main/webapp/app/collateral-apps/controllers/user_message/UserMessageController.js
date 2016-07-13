@@ -4,7 +4,8 @@
     
     	$scope.$on('$includeContentLoaded', function () {
          });
-    	$rootScope.gridUserMessages = {
+    	$scope.gridUserMessages = {
+    			data: [],
     			columnDefs : [
 				{ 	name:"From",
 					field : "hasBeenSentByEmail"
@@ -19,18 +20,23 @@
     			          ],
     	} ;
     	
-    	$rootScope.messageContent  = {} ;
-    	$rootScope.viewMessage = function(entity){
-    		$rootScope.messageContent  =  entity;	
+    	$scope.messageContent  = {} ;
+    	$scope.viewMessage = function(entity){
+    		$scope.messageContent  =  entity;	
     	};
-    	$rootScope.messagesList = [];
+    	$scope.messagesList = [];
     	
-    	$rootScope.getNewMessages = function(){
+    	$scope.getNewMessages = function(){
  	    	UserMessage.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
- 	    		$rootScope.messagesList	   = data.dataResponse;
- 	    		$rootScope.gridUserMessages.data = data.dataResponse ;
+ 	    		if($scope.gridUserMessagesData.length==0){
+ 	    			$scope.gridUserMessagesData = data.dataResponse;
+ 	    		}
+// 	    		else{
+// 	    			$scope.gridUserMessagesData = data.dataResponse.concat($scope.gridUserMessagesData);
+// 	    		}
+ 	    		$scope.gridUserMessages.data = $scope.gridUserMessagesData;
 	    	});
     	};
-    	$rootScope.getNewMessages();
+    	$scope.getNewMessages();
     
 }]);
