@@ -4,16 +4,20 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
-    'localStorageService', 'LegalEntityService', 'ArrayService',
-    function ( $scope, elementService, localStorageService, LegalEntityService, ArrayService ) {
+    'localStorageService', 'LegalEntityService', 'IssuerRiskService', 'ArrayService',
+    function ( $scope, elementService, localStorageService, LegalEntityService, IssuerRiskService, ArrayService ) {
 
         $scope.currencies = localStorageService.get("CurrencyEnum");
+        $scope.currency = {};
+        $scope.legalEntityPO = {};
+        $scope.legalEntityCounterParty = {};
 
         $scope.drawPieChart = function (title, Array, component) {
-            var newArray = ArrayService.ArrayDuplicateCounter(Array);
+            console.log(Array);
+            //var Array = ArrayService.ArrayDuplicateCounter(Array);
 
             //PieChart Data
-            if(newArray.length > 0){
+            if(Array.length > 0){
                 $('#'+component).highcharts({
                     chart: {
                         type: 'pie',
@@ -54,7 +58,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
                     series: [{
                         type: 'pie',
                         name: 'Status',
-                        data: newArray,
+                        data: Array,
                         point:{
                             events:{
                                 click: function (event) {
@@ -85,16 +89,43 @@ DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
                 }
 
              });
+            //inicializando combos
+            $scope.currency.selected = $scope.currencies[1];
+            $scope.legalEntityPO.selected = $scope.legalEntitiesPO[0];
+            $scope.legalEntityCounterParty.selected = $scope.legalEntitiesCounterParty[0];
 
-            let postedArray = [];
-            let receiveArray = [];
-            let availableArray = [];
+
+            IssuerRiskService.getAll($scope.legalEntityPO.selected.id,"CCP",
+                $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name).then(function (result) {
+
+                let postedArray = [];
+                let receiveArray = [];
+                let availableArray = [];
+
+                result.data.dataResponse.forEach(function (IssuerRisk) {
+                    postedArray.push({name:IssuerRisk.name, y: IssuerRisk.postedAmount});
+                    receiveArray.push({name:IssuerRisk.name, y: IssuerRisk.receivedAmount});
+                    availableArray.push({name:IssuerRisk.name, y: IssuerRisk.availableAmount});
+
+                });
+                console.log(postedArray);
 
 
+                $scope.drawPieChart('Posted',postedArray,'gchart_pie_posted');
+                $scope.drawPieChart('Received',receiveArray,'gchart_pie_received');
+                $scope.drawPieChart('Available',availableArray,'gchart_pie_available');
+            });
 
-            $scope.drawPieChart('Posted',postedArray,'gchart_pie_posted');
 
         });
+
+        $scope.filterIssuerRisk = function () {
+
+            IssuerRiskService.getAll($scope.legalEntityPO.selected.id,"CCP",
+                $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name).then(function (result) {
+                //console.log(result.data.dataResponse);
+            })
+        }
 
 
     }]);

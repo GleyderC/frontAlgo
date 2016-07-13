@@ -4,13 +4,13 @@
             <div class="form-group col-md-4">
                 <label class="col-md-4 control-label">Legal Entity Point Of View</label>
                 <div class="col-md-8">
-                    <ui-select ng-model="legalEntityPO.selected" theme="select2" class="input-medium">
+                    <ui-select ng-model="legalEntityPO.selected" ng-change="filterIssuerRisk()" theme="select2" class="input-medium">
                         <ui-select-match placeholder="Select an option...">{{$select.selected.name}}
                         </ui-select-match>
-                        <ui-select-choices repeat="legalEntityPO in legalEntitiesPO | filter: $select.search">
+                        <ui-select-choices repeat="legalEntityPO in legalEntitiesPO | filter: {name: $select.search, otherName: $select.search}">
                             <div ng-bind-html="legalEntityPO.name | highlight: $select.search"></div>
                             <small>OtherName:
-                                <span bind-html="''+legalEntityPO.otherName | highlight: $select.search"></span>
+                                <span ng-bind-html="''+legalEntityPO.otherName | highlight: $select.search"></span>
                             </small>
                         </ui-select-choices>
                     </ui-select>
@@ -21,13 +21,14 @@
             <div class="form-group col-md-4">
                 <label class="col-md-4 control-label">Filter By CounterParty</label>
                 <div class="col-md-8">
-                    <ui-select ng-model="legalEntityCounterParty.selected" theme="select2" class="input-medium">
-                        <ui-select-match placeholder="Select an option...">{{$select.selected.name}}
-                        </ui-select-match>
-                        <ui-select-choices repeat="legalEntityCounterParty in legalEntitiesCounterParty | filter: $select.search">
+                    <ui-select ng-model="legalEntityCounterParty.selected" ng-change="filterIssuerRisk()" theme="select2" class="input-medium">
+                        <ui-select-match placeholder="Select an option...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices
+                                repeat="legalEntityCounterParty in legalEntitiesCounterParty | filter: {name: $select.search, otherName: $select.search} ">
                             <div ng-bind-html="legalEntityCounterParty.name | highlight: $select.search"></div>
-                            <small>OtherName:
-                                <span bind-html="''+legalEntityCounterParty.otherName | highlight: $select.search"></span>
+                            <small>
+                                otherName: <span
+                                    ng-bind-html="''+legalEntityCounterParty.otherName | highlight: $select.search"></span>
                             </small>
                         </ui-select-choices>
                     </ui-select>
@@ -51,12 +52,16 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-
+                <div id="gchart_pie_posted" style="text-align: center"></div>
             </div>
 
-            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div id="gchart_pie_received" style="text-align: center"></div>
+            </div>
 
-            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div id="gchart_pie_available" style="text-align: center"></div>
+            </div>
         </div>
     </div>
 </div>
