@@ -8,6 +8,11 @@ angular.module('DashboardApp')
             return $request.get('/servlet/BilateralContract/SelectAll');
         }
 
+        this.getAllByLegalEntityID = function (legalEntityID) {
+            var param = {id: legalEntityID};
+            return $request.post('/servlet/BilateralContract/SelectAllById', param);
+        }
+
         this.getById = function (idBilateralContract) {
             var param = {id: idBilateralContract};
             return $request.post('/servlet/BilateralContract/Select', param);
