@@ -206,12 +206,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             searchSelected: true,
             data: financialCalendar
         };
-        //console.log($('#holidays-select').multiSelect());
-        /*financialCalendar.forEach(function (holiday) {
-
-         $('#holidays-select').multiSelect('addOption', { value: holiday.key, text: holiday.name, index: i, nested: 'optgroup_label' });
-         i++;
-         });*/
 
         $scope.setFocusInput = function (element) {
             //console.log("#"+element+" input:first:not([readonly])");
@@ -224,12 +218,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         {
             searchSelect: true,
             searchSelected: true,
-            data: [
-                {key: 'COUNTERPARTY', name: 'COUNTERPARTY'},
-                {key: 'PO', name: 'PO'},
-                {key: 'ISSUER', name: 'ISSUER'},
-                {key: 'CCP', name: 'CCP'}
-            ]
+            data: localStorageService.get('RolType')
         };
         $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
         $scope.country = {};
@@ -294,15 +283,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 legalEntity.countryId = $scope.country.selected.key;
             }
 
-            //LegalEntityService.set(legalEntity, $scope.isEditLegal);
-
-            /*if($scope.holidays.getSelectedElements().length > 0){
-             //console.log($scope.holidays.getSelectedElements());
-             //legalEntity.financialCalendarList = $scope.holidays.getSelectedElements();
-             //console.log(legalEntity.financialCalendarList);
-             $scope.holidays.unselectAll();
-
-             }*/
 
             if (!$scope.isEditLegal) {
                 $scope.gridLegalEntityOptions.data.push(legalEntity);
@@ -325,7 +305,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             buildLegalData();
         }
 
-        //editing
+        //#### Editing a Legal Entity ####
         if (!$scope.parameters.legalEntity)
             return false;
 
@@ -339,6 +319,10 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 $scope.legalEntityMother.selected = legalEntityMother;
             });
         }
+
+        $scope.holidays.selectedItems = $scope.legalEntity.financialCalendarList;
+
+        $scope.rols.selectedItems = $scope.legalEntity.rolList;
 
         $scope.country = {selected: {id: -1}};
         var country = $scope.countries.filter(function (country) {
@@ -575,8 +559,8 @@ DashboardApp.controller('LEBilateralController', ['$scope', '$log', 'toastr', 'R
             },
             columnDefs: [
                 {
-                    name: 'Contract name',
-                    field: 'contract_name',
+                    name: 'Contract Code',
+                    field: 'contractCode',
                     sort: {
                         direction: uiGridConstants.ASC,
                         priority: 0
@@ -584,7 +568,7 @@ DashboardApp.controller('LEBilateralController', ['$scope', '$log', 'toastr', 'R
                 },
                 {
                     name: 'Contract type',
-                    field: 'contract_type'
+                    field: 'contractType'
                 },
                 {
                     name: 'Actions',
@@ -598,18 +582,16 @@ DashboardApp.controller('LEBilateralController', ['$scope', '$log', 'toastr', 'R
             data: []
         };
 
-        if(!$scope.legalEntity)
+        if (!$scope.legalEntity)
             return false;
 
         var legalEntityID = $scope.legalEntity.id;
 
-        BilateralContractService.getAllByLegalEntityID(legalEntityID).then(function(result){
+        BilateralContractService.getAllByLegalEntityID(legalEntityID).then(function (result) {
 
-            console.log(result)
             $scope.gridBilateralAgreementsOptions.data = result.data.dataResponse;
 
         })
-
 
 
     }]);
@@ -657,8 +639,16 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
                     }
                 },
                 {
-                    name: 'Contract type',
-                    field: 'contract_type'
+                    name: 'CCP',
+                    field: 'ccp'
+                },
+                {
+                    name: 'Account type',
+                    field: 'account_type'
+                },
+                {
+                    name: 'CM/FCM',
+                    field: 'cm_fcm'
                 },
                 {
                     name: 'Actions',
