@@ -56,14 +56,12 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope','$scope',
             }
 
         ];
-        
+        $scope.gridMessagesOptions.data = [];
         $scope.$watchCollection('$parent.Messages', function (newMessages, oldMessages) {
             if (newMessages === oldMessages ||  newMessages == undefined) {
                 return false;
             }
-            
             newMessages.forEach(function (message) {
-
                 if(message.date != undefined)
                     message.date.dateMessage = new Date(message.date.iMillis);
             });
@@ -72,29 +70,19 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope','$scope',
         
         $scope.getNewMessages = function (MarginCallId) {
             MarginCallService.getDetail($scope.MarginCallDetail.marginCall.id).then(function (result) {
-                //$scope.marginCallTrade = result.data.dataResponse.marginCall;
-            	$rootScope.Messages = result.data.dataResponse.marginCall.messages;
-
-            	$rootScope.Messages.forEach(function (message) {
+            	$scope.Messages = result.data.dataResponse.marginCall.messages;
+            	$scope.Messages.forEach(function (message) {
                     message.date.dateMessage = new Date(message.date.iMillis);
                 });
-                //console.log($scope.Messages);
-                $scope.gridMessagesOptions.data = $rootScope.Messages;
+                $scope.gridMessagesOptions.data = $scope.Messages;
             });
         };
-        
-        var addSlashes = function ( str ) {
-            return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
-        }	
         $scope.getPDF  = function(url){    	
         	MarginCallService.getFile(url);
         };
         $scope.getExcel  = function(url){
-        	MarginCallService.getFile(url).success(function(result){
-
-        	});
+        	MarginCallService.getFile(url);
         };
-        	
         $scope.viewMessage = function(row) {
             $scope.messageSelected = row;
         };
