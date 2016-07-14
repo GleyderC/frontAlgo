@@ -7,7 +7,7 @@ angular.module('DashboardApp')
             var param = {legalEntityPointOfViewId:idLegal,counterPartyType : "CCP",
                 counterPartyId : counterPartyId, currency: currency};
 
-            console.log(param);
+            //console.log(param);
 
             return $request.post('/servlet/ExposureByIssuer/SelectAll',param);
         }

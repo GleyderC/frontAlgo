@@ -3,9 +3,9 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
+DashboardApp.controller('IssuerRiskController', [ '$scope',
     'localStorageService', 'LegalEntityService', 'IssuerRiskService', 'ArrayService',
-    function ( $scope, elementService, localStorageService, LegalEntityService, IssuerRiskService, ArrayService ) {
+    function ( $scope, localStorageService, LegalEntityService, IssuerRiskService, ArrayService ) {
 
         $scope.currencies = localStorageService.get("CurrencyEnum");
         $scope.currency = {};
@@ -13,7 +13,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
         $scope.legalEntityCounterParty = {};
 
         $scope.drawPieChart = function (title, Array, component) {
-            console.log(Array);
+            //console.log(Array);
             //var Array = ArrayService.ArrayDuplicateCounter(Array);
 
             //PieChart Data
@@ -52,14 +52,14 @@ DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
                         useHTML: true,
                         labelFormatter: function () {
                             //console.log(this);
-                            return '<div style="text-align: left; width:130px;float:left;">' + this.name + '</div><div style="width:40px; float:left;text-align:right;">' + this.y + '</div>';
+                            return '<div style="text-align: left; width:130px;float:left;">' + this.name + '</div><div style="width:40px; float:left;text-align:right;" ui-number-mask="2">' + this.y + '</div>';
                         }
                     },
                     series: [{
                         type: 'pie',
                         name: 'Status',
                         data: Array,
-                        point:{
+                        /*point:{
                             events:{
                                 click: function (event) {
                                     $scope.filterValue = this.name;
@@ -67,9 +67,12 @@ DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
                                     //console.log(this);
                                 }
                             }
-                        }
+                        }*/
                     }],
-                    exporting: { enabled: false }
+                    exporting: { enabled: false },
+                    lang: {
+                        thousandsSep: ','
+                    }
                 });
             }
         }
@@ -108,7 +111,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope', 'elementService',
                     availableArray.push({name:IssuerRisk.name, y: IssuerRisk.availableAmount});
 
                 });
-                console.log(postedArray);
+                //console.log(postedArray);
 
 
                 $scope.drawPieChart('Posted',postedArray,'gchart_pie_posted');
