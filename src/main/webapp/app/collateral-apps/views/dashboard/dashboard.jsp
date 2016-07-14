@@ -42,19 +42,19 @@
 									data-close-others="true">
 									<i class="icon-bell"></i>
 									
-									 <span ng-if="$root.qtyMessages > 0 " class="badge">{{$root.qtyMessages}}</span>
+									 <span ng-if="qtyMessages > 0 " class="badge">{{qtyMessages}}</span>
 								</button>
 								<ul class="dropdown-menu-v2">
 									<li class="external">
 										<h3>
-											<span class="bold">{{$root.qtyMessages}} pending</span> notifications
+											<span class="bold">{{qtyMessages}} pending</span> notifications
 										</h3> <a href="#">view all</a>
 									</li>
 									<li>
 										<ul class="dropdown-menu-list scroller"
 											style="height: 250px; padding: 0;"
 											data-handle-color="#637283">
-											<li  ng-repeat="notif in $root.unReadMessages">
+											<li  ng-repeat="notif in unReadMessages">
 												<a href="javascript:;"> <span class="details">
 															<span class="label label-sm label-icon label-success md-skip">
 																<i class="fa  fa-envelope-o"></i>
