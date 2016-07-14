@@ -25,18 +25,14 @@
     		$scope.messageContent  =  entity;	
     	};
     	$scope.messagesList = [];
-    	
     	$scope.getNewMessages = function(){
- 	    	UserMessage.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
  	    		if($scope.gridUserMessagesData.length==0){
- 	    			$scope.gridUserMessagesData = data.dataResponse;
+ 	    			UserMessage.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
+ 	    				$scope.gridUserMessagesData = data.dataResponse;
+ 	    			});
+ 	    		}else{
+ 	    				$scope.gridUserMessages.data = $scope.gridUserMessagesData;
  	    		}
-// 	    		else{
-// 	    			$scope.gridUserMessagesData = data.dataResponse.concat($scope.gridUserMessagesData);
-// 	    		}
- 	    		$scope.gridUserMessages.data = $scope.gridUserMessagesData;
-	    	});
     	};
     	$scope.getNewMessages();
-    
 }]);

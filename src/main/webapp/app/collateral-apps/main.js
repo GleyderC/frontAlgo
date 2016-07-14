@@ -216,7 +216,9 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
 
     
     var request = {};
-
+    request.getFile = function(urlRelative){
+    	window.open(URL_CONFIG.API_URL+''+urlRelative,"_blank");
+    };
     request.get = function  (urlRelative, dataRequest)
     {
         var config_request = {};

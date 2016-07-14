@@ -3,21 +3,8 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('MarginCallMessagingController', ['$scope','$socket', 'uiGridConstants', 'MarginCallService',
-    function ($scope,$socket ,uiGridConstants, MarginCallService) {
-		
-		$socket.onMessage(function(msg){
-			$scope.newMessage= JSON.parse(msg.data);
-			console.log($scope.newMessage);
-			if($scope.newMessage.hasOwnProperty("signal" )&& $scope.newMessage.signal == "SGN_MC1_MESSAGE_RECEIVED"){
-				if($scope.$parent.Messages.length==0){
-					$scope.$parent.Messages  = $scope.newMessage.marginCall.messages ;
-				}else{
-					$scope.$parent.Messages.push($scope.newMessage.marginCall.messages[$scope.newMessage.marginCall.messages.length-1]);
-				}
-			}
-		});
-		
+DashboardApp.controller('MarginCallMessagingController', ['$rootScope','$scope','$socket', 'uiGridConstants', 'MarginCallService',
+    function ($rootScope,$scope,$socket ,uiGridConstants, MarginCallService) {
 		
 		
         $scope.gridMessagesOptions = {
@@ -60,7 +47,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope','$socket', 'u
                 name : 'Action',
                 cellTemplate : '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></button> ' +
                                     '<a ng-click="grid.appScope.getPDF(row.entity.pdfURL)"  class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
-                                    ' <a  ng-href="{{row.entity.excelURL}}" class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></button>' +
+                                    ' <a ng-click="grid.appScope.getExcel(row.entity.excelURL)"class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></button>' +
                                 '</div>',
                 enableColumnMenu : false,
                 width : 140,
@@ -69,14 +56,12 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope','$socket', 'u
             }
 
         ];
-        
+        $scope.gridMessagesOptions.data = [];
         $scope.$watchCollection('$parent.Messages', function (newMessages, oldMessages) {
             if (newMessages === oldMessages ||  newMessages == undefined) {
                 return false;
             }
-            
             newMessages.forEach(function (message) {
-
                 if(message.date != undefined)
                     message.date.dateMessage = new Date(message.date.iMillis);
             });
@@ -85,37 +70,19 @@ DashboardApp.controller('MarginCallMessagingController', ['$scope','$socket', 'u
         
         $scope.getNewMessages = function (MarginCallId) {
             MarginCallService.getDetail($scope.MarginCallDetail.marginCall.id).then(function (result) {
-                //$scope.marginCallTrade = result.data.dataResponse.marginCall;
-                $scope.Messages = result.data.dataResponse.marginCall.messages;
-
-                $scope.Messages.forEach(function (message) {
+            	$scope.Messages = result.data.dataResponse.marginCall.messages;
+            	$scope.Messages.forEach(function (message) {
                     message.date.dateMessage = new Date(message.date.iMillis);
                 });
-                //console.log($scope.Messages);
                 $scope.gridMessagesOptions.data = $scope.Messages;
             });
         };
-        $scope.getPDF  = function(url){
-        	MarginCallService.getFile(url).then(function(result){
-        			console.log(result);
-        	});
+        $scope.getPDF  = function(url){    	
+        	MarginCallService.getFile(url);
         };
-//        	$.fileDownload('/File/Select', 
-//        		    {
-//        		        httpMethod : "POST",
-//        		        data : {
-//        		            fileName : url
-//        		        }
-//        		    }).done(function(e, response)
-//        		    {
-//        		     // success
-//        		    	console.log(response);
-//        		    
-//        		    }).fail(function(e, response)
-//        		    {
-//        		     // failure
-//        		    });
-//        };
+        $scope.getExcel  = function(url){
+        	MarginCallService.getFile(url);
+        };
         $scope.viewMessage = function(row) {
             $scope.messageSelected = row;
         };

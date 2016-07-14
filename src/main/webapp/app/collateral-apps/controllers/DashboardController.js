@@ -25,6 +25,7 @@ angular.module('CollateralApp').controller('DashboardController',
             
             
             $scope.gridUserMessagesData  = [];
+            $scope.Messages  = [];
             /* Socket Management */
         	$socket.onMessage(function(msg){
         		newMessage= JSON.parse(msg.data);
