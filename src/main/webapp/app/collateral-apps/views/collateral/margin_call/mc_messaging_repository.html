@@ -25,7 +25,7 @@
         <div class="portlet light bordered" style="margin-bottom:0">
             <div class="note note-success">
                 <h4 class="block">{{messageSelected.email.subject}}</h4>
-                <span class="timeline-body-time font-blue-soft">{{messageSelected.date.dateMessage}}</span>
+                <span class="timeline-body-time font-blue-soft">{{messageSelected.date.dateMessage | date:'yyyy-MM-dd  hh:mm:ss'}}</span>
                 <br>
                 <span class="timeline-body-time font-grey-mint">To: {{messageSelected.email.senderName}} ({{messageSelected.email.senderEmail}})</span>
                 <br>
@@ -35,4 +35,5 @@
             </div>
         </div>
     </div>
+    </form>
 </div>

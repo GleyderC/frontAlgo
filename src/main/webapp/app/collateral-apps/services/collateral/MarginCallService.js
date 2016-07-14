@@ -15,13 +15,14 @@ angular.module('DashboardApp')
         };
 
         this.getDetail = function(marginCallId){
-            //console.log(marginCallId);
         	var  detailParam = {
         			id : marginCallId 
         	};
         	return $request.post('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
         };
-
+        this.getFile = function(url){
+        	$request.getFile("/servlet/File/Select/?fileN="+url)
+        };
         this.sendIssueMarginCall = function (marginCallId,collateralLiabilityType) {
 
             //console.log(marginCallId);

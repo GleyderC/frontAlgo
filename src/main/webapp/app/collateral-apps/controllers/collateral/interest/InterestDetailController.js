@@ -39,6 +39,7 @@ InterestCtrl.controller('InterestDetailController',
 	                	$scope.InterestData.forEach(function(v,k){
 	                    	$scope.InterestCumulative += v.interest;
 	                    	if(v.isCompounding){
+                                let basis = 0  ;
 //	                    		   Interest(dailyAccrual) = AppliedRate  *  numDeDías(siempre 1) * (1/360 o 1/365) * (amount + acumuladoHastaLaFecha)
 	                    		if(v.basisCalculationConvetion==="ACT_360"){
 	                    			basis =  1/360; 
