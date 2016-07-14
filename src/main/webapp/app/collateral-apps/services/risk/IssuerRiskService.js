@@ -3,7 +3,7 @@ angular.module('DashboardApp')
         var IssuerRisk = {};
 
         this.getAll = function(idLegal, counterPartyType, counterPartyId, currency){
-
+            
             var param = {legalEntityPointOfViewId:idLegal,counterPartyType : "CCP",
                 counterPartyId : counterPartyId, currency: currency};
 

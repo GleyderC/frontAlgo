@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <div id="gchart_pie_posted" style="text-align: center"></div>
+                <div id="gchart_pie_posted" style="text-align: center; height:150px;"></div>
             </div>
 
             <div class="col-md-4">
@@ -62,6 +62,30 @@
             <div class="col-md-4">
                 <div id="gchart_pie_available" style="text-align: center"></div>
             </div>
+        </div>
+        <div class="row">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Issuer</th>
+                        <th>Posted</th>
+                        <th>Received</th>
+                        <th>Available</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="IssuerRisk in IssuersRisk">
+                    <tr>
+                        <td>{{IssuerRisk.name}}</td>
+                        <td class="success">{{IssuerRisk.postedAmount | currency:''}}</td>
+                        <td class="warning">{{IssuerRisk.receivedAmount | currency:''}}</td>
+                        <td class="active">{{IssuerRisk.availableAmount | currency:''}}</td>
+                        <td>{{IssuerRisk.raiting}}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
         </div>
     </div>
 </div>

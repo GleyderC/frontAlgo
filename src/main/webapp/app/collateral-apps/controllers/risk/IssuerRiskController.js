@@ -27,8 +27,8 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                             beta: 0
                         },
                         plotShadow: true,
-                        margin: 0,
-                        height: 550
+                        marginTop:0,
+                        height: 250
                     },
                     title: {
                         text: '<span id="titleMargin"> '+ title +' </span>'
@@ -38,6 +38,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     },
                     plotOptions: {
                         pie: {
+                            size: 100,
                             allowPointSelect: true,
                             cursor: 'pointer',
                             depth: 35,
@@ -45,7 +46,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                         },
                     },
                     legend: {
-                        enabled: true,
+                        enabled: false,
                         layout: 'horizontal',
                         verticalAlign: 'bottom',
                         y: 15,
@@ -80,6 +81,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
         LegalEntityService.getAll().then(function (result) {
             $scope.legalEntitiesPO = [];
             $scope.legalEntitiesCounterParty = [];
+            $scope.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: -1, otherName:""});
 
             let legalEntities = result.data.dataResponse;
             legalEntities.forEach(function(legal){
@@ -104,11 +106,20 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                 let postedArray = [];
                 let receiveArray = [];
                 let availableArray = [];
+                $scope.IssuersRisk = [];
 
                 result.data.dataResponse.forEach(function (IssuerRisk) {
-                    postedArray.push({name:IssuerRisk.name, y: IssuerRisk.postedAmount});
-                    receiveArray.push({name:IssuerRisk.name, y: IssuerRisk.receivedAmount});
-                    availableArray.push({name:IssuerRisk.name, y: IssuerRisk.availableAmount});
+                    if(IssuerRisk.postedAmount != 0 || IssuerRisk.receivedAmount != 0 || IssuerRisk.availableAmount != 0)
+                        $scope.IssuersRisk.push(IssuerRisk);
+
+                    if(IssuerRisk.postedAmount > 0)
+                        postedArray.push({name:IssuerRisk.name, y: IssuerRisk.postedAmount});
+
+                    if(IssuerRisk.receivedAmount > 0)
+                        receiveArray.push({name:IssuerRisk.name, y: IssuerRisk.receivedAmount});
+
+                    if(IssuerRisk.availableAmount > 0)
+                        availableArray.push({name:IssuerRisk.name, y: IssuerRisk.availableAmount});
 
                 });
                 //console.log(postedArray);
