@@ -178,6 +178,26 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         $scope.legalEntities = [];
 
+        LegalEntityService.getAll().then(function (result) {
+            $scope.legalEntities = result.data.dataResponse;
+
+            $scope.legalEntities.forEach(function (legalEntity) {
+
+                //Insert mother Legal Entity
+                var MotherLegal = $scope.legalEntities.filter(function (legal) {
+                    if (legal.id == legalEntity.motherLegalEntity)
+                        return legal.name;
+                    else return "";
+
+                });
+
+                if (MotherLegal[0]) {
+                    legalEntity.namemotherLegalEntity = MotherLegal[0].name;
+                }
+            });
+
+        });
+
         var financialCalendar = localStorageService.get('FinancialCalendar');
         var i = 0;
 
@@ -205,10 +225,10 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             searchSelect: true,
             searchSelected: true,
             data: [
-                { key: 'COUNTERPARTY', name: 'COUNTERPARTY' },
-                { key: 'PO', name: 'PO' },
-                { key: 'ISSUER', name: 'ISSUER' },
-                { key: 'CCP', name: 'CCP' }
+                {key: 'COUNTERPARTY', name: 'COUNTERPARTY'},
+                {key: 'PO', name: 'PO'},
+                {key: 'ISSUER', name: 'ISSUER'},
+                {key: 'CCP', name: 'CCP'}
             ]
         };
         $scope.regulatories_status = ['NFC', 'NFC_PLUS', 'CATEGORY_1', 'CATEGORY_2', 'CATEGORY_3'];
@@ -306,7 +326,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         }
 
         //editing
-        if(!$scope.parameters.legalEntity)
+        if (!$scope.parameters.legalEntity)
             return false;
 
         $scope.legalEntity = $scope.parameters.legalEntity;
@@ -517,6 +537,139 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                 }
             });
             return renderableRows;
+        };
+
+    }]);
+
+DashboardApp.controller('LEBilateralController', ['$scope', '$log', 'toastr', 'RowEditorModalService', 'uiGridConstants', 'LegalEntityService', 'BilateralContractService',
+    function ($scope, $log, toastr, RowEditorModalService, uiGridConstants, LegalEntityService, BilateralContractService) {
+        /* Cargando datos en legal entity ui-grid*/
+
+        $scope.gridBilateralAgreementsOptions = {
+            showGridFooter: true,
+            paginationPageSizes: [12, 50, 100, 200, 500],
+            paginationPageSize: 12,
+            enableColumnResizing: true,
+            enableFiltering: true,
+            rowHeight: 35, // set height to each row
+            enableGridMenu: true,
+            exporterCsvFilename: 'legal_entity.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Legal Entity", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 450,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+            },
+            columnDefs: [
+                {
+                    name: 'Contract name',
+                    field: 'contract_name',
+                    sort: {
+                        direction: uiGridConstants.ASC,
+                        priority: 0
+                    }
+                },
+                {
+                    name: 'Contract type',
+                    field: 'contract_type'
+                },
+                {
+                    name: 'Actions',
+                    cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                    enableColumnMenu: false,
+                    enableFiltering: false,
+                    enableSorting: false,
+                    width: 160
+                }
+            ],
+            data: []
+        };
+
+        if(!$scope.legalEntity)
+            return false;
+
+        var legalEntityID = $scope.legalEntity.id;
+
+        BilateralContractService.getAllByLegalEntityID(legalEntityID).then(function(result){
+
+            console.log(result)
+            $scope.gridBilateralAgreementsOptions.data = result.data.dataResponse;
+
+        })
+
+
+
+    }]);
+
+DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 'RowEditorModalService', 'uiGridConstants', 'LegalEntityService', 'BilateralContractService',
+    function ($scope, $log, toastr, RowEditorModalService, uiGridConstants, LegalEntityService, BilateralContractService) {
+
+        $scope.gridClearingAgreementsOptions = {
+            showGridFooter: true,
+            paginationPageSizes: [12, 50, 100, 200, 500],
+            paginationPageSize: 12,
+            enableColumnResizing: true,
+            enableFiltering: true,
+            rowHeight: 35,
+            enableGridMenu: true,
+            exporterCsvFilename: 'bilateral_contracts.csv',
+            exporterPdfDefaultStyle: {fontSize: 9},
+            exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+            exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+            exporterPdfHeader: {text: "Bilateral Contracts", style: 'headerStyle'},
+            exporterPdfFooter: function (currentPage, pageCount) {
+                return {
+                    text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'
+                };
+            },
+            exporterPdfCustomFormatter: function (docDefinition) {
+                docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                return docDefinition;
+            },
+            exporterPdfOrientation: 'portrait',
+            exporterPdfPageSize: 'LETTER',
+            exporterPdfMaxGridWidth: 450,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+            },
+            columnDefs: [
+                {
+                    name: 'Contract name',
+                    field: 'contract_name',
+                    sort: {
+                        direction: uiGridConstants.ASC,
+                        priority: 0
+                    }
+                },
+                {
+                    name: 'Contract type',
+                    field: 'contract_type'
+                },
+                {
+                    name: 'Actions',
+                    cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
+                    enableColumnMenu: false,
+                    enableFiltering: false,
+                    enableSorting: false,
+                    width: 160
+                }
+            ],
+            data: []
         };
 
     }]);
