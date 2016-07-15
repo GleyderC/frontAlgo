@@ -16834,6 +16834,8 @@ Customized Bootstrap Tables
 
 .table.table-bordered thead > tr > th {
     border-bottom: 0;
+    background-color: rgba(38, 90, 136, 1);
+    color: #FFFFFF;
 }
 
 .table td .img-responsive {

@@ -27,8 +27,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                             beta: 0
                         },
                         plotShadow: true,
-                        marginTop:0,
-                        height: 250
+                        marginTop:0
                     },
                     title: {
                         text: '<span id="titleMargin"> '+ title +' </span>'
@@ -38,11 +37,18 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     },
                     plotOptions: {
                         pie: {
-                            size: 100,
+                            center: ['50%', '50%'],
                             allowPointSelect: true,
                             cursor: 'pointer',
                             depth: 35,
-                            showInLegend: true
+                            showInLegend: true,
+                            /*dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }*/
                         },
                     },
                     legend: {
@@ -59,6 +65,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     series: [{
                         type: 'pie',
                         name: 'Status',
+                        size: '50%',
                         data: Array,
                         /*point:{
                             events:{
@@ -70,10 +77,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                             }
                         }*/
                     }],
-                    exporting: { enabled: false },
-                    lang: {
-                        thousandsSep: ','
-                    }
+                    exporting: { enabled: false }
                 });
             }
         }
