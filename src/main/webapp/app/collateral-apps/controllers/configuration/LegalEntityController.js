@@ -631,12 +631,16 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
             },
             columnDefs: [
                 {
-                    name: 'Contract name',
-                    field: 'contract_name',
+                    name: 'Principal',
+                    field: 'principal',
                     sort: {
                         direction: uiGridConstants.ASC,
                         priority: 0
                     }
+                },
+                {
+                    name: 'Contract name',
+                    field: 'contract_name',
                 },
                 {
                     name: 'CCP',
