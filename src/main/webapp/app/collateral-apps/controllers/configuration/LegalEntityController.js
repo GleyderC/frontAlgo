@@ -662,4 +662,8 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
             data: []
         };
 
+        var ccp_house_accounts = LegalEntityService.getAllCCPHouseAccounts($scope.legalEntity.id);
+        var ccp_client_accounts = LegalEntityService.getAllCCPClientAccounts($scope.legalEntity.id);
+
+
     }]);
