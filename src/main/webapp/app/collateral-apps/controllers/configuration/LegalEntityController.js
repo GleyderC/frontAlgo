@@ -666,8 +666,51 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
             data: []
         };
 
-        var ccp_house_accounts = LegalEntityService.getAllCCPHouseAccounts($scope.legalEntity.id);
-        var ccp_client_accounts = LegalEntityService.getAllCCPClientAccounts($scope.legalEntity.id);
+        if($scope.legalEntity.id <= 0 || !$scope.legalEntity.id)
+            return false;
 
+        LegalEntityService.getAllCCPClientAccounts($scope.legalEntity.id).then(function(result){
+
+            let ccp_client_accounts = result.data.dataResponse;
+
+            angular.forEach(ccp_client_accounts, function(client_account){
+
+                $scope.gridClearingAgreementsOptions.data.push({
+                    principal: client_account.client.name,
+                    contract_name: client_account.accountName,
+                    ccp: client_account.ccpId,
+                    account_type: "CCP Client " + client_account.accountType,
+                    cm_fcm: client_account.clearingBroker.name
+                });
+
+            });
+
+        });
+
+        LegalEntityService.getAllCCPHouseAccounts($scope.legalEntity.id).then(function(result){
+
+            let ccp_house_accounts = result.data.dataResponse;
+
+            angular.forEach(ccp_house_accounts, function(house_account){
+
+                $scope.gridClearingAgreementsOptions.data.push({
+                    principal: house_account.clearingMemberLegalEntity.name,
+                    contract_name: house_account.accountCode,
+                    ccp: house_account.ccpName,
+                    account_type: house_account.contractType,
+                    cm_fcm: house_account.clearingMemberLegalEntity.name
+                });
+
+            });
+
+        });
+
+        $scope.editRow = function (grid, row) {
+            console.log("editing")
+        }
+
+        $scope.deleteRow = function (grid, row) {
+            console.log("deleting")
+        }
 
     }]);

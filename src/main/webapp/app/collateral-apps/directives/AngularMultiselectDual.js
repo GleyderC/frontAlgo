@@ -138,7 +138,6 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
                     $scope.multiselectElements.selectElementsByArray = function (arrayKeys) {
 
                         angular.forEach(arrayKeys, function (key, index) {
-                            console.log(key)
                             $scope.multiselectElements.selectElementByKey(key);
                         });
 
