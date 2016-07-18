@@ -137,10 +137,11 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                 {
                     name: 'VM',
                     field: 'marginCallAmount',
-                    width: 50
+                    width: 50,
+                    cellClass:'collateral-money'
 
                 },
-                { name: 'IM', width: 50 },
+                { name: 'IM', width: 50, cellClass:'collateral-money' },
                 {
                     name: 'Action',
                     cellTemplate: '<div class="text-center"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMarginCall(row.entity)" ><i class="fa fa-eye"></i></button> </div>',

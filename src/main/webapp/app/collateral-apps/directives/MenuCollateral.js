@@ -137,7 +137,7 @@ DashboardApp.service('MenuService', function () {
                                 icon: '',
                                 text: 'Issuer Risk'
                             },
-                            templateUrl: paths.views + '/collateral/risk/issuer_risk.html',
+                            templateUrl: paths.views + '/risk/issuer_risk.html',
                             autoload : true
                         },
                         {
@@ -145,7 +145,7 @@ DashboardApp.service('MenuService', function () {
                                 icon: '',
                                 text: 'Sovereign Risk'
                             },
-                            templateUrl: paths.views + '/collateral/risk/sovereign_risk.html',
+                            templateUrl: paths.views + '/risk/sovereign_risk.html',
                             autoload : true
                         },
                         {
@@ -153,7 +153,7 @@ DashboardApp.service('MenuService', function () {
                                 icon: '',
                                 text: 'CounterParty Risk'
                             },
-                            templateUrl: paths.views + '/collateral/risk/counterparty_risk.html',
+                            templateUrl: paths.views + '/risk/counterparty_risk.html',
                             autoload : true
                         },
                         {
@@ -161,7 +161,7 @@ DashboardApp.service('MenuService', function () {
                                 icon: '',
                                 text: 'FX Risk'
                             },
-                            templateUrl: paths.views + '/collateral/risk/fx_risk.html',
+                            templateUrl: paths.views + '/risk/fx_risk.html',
                             autoload : true
                         }
                     ]
