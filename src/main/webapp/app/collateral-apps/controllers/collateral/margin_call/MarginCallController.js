@@ -53,7 +53,6 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     parameters: value
 
                 }, [1, 2]);
-
         };
         $scope.contractTypeList = [];
         $scope.counterPartyAList = [];

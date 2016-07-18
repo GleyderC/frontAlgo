@@ -1,4 +1,4 @@
-<div class="row" ng-controller="MarginCallCsaController">
+<div class="row">
     <div class="col-md-4">
         <div class="portlet light bordered" style="margin-bottom:0">
             <strong>Calculation (EUR)</strong>
@@ -129,40 +129,43 @@
 
                     <div class="form-body">
                         <div class="row">
-
                             <label class="control-label col-md-2">Dispute status</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="" disabled>
+                                <input type="text"  ng-model="dispute.status"  class="form-control collateral-money" placeholder="" disabled>
                             </div>
-
                             <label class="control-label col-md-2">CrPrty call</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="">
+                                <input type="text" ng-model="dispute.ctrPartyCall" class="form-control collateral-money" placeholder="">
                             </div>
-
                         </div>
                         <div class="row">
 
                             <label class="control-label col-md-2">Agreed margin</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="">
+                                <input type="text" ng-model="dispute.agreedMargin"  class="form-control collateral-money" placeholder="">
                             </div>
                             <label class="control-label col-md-2">Tolerance</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control collateral-money" placeholder="">
+                                <input type="text" ng-model="dispute.tolerance" value="{{(dispute.tolerance * 100) + '%'}}" class="form-control collateral-money" placeholder="">
                             </div>
 
                         </div>
                         <div class="row">
                             <label class="control-label col-md-2">Dispute comments</label>
                             <div class="col-md-10">
-                                <textarea class="form-control " rows="3"></textarea>
+                                <textarea class="form-control " ng-model="dispute.disputeComments"  rows="3"></textarea>
                             </div>
                         </div>
-
+						<div class="row">
+							<br/>
+							<div class="col-md-4 pull-right">
+								<button class="btn btn green" ng-click="updateDispute(dispute)" ng-show="disputeEdit">Save</button>
+							</div>
+						</div>
                     </div>
                 </form>
             </div>
         </div>
+   
     </div>
 </div>
