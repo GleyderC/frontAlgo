@@ -66,7 +66,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     series: [{
                         type: 'pie',
                         name: 'Status',
-                        size: '50%',
+                        size: '60%',
                         data: Array,
                         /*point:{
                             events:{
