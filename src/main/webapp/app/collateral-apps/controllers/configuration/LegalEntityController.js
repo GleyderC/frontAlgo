@@ -559,12 +559,20 @@ DashboardApp.controller('LEBilateralController', ['$scope', '$log', 'toastr', 'R
             },
             columnDefs: [
                 {
-                    name: 'Contract Code',
-                    field: 'contractCode',
+                    name: 'Principal',
+                    field: 'counterpartyA.name',
                     sort: {
                         direction: uiGridConstants.ASC,
                         priority: 0
                     }
+                },
+                {
+                    name: 'Counterparty',
+                    field: 'counterpartyB.name',
+                },
+                {
+                    name: 'Contract Code',
+                    field: 'contractCode'
                 },
                 {
                     name: 'Contract type',

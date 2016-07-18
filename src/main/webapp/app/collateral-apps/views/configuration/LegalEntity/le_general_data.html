@@ -38,19 +38,32 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
+
+                                    <label class="col-md-3 control-label">Country</label>
+                                    <div class="col-md-9">
+                                        <ui-select ng-model="country.selected" theme="select2" class="input-medium">
+                                            <ui-select-match placeholder="Select Country...">{{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="country in countries | filter: $select.search">
+                                                <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                                <small ng-bind-html="country.key | highlight: $select.search"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+
+                                    </div>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label class="control-label col-md-3">Is a Branch</label>
-                                <div class="col-md-9">
+                                <div class="col-md-9" style="margin-bottom: 4px;">
                                     <input bs-switch ng-model="legalEntity.isBranch" type="checkbox"
                                            switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                            ng-true-value="true" ng-false-value="false">
                                     <!--input type="checkbox" class="make-switch" data-on-text="Yes" data-off-text="No" ng-model="legalEntity.isBranch"-->
                                 </div>
-                            </div>
-                            <div class="form-group col-md-6">
                                 <label class="control-label col-md-3">Mother Legal Entity:</label>
                                 <div class="col-md-9">
 
-                                    <ui-select ng-model="legalEntityMother.selected" theme="select2"
+                                    <ui-select ng-model="legalEntityMother.selected" theme="select2" ng-disabled="!legalEntity.isBranch"
                                                style="min-width: 250px;height:30px;"
                                                title="Choose a Legal Entity Mother">
                                         <ui-select-match placeholder="Select name or othername...">
@@ -95,20 +108,7 @@
                         </div>
                         <!--END </div> row-->
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="col-md-3 control-label">Country</label>
-                                <div class="col-md-9">
-                                    <ui-select ng-model="country.selected" theme="select2" class="input-medium">
-                                        <ui-select-match placeholder="Select Country...">{{$select.selected.name}}
-                                        </ui-select-match>
-                                        <ui-select-choices repeat="country in countries | filter: $select.search">
-                                            <div ng-bind-html="country.name | highlight: $select.search"></div>
-                                            <small ng-bind-html="country.key | highlight: $select.search"></small>
-                                        </ui-select-choices>
-                                    </ui-select>
 
-                                </div>
-                            </div>
                         </div>
                         <!--END </DIV> ROW-->
                     </div>

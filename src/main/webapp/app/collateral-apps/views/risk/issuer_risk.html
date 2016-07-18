@@ -39,7 +39,7 @@
             <div class="form-group col-md-4">
                 <label class="col-sm-12 col-md-3 centered control-label">Currency</label>
                 <div class="col-md-9">
-                    <ui-select ng-model="currency.selected" theme="select2" class="input-medium">
+                    <ui-select ng-model="currency.selected" theme="select2" class="input-medium" ng-change="filterIssuerRisk()">
                         <ui-select-match placeholder="Select an option...">{{$select.selected.name}}
                         </ui-select-match>
                         <ui-select-choices repeat="currency in currencies | filter: $select.search">
@@ -53,20 +53,20 @@
         <div class="row">
             <div class="col-sm-12 col-md-4">
                 <div class="portlet-body">
-                    <div id="gchart_pie_posted" style="text-align: center; height:250px;"></div>
+                    <div id="gchart_pie_posted" style="text-align: center; height:300px;"></div>
                 </div>
             </div>
 
 
             <div class="col-sm-12 col-md-4">
                 <div class="portlet-body">
-                    <div id="gchart_pie_received" style="text-align: center; height:250px;"></div>
+                    <div id="gchart_pie_received" style="text-align: center; height:300px;"></div>
                 </div>
             </div>
 
             <div class="col-sm-12 col-md-4">
                 <div class="portlet-body">
-                    <div id="gchart_pie_available" style="text-align: center; height:250px;"></div>
+                    <div id="gchart_pie_available" style="text-align: center; height:300px;"></div>
                 </div>
             </div>
         </div>
