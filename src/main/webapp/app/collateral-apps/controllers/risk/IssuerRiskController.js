@@ -82,29 +82,9 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
             }
         }
 
-        LegalEntityService.getAll().then(function (result) {
-            $scope.legalEntitiesPO = [];
-            $scope.legalEntitiesCounterParty = [];
-            $scope.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: -1, otherName:""});
+        $scope.filterIssuerRisk = function () {
 
-            let legalEntities = result.data.dataResponse;
-            legalEntities.forEach(function(legal){
-
-                if(legal.rolList == "PO"){
-                    $scope.legalEntitiesPO.push(legal);
-                }
-                else if(legal.rolList == "COUNTERPARTY"){
-                    $scope.legalEntitiesCounterParty.push(legal);
-                }
-
-             });
-            //inicializando combos
-            $scope.currency.selected = $scope.currencies[1];
-            $scope.legalEntityPO.selected = $scope.legalEntitiesPO[0];
-            $scope.legalEntityCounterParty.selected = $scope.legalEntitiesCounterParty[0];
-
-
-            IssuerRiskService.getAll($scope.legalEntityPO.selected.id,"CCP",
+            IssuerRiskService.getAll($scope.legalEntityPO.selected.id,"LE",
                 $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name).then(function (result) {
 
                 let postedArray = [];
@@ -133,17 +113,33 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                 $scope.drawPieChart('Received',receiveArray,'gchart_pie_received');
                 $scope.drawPieChart('Available',availableArray,'gchart_pie_available');
             });
+        }
 
+        LegalEntityService.getAll().then(function (result) {
+            $scope.legalEntitiesPO = [];
+            $scope.legalEntitiesCounterParty = [];
+            $scope.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: -1, otherName:""});
+
+            let legalEntities = result.data.dataResponse;
+            legalEntities.forEach(function(legal){
+
+                if(legal.rolList == "PO"){
+                    $scope.legalEntitiesPO.push(legal);
+                }
+                else if(legal.rolList == "COUNTERPARTY"){
+                    $scope.legalEntitiesCounterParty.push(legal);
+                }
+
+             });
+
+            //inicializando combos
+            $scope.currency.selected = $scope.currencies[1];
+            $scope.legalEntityPO.selected = $scope.legalEntitiesPO[0];
+            $scope.legalEntityCounterParty.selected = $scope.legalEntitiesCounterParty[0];
+
+            $scope.filterIssuerRisk();
 
         });
-
-        $scope.filterIssuerRisk = function () {
-
-            IssuerRiskService.getAll($scope.legalEntityPO.selected.id,"CCP",
-                $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name).then(function (result) {
-                //console.log(result.data.dataResponse);
-            })
-        }
 
 
     }]);
