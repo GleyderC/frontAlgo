@@ -38,6 +38,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     },
                     plotOptions: {
                         pie: {
+                            center: ['50%', '50%'],
                             allowPointSelect: true,
                             cursor: 'pointer',
                             depth: 35,
