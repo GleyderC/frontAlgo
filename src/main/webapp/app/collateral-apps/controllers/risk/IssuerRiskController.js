@@ -38,7 +38,6 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     },
                     plotOptions: {
                         pie: {
-                            center: ['50%', '50%'],
                             allowPointSelect: true,
                             cursor: 'pointer',
                             depth: 35,
@@ -66,7 +65,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     series: [{
                         type: 'pie',
                         name: 'Status',
-                        size: '50%',
+                        size: '60%',
                         data: Array,
                         /*point:{
                             events:{
