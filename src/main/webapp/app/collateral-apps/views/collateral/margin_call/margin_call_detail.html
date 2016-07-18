@@ -41,7 +41,7 @@
                         <td style="font-size: 12px;"><span class="label label-sm label-success"> {{MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.status}}  </span></td>
                         <td style="font-size: 12px;">{{MarginCallDetail.contract.contractType}}</td>
                         <td style="font-size: 12px;">{{MarginCallDetail.contract.baseCurrency}}</td>
-                        <td style="font-size: 12px;">{{MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount | currency:''}}</td>
+                        <td style="font-size: 12px;" class="collateral-money">{{MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount | currency:''}}</td>
                     </tr>
                     </tbody>
                     </table>

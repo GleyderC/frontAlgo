@@ -90,13 +90,13 @@
                         <tbody ng-repeat="IssuerRisk in IssuersRisk | orderBy:'IssuerRisk.name'">
                         <tr>
                             <td>{{IssuerRisk.name}}</td>
-                            <td class="success">{{IssuerRisk.postedAmount | currency:''}}</td>
+                            <td class="success collateral-money">{{IssuerRisk.postedAmount | currency:''}}</td>
                             <td>{{IssuerRisk.postedPerCent | number:2 }}%</td>
 
-                            <td class="warning">{{IssuerRisk.receivedAmount | currency:''}}</td>
+                            <td class="warning collateral-money">{{IssuerRisk.receivedAmount | currency:''}}</td>
                             <td>{{IssuerRisk.receivedPerCent | number:2 }}%</td>
 
-                            <td class="active">{{IssuerRisk.availableAmount | currency:''}}</td>
+                            <td class="active collateral-money">{{IssuerRisk.availableAmount | currency:''}}</td>
                             <td>{{IssuerRisk.availablePerCent | number:2 }}%</td>
 
                             <td>{{IssuerRisk.raiting}}</td>
