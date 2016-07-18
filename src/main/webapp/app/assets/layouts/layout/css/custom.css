@@ -282,6 +282,10 @@ div.ui-grid-cell select {
 
 /*TABS CUSTOM STYLE*/
 
+.tab-action-buttons{
+    margin: 5px 7px 5px 7px;
+}
+
 .nav.nav-tabs {
     background-color: rgba(195, 213, 230, 0.35);
     border-bottom: none;

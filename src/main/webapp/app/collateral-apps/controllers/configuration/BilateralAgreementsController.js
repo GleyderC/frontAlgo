@@ -12,6 +12,7 @@ DashboardApp.controller(
         '$request',
         'localStorageService',
         '$filter',
+        'toastr',
         function (LegalEntityService,
                   BilateralContractService,
                   $scope,
@@ -19,7 +20,8 @@ DashboardApp.controller(
                   $timeout,
                   $request,
                   $localStorage,
-                  $filter) {
+                  $filter,
+                  toastr) {
 
             var currenciesList = [];
 
@@ -92,6 +94,10 @@ DashboardApp.controller(
                     }
                 ]
             };
+
+            this.saveBilateralAgr = function(){
+                toastr.success("Info Saved","Good")
+            }
 
         }]);
 
@@ -326,11 +332,6 @@ DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$r
             resolve: {}
         });
     };
-
-
-    this.saveBilateralAgr = function(){
-        toastr.success("Info Saved","Good")
-    }
 
 }]);
 

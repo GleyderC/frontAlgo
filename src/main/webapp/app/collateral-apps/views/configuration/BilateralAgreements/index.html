@@ -1,5 +1,16 @@
-<div class="row" ng-controller="BilateralAgreementsController">
+<div class="row" ng-controller="BilateralAgreementsController as BACtrl">
     <div class="col-md-12">
+        <!-- Action Buttons -->
+
+                    <div class="pull-right tab-action-buttons">
+                        <button type="submit" class="btn btn-primary" ng-click="BACtrl.saveBilateralAgr()">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                        </button>
+                        <button type="button" class="btn default" ng-click="">
+                            <span class="glyphicon glyphicon-refresh"></span> Reset
+                        </button>
+                    </div>
+
         <workspace-tabs id="BilateralAgrWorkspaceTabs" data-workspace-info="bilateralAgrWorkspaceTabs"></workspace-tabs>
     </div>
 </div>
