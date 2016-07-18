@@ -8,6 +8,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
     function ( $scope, localStorageService, LegalEntityService, IssuerRiskService, ArrayService ) {
 
         $scope.currencies = localStorageService.get("CurrencyEnum");
+        $scope.currencies.splice(2,1);
         $scope.currency = {};
         $scope.legalEntityPO = {};
         $scope.legalEntityCounterParty = {};
@@ -122,7 +123,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
         LegalEntityService.getAll().then(function (result) {
             $scope.legalEntitiesPO = [];
             $scope.legalEntitiesCounterParty = [];
-            $scope.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: -1, otherName:""});
+            $scope.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: 0, otherName:""});
 
             let legalEntities = result.data.dataResponse;
             legalEntities.forEach(function(legal){
