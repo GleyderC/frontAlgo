@@ -223,6 +223,18 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
     this.bilateralAcasiaSoft = false;
     this.status = true;
 
+    //Notification TimePicker
+    this.notification  = new Date();
+    this.hstep = 1;
+    this.mstep = 1;
+
+    this.options = {
+        hstep: [1, 2, 3],
+        mstep: [1, 5, 10, 15, 25, 30]
+    };
+    this.ismeridian = true;
+    //TimePicker
+
     $scope.holidays = {
         searchSelect: true,
         searchSelected: true,
