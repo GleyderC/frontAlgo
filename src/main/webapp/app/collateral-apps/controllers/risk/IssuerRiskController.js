@@ -80,6 +80,10 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     exporting: { enabled: false }
                 });
             }
+            else {
+                //console.log("clean data")
+                $('#'+component).empty();
+            }
         }
 
         $scope.filterIssuerRisk = function () {
