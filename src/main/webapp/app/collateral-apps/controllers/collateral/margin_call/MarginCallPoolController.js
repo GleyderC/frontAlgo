@@ -25,7 +25,10 @@ DashboardApp.controller('MarginCallPoolController', ['$scope', 'uiGridConstants'
 	}
 
 	};
-
+	MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
+        $scope.pool  =  result.data.dataResponse.poolDisplays;
+        $scope.gridMCCsaPool.data = $scope.pool;
+    });
 	$scope.$parent.$watchCollection('pool', function (newPool, oldPool) {
 	    if (newPool === oldPool) {
 	        return false;

@@ -58,6 +58,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
         MarginCallService.getDetail($scope.parameters.marginCalls[0].id).then(function (result) {
             //$scope.marginCallTrade = result.data.dataResponse.marginCall;
             $scope.received = result.data.dataResponse.receivedCollateral;
+            $scope.posted 	= result.data.dataResponse.postedCollateral;
             $scope.Inventory  =  $scope.posted.concat($scope.received);
             $scope.gridInventoryOptions.data  = $scope.Inventory  ;
         });

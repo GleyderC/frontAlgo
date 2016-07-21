@@ -73,6 +73,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
             $scope.Trades = result.data.dataResponse.trades;
             $scope.gridTradesOptions.data = $scope.Trades;
+            $scope.pool  =  result.data.dataResponse.poolDisplays;
         });
 
         $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {
