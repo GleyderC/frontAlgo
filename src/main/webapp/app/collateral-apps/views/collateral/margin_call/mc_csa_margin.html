@@ -135,18 +135,18 @@
                             </div>
                             <label class="control-label col-md-2">CrPrty call</label>
                             <div class="col-md-4">
-                                <input type="text" ng-model="dispute.disputeCalculations.counterpartyValue" class="form-control collateral-money" placeholder="">
+                                <input ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.counterpartyValue" class="form-control collateral-money" placeholder="">
                             </div>
                         </div>
                         <div class="row">
 
                             <label class="control-label col-md-2">Agreed margin</label>
                             <div class="col-md-4">
-                                <input type="text" ng-model="dispute.disputeCalculations.agreedMargin"  class="form-control collateral-money" placeholder="">
+                                <input ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.agreedMargin"  class="form-control collateral-money" placeholder="">
                             </div>
-                            <label class="control-label col-md-2">Tolerance</label>
+                            <label class="control-label col-md-2">Tolerance % </label>
                             <div class="col-md-4">
-                                <input type="text" ng-model="dispute.disputeCalculations.tolerance" value="{{(dispute.disputeCalculations.tolerance * 100) + '%'}}" class="form-control" placeholder="">
+                                <input ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.tolerance" class="form-control collateral-money " ui-number="0" placeholder="">
                             </div>
 
                         </div>

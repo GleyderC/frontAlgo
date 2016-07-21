@@ -84,7 +84,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
             			difference 		: 0 ,
             			differencePercentage 		: 0 ,
             			disputeStatus : $scope.disputeStatus, 
-            			tolerance 	  : $scope.tolerance,
+            			tolerance 	  : $scope.tolerance * 100,
             			myValue   	  : $scope.myValue ,
             			disputeComments : "",
             			agreedMargin : 0
