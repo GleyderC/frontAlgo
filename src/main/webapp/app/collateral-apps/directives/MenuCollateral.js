@@ -143,9 +143,9 @@ DashboardApp.service('MenuService', function () {
                         {
                             head: {
                                 icon: '',
-                                text: 'Sovereign Risk'
+                                text: 'Country Risk'
                             },
-                            templateUrl: paths.views + '/risk/sovereign_risk.html',
+                            templateUrl: paths.views + '/risk/country_risk.html',
                             autoload : true
                         },
                         {

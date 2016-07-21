@@ -1,4 +1,4 @@
-<div class="portlet light" ng-controller="IssuerRiskController as IssuerCtrl">
+<div class="portlet light" ng-controller="CountryRiskController">
     <div class="portlet light bordered">
         <div class="row">
             <div class="form-group col-md-4">
@@ -51,58 +51,34 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-4">
-                <div class="portlet-body">
-                    <div id="gchart_pie_posted" style="text-align: center; height:300px;"></div>
+            <fieldset>
+                <label class="col-sm-12 col-md-offset-3 col-md-1 control-label">Country Risk</label>
+                <div class="col-sm-12 col-md-8">
+                    <div class="mt-checkbox-inline">
+                        <label class="mt-checkbox mt-checkbox-outline">
+                            <input type="checkbox" id="sovereign" > Sovereign
+                            <span></span>
+                        </label>
+                        <label class="mt-checkbox mt-checkbox-outline">
+                            <input type="checkbox" id="public" > Public
+                            <span></span>
+                        </label>
+                        <label class="mt-checkbox mt-checkbox-outline">
+                            <input type="checkbox" id="corporate" > Corporate
+                            <span></span>
+                        </label>
+                    </div>
                 </div>
-            </div>
+            </fieldset>
 
-
-            <div class="col-sm-12 col-md-4">
-                <div class="portlet-body">
-                    <div id="gchart_pie_received" style="text-align: center; height:300px;"></div>
-                </div>
-            </div>
-
-            <div class="col-sm-12 col-md-4">
-                <div class="portlet-body">
-                    <div id="gchart_pie_available" style="text-align: center; height:300px;"></div>
-                </div>
-            </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-
-                <div class="table-scrollable">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th>Issuer</th>
-                            <th>Posted</th>
-                            <th>Haircut</th>
-                            <th>Received</th>
-                            <th>Haircut</th>
-                            <th>Available</th>
-                            <th>Haircut</th>
-                            <th>Rating</th>
-                        </tr>
-                        </thead>
-                        <tbody ng-repeat="IssuerRisk in IssuerCtrl.IssuersRisk | orderBy:'IssuerRisk.name'">
-                        <tr>
-                            <td>{{IssuerRisk.name}}</td>
-                            <td class="success collateral-money">{{IssuerRisk.postedAmount | currency:''}}</td>
-                            <td>{{IssuerRisk.postedPerCent | number:2 }}%</td>
-
-                            <td class="warning collateral-money">{{IssuerRisk.receivedAmount | currency:''}}</td>
-                            <td>{{IssuerRisk.receivedPerCent | number:2 }}%</td>
-
-                            <td class="active collateral-money">{{IssuerRisk.availableAmount | currency:''}}</td>
-                            <td>{{IssuerRisk.availablePerCent | number:2 }}%</td>
-
-                            <td>{{IssuerRisk.raiting}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+        <div class="row" style=" height: 500px; width: 1000px; margin: 0 auto; padding: 0;">
+            <div id="wrapper">
+                <div id="container" style="float: left; height: 500px; width: 700px; margin: 0;"></div>
+                <div id="info">
+                    <span class="f32" style="float: left;width: 270px;padding-left: 20px;margin: 100px 0 0 0;border-left: 1px solid silver;"><span id="flag"></span></span>
+                    <h2></h2>
+                    <div class="subheader">Click countries to view history</div>
                 </div>
             </div>
         </div>

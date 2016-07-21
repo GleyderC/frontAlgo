@@ -4,14 +4,17 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('IssuerRiskController', [ '$scope',
-    'localStorageService', 'LegalEntityService', 'IssuerRiskService', 'ArrayService',
-    function ( $scope, localStorageService, LegalEntityService, IssuerRiskService, ArrayService ) {
+    'localStorageService', 'LegalEntityService', 'RiskService', 'ArrayService',
+    function ( $scope, localStorageService, LegalEntityService, RiskService, ArrayService ) {
 
         $scope.currencies = localStorageService.get("CurrencyEnum");
         $scope.currencies.splice(2,1);
         $scope.currency = {};
         $scope.legalEntityPO = {};
         $scope.legalEntityCounterParty = {};
+        let _that = this;
+        this.IssuersRisk = [];
+
 
         $scope.drawPieChart = function (title, Array, component) {
             //console.log(Array);
@@ -89,26 +92,26 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
 
         $scope.filterIssuerRisk = function () {
 
-            IssuerRiskService.getAll($scope.legalEntityPO.selected.id,"LE",
+            RiskService.getExposureByIssuer($scope.legalEntityPO.selected.id,"LE",
                 $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name).then(function (result) {
 
                 let postedArray = [];
                 let receiveArray = [];
                 let availableArray = [];
-                $scope.IssuersRisk = [];
+                _that.IssuersRisk = [];
 
-                result.data.dataResponse.forEach(function (IssuerRisk) {
-                    if(IssuerRisk.postedAmount != 0 || IssuerRisk.receivedAmount != 0 || IssuerRisk.availableAmount != 0)
-                        $scope.IssuersRisk.push(IssuerRisk);
+                result.data.dataResponse.forEach(function (Risk) {
+                    if(Risk.postedAmount != 0 || Risk.receivedAmount != 0 || Risk.availableAmount != 0)
+                        _that.IssuersRisk.push(Risk);
 
-                    if(IssuerRisk.postedAmount > 0)
-                        postedArray.push({name:IssuerRisk.name, y: IssuerRisk.postedAmount});
+                    if(Risk.postedAmount > 0)
+                        postedArray.push({name:Risk.name, y: Risk.postedAmount});
 
-                    if(IssuerRisk.receivedAmount > 0)
-                        receiveArray.push({name:IssuerRisk.name, y: IssuerRisk.receivedAmount});
+                    if(Risk.receivedAmount > 0)
+                        receiveArray.push({name:Risk.name, y: Risk.receivedAmount});
 
-                    if(IssuerRisk.availableAmount > 0)
-                        availableArray.push({name:IssuerRisk.name, y: IssuerRisk.availableAmount});
+                    if(Risk.availableAmount > 0)
+                        availableArray.push({name:Risk.name, y: Risk.availableAmount});
 
                 });
                 //console.log(postedArray);
