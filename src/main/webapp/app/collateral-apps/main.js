@@ -386,8 +386,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             'collateral-apps/services/user_message/UserMessageService.js',
 
-                            'collateral-apps/services/risk/IssuerRiskService.js',
-
+                            'collateral-apps/services/risk/RiskService.js',
 
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/configuration/LegalEntityController.js',
@@ -413,7 +412,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/NotificationsController.js',
 
                             /*IssuerRisk Controller*/
-                            'collateral-apps/controllers/risk/IssuerRiskController.js'
+                            'collateral-apps/controllers/risk/IssuerRiskController.js',
+                            'collateral-apps/controllers/risk/CountryRiskController.js'
 
                         ],
                         serie: true,
