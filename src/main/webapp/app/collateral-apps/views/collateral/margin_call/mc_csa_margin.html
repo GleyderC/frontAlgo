@@ -156,6 +156,18 @@
                                 <textarea class="form-control " ng-model="dispute.disputeCalculations.disputeComments"  rows="3"></textarea>
                             </div>
                         </div>
+                        <div class="row" ng-show="dispute.disputeCalculations.difference!=0">
+
+                            <label class="control-label col-md-2">Difference</label>
+                            <div class="col-md-4">
+                                <label class="control-label collateral-money" >{{dispute.disputeCalculations.difference | number:2}}</label>
+                            </div>
+                            <label class="control-label col-md-2">Difference %</label>
+                            <div class="col-md-4">
+                                <label class="control-label collateral-money" >{{dispute.disputeCalculations.differencePercentage | number:2}}% </label>
+                            </div>
+
+                        </div>
 						<div class="row">
 							<br/>
 							<div class="col-md-4 pull-right">
