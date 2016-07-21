@@ -70,12 +70,16 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
 
         ];
 
+        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
+            $scope.Trades = result.data.dataResponse.trades;
+            $scope.gridTradesOptions.data = $scope.Trades;
+        });
+
         $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {
             if (newTrades === oldTrades) {
                 return false;
             }
             $scope.gridTradesOptions.data = newTrades;
-
             $scope.baseCurrency = $scope.MarginCallDetail.contract.baseCurrency
         });
 
