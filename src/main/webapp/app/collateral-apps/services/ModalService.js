@@ -12,7 +12,7 @@ angular.module('DashboardApp')
                 controller: function(){},
                 controllerAs: '',
                 animationsEnabled: true,
-                size: 'md',
+                size: 'sm',
                 opened: function(){},
                 closed: function(){},
                 rendered: function(){},
@@ -38,6 +38,9 @@ angular.module('DashboardApp')
 
                     if(!!Options.resolve)
                         ModalService.Options.resolve = Options.resolve;
+
+                    if(!!Options.windowClass)
+                        ModalService.Options.windowClass = Options.windowClass;
 
                     if(!!Options.opened)
                         ModalService.Options.opened = Options.opened;

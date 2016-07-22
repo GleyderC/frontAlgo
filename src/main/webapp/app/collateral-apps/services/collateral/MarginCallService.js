@@ -1,5 +1,5 @@
 angular.module('DashboardApp')
-    .service('MarginCallService',['$request','toastr','$q',function ($request, toastr, $q) {
+    .service('MarginCallService',['$request','toastr','$q','localStorageService',function ($request, toastr, $q, $localStorage) {
        
         this.getAll = function(){
 
@@ -53,4 +53,20 @@ angular.module('DashboardApp')
         this.updateDispute  = function(dispute){
         	  return $request.post('/servlet/MarginCallAndContract/UpdateDispute/',dispute); 
         };
+
+
+        //Process Margin Call Message
+        this.ProcessMCMessage  = function(params){
+        	  return $request.post('/servlet/Mapping/ProcessMCMessage',params);
+        };
+
+        this.getInputFilesDefinition  = function(){
+        	  return $request.get('/servlet/InputFilesDefinition/SelectAll');
+        };
+
+        this.getColumnDataFormat  = function(){
+        	  return $localStorage.get("ColumnDataFormat");
+        };
+
+
   }]);
