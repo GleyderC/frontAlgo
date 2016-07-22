@@ -497,3 +497,10 @@ i.close-tab-icon:hover {
 }
 
 /*TABS CUSTOM STYLE*/
+
+/*UI-SELECT*/
+
+.select2-results .select2-highlighted
+{
+    color: #212121;
+}
