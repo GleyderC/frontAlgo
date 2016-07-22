@@ -150,9 +150,13 @@
 <!-- HiGHT CHART -->
 <script src="assets/global/plugins/highcharts/js/highcharts.js" type="text/javascript"></script>
 <script src="assets/global/plugins/highcharts/js/highcharts-3d.js" type="text/javascript"></script>
-<script src="assets/global/plugins/highcharts/js/highcharts-more.js" type="text/javascript"></script>
+<script src="assets/global/plugins/highmaps/js/modules/map.js"></script>
+<script src="assets/global/plugins/highmaps/js/custom/world.js"></script>
 <script src="assets/global/plugins/highcharts/js/modules/exporting.js" type="text/javascript"></script>
 <script src="assets/global/plugins/highcharts/js/modules/offline-exporting.js" type="text/javascript"></script>
+
+<!-- Flag sprites service provided by Martijn Lafeber, https://github.com/lafeber/world-flags-sprite/blob/master/LICENSE -->
+<link rel="stylesheet" type="text/css" href="https://cloud.github.com/downloads/lafeber/world-flags-sprite/flags32.css" />
 
 <!--Angular Web Socket  -->
 <script src="assets/vendor/angular-websocket/dist/angular-websocket.min.js" type="text/javascript"></script>

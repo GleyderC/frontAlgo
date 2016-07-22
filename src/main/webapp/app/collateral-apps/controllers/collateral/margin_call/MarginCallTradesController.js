@@ -65,13 +65,23 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'currency:""', cellClass:'collateral-money' },
             {field: 'ownPricing.priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'currency:""', cellClass:'collateral-money'},
-            {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellFilter: 'currency:""', cellClass:'collateral-money'},
-            {field: 'npvCounterParty', name:'Diff (%Npv)'}
+            {field: 'npvCounterParty', name:'Diff (%Npv)'},
+            {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellClass:'collateral-money'}
+            
 
         ];
 
         MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
             $scope.Trades = result.data.dataResponse.trades;
+            $scope.gridTradesOptions.data = $scope.Trades;
+            $scope.pool  =  result.data.dataResponse.poolDisplays;
+            $scope.disputesDetail = result.data.dataResponse.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.csaDisputesCalculations.disputeCalculationDetail
+            $scope.Trades.forEach(function(v,k){
+            	if($scope.disputesDetail[v.trade.internalId]!==undefined){
+            		v.ownPricing.Counterparty  = v.trade.$scope.disputesDetail[v.trade.internalId].myValue;
+            		v.ownPricing.Counterparty  = v.trade.$scope.disputesDetail[v.trade.internalId].counterparty;
+            	}  	
+            });
             $scope.gridTradesOptions.data = $scope.Trades;
         });
 
