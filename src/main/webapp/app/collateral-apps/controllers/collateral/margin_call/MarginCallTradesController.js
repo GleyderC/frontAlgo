@@ -82,7 +82,8 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             		$scope.disputeList[rowEntity.trade.internalId] ={
             				myValue : rowEntity.ownPricing.priceInBaseCurrency,
             				counterpartyValue: rowEntity.ownPricing.Counteparty,
-            				difference : parseFloat(rowEntity.npvCounterParty.replace(/,/,''))
+            				difference : parseFloat(rowEntity.npvCounterParty.replace(/,/,'')),
+            				collateralLiabilityType : "CSA"
             					
             		}; 
             		gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
