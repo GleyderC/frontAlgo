@@ -18,7 +18,7 @@ angular.module('DashboardApp')
 
         this.getExposureByCountry = function(idLegal, counterPartyType, counterPartyId, currency,
                                              showSovereign, showPublic, showCorporate){
-            //console.log(currency);
+            //console.log(showSovereign, showPublic, showCorporate);
 
             var param = {legalEntityPointOfViewId:idLegal,counterPartyType : counterPartyType,
                 counterPartyId : counterPartyId, currency: currency, showSovereign: showSovereign,

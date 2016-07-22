@@ -1,5 +1,5 @@
-<div class="portlet light" ng-controller="CountryRiskController">
-    <div class="portlet light bordered">
+<div class="portlet light" ng-controller="CountryRiskController as CountryRiskCtrl">
+    <div class="portlet light bordered" style="padding: 12px 7px 15px 7px;">
         <div class="row">
             <div class="form-group col-md-4">
                 <label class="col-sm-12 col-md-4 control-label">Legal Entity Point Of View</label>
@@ -56,15 +56,15 @@
                 <div class="col-sm-12 col-md-8">
                     <div class="mt-checkbox-inline">
                         <label class="mt-checkbox mt-checkbox-outline">
-                            <input type="checkbox" id="sovereign" > Sovereign
+                            <input type="checkbox" id="sovereign" ng-model="sovereign" ng-click="filterIssuerRisk()"> Sovereign
                             <span></span>
                         </label>
                         <label class="mt-checkbox mt-checkbox-outline">
-                            <input type="checkbox" id="public" > Public
+                            <input type="checkbox" id="public" ng-model="public" ng-click="filterIssuerRisk()"> Public
                             <span></span>
                         </label>
                         <label class="mt-checkbox mt-checkbox-outline">
-                            <input type="checkbox" id="corporate" > Corporate
+                            <input type="checkbox" id="corporate" ng-model="corporate" ng-click="filterIssuerRisk()"> Corporate
                             <span></span>
                         </label>
                     </div>
@@ -72,15 +72,33 @@
             </fieldset>
 
         </div>
-        <div class="row" style=" height: 500px; width: 1000px; margin: 0 auto; padding: 0;">
-            <div id="wrapper">
-                <div id="container" style="float: left; height: 500px; width: 700px; margin: 0;"></div>
-                <div id="info">
-                    <span class="f32" style="float: left;width: 270px;padding-left: 20px;margin: 100px 0 0 0;border-left: 1px solid silver;"><span id="flag"></span></span>
-                    <h2></h2>
-                    <div class="subheader">Click countries to view history</div>
+        <split-pane style="height: 500px;">
+
+            <split-pane-component width="55%" class="col-sm-12" style="padding-left: 7px;padding-right: 7px;">
+                <div class="portlet-body">
+                    <div id="container" style="float: left; height: 480px; width: 680px; margin: 0;"></div>
                 </div>
-            </div>
-        </div>
+            </split-pane-component>
+
+            <split-pane-divider width="5px"></split-pane-divider>
+
+            <split-pane-component class="col-sm-12" style="padding-left: 2px;padding-right: 2px;">
+                <div class="row" style="margin-left: 10px;margin-right: 10px;">
+                    <div class="portlet-body">
+                        <div class="col-md-12" id="info">
+                            <span class="f32" style="float: left;">
+                                <span id="flag"></span>
+                                <span id="flag_name" style="vertical-align: -5px;padding-left: 5px;font-weight:bold;"></span>
+                            </span>
+                        </div>
+                        <div class="col-md-12" style="padding: 0px">
+                            <div ui-grid="gridCountryRiskOptions" ui-grid-selection ui-grid-exporter
+                                 ui-grid-auto-resize ui-grid-resize-columns  ui-grid-pagination class="grid" style="height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </split-pane-component>
+        </split-pane>
+
     </div>
 </div>
