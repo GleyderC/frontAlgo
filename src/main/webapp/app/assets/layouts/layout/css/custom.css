@@ -504,3 +504,16 @@ i.close-tab-icon:hover {
 {
     color: #212121;
 }
+
+.row-space{
+    margin-top: 1px;
+    margin-bottom: 2px;
+}
+
+/* MARGIN CALL SECTION */
+.badge-mandatory-field
+{
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
