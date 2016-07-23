@@ -78,7 +78,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         	
             $scope.dispute = {
             		contractId    : $scope.MarginCallDetail.contract.internalId,
-            		margincallId  : $scope.currentMarginCall.marginCalls[0].id,
+            		marginCallId  : $scope.currentMarginCall.marginCalls[0].id,
             		disputeCalculations  : {
             			counterpartyValue : 0,
             			difference 		: 0 ,
