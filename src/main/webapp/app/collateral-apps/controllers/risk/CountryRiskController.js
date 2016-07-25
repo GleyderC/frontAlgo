@@ -20,6 +20,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
         //Grid Config
         $scope.gridCountryRiskOptions = {
+            showTreeExpandNoChildren: true,
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
             paginationPageSize: 5,
@@ -104,7 +105,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
             var mapChart;
 
             // Initiate the chart
-            mapChart = $('#container').highcharts('Map', {
+            mapChart = $('#country_risk_map').highcharts('Map', {
 
                 title : {
                     text : 'Country Risk'

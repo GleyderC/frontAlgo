@@ -88,38 +88,6 @@
     padding-top: 10px;
 }
 
-@media (min-width: 1200px) {
-    .container {
-
-        width: 1280px;
-
-    }
-}
-
-@media (min-width: 992px) {
-    .page-header .navbar-collapse {
-        margin-top: 75px;
-        margin-left: 1px;
-    }
-
-    .page-header .topbar-actions {
-        top: 5px;
-    }
-
-    .page-header .navbar-fixed-top {
-        background: #616d76;
-        padding: 9px 25px;
-    }
-
-    .wrapper {
-        margin-top: 0;
-    }
-
-    .modal-xlg .modal-dialog {
-        width: 1200px !important;
-    }
-}
-
 img.action-button-icon {
     width: 20px;
 }
