@@ -28,6 +28,10 @@
     .modal-xlg .modal-dialog {
         width: 1200px !important;
     }
+
+    .modal-full-size .modal-dialog {
+        width: 95% !important;
+    }
 }
 @media (max-height: 768px) {
     .split-pane {
