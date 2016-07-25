@@ -26,13 +26,14 @@
                     <div class="row">
 
                         <!-- START FILE DEFINITION SECTION -->
-                        <div class="col-md-9">
+                        <div class="col-md-12">
 
                             <!-- MC INPUT FILE INFO LEFT SECTION -->
-                            <div class="row"><!-- START UP SECTION -->
+                            <div class="col-md-9"><!-- START UP SECTION -->
+
                                 <div class="col-md-6">
 
-                                    <div class="row">
+                                    <div class="row row-space">
                                         <div class="form-group">
                                             <label class="control-label col-md-3">File Type</label>
                                             <div class="col-md-9">
@@ -44,7 +45,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row row-space">
                                         <div class="form-group">
                                             <label class="control-label col-md-3">File Content</label>
                                             <div class="col-md-9">
@@ -71,7 +72,7 @@
                                 </div>
                                 <!-- MC FILE INFO RIGHT SECTION -->
                                 <div class="col-md-6">
-                                    <div class="row">
+                                    <div class="row row-space">
                                         <div class="form-group">
                                             <label class="control-label col-md-3">KeyWords</label>
                                             <div class="col-md-9">
@@ -82,13 +83,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row row-space">
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Mapping Status</label>
                                             <div class="col-md-9">
 
                                                 <input type="text" class="form-control input-medium"
-                                                       ng-model="MCProcessMessage.fileDefinitions.selected.mappingStatus">
+                                                       ng-model="MCProcessMessage.MCMessageInformation.error"
+                                                       ng-readonly="true">
 
                                             </div>
                                         </div>
@@ -96,71 +98,74 @@
                                 </div>
                             </div><!-- END UP SECTION -->
 
-                            <div class="row" style="overflow: auto;"><!-- START DOWN SECTION -->
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps">
-                                            <ui-select ng-model="MCProcessMessage.mappedTable[$index].fieldMap"
-                                                       theme="select2"
-                                                       class="input-medium">
-                                                <ui-select-match placeholder="Select Field...">
-                                                    {{$select.selected.columnField}}
-                                                </ui-select-match>
-                                                <ui-select-choices
-                                                        repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search">
-                                                    <div ng-bind-html="field.columnField | highlight: $select.search"></div>
-                                                    <small ng-bind-html="field.dataFormat | highlight: $select.search"></small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps">
-                                            <ui-select ng-model="MCProcessMessage.mappedTable[$index].columnDataFormat"
-                                                       theme="select2"
-                                                       class="input-medium">
-                                                <ui-select-match placeholder="Select Column Format...">
-                                                    {{$select.selected.name}}
-                                                </ui-select-match>
-                                                <ui-select-choices
-                                                        repeat="colFormat in MCProcessMessage.columnDataFormat | filter: $select.search">
-                                                    <div ng-bind-html="colFormat.name | highlight: $select.search"></div>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div><!-- END DOWN SECTION -->
-                        </div>
-                        <!-- END FILE DEFINITION SECTION -->
-                        <!-- START MANDATORY FIELDS SECTION -->
-                        <div class="col-md-3">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Mandatory Fields:</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-12"
+                            <!-- START MANDATORY FIELDS SECTION -->
+                            <div class="col-md-3">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Mandatory Fields:</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                       <span class="badge badge-mandatory-field"
                                              ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
-                                             ng-if="field.mandatory">
-                                            <span class="badge"
-                                                  ng-class="field.checked ? 'badge-success': 'badge-danger'">
+                                             ng-if="field.mandatory"
+                                             ng-class="field.checked ? 'badge-success': 'badge-danger'">
                                                 <i class="fa"
                                                    ng-class="field.checked ? 'fa-check': 'fa-times'"
                                                    aria-hidden="true"></i> {{ field.columnField }}
                                             </span>
-                                        </div>
                                     </div>
                                 </div>
+
                             </div>
+                            <!-- END MANDATORY FIELDS SECTION -->
 
                         </div>
-                        <!-- END MANDATORY FIELDS SECTION -->
+                        <!-- END FILE DEFINITION SECTION -->
+                        <div class="col-md-12" style="overflow: auto; min-height: 280px;"><!-- START DOWN SECTION -->
+                            <button ng-click="MCProcessMessage.show_boject()">=)</button>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
+                                        class="text-center">
+                                        <ui-select
+                                                ng-model="MCProcessMessage.fileDefinitions.selected.fieldMaps[$index].fieldMapSelected"
+                                                theme="select2"
+                                                class="input-small">
+                                            <ui-select-match placeholder="Select Field...">
+                                                {{$select.selected.columnField}}
+                                            </ui-select-match>
+                                            <ui-select-choices
+                                                    repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search">
+                                                <div ng-bind-html="field.columnField | highlight: $select.search"></div>
+                                                <small ng-bind-html="field.dataFormat | highlight: $select.search"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
+                                        class="text-center">
+                                        <ui-select
+                                                ng-model="MCProcessMessage.fileDefinitions.selected.fieldMaps[$index].fieldMapSelected.columnDataFormat"
+                                                theme="select2"
+                                                class="input-small">
+                                            <ui-select-match placeholder="Select Column Format...">
+                                                {{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices
+                                                    repeat="colFormat in MCProcessMessage.columnDataFormat | filter: $select.search">
+                                                <div ng-bind-html="colFormat.name | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- END DOWN SECTION -->
+
                     </div>
 
                 </div>
