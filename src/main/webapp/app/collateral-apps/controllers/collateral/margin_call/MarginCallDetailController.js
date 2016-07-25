@@ -6,6 +6,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
     function ($scope, localStorage,uiGridConstants, MarginCallService, $timeout,$toastr) {
 
         $scope.sendFlag = false;
+        $scope.collateralLiabilityType = "CSA";
         $scope.currentMarginCall = $scope.parameters;
         $scope.tab2Active = 2;
         $scope.post = [];
@@ -57,13 +58,17 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
             $scope.MarginCallDetail = result.data.dataResponse;
             $scope.Inventory  =  $scope.posted.concat($scope.received);
             $scope.pool  =  result.data.dataResponse.poolDisplays;
+            //Collateral Liability 
+            let collateralLiabType = Object.keys($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType);
+            $scope.collateralLiabilityType = collateralLiabType[0];  
             
-			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallType);
+            
+			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType);
 			
-			$scope.setCallAmount($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallType,$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallAmount);
+			$scope.setCallAmount($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType,$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallAmount);
 
-			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.marginCallType);
-            if($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.exposurePlusNettedIa > 0 ){
+			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType);
+            if($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.exposurePlusNettedIa > 0 ){
             	$scope.threshold  = $scope.MarginCallDetail.contract.partyBThreshold;
             	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyB; 
             	
@@ -72,13 +77,13 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
             	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyA; 
             }
             
-            $scope.tolerance = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.csaDisputesCalculations.tolerance;
-            $scope.myValue = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.csaDisputesCalculations.myValue;
-            $scope.disputeStatus = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.csaDisputesCalculations.disputeStatusEnum;
+            $scope.tolerance = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.tolerance;
+            $scope.myValue = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.myValue;
+            $scope.disputeStatus = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeStatusEnum;
         	
             $scope.dispute = {
             		contractId    : $scope.MarginCallDetail.contract.internalId,
-            		margincallId  : $scope.currentMarginCall.marginCalls[0].id,
+            		marginCallId  : $scope.currentMarginCall.marginCalls[0].id,
             		disputeCalculations  : {
             			counterpartyValue : 0,
             			difference 		: 0 ,

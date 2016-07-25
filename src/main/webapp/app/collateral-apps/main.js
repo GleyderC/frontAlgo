@@ -11,6 +11,7 @@ var CollateralApp = angular.module("CollateralApp", [
     "duScroll",
     "ngCookies",
     'ngWebSocket',
+    'angular-md5',
     "LocalStorageModule",
     "toastr",
     "ui.utils.masks",

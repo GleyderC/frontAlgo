@@ -3,8 +3,8 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstants', 'MarginCallService',
-    function ($scope, uiGridConstants, MarginCallService) {
+DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstants', 'MarginCallService','toastr',
+    function ($scope, uiGridConstants, MarginCallService,$toastr) {
 
         $scope.gridTradesOptions = {
             showGridFooter: true,
@@ -77,13 +77,14 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         $scope.gridTradesOptions.onRegisterApi = function(gridApi){
             	$scope.gridApi = gridApi;
             	gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
+            		if(newValue == oldValue){
+            			return false;
+            		}
             		$scope.disputeDetailEdit = true;
-            		
             		$scope.disputeList[rowEntity.trade.internalId] ={
             				myValue : rowEntity.ownPricing.priceInBaseCurrency,
             				counterpartyValue: rowEntity.ownPricing.Counteparty,
-            				difference : parseFloat(rowEntity.npvCounterParty.replace(/,/,''))
-            					
+            				difference : parseFloat(rowEntity.npvCounterParty.replace(/,/,'')),
             		}; 
             		gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
               });
@@ -93,7 +94,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             $scope.Trades = result.data.dataResponse.trades;
             $scope.gridTradesOptions.data = $scope.Trades;
             $scope.pool  =  result.data.dataResponse.poolDisplays;
-            $scope.disputesDetail = result.data.dataResponse.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.csaDisputesCalculations.disputeCalculationDetail
+            $scope.disputesDetail = result.data.dataResponse.marginCall.marginCallElementsByLiabilityType[$scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeCalculationDetail
             $scope.Trades.forEach(function(v,k){
             	if($scope.disputesDetail[v.trade.internalId]!==undefined){
             		v.ownPricing.Counterparty  = $scope.disputesDetail[v.trade.internalId].myValue;
@@ -103,17 +104,17 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             $scope.gridTradesOptions.data = $scope.Trades;
         });
 
-        console.log($scope.parameters);	
         $scope.updateDisputeDetail = function(disputeList){
         	var param =  {
         			marginCallId : $scope.currentMarginCall.marginCalls[0].id,
         			contractId : $scope.parameters.contract.internalId,
+    				collateralLiabilityType : $scope.collateralLiabilityType,
         			disputeCalculations : {
         				disputeCalculationsDetail : disputeList
         			}
         	};
         	MarginCallService.updateDispute(param).success(function(resp){
-//        		$toastr.success("Dispute updated successfully","Update dispute data",{closeButton: true});
+        		$toastr.success("Trade updated successfully","Update dispute data",{closeButton: true});
         	});
         };
         $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {

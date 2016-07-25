@@ -1,5 +1,5 @@
 angular.module('DashboardApp')
-    .service('MarginCallService',['$request','toastr','$q','localStorageService',function ($request, toastr, $q, $localStorage) {
+    .service('MarginCallService',['$request','toastr','$q','localStorageService','md5',function ($request, toastr, $q, $localStorage,$md5) {
        
         this.getAll = function(){
 
@@ -21,11 +21,10 @@ angular.module('DashboardApp')
         	return $request.post('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
         };
         this.getFile = function(url){
-        	$request.getFile("/servlet/File/Select/?fileN="+url)
+        	let md5 = $md5.createHash(url);
+        	$request.getFile("/servlet/File/Select/?fileMD5="+md5)
         };
         this.sendIssueMarginCall = function (marginCallId,collateralLiabilityType) {
-
-            //console.log(marginCallId);
             var MarginSent = "";
             var defered = $q.defer();
             var promise = defered.promise;
