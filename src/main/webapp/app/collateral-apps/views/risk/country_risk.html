@@ -1,4 +1,7 @@
 <div class="portlet light" ng-controller="CountryRiskController as CountryRiskCtrl">
+    <script type="text/ng-template" id="country_risk_expandable.html">
+        <div ui-grid="row.entity.subGridOptions" style="height:120px;"></div>
+    </script>
     <div class="portlet light bordered" style="padding: 12px 7px 15px 7px;">
         <div class="row">
             <div class="form-group col-md-4">
@@ -93,12 +96,11 @@
                         </div>
                         <div class="col-md-12" style="padding: 0px">
                             <div id="grid_country_risk" ui-grid="gridCountryRiskOptions" ui-grid-exporter
-                                 ui-grid-auto-resize ui-grid-resize-columns ui-grid-grouping ui-grid-pagination class="grid"></div>
+                                 ui-grid-auto-resize ui-grid-resize-columns ui-grid-pagination ui-grid-expandable class="grid"></div>
                         </div>
                     </div>
                 </div>
             </split-pane-component>
         </split-pane>
-
     </div>
 </div>

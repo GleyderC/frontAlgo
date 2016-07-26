@@ -20,6 +20,12 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
         //Grid Config
         $scope.gridCountryRiskOptions = {
+            expandableRowTemplate: 'country_risk_expandable.html',
+            expandableRowHeight: 120,
+            //subGridVariable will be available in subGrid scope
+            expandableRowScope: {
+                subGridVariable: 'subGridScopeVariable'
+            },
             showTreeExpandNoChildren: true,
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
@@ -58,17 +64,14 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                     priority: 0
                 }
             },
-            {field: 'postedAmount',  name:'Posted', cellFilter: 'number:0', cellClass:'collateral-money'  },
+            {field: 'postedAmount', cellFilter: 'number:0', cellClass:'collateral-money'  },
             {field: 'postedPerCent',  displayName:'Haircut', cellTemplate: '<div class="text-center">{{COL_FIELD | number:2 }}%</div>'},
-            {field: 'receivedAmount',  name:'Received', cellFilter: 'number:0', cellClass:'collateral-money'  },
+            {field: 'receivedAmount', cellFilter: 'number:0', cellClass:'collateral-money'  },
             {field: 'receivedPerCent',  displayName:'Haircut', cellTemplate: '<div class="text-center">{{COL_FIELD | number:2}}%</div>'},
-            {field: 'availableAmount',  name:'Available', cellFilter: 'number:0', cellClass:'collateral-money'  },
+            {field: 'availableAmount', cellFilter: 'number:0', cellClass:'collateral-money'  },
             {field: 'availablePerCent',  displayName:'Haircut', cellTemplate: '<div class="text-center">{{COL_FIELD | number:2}}%</div>'},
             {field: 'rating'}
         ];
-        $scope.filterCountry = function() {
-            $scope.gridApi.grid.refresh();
-        };
 
         $scope.countryGridFilter = function( renderableRows ){
             var matcher = new RegExp($scope.filterValue);
@@ -80,6 +83,9 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                         if ( row.entity[field] ){
                             if ( row.entity[field].match(matcher) ){
                                 match = true;
+                                //console.log(row.entity);
+                                //$scope.gridApi.expandable.expandRow($scope.gridApi.grid.rows[0].entity);
+
                             }
                         }
                     });
@@ -138,13 +144,30 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                     },
                     point:{
                         events:{
-                            click: function(){
+                            select: function(){
+                                //console.log('select');
+                                //console.log(this);
+
                                 $('#info #flag').attr('class', 'flag ' + this.flag);
                                 $('#info #flag_name').html(this.name);
+
                                 $scope.filterValue = this.id.toUpperCase();
-                                //console.log($scope.filterValue);
                                 $scope.gridApi.grid.refresh();
-                            }
+
+                            },
+                            unselect: function () {
+                             //console.log('unselect');
+                                // console.log(this);
+                                $('#info #flag').removeAttr('class', 'flag '  + this.flag);
+                                $('#info #flag_name').html('');
+                                $scope.filterValue = '';
+                                $scope.gridApi.grid.refresh();
+
+                            }/*,
+                            click: function () {
+                                console.log('click');
+                                console.log(this);
+                            }*/
                         }
                     },
                     tooltip:{
@@ -191,6 +214,20 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
                 $scope.gridCountryRiskOptions.data = _that.IssuersRisk;
 
+                $scope.gridCountryRiskOptions.data.forEach(function (data) {
+
+                    data.subGridOptions = {
+                        columnDefs: [
+                            {field: 'issuer'},
+                            {field: 'issuerType'},
+                            {field: 'posted',  cellFilter: 'number:0', cellClass:'collateral-money'  },
+                            {field: 'received', cellFilter: 'number:0', cellClass:'collateral-money'  },
+                            {field: 'available', cellFilter: 'number:0', cellClass:'collateral-money'  }
+                        ],
+                        data: data.detailByIssuerList
+                    }
+                })
+                
                 $scope.drawHighMap(IssuersRiskCountry);
             });
         }
