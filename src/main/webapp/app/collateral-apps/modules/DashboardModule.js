@@ -14,7 +14,8 @@ var DashboardApp = angular.module("DashboardApp", [
     'ui.grid.edit',
     'ui.grid.resizeColumns',
     'ui.grid.cellNav',
-    'ui.grid.rowEdit'
+    'ui.grid.rowEdit',
+    'ui.grid.grouping'
 ]);
 
 /* Setup Rounting For All Pages */

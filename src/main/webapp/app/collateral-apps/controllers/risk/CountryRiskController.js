@@ -52,7 +52,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
         };
 
         $scope.gridCountryRiskOptions.columnDefs = [
-            {field: 'name', name:'Issuer', width: 90,
+            {field: 'name', name:'Country', width: 90,
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
