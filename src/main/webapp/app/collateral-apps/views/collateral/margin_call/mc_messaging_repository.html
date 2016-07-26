@@ -30,73 +30,72 @@
 
                             <!-- MC INPUT FILE INFO LEFT SECTION -->
                             <div class="col-md-9"><!-- START UP SECTION -->
-
-                                <div class="col-md-6">
-
-                                    <div class="row row-space">
+                                <div class="row">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label col-md-3">File Type</label>
                                             <div class="col-md-9">
 
-                                                <input type="text" class="form-control input-medium" ng-readonly="true"
-                                                       ng-model="MCProcessMessage.fileDefinitions.selected.fileType">
+                                                <textarea class="form-control" ng-readonly="true"
+                                                          ng-model="MCProcessMessage.fileDefinitions.selected.fileType"></textarea>
 
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row row-space">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">File Content</label>
+                                            <label class="control-label col-md-3">Keywords</label>
                                             <div class="col-md-9">
 
-                                                <ui-select ng-model="MCProcessMessage.fileDefinitions.selected"
-                                                           theme="select2"
-                                                           class="input-medium">
-                                                    <ui-select-match placeholder="Select File Content...">
-                                                        {{$select.selected.fileDescription}}
-                                                    </ui-select-match>
-                                                    <ui-select-choices
-                                                            repeat="fileDefinition in MCProcessMessage.fileDefinitions | filter: $select.search">
-                                                        <div ng-bind-html="fileDefinition.fileDescription | highlight: $select.search"></div>
-                                                        <small ng-bind-html="fileDefinition.documentType | highlight: $select.search"></small>
-                                                    </ui-select-choices>
-                                                </ui-select>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <!-- MC FILE INFO RIGHT SECTION -->
-                                <div class="col-md-6">
-                                    <div class="row row-space">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3">KeyWords</label>
-                                            <div class="col-md-9">
-
-                                                <input type="text" class="form-control input-medium"
-                                                       ng-model="MCProcessMessage.fileDefinitions.selected.keywords">
+                                                <textarea class="form-control"
+                                                          ng-model="MCProcessMessage.fileDefinitions.selected.keywords"></textarea>
 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row row-space">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Mapping Status</label>
                                             <div class="col-md-9">
 
-                                                <input type="text" class="form-control input-medium"
-                                                       ng-model="MCProcessMessage.MCMessageInformation.error"
-                                                       ng-readonly="true">
+                                                <textarea class="form-control"
+                                                          ng-model="MCProcessMessage.MCMessageInformation.error"
+                                                          ng-readonly="true"></textarea>
 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div><!-- END UP SECTION -->
+                                <!--END UP SECTION -->
+
+                                <!-- START DOWN SECTION-->
+                                <div class="row" style="margin-top: 10px;">
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">File Content</label>
+
+
+                                            <ui-select ng-model="MCProcessMessage.fileDefinitions.selected"
+                                                       theme="select2" class="col-md-10">
+                                                <ui-select-match placeholder="Select File Content...">
+                                                    {{$select.selected.fileDescription}}
+                                                </ui-select-match>
+                                                <ui-select-choices
+                                                        repeat="fileDefinition in MCProcessMessage.fileDefinitions | filter: $select.search">
+                                                    <div ng-bind-html="fileDefinition.fileDescription | highlight: $select.search"></div>
+                                                    <small ng-bind-html="fileDefinition.documentType | highlight: $select.search"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
 
                             <!-- START MANDATORY FIELDS SECTION -->
                             <div class="col-md-3">
@@ -122,23 +121,23 @@
                         </div>
                         <!-- END FILE DEFINITION SECTION -->
                         <div class="col-md-12" style="overflow: auto; min-height: 280px;"><!-- START DOWN SECTION -->
-                            <button ng-click="MCProcessMessage.show_boject()">=)</button>
+                            <!--<button ng-click="MCProcessMessage.show_boject()">=)</button>-->
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
                                         class="text-center">
                                         <ui-select
-                                                ng-model="MCProcessMessage.fileDefinitions.selected.fieldMaps[$index].fieldMapSelected"
+                                                ng-model="field.fieldMapSelected.columnField"
                                                 theme="select2"
                                                 class="input-small">
                                             <ui-select-match placeholder="Select Field...">
                                                 {{$select.selected.columnField}}
                                             </ui-select-match>
                                             <ui-select-choices
-                                                    repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search">
-                                                <div ng-bind-html="field.columnField | highlight: $select.search"></div>
-                                                <small ng-bind-html="field.dataFormat | highlight: $select.search"></small>
+                                                    repeat="colField.columnField as colField in MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search">
+                                                <div ng-bind-html="colField.columnField | highlight: $select.search"></div>
+                                                <small ng-bind-html="colField.dataFormat | highlight: $select.search"></small>
                                             </ui-select-choices>
                                         </ui-select>
                                     </th>
@@ -149,14 +148,14 @@
                                     <td ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
                                         class="text-center">
                                         <ui-select
-                                                ng-model="MCProcessMessage.fileDefinitions.selected.fieldMaps[$index].fieldMapSelected.columnDataFormat"
+                                                ng-model="field.fieldMapSelected.colFormat"
                                                 theme="select2"
                                                 class="input-small">
                                             <ui-select-match placeholder="Select Column Format...">
                                                 {{$select.selected.name}}
                                             </ui-select-match>
                                             <ui-select-choices
-                                                    repeat="colFormat in MCProcessMessage.columnDataFormat | filter: $select.search">
+                                                    repeat="colFormat.key as colFormat in MCProcessMessage.columnDataFormat | filter: $select.search">
                                                 <div ng-bind-html="colFormat.name | highlight: $select.search"></div>
                                             </ui-select-choices>
                                         </ui-select>

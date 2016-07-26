@@ -485,3 +485,6 @@ i.close-tab-icon:hover {
     margin-right: 1px;
 }
 
+.portlet {
+    margin-bottom: 4px;
+}

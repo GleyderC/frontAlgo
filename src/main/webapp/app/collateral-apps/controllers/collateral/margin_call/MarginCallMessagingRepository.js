@@ -98,7 +98,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
             ModalService.open({
                 templateUrl: "modalProcessMCMessage.html",
                 size: 'lg',
-                windowClass: 'modal-xlg',
+                windowClass: 'modal-full-size',
                 rendered: function () {
                     App.initComponents();
                 },

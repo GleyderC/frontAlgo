@@ -30,6 +30,7 @@
     }
 
     .modal-full-size .modal-dialog {
+        margin-top: 10px;
         width: 95% !important;
     }
 }
