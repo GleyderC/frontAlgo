@@ -23,7 +23,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
             showTreeExpandNoChildren: true,
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
-            paginationPageSize: 5,
+            paginationPageSize: 50,
             enableColumnResizing: true,
             enableFiltering: true,
             rowHeight: 35, // set height to each row
