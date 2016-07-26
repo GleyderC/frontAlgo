@@ -21,8 +21,8 @@ angular.module('DashboardApp')
         	return $request.post('/servlet/MarginCallAndContract/SelectDetailById',detailParam);
         };
         this.getFile = function(url){
-        	let md5 = $md5.createHash(url);
-        	$request.getFile("/servlet/File/Select/?fileMD5="+md5)
+//        	let md5 = $md5.createHash(url);
+        	$request.getFile("/servlet/File/Select/?fileMD5="+url);
         };
         this.sendIssueMarginCall = function (marginCallId,collateralLiabilityType) {
             var MarginSent = "";
