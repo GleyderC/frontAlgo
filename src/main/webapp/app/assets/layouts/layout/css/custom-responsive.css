@@ -1,0 +1,51 @@
+@media (min-width: 1200px) {
+    .container {
+
+        width: 1280px;
+
+    }
+}
+
+@media (min-width: 992px) {
+    .page-header .navbar-collapse {
+        margin-top: 75px;
+        margin-left: 1px;
+    }
+
+    .page-header .topbar-actions {
+        top: 5px;
+    }
+
+    .page-header .navbar-fixed-top {
+        background: #616d76;
+        padding: 9px 25px;
+    }
+
+    .wrapper {
+        margin-top: 0;
+    }
+
+    .modal-xlg .modal-dialog {
+        width: 1200px !important;
+    }
+
+    .modal-full-size .modal-dialog {
+        width: 95% !important;
+    }
+}
+@media (max-height: 768px) {
+    .split-pane {
+        min-height: 550px !important;
+    }
+    #country_risk_map{
+        height: 540px !important;
+    }
+}
+@media (max-height: 992px) {
+    .split-pane {
+        min-height: 780px !important;
+    }
+    #country_risk_map{
+        height: 760px !important;
+    }
+}

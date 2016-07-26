@@ -50,7 +50,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                 '<a class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></a> ' +
                 '<a ng-click="grid.appScope.getPDF(row.entity.pdfURL)"  class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
                 '<a ng-click="grid.appScope.getExcel(row.entity.excelURL)" class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></a>' +
-                '<a ng-click="grid.appScope.processMCMessage(row.entity)" class="btn btn-sm uigrid-btn" ng-class="{ \'btn-success\': row.entity.processMCMessage.success, \'btn-danger\': !row.entity.processMCMessage.success}" >' +
+                '<a title="Process MarginCall Message" ng-click="grid.appScope.processMCMessage(row.entity)" class="btn btn-sm uigrid-btn" ng-class="{ \'btn-success\': row.entity.processMCMessage.success, \'btn-danger\': !row.entity.processMCMessage.success}" >' +
                 '<i class="fa fa-file-excel-o"></i>' +
                 '</a>' +
                 '</div>',
@@ -92,6 +92,9 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
             $scope.messageSelected = row;
         };
         $scope.processMCMessage = function (MCMessage) {
+
+            MCMessage.marginCallID = $scope.MarginCallDetail.marginCall.id;
+
             ModalService.open({
                 templateUrl: "modalProcessMCMessage.html",
                 size: 'lg',
@@ -109,13 +112,18 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                         _that.fileDefinitions = result.data.dataResponse.fileDefinitions;
                     });
 
+                    console.log({
+                        marginCallId: MCMessage.marginCallID,
+                        contractId: MCMessage.contractId,
+                        mcMessageId: MCMessage.id
+                    })
+                    
                     MarginCallService.ProcessMCMessage({
-                        marginCallId: MCMessage.marginCallClone.id,
-                        contractId: MCMessage.marginCallClone.collateralContractId,
+                        marginCallId: MCMessage.marginCallID,
+                        contractId: MCMessage.contractId,
                         mcMessageId: MCMessage.id
                     }).then(function (result) {
-                        this.MCMessageInformation = result.data.dataResponse;
-                        console.log(this.MCMessageInformation)
+                        _that.MCMessageInformation = result.data.dataResponse;
                     });
 
 
@@ -127,8 +135,13 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
                     };
+
+                    this.show_boject = function(){
+                        console.log(_that.fileDefinitions.selected)
+                    }
                 },
                 resolve: {}
             });
+
         }
     }]);

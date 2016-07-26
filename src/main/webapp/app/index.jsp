@@ -61,6 +61,8 @@
     <!-- BEGIN THEME LAYOUT STYLES -->
     <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/layouts/layout/css/custom-responsive.css" rel="stylesheet" type="text/css"/>
+
     <!-- END THEME LAYOUT STYLES -->
 
     <!-- END THEME STYLES -->
