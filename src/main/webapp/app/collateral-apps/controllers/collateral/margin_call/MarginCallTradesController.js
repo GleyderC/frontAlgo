@@ -65,8 +65,8 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'currency:""', cellClass:'collateral-money' },
             {field: 'ownPricing.priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'currency:""', cellClass:'collateral-money'},
-            {field: 'npvCounterParty', name:'Diff (%Npv)', cellFilter:'currency:""'},
-            {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellClass:'collateral-money'}
+            {field: 'npvCounterParty', name:'Diff (%Npv)', cellFilter:'currency:""',enableCellEdit:false},
+            {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellClass:'collateral-money',cellFilter:'currency:""'}
             
 
         ];
@@ -83,8 +83,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             		$scope.disputeDetailEdit = true;
             		$scope.disputeList[rowEntity.trade.internalId] ={
             				myValue : rowEntity.ownPricing.priceInBaseCurrency,
-            				counterpartyValue: rowEntity.ownPricing.Counteparty,
-            				difference : parseFloat(rowEntity.npvCounterParty.replace(/,/,'')),
+            				"counterpartyValue" : parseFloat(newValue.replace(/,/,'')),
+            				"agreedValue" : parseFloat(newValue.replace(/,/,''))
+            				
             		}; 
             		gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
               });
@@ -97,8 +98,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             $scope.disputesDetail = result.data.dataResponse.marginCall.marginCallElementsByLiabilityType[$scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeCalculationDetail
             $scope.Trades.forEach(function(v,k){
             	if($scope.disputesDetail[v.trade.internalId]!==undefined){
-            		v.ownPricing.Counterparty  = $scope.disputesDetail[v.trade.internalId].myValue;
-            		v.ownPricing.Counterparty  = $scope.disputesDetail[v.trade.internalId].counterparty;
+            		v.ownPricing.priceInBaseCurrency  = $scope.disputesDetail[v.trade.internalId].myValue;
+            		v.npvCounterParty =   	 	  $scope.disputesDetail[v.trade.internalId].difference;
+            		v.ownPricing["Counterparty"]  = $scope.disputesDetail[v.trade.internalId].counterparty;
             	}  	
             });
             $scope.gridTradesOptions.data = $scope.Trades;
@@ -110,19 +112,28 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         			contractId : $scope.parameters.contract.internalId,
     				collateralLiabilityType : $scope.collateralLiabilityType,
         			disputeCalculations : {
-        				disputeCalculationsDetail : disputeList
+        				disputeCalculationDetail : disputeList
         			}
         	};
         	MarginCallService.updateDispute(param).success(function(resp){
+        		var disputeDetailResult = resp.dataResponse.disputeCalculations.disputeCalculationDetail;
+        		$scope.Trades.forEach(function(vTrade, kTrade){
+        			Object.keys(disputeDetailResult).forEach(function(v,k){
+        				if(parseInt(v)==vTrade.ownPricing.tradeId){
+        					vTrade.npvCounterParty  = disputeDetailResult[v].difference;
+        				}
+        			});
+        		});
         		$toastr.success("Trade updated successfully","Update dispute data",{closeButton: true});
         	});
         };
-        $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {
-            if (newTrades === oldTrades) {
-                return false;
-            }
-            $scope.gridTradesOptions.data = newTrades;
-            $scope.baseCurrency = $scope.MarginCallDetail.contract.baseCurrency
-        });
+//        $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {
+//            if (newTrades === oldTrades) {
+//                return false;
+//            }
+//            $scope.gridTradesOptions.data = newTrades;
+//            console.log(newTrades);
+//            $scope.baseCurrency = $scope.MarginCallDetail.contract.baseCurrency
+//        });
 
     }]);
