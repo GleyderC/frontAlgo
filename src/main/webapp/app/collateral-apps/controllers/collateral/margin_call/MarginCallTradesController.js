@@ -39,7 +39,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             {field: 'trade.internalId', name:'TradeId', width: 90,
                 sort: {
                     direction: uiGridConstants.ASC,
-                    priority: 0
+                    priority: 1
                 }
             },
             {field: 'trade.tradeType', name: 'type'},
@@ -62,11 +62,22 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                     }
                 }
             },
-            {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'currency:""', cellClass:'collateral-money' },
+            {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'number:2', cellClass:'collateral-money' },
             {field: 'ownPricing.priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
-                cellFilter: 'currency:""', cellClass:'collateral-money'},
-            {field: 'npvCounterParty', name:'Diff (%Npv)', cellFilter:'currency:""',enableCellEdit:false},
-            {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellClass:'collateral-money',cellFilter:'currency:""'}
+                cellFilter: 'number:2', cellClass:'collateral-money'},
+            {field: 'npvCounterParty', name:'Diff', cellFilter:'number:2',enableCellEdit:false},
+            {
+            	field: 'differencePercent', 
+            	name:'Diff(%)', 
+            	cellFilter:'number:2',
+            	enableCellEdit:false,
+            	sort: {
+                    direction: uiGridConstants.DESC,
+                    priority: 0
+                }
+            	
+            },
+            {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellClass:'collateral-money',cellFilter:'number:2'}
             
 
         ];
@@ -101,6 +112,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             		v.ownPricing.priceInBaseCurrency  = $scope.disputesDetail[v.trade.internalId].myValue;
             		v.npvCounterParty =   	 	  $scope.disputesDetail[v.trade.internalId].difference;
             		v.ownPricing["Counterparty"]  = $scope.disputesDetail[v.trade.internalId].counterparty;
+            		v.differencePercent   =$scope.disputesDetail[v.trade.internalId].differencePercentage;
             	}  	
             });
             $scope.gridTradesOptions.data = $scope.Trades;
@@ -120,10 +132,12 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         		$scope.Trades.forEach(function(vTrade, kTrade){
         			Object.keys(disputeDetailResult).forEach(function(v,k){
         				if(parseInt(v)==vTrade.ownPricing.tradeId){
-        					vTrade.npvCounterParty  = disputeDetailResult[v].difference;
+        					vTrade.npvCounterParty	  = disputeDetailResult[v].difference;
+        					 vTrade.differencePercent   	=disputeDetailResult[v].differencePercentage;
         				}
         			});
         		});
+        		$scope.gridApi.core.refresh();
         		$toastr.success("Trade updated successfully","Update dispute data",{closeButton: true});
         	});
         };
