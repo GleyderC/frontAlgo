@@ -145,16 +145,8 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         			});
         		});
         		$scope.gridApi.core.refresh();
+        		gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
         		$toastr.success("Trade updated successfully","Update dispute data",{closeButton: true});
         	});
         };
-//        $scope.$watchCollection('$parent.Trades', function (newTrades, oldTrades) {
-//            if (newTrades === oldTrades) {
-//                return false;
-//            }
-//            $scope.gridTradesOptions.data = newTrades;
-//            console.log(newTrades);
-//            $scope.baseCurrency = $scope.MarginCallDetail.contract.baseCurrency
-//        });
-
     }]);
