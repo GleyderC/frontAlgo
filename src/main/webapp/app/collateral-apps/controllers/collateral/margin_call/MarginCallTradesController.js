@@ -36,11 +36,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             }
         };
         $scope.gridTradesOptions.columnDefs = [
-            {field: 'trade.internalId', name:'TradeId', width: 90,
-                sort: {
-                    direction: uiGridConstants.ASC,
-                    priority: 1
-                }
+            {field: 'trade.internalId', name:'TradeId', 
+            	width: 90
+                
             },
             {field: 'trade.tradeType', name: 'type'},
             {field: 'trade.tradeSubType', name:'subType'},
@@ -73,9 +71,18 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             	enableCellEdit:false,
             	sort: {
                     direction: uiGridConstants.DESC,
-                    priority: 0
-                }
-            	
+                    priority: 1
+                },
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+                	let val = grid.getCellValue(row,col);
+                	val =  val < 0 ?  val * -1 : val ;               	
+                
+                    if (val > $scope.tolerance) {
+                    	return 'text-danger';
+                    }else{
+                    	return '';
+                    }
+                  }
             },
             {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellClass:'collateral-money',cellFilter:'number:2'}
             
