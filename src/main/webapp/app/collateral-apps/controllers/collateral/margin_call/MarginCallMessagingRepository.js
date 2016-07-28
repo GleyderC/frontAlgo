@@ -103,7 +103,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                     App.initComponents();
                 },
                 controllerAs: 'MCProcessMessage',
-                controller: function (toastr, $scope, $uibModalInstance) {
+                controller: function (toastr, $scope, $uibModalInstance, $sanitize) {
 
                     let _that = this;
                     this.fileDefinitions = [];
@@ -159,8 +159,8 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
                     }, function( newVal, oldVal ){
 
-                        console.log(newVal)
-                        console.log(oldVal)
+                        /*console.log(newVal)
+                        console.log(oldVal)*/
 
                     });
 
@@ -170,54 +170,49 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                         mcMessageId: MCMessage.id
                     }).then(function (result) {
 
+                        let tableData = [];
+                        let rowsCount = 0;
                         _that.MCMessageInformation = result.data.dataResponse;
 
-                        angular.forEach(_that.MCMessageInformation.rawTable.head, function(head, index){
+
+                        angular.forEach(_that.MCMessageInformation.rawTable.head, function(head, indexCol){
 
                             _that.gridProcessMCMessages.columnDefs.push({
 
-                                field: 'col-' + index,
+                                field: 'col-' + indexCol,
                                 name: head,
                                 minWidth: 100,
                                 width: head.length + 100
 
                             });
 
-                        });
-
-                        let tableData = [];
-
-                        angular.forEach(_that.MCMessageInformation.rawTable.rawData, function(col, indexCol){ //COLS
-
-                            if( col.length > 0 && angular.isArray(col) ){
-
-                                let strRow = '';
-
-                                //strRow += '{'
-                                angular.forEach(col, function( el, indexRow ){ //ROWS
-
-                                    if( !angular.isArray(tableData[indexCol]) ){
-
-                                        tableData[indexCol] = [];
-                                        //strRow += '"col-' + indexCol + '": "' + el + '"'
-                                    }
-
-                                    tableData[indexCol].push(el)
-
-                                });
-
-                                //strRow += '}';
-
-                               /* tableData[indexCol].push(
-                                    JSON.parse(strRow)
-                                )*/
-
+                            if(rowsCount < _that.MCMessageInformation.rawTable.rawData[indexCol].length)
+                            {
+                                rowsCount = _that.MCMessageInformation.rawTable.rawData[indexCol].length;
                             }
 
                         });
 
-                        console.log(tableData)
-                        _that.gridProcessMCMessages.data.push(tableData);
+                        for(let indexRow = 0; indexRow < rowsCount; indexRow++){
+
+                            let row = {};
+
+                            angular.forEach(_that.MCMessageInformation.rawTable.rawData, function(col, indexCol) { //ROWS
+
+                                let colValue = $sanitize(col[indexRow].toString());
+                                if(!colValue)
+                                {
+                                    colValue = "";
+                                }
+
+                                row['col-' + indexCol] = colValue;
+
+                            });
+
+                            tableData.push(row)
+                        }
+
+                        _that.gridProcessMCMessages.data = tableData;
 
                     });
 
