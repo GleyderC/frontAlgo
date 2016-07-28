@@ -130,7 +130,8 @@
                                         <ui-select
                                                 ng-model="field.fieldMapSelected.columnField"
                                                 theme="select2"
-                                                class="input-small">
+                                                class="input-small"
+                                                on-select="MCProcessMessage.checkMandatoryFields($item, $model)">
                                             <ui-select-match placeholder="Select Field...">
                                                 {{$select.selected.columnField}}
                                             </ui-select-match>
@@ -150,7 +151,8 @@
                                         <ui-select
                                                 ng-model="field.fieldMapSelected.colFormat"
                                                 theme="select2"
-                                                class="input-small">
+                                                class="input-small"
+                                                on-select="MCProcessMessage.checkMandatoryFields($item, $model)">
                                             <ui-select-match placeholder="Select Column Format...">
                                                 {{$select.selected.name}}
                                             </ui-select-match>
@@ -163,6 +165,13 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+                            <div class="row">
+                                <div ui-grid="MCProcessMessage.gridProcessMCMessages" ui-grid-auto-resize
+                                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                                     class="grid" style="height: 300px;"></div>
+                            </div>
+
                         </div><!-- END DOWN SECTION -->
 
                     </div>

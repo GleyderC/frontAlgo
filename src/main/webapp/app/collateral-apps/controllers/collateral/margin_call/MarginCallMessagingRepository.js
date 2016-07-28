@@ -107,23 +107,118 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
                     let _that = this;
                     this.fileDefinitions = [];
+
+                    this.gridProcessMCMessages = {
+                        paginationPageSizes: [15, 50, 100, 200, 500],
+                        paginationPageSize: 5,
+                        enableFiltering: true,
+                        rowHeight: 35, // set height to each row
+                        enableGridMenu: true,
+                        exporterCsvFilename: 'margin-call-messaging-repository.csv',
+                        exporterPdfDefaultStyle: {fontSize: 9},
+                        exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+                        exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+                        exporterPdfHeader: {text: "Margin Call - Messaging Repository", style: 'headerStyle'},
+                        exporterPdfFooter: function (currentPage, pageCount) {
+                            return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+                        },
+                        exporterPdfCustomFormatter: function (docDefinition) {
+                            docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+                            docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+                            return docDefinition;
+                        },
+                        exporterPdfOrientation: 'portrait',
+                        exporterPdfPageSize: 'LETTER',
+                        exporterPdfMaxGridWidth: 450,
+                        exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+                        onRegisterApi: function (gridApi) {
+                            $scope.gridApi = gridApi;
+                        },
+                        columnDefs: [],
+                        data: []
+                    };
+
                     this.columnDataFormat = MarginCallService.getColumnDataFormat();
                     MarginCallService.getInputFilesDefinition().then(function(result){
                         _that.fileDefinitions = result.data.dataResponse.fileDefinitions;
                     });
 
-                    console.log({
-                        marginCallId: MCMessage.marginCallID,
-                        contractId: MCMessage.contractId,
-                        mcMessageId: MCMessage.id
-                    })
-                    
+                    /*this.checkMandatoryFields = function(item, model){
+                        angular.forEach(_that.fileDefinitions.fieldMaps, function(field, index){
+                            if(filed.mandataroty != true)
+                            {
+                                return false;
+                            }
+
+                        });
+                    }*/
+
+                    $scope.$watch(function(scope){
+
+                        return _that.fileDefinitions.selected;
+
+                    }, function( newVal, oldVal ){
+
+                        console.log(newVal)
+                        console.log(oldVal)
+
+                    });
+
                     MarginCallService.ProcessMCMessage({
                         marginCallId: MCMessage.marginCallID,
                         contractId: MCMessage.contractId,
                         mcMessageId: MCMessage.id
                     }).then(function (result) {
+
                         _that.MCMessageInformation = result.data.dataResponse;
+
+                        angular.forEach(_that.MCMessageInformation.rawTable.head, function(head, index){
+
+                            _that.gridProcessMCMessages.columnDefs.push({
+
+                                field: 'col-' + index,
+                                name: head,
+                                minWidth: 100,
+                                width: head.length + 100
+
+                            });
+
+                        });
+
+                        let tableData = [];
+
+                        angular.forEach(_that.MCMessageInformation.rawTable.rawData, function(col, indexCol){ //COLS
+
+                            if( col.length > 0 && angular.isArray(col) ){
+
+                                let strRow = '';
+
+                                //strRow += '{'
+                                angular.forEach(col, function( el, indexRow ){ //ROWS
+
+                                    if( !angular.isArray(tableData[indexCol]) ){
+
+                                        tableData[indexCol] = [];
+                                        //strRow += '"col-' + indexCol + '": "' + el + '"'
+                                    }
+
+                                    tableData[indexCol].push(el)
+
+                                });
+
+                                //strRow += '}';
+
+                               /* tableData[indexCol].push(
+                                    JSON.parse(strRow)
+                                )*/
+
+                            }
+
+                        });
+
+                        console.log(tableData)
+                        _that.gridProcessMCMessages.data.push(tableData);
+
                     });
 
 
