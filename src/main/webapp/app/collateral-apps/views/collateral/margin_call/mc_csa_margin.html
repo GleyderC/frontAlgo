@@ -146,7 +146,7 @@
                             </div>
                             <label class="control-label col-md-2">Tolerance % </label>
                             <div class="col-md-4">
-                                <input ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.tolerance" class="form-control collateral-money " ui-number="0" placeholder="">
+                                <input ui-number-mask="2" type="text" ng-model="tolerancePercentage" ng-change="changeTolerance(tolerancePercentage);" class="form-control collateral-money " ui-number="0" placeholder="">
                             </div>
 
                         </div>
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                         <div class="row" ng-show="dispute.disputeCalculations.difference!=0">
-
+							 
                             <label class="control-label col-md-2">Difference</label>
                             <div class="col-md-4">
                                 <label class="control-label collateral-money" >{{dispute.disputeCalculations.difference | number:2}}</label>

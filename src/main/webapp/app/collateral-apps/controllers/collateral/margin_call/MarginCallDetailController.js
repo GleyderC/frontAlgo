@@ -30,7 +30,12 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         $scope.marginCallType  = "";
         $scope.callAmount      = "" ;
         $scope.reCallAmount    =  "";
-        $scope.tolerance = 0 ; 
+        $scope.tolerancePercentage = 0 ; // input manually
+        $scope.tolerance =  0; 
+        
+        $scope.changeTolerance = function(tolerancePercentage){ //calculated
+        	$scope.tolerance = tolerancePercentage/100; 	 
+        };
 //      Dispute
         $scope.disputeEdit = false ;
         
@@ -89,7 +94,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
             			difference 		: 0 ,
             			differencePercentage 		: 0 ,
             			disputeStatus : $scope.disputeStatus, 
-            			tolerance 	  : $scope.tolerance * 100,
+            			tolerance 	  : $scope.tolerance * 100 ,
             			myValue   	  : $scope.myValue ,
             			disputeComments : "",
             			agreedMargin : 0
@@ -173,6 +178,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
                     ];
         
         $scope.updateDispute     = function(dispute){
+        	dispute.disputeCalculations.tolerance = $scope.tolerance;
         	MarginCallService.updateDispute(dispute).success(function(resp){
         		$scope.dispute.disputeCalculations.disputeStatus   = resp.dataResponse.disputeCalculations.disputeStatusEnum;
         		$scope.dispute.disputeCalculations.difference   = resp.dataResponse.disputeCalculations.difference;

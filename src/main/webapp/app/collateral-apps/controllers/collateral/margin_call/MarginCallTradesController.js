@@ -76,7 +76,6 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                 cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
                 	let val = grid.getCellValue(row,col);
                 	val =  val < 0 ?  val * -1 : val ;               	
-                
                     if (val > $scope.tolerance) {
                     	return 'text-danger';
                     }else{
@@ -105,7 +104,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             				"agreedValue" : parseFloat(newValue.replace(/,/,''))
             				
             		}; 
-            		gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+            		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
               });
 
          };       
@@ -145,7 +144,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         			});
         		});
         		$scope.gridApi.core.refresh();
-        		gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+        		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
         		$toastr.success("Trade updated successfully","Update dispute data",{closeButton: true});
         	});
         };
