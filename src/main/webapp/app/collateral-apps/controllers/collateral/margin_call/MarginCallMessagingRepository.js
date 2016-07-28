@@ -143,15 +143,54 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                         _that.fileDefinitions = result.data.dataResponse.fileDefinitions;
                     });
 
-                    /*this.checkMandatoryFields = function(item, model){
-                        angular.forEach(_that.fileDefinitions.fieldMaps, function(field, index){
-                            if(filed.mandataroty != true)
+                    this.checkMandatoryFields = function(item, model){
+
+                        if(!angular.isArray(_that.fileDefinitions.selected.fieldMaps))
+                            return false;
+
+                        let remainingMandatoryFields = 0;
+                        
+                        angular.forEach(_that.fileDefinitions.selected.fieldMaps, function(field, index){
+
+                            if(field.mandatory != true)
                             {
-                                return false;
+                                return;
+                            }
+
+                            field.checked = false;
+
+                            for(let i = 0; i < _that.fileDefinitions.selected.fieldMaps.length; i++){
+
+                                if(angular.isUndefined(_that.fileDefinitions.selected.fieldMaps[i].fieldMapSelected))
+                                {
+                                    continue;
+                                }
+
+                                if(  field.columnField === _that.fileDefinitions.selected.fieldMaps[i].fieldMapSelected.columnField ){
+
+                                    field.checked = true;
+                                    break;
+
+                                }
+
+                            }
+
+                            if(field.checked == false)
+                            {
+                                remainingMandatoryFields++;
                             }
 
                         });
-                    }*/
+
+                        if(remainingMandatoryFields == 0){
+                            _that.fileDefinitions.selected.allFieldsMapped = true;
+                        }
+                        else
+                        {
+                            _that.fileDefinitions.selected.allFieldsMapped = false;
+                        }
+
+                    }
 
                     $scope.$watch(function(scope){
 

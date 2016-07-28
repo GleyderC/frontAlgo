@@ -473,6 +473,12 @@ i.close-tab-icon:hover {
     color: #212121;
 }
 
+.select2-results .select2-disabled
+{
+    color: #666;
+    background: rgb(253, 253, 253);
+}
+
 .row-space{
     margin-top: 1px;
     margin-bottom: 2px;

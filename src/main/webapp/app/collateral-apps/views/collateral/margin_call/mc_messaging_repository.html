@@ -136,7 +136,8 @@
                                                 {{$select.selected.columnField}}
                                             </ui-select-match>
                                             <ui-select-choices
-                                                    repeat="colField.columnField as colField in MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search">
+                                                    repeat="colField.columnField as colField in MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search"
+                                                    ui-disable-choice="colField.checked">
                                                 <div ng-bind-html="colField.columnField | highlight: $select.search"></div>
                                                 <small ng-bind-html="colField.dataFormat | highlight: $select.search"></small>
                                             </ui-select-choices>
