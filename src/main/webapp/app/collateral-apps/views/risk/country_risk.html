@@ -1,6 +1,7 @@
 <div class="portlet light" ng-controller="CountryRiskController as CountryRiskCtrl">
     <script type="text/ng-template" id="country_risk_expandable.html">
-        <div ui-grid="row.entity.subGridOptions" style="height:120px;"></div>
+        <div ui-grid="row.entity.subGridOptions" style="height:100%;" ui-grid-exporter
+             ui-grid-auto-resize ui-grid-resize-columns class="grid"></div>
     </script>
     <div class="portlet light bordered" style="padding: 12px 7px 15px 7px;">
         <div class="row">
@@ -88,12 +89,6 @@
             <split-pane-component class="col-sm-12" style="padding-left: 2px;padding-right: 2px;">
                 <div class="row" style="margin-left: 10px;margin-right: 10px;">
                     <div class="portlet-body">
-                        <div class="col-md-12" id="info">
-                            <span class="f32" style="float: left;">
-                                <span id="flag"></span>
-                                <span id="flag_name" style="vertical-align: -5px;padding-left: 5px;font-weight:bold;"></span>
-                            </span>
-                        </div>
                         <div class="col-md-12" style="padding: 0px">
                             <div id="grid_country_risk" ui-grid="gridCountryRiskOptions" ui-grid-exporter
                                  ui-grid-auto-resize ui-grid-resize-columns ui-grid-pagination ui-grid-expandable class="grid"></div>
