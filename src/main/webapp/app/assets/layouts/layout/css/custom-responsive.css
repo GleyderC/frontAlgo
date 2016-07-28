@@ -70,6 +70,9 @@
         height: 960px !important;
     }
     #grid_country_risk{
+        height: 1800px;
+    }
+    #grid_issuer_risk{
         height: 900px;
     }
 }

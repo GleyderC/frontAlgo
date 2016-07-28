@@ -8,6 +8,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
     function ( $scope, localStorageService, LegalEntityService, RiskService, ArrayService, uiGridConstants) {
 
         $scope.currencies = localStorageService.get("CurrencyEnum");
+        $scope.countries = localStorageService.get("CountryEnum");
         $scope.currencies.splice(2,1);
         $scope.currency = {};
         $scope.legalEntityPO = {};
@@ -20,6 +21,8 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
         //Grid Config
         $scope.gridCountryRiskOptions = {
+            expandableRowTemplate: 'country_risk_expandable.html',
+            //expandableRowHeight: 600,
             showTreeExpandNoChildren: true,
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
@@ -48,38 +51,43 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
                 $scope.gridApi.grid.registerRowsProcessor( $scope.countryGridFilter, 200 );
+                gridApi.expandable.on.rowExpandedStateChanged($scope,function(row){
+                    $scope.gridCountryRiskOptions.expandableRowHeight = row.entity.subGridOptions.length * 30;
+                });
             }
         };
 
         $scope.gridCountryRiskOptions.columnDefs = [
-            {field: 'name', name:'Issuer', width: 90,
+            {field: 'name', name:'',width:40, enableSorting: false, enableFiltering:false, cellTemplate: '<span class="f32">' +
+            '<span id="flag" class="flag {{COL_FIELD | lowercase}}"></span></span>'},
+            {field: 'country',
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
-            {field: 'postedAmount',  name:'Posted', cellFilter: 'number:0', cellClass:'collateral-money'  },
+            {field: 'postedAmount', cellFilter: 'number:0', cellClass:'collateral-money'  },
             {field: 'postedPerCent',  displayName:'Haircut', cellTemplate: '<div class="text-center">{{COL_FIELD | number:2 }}%</div>'},
-            {field: 'receivedAmount',  name:'Received', cellFilter: 'number:0', cellClass:'collateral-money'  },
+            {field: 'receivedAmount', cellFilter: 'number:0', cellClass:'collateral-money'  },
             {field: 'receivedPerCent',  displayName:'Haircut', cellTemplate: '<div class="text-center">{{COL_FIELD | number:2}}%</div>'},
-            {field: 'availableAmount',  name:'Available', cellFilter: 'number:0', cellClass:'collateral-money'  },
+            {field: 'availableAmount', cellFilter: 'number:0', cellClass:'collateral-money'  },
             {field: 'availablePerCent',  displayName:'Haircut', cellTemplate: '<div class="text-center">{{COL_FIELD | number:2}}%</div>'},
             {field: 'rating'}
         ];
-        $scope.filterCountry = function() {
-            $scope.gridApi.grid.refresh();
-        };
 
         $scope.countryGridFilter = function( renderableRows ){
             var matcher = new RegExp($scope.filterValue);
             if(renderableRows != undefined || renderableRows.length >0 ){
                 renderableRows.forEach( function( row ) {
                     var match = false;
-                    ['name'].forEach(function( field ){
+                    ['country'].forEach(function( field ){
                         //console.log(row.entity[field]);
                         if ( row.entity[field] ){
                             if ( row.entity[field].match(matcher) ){
                                 match = true;
+                                //console.log(row.entity);
+                                //$scope.gridApi.expandable.expandRow($scope.gridApi.grid.rows[0].entity);
+
                             }
                         }
                     });
@@ -96,10 +104,10 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
             // Add lower case codes to the data set for inclusion in the tooltip.pointFormat
             var mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
-            $.each(mapData, function () {
+            /*$.each(mapData, function () {
                 this.id = this.properties['hc-key']; // for Chart.get()
                 this.flag = this.id.replace('UK', 'GB').toLowerCase();
-            });
+            });*/
 
 
             var mapChart;
@@ -136,20 +144,42 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                             dashStyle: 'shortdot'
                         }
                     },
+                    dataLabels: {
+                        enabled: true,
+                        format: "{point.iso-a2}"
+                    },
                     point:{
                         events:{
-                            click: function(){
+                            select: function(){
+                                //console.log('select');
+                                //console.log(this);
+
                                 $('#info #flag').attr('class', 'flag ' + this.flag);
                                 $('#info #flag_name').html(this.name);
-                                $scope.filterValue = this.id.toUpperCase();
-                                //console.log($scope.filterValue);
+
+                                console.log(this);
+                                $scope.filterValue = this.name;
                                 $scope.gridApi.grid.refresh();
-                            }
+
+                            },
+                            unselect: function () {
+                             //console.log('unselect');
+                                // console.log(this);
+                                //$('#info #flag').removeAttr('class', 'flag '  + this.flag);
+                                //$('#info #flag_name').html('');
+                                $scope.filterValue = '';
+                                $scope.gridApi.grid.refresh();
+
+                            }/*,
+                            click: function () {
+                                console.log('click');
+                                console.log(this);
+                            }*/
                         }
                     },
                     tooltip:{
-                        pointFormat: '{point.id : point.name} ',
-                        footerFormat: '<span style="font-size: 10px">(Click for details)</span>'
+                        pointFormat: "{point.name}",
+                        footerFormat: '<br><span style="font-size: 10px">(Click for details)</span>'
                     }
                 }]
             }).highcharts();
@@ -173,9 +203,18 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                 //console.log(result.data.dataResponse);
                 result.data.dataResponse.forEach(function (Risk) {
                     if(Risk.postedAmount != 0 || Risk.receivedAmount != 0 || Risk.availableAmount != 0) {
+                        if(Risk.name == 'UK')
+                            Risk.name = 'GB';
+
+                        let country = $scope.countries.filter(function (country) {
+                            if(country.key == Risk.name){
+                                Risk.country = country.name;
+                            }
+                        });
+                        
                         _that.IssuersRisk.push(Risk);
                         IssuersRiskCountry.push(Risk);
-
+                        
                     }
                     if(Risk.postedAmount > 0)
                         postedArray.push({name:Risk.name, y: Risk.postedAmount});
@@ -191,6 +230,20 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
                 $scope.gridCountryRiskOptions.data = _that.IssuersRisk;
 
+                $scope.gridCountryRiskOptions.data.forEach(function (data) {
+
+                    data.subGridOptions = {
+                        columnDefs: [
+                            {field: 'issuer'},
+                            {field: 'issuerType'},
+                            {field: 'posted',  cellFilter: 'number:0', cellClass:'collateral-money'  },
+                            {field: 'received', cellFilter: 'number:0', cellClass:'collateral-money'  },
+                            {field: 'available', cellFilter: 'number:0', cellClass:'collateral-money'  }
+                        ],
+                        data: data.detailByIssuerList
+                    }
+                })
+                
                 $scope.drawHighMap(IssuersRiskCountry);
             });
         }
