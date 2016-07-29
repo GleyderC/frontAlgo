@@ -121,6 +121,24 @@ DashboardApp.service('MenuService', function () {
                                     }
                                 ]
                             }
+                        },
+                        {
+                            head: {
+                                icon: 'fa fa-lock',
+                                text: 'Security'
+                            },
+                            childWorkspace: {
+                                tabList: [
+                                    {
+                                        head: {
+                                            icon: 'fa fa-home',
+                                            text: 'Main'
+                                        },
+                                        templateUrl: paths.views + '/configuration/Security/main.html',
+                                        autoload: true
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
