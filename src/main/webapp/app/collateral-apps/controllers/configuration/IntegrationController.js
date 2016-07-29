@@ -3,12 +3,12 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('SecurityController', [ '$scope',
-    'localStorageService', 'SecurityService', 'uiGridConstants',
-    function ( $scope, localStorageService, SecurityService, uiGridConstants ) {
+DashboardApp.controller('IntegrationController', [ '$scope',
+    'localStorageService', 'IntegrationService', 'uiGridConstants',
+    function ( $scope, localStorageService, IntegrationService, uiGridConstants ) {
 
         /* Cargando datos en legal entity ui-grid*/
-        $scope.gridSecurityOptions = {
+        $scope.gridIntegrationOptions = {
             showGridFooter: true,
             paginationPageSizes: [12, 50, 100, 200, 500],
             paginationPageSize: 12,
@@ -16,11 +16,11 @@ DashboardApp.controller('SecurityController', [ '$scope',
             enableFiltering: true,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
-            exporterCsvFilename: 'security.csv',
+            exporterCsvFilename: 'Integration.csv',
             exporterPdfDefaultStyle: {fontSize: 9},
             exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
             exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: {text: "Security", style: 'headerStyle'},
+            exporterPdfHeader: {text: "Integration", style: 'headerStyle'},
             exporterPdfFooter: function (currentPage, pageCount) {
                 return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
             },
@@ -38,33 +38,23 @@ DashboardApp.controller('SecurityController', [ '$scope',
             }
         };
 
-        $scope.gridSecurityOptions.columnDefs = [
-            {field: 'isin',
+        $scope.gridIntegrationOptions.columnDefs = [
+            {field: 'content',
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
-            {field: 'issuerLEI' },
-            {field: 'collateralType.name'},
-            {field: 'collateralType.fundingCost', cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'collateralCategory.name' },
-            {field: 'issuer' },
-            {field: 'country' },
-            {field: 'price',cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'currency' },
-            {field: 'description' },
-            {field: 'interestRate',cellFilter: 'number:2' },
-            {field: 'lotSize',cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'priceBase',cellFilter: 'number:0', cellClass:'collateral-money' },
-            {field: 'issuerType' }
+            {field: 'mode' },
+            {field: 'loading'},
+            {field: 'log' }
         ];
 
-        SecurityService.getAll().then(function (result) {
-            $scope.Securities = result.data.dataResponse;
+        IntegrationService.getAll().then(function (result) {
+            $scope.Integrations = result.data.dataResponse;
 
 
-            $scope.gridSecurityOptions.data = $scope.Securities;
+            $scope.gridIntegrationOptions.data = $scope.Integrations;
 
         });
 

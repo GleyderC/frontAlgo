@@ -113,7 +113,7 @@ DashboardApp.service('MenuService', function () {
                                 tabList: [
                                     {
                                         head: {
-                                            icon: 'fa fa-thumbs-o-up',
+                                            icon: 'fa fa-search',
                                             text: 'Search Bilateral Agreements'
                                         },
                                         templateUrl: paths.views + '/configuration/BilateralAgreements/bilateral_a_add_search.html',
@@ -131,15 +131,23 @@ DashboardApp.service('MenuService', function () {
                                 tabList: [
                                     {
                                         head: {
-                                            icon: 'fa fa-home',
-                                            text: 'Main'
+                                            icon: 'fa fa-search',
+                                            text: 'Search Security'
                                         },
                                         templateUrl: paths.views + '/configuration/Security/main.html',
                                         autoload: true
                                     }
                                 ]
                             }
-                        }
+                        },
+                        {
+                            head: {
+                                icon: 'fa fa-cog',
+                                text: 'Integration'
+                            },
+                            templateUrl: paths.views + '/configuration/Integration/integration.html',
+                            autoload: true
+                        },
                     ]
                 }
             },
