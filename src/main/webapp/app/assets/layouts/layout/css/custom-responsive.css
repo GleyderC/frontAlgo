@@ -38,41 +38,50 @@
     .split-pane {
         min-height: 650px !important;
     }
-    #country_risk_map{
+    #country-risk-map{
         height: 640px !important;
     }
-    #grid_country_risk{
+    #grid-country-risk{
         height: 600px;
     }
     .issuer_map_chart{
         height: 300px;
+    }
+    .grid-collateral{
+        height: 570px;
     }
 }
 @media (min-height: 768px) {
     .split-pane {
         min-height: 650px !important;
     }
-    .country_risk_map{
+    #country-risk-map{
         height: 640px !important;
     }
-    #grid_country_risk{
-        height: 600px;
+    #grid-country-risk{
+        height: 1200px;
     }
     .issuer_map_chart{
         height: 500px;
+    }
+    .grid-collateral{
+        height: 670px;
     }
 }
 @media (min-height: 992px) {
     .split-pane {
         min-height: 970px !important;
     }
-    .country_risk_map{
+    #country-risk-map{
         height: 960px !important;
     }
-    #grid_country_risk{
+    #grid-country-risk{
         height: 1800px;
     }
     #grid_issuer_risk{
         height: 900px;
+    }
+    .grid-collateral{
+        height: 870px;
     }
 }

@@ -113,7 +113,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
             var mapChart;
 
             // Initiate the chart
-            mapChart = $('#country_risk_map').highcharts('Map', {
+            mapChart = $('#country-risk-map').highcharts('Map', {
 
                 title : {
                     text : 'Country Risk'
