@@ -421,8 +421,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 
                             /*IssuerRisk Controller*/
                             'collateral-apps/controllers/risk/IssuerRiskController.js',
-                            'collateral-apps/controllers/risk/CountryRiskController.js'
+                            'collateral-apps/controllers/risk/CountryRiskController.js',
 
+                            /* Profile Menu */
+                            'collateral-apps/controllers/admin/UserProfileController.js'
                         ],
                         serie: true,
                         cache: false

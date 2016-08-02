@@ -1,6 +1,32 @@
-<div class="page-header-fixed page-sidebar-closed-hide-logo page-md"
-	ng-app="DashboardApp">
+<div class="page-header-fixed page-sidebar-closed-hide-logo page-md" ng-app="DashboardApp">
 
+	<!-- TEMPLATE TO CHANGE PASS BEGIN-->
+	<script type="text/ng-template" id="modalChangePassword.html">
+
+		<div class="modal-header">
+			<h4 class="modal-title">Change Password</h4>
+		</div>
+		<div class="modal-body">
+
+			<div class="row" style="text-align: center;">
+				<div class="form-group col-md-12">
+					<label class="control-label col-md-4">Current Password</label>
+					<input type="password" class="form-control input-medium">
+					<label class="control-label col-md-4">New Password</label>
+					<input type="password" class="form-control input-medium">
+					<label class="control-label col-md-4">Re-type New Password</label>
+					<input type="password" class="form-control input-medium">
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+					<button class="btn btn-primary" type="button" ng-click="save()">Save</button>
+				</div>
+			</div>
+		</div>
+
+	</script>
+	<!-- TEMPLATE TO CHANGE PASS END -->
 	<!-- BEGIN CONTAINER -->
 	<div class="wrapper">
 		<!-- BEGIN HEADER -->
@@ -98,8 +124,8 @@
 									<span>Hi, Username</span> <img
 										src="assets/global/img/avatar.png" alt="">
 								</button>
-								<ul class="dropdown-menu-v2" role="menu">
-									<li><a href="#"> <i class="icon-user"></i> My Profile
+								<ul class="dropdown-menu-v2" role="menu" ng-controller="UserProfileController as UserProfileCtrl">
+									<li><a href="#" ng-click="UserProfileCtrl.modalChangePass()"> <i class="icon-user"></i> Change Password
 											<span class="badge badge-danger">1</span>
 									</a></li>
 									<li><a href="#"> <i class="icon-calendar"></i> My
