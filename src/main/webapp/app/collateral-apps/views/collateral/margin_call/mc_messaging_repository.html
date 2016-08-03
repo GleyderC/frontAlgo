@@ -1,4 +1,107 @@
-<div class="row" ng-controller="MarginCallMessagingController ">
+<div class="row" ng-controller="MarginCallMessagingController">
+
+    <style>
+
+        .cellHeader-uiSelect .ui-select-container {
+            margin: 0 3px 3px 3px;
+        }
+
+        .ui-select-bootstrap.open{
+            z-index: 99999 !important;
+        }
+
+    </style>
+
+    <script type="text/ng-template" id="headerTemplate.html">
+
+        <div
+                role="columnheader"
+                ng-class="{ 'sortable': sortable }"
+                ui-grid-one-bind-aria-labelledby-grid="col.uid + '-header-text ' + col.uid + '-sortdir-text'"
+                aria-sort="{{col.sort.direction == asc ? 'ascending' : ( col.sort.direction == desc ? 'descending' : (!col.sort.direction ? 'none' : 'other'))}}">
+            <div
+                    role="button"
+                    tabindex="0"
+                    class="ui-grid-cell-contents ui-grid-header-cell-primary-focus"
+                    col-index="renderIndex"
+                    title="TOOLTIP">
+    <span
+            class="ui-grid-header-cell-label"
+            ui-grid-one-bind-id-grid="col.uid + '-header-text'">
+      {{ col.displayName CUSTOM_FILTERS }}
+    </span>
+                <span
+                        ui-grid-one-bind-id-grid="col.uid + '-sortdir-text'"
+                        ui-grid-visible="col.sort.direction"
+                        aria-label="{{getSortDirectionAriaLabel()}}">
+      <i
+              ng-class="{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }"
+              title="{{isSortPriorityVisible() ? i18n.headerCell.priority + ' ' + ( col.sort.priority + 1 )  : null}}"
+              aria-hidden="true">
+     </i>
+     <sub
+             ui-grid-visible="isSortPriorityVisible()"
+             class="ui-grid-sort-priority-number">
+       {{col.sort.priority + 1}}
+     </sub>
+    </span>
+
+            </div>
+
+            <div
+                    role="button"
+                    tabindex="0"
+                    ui-grid-one-bind-id-grid="col.uid + '-menu-button'"
+                    class="ui-grid-column-menu-button"
+                    ng-if="grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false"
+                    ng-click="toggleMenu($event)"
+                    ng-class="{'ui-grid-column-menu-button-last-col': isLastCol}"
+                    ui-grid-one-bind-aria-label="i18n.headerCell.aria.columnMenuButtonLabel"
+                    aria-haspopup="true">
+                <i
+                        class="ui-grid-icon-angle-down"
+                        aria-hidden="true">
+                    &nbsp;
+                </i>
+            </div>
+
+            <div ui-grid-filter></div>
+        </div>
+
+        <div class="cellHeader-uiSelect" ng-if="grid.appScope.MCProcessMessage.fileDefinitions.selected">
+            <ui-select
+                    ng-model="col.colDef.colDefinitionInfo"
+                    theme="bootstrap"
+                    append-to-body="true"
+                    on-select="grid.appScope.MCProcessMessage.checkMandatoryFields($item, $model)">
+                <ui-select-match allow-clear="true" placeholder="Select Field...">
+                    {{$select.selected.columnField}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="colField in grid.appScope.MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search"
+                        ui-disable-choice="colField.checked">
+                    <div ng-bind-html="colField.columnField | highlight: $select.search"></div>
+                    <small ng-bind-html="colField.dataFormat | highlight: $select.search"></small>
+                </ui-select-choices>
+            </ui-select>
+
+            <ui-select
+                    ng-model="col.colDef.colDefinitionInfo.dataFormat"
+                    theme="bootstrap"
+                    append-to-body="true"
+                    on-select="grid.appScope.MCProcessMessage.checkMandatoryFields($item, $model)" ng-disabled="col.colDef.colDefinitionInfo == undefined">
+                <ui-select-match allow-clear="true" placeholder="Select Type...">
+                    {{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="colFormat.key as colFormat in grid.appScope.MCProcessMessage.columnDataFormat | filter: $select.search">
+                    <div ng-bind-html="colFormat.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+
+        </div>
+
+    </script>
 
     <script type="text/ng-template" id="modalProcessMCMessage.html">
         <div class="modal-header">
@@ -122,15 +225,15 @@
                         <!-- END FILE DEFINITION SECTION -->
                         <div class="col-md-12" style="overflow: auto; min-height: 280px;"><!-- START DOWN SECTION -->
                             <!--<button ng-click="MCProcessMessage.show_boject()">=)</button>-->
-                            <table class="table table-bordered table-hover">
+                            <!--<table id="fileDefinitionCols" class="table table-bordered table-hover" style="margin-left: -15px; margin-bottom: 0;">
                                 <thead>
                                 <tr>
-                                    <th ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
+                                    <th ng-repeat="field in MCProcessMessage.columnFieldsList"
                                         class="text-center">
                                         <ui-select
-                                                ng-model="field.fieldMapSelected.columnField"
+                                                ng-model="field.columnField"
                                                 theme="select2"
-                                                class="input-small"
+                                                class="input-medium" append-to-body="true"
                                                 on-select="MCProcessMessage.checkMandatoryFields($item, $model)">
                                             <ui-select-match placeholder="Select Field...">
                                                 {{$select.selected.columnField}}
@@ -142,17 +245,11 @@
                                                 <small ng-bind-html="colField.dataFormat | highlight: $select.search"></small>
                                             </ui-select-choices>
                                         </ui-select>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
-                                        class="text-center">
+
                                         <ui-select
-                                                ng-model="field.fieldMapSelected.colFormat"
+                                                ng-model="field.colFormat"
                                                 theme="select2"
-                                                class="input-small"
+                                                class="input-medium" append-to-body="true"
                                                 on-select="MCProcessMessage.checkMandatoryFields($item, $model)">
                                             <ui-select-match placeholder="Select Column Format...">
                                                 {{$select.selected.name}}
@@ -162,14 +259,15 @@
                                                 <div ng-bind-html="colFormat.name | highlight: $select.search"></div>
                                             </ui-select-choices>
                                         </ui-select>
-                                    </td>
+
+                                    </th>
                                 </tr>
-                                </tbody>
-                            </table>
+                                </thead>
+                            </table>-->
 
                             <div class="row">
                                 <div ui-grid="MCProcessMessage.gridProcessMCMessages" ui-grid-auto-resize
-                                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                                     ui-grid-resize-columns ui-grid-pagination
                                      class="grid" style="height: 300px;"></div>
                             </div>
 

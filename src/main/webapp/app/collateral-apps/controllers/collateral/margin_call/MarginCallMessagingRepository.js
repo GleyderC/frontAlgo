@@ -107,13 +107,15 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
                     let _that = this;
                     this.fileDefinitions = [];
+                    this.columnFieldsList = [];
+                    this.columnDataFormat = [];
 
                     this.gridProcessMCMessages = {
-                        paginationPageSizes: [15, 50, 100, 200, 500],
-                        paginationPageSize: 5,
-                        enableFiltering: true,
+                        paginationPageSizes: [100, 200, 500],
+                        paginationPageSize: 100,
+                        enableFiltering: false,
                         rowHeight: 35, // set height to each row
-                        enableGridMenu: true,
+                        enableGridMenu: false,
                         exporterCsvFilename: 'margin-call-messaging-repository.csv',
                         exporterPdfDefaultStyle: {fontSize: 9},
                         exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
@@ -139,69 +141,63 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                     };
 
                     this.columnDataFormat = MarginCallService.getColumnDataFormat();
-                    MarginCallService.getInputFilesDefinition().then(function(result){
+
+                    MarginCallService.getInputFilesDefinition().then(function (result) {
                         _that.fileDefinitions = result.data.dataResponse.fileDefinitions;
                     });
 
-                    this.checkMandatoryFields = function(item, model){
+                    this.checkMandatoryFields = function (item, model) {
 
-                        if(!angular.isArray(_that.fileDefinitions.selected.fieldMaps))
+                        if (!angular.isArray(_that.gridProcessMCMessages.columnDefs) || _that.gridProcessMCMessages.columnDefs.length == 0)
                             return false;
 
-                        let remainingMandatoryFields = 0;
-                        
-                        angular.forEach(_that.fileDefinitions.selected.fieldMaps, function(field, index){
+                        let remainingMandatoryFields = false;
+                        let fields = _that.fileDefinitions.selected.fieldMaps;
 
-                            if(field.mandatory != true)
-                            {
+                        for (let i = 0; i < fields.length; i++) {
+
+                            if (fields[i].mandatory == true)
+                                fields[i].checked = false;
+                        }
+
+                        angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col, index) {
+
+                            if (angular.isUndefined(col.colDefinitionInfo) || col.colDefinitionInfo.mandatory != true)
                                 return;
-                            }
 
-                            field.checked = false;
+                            for (let i = 0; i < fields.length; i++) {
 
-                            for(let i = 0; i < _that.fileDefinitions.selected.fieldMaps.length; i++){
+                                if (fields[i].mandatory == true) {
 
-                                if(angular.isUndefined(_that.fileDefinitions.selected.fieldMaps[i].fieldMapSelected))
-                                {
-                                    continue;
-                                }
+                                    if (col.colDefinitionInfo.columnField === fields[i].columnField) {
 
-                                if(  field.columnField === _that.fileDefinitions.selected.fieldMaps[i].fieldMapSelected.columnField ){
+                                        fields[i].checked = true;
+                                        break;
 
-                                    field.checked = true;
-                                    break;
+                                    }
 
                                 }
 
-                            }
-
-                            if(field.checked == false)
-                            {
-                                remainingMandatoryFields++;
                             }
 
                         });
 
-                        if(remainingMandatoryFields == 0){
+                        for (let i = 0; i < fields.length; i++) {
+
+                            if (fields[i].mandatory == true && fields[i].checked == false) {
+                                remainingMandatoryFields = true;
+                                break;
+                            }
+                        }
+
+                        if (remainingMandatoryFields == false) {
                             _that.fileDefinitions.selected.allFieldsMapped = true;
                         }
-                        else
-                        {
+                        else {
                             _that.fileDefinitions.selected.allFieldsMapped = false;
                         }
 
                     }
-
-                    $scope.$watch(function(scope){
-
-                        return _that.fileDefinitions.selected;
-
-                    }, function( newVal, oldVal ){
-
-                        /*console.log(newVal)
-                        console.log(oldVal)*/
-
-                    });
 
                     MarginCallService.ProcessMCMessage({
                         marginCallId: MCMessage.marginCallID,
@@ -213,34 +209,38 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                         let rowsCount = 0;
                         _that.MCMessageInformation = result.data.dataResponse;
 
+                        _that.columnFieldsList = [];
 
-                        angular.forEach(_that.MCMessageInformation.rawTable.head, function(head, indexCol){
+                        angular.forEach(_that.MCMessageInformation.rawTable.head, function (head, indexCol) {
+
+                            _that.columnFieldsList.push({
+                                columnField: {},
+                                colFormat: ''
+                            });
 
                             _that.gridProcessMCMessages.columnDefs.push({
 
                                 field: 'col-' + indexCol,
                                 name: head,
-                                minWidth: 100,
-                                width: head.length + 100
-
+                                minWidth: 180,
+                                width: 257,
+                                headerCellTemplate: 'headerTemplate.html',
                             });
 
-                            if(rowsCount < _that.MCMessageInformation.rawTable.rawData[indexCol].length)
-                            {
+                            if (rowsCount < _that.MCMessageInformation.rawTable.rawData[indexCol].length) {
                                 rowsCount = _that.MCMessageInformation.rawTable.rawData[indexCol].length;
                             }
 
                         });
 
-                        for(let indexRow = 0; indexRow < rowsCount; indexRow++){
+                        for (let indexRow = 0; indexRow < rowsCount; indexRow++) {
 
                             let row = {};
 
-                            angular.forEach(_that.MCMessageInformation.rawTable.rawData, function(col, indexCol) { //ROWS
+                            angular.forEach(_that.MCMessageInformation.rawTable.rawData, function (col, indexCol) { //ROWS
 
                                 let colValue = $sanitize(col[indexRow].toString());
-                                if(!colValue)
-                                {
+                                if (!colValue) {
                                     colValue = "";
                                 }
 
@@ -259,15 +259,31 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                     $scope.save = function () {
                         //console.log("Press Ok")
                         $uibModalInstance.close();
+                        toastr.success("Mapping Definition was saved", "Success:")
                     };
 
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
                     };
 
-                    this.show_boject = function(){
+                    this.show_boject = function () {
                         console.log(_that.fileDefinitions.selected)
                     }
+
+                    //START WATCHES
+
+                    $scope.$watch(function (scope) {
+
+                        return _that.fileDefinitions.selected;
+
+                    }, function (newVal, oldVal) {
+
+                        /*console.log(newVal)
+                         console.log(oldVal)*/
+
+                    });
+                    //END WATCHES
+
                 },
                 resolve: {}
             });
