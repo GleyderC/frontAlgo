@@ -7,10 +7,107 @@ angular.module('CollateralApp').controller('DashboardController',
         'toastr',
         'localStorageService',
         'MenuService',
-        function ($rootScope, $scope, $request,$socket, toastr,localStorageService, $menuService) {
+		'ModalService',
+        function ($rootScope, $scope, $request,$socket, toastr,localStorageService, $menuService, ModalService) {
 
             $scope.$workspaceTabsMgm = $menuService.MenuTree;
-           
+
+			//SET USER TYPE
+			localStorageService.set('user_rol', 'admin');
+			
+			$scope.userRol = localStorageService.get('user_rol');
+
+			$scope.userManagementModal = function(){
+
+				ModalService.open({
+					templateUrl: paths.views + "/admin/user_management.html",
+					size: 'lg',
+					rendered: function () {
+						App.initComponents();
+					},
+					controllerAs: 'UserMgm',
+					controller: function (toastr, $scope, $uibModalInstance) {
+
+						this.gridOptions = {
+
+							columnDefs: [
+								{
+									field: 'name',
+									name: 'Name'
+								},
+								{
+									field: 'description',
+									name: 'Description'
+								},
+								{
+									field: 'access',
+									name: 'Access',
+									cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+								},
+								{
+									field: 'create',
+									name: 'Create',
+									cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+								},
+								{
+									field: 'update',
+									name: 'Update',
+									cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+								},
+								{
+									field: 'delete',
+									name: 'Delete',
+									cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+								},
+							],
+							enableGridMenu: true,
+							exporterCsvFilename: 'permissions.csv',
+							exporterPdfDefaultStyle: {fontSize: 9},
+							exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
+							exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
+							exporterPdfHeader: {text: "Permissions", style: 'headerStyle'},
+							exporterPdfFooter: function (currentPage, pageCount) {
+								return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
+							},
+							exporterPdfCustomFormatter: function (docDefinition) {
+								docDefinition.styles.headerStyle = {fontSize: 22, bold: true};
+								docDefinition.styles.footerStyle = {fontSize: 10, bold: true};
+								return docDefinition;
+							},
+							exporterPdfOrientation: 'portrait',
+							exporterPdfPageSize: 'LETTER',
+							exporterPdfMaxGridWidth: 500,
+							exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+							onRegisterApi: function (gridApi) {
+								$scope.gridApi = gridApi;
+							},
+							data: []
+						}
+
+						//data DEMO
+						this.gridOptions.data.push(
+							{
+								name: 'Legal Entity',
+								description: ''
+							},
+							{
+								name: 'Bilateral Contract',
+								description: ''
+							}
+						);
+
+						this.save = function(){
+							$uibModalInstance.dismiss();
+						}
+
+						this.cancel = function(){
+							$uibModalInstance.dismiss();
+						}
+					}
+				});
+
+			}
+			
             //GET STATIC DATA FROM THE SERVER
             $request.get("/servlet/StaticData/SelectAll").then(function (response) {
                 angular.forEach(response.data.dataResponse, function (obj, key) {
