@@ -15,8 +15,8 @@ InterestCtrl.controller('InterestDetailController',
             $scope.InterestCumulative  = 0 ;
             $scope.InterestCumulativeAdjustment  = 0 ;
             $scope.InterestTotal  =  0 ;
-            $scope.startDate = new Date($scope.currentContract.interestCall.ownInterestOnCashCollateral[0].day.iLocalMillis);
-            
+            $scope.startDate = new Date($scope.currentContract.contractDate.iLocalMillis);
+//            $scope.endDate 	 = new Date($scope.currentContract.endDate.iLocalMillis);
             
             $scope.reCalculateInterest = function(){
             	$scope.InterestCumulativeAdjustment = 0 ;
@@ -28,9 +28,9 @@ InterestCtrl.controller('InterestDetailController',
             
             
             Interest.getInterest(moment().format("YYYY-MM-DD"),
-            					$scope.currentContract.collateralContract.internalId,
-            					$scope.currentContract.collateralContract.eligibleCurrencyConfig.baseCurrency,
-            					$scope.currentContract.collateralLiabilityType)
+            					$scope.currentContract.internalId,
+            					$scope.currentContract.baseCurrency,
+            					"CSA")
 	            			  
 	                .success(function(data){
 	                	$scope.InterestData   = data.dataResponse.ownInterestOnCashCollateral;
