@@ -34,7 +34,10 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         $scope.tolerance =  0; 
         
         $scope.changeTolerance = function(tolerancePercentage){ //calculated
+        	tolerancePercentage = tolerancePercentage.replace(/%/,'');
+        	tolerancePercentage = parseFloat(tolerancePercentage.replace(/,/,''));
         	$scope.tolerance = tolerancePercentage/100; 	 
+        	
         };
 //      Dispute
         $scope.disputeEdit = false ;

@@ -6,10 +6,17 @@ var DashboardApp = angular.module('DashboardApp');
 DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstants', 'MarginCallService','toastr',
     function ($scope, uiGridConstants, MarginCallService,$toastr) {
 
+	$scope.getTableHeight = function() {
+	       var rowHeight = 30; // your row height
+	       var headerHeight = 30; // your header height
+	       return {
+	          height: ($scope.gridTradesOptions.data.length * rowHeight + headerHeight) + "px"
+	       };
+	    };
         $scope.gridTradesOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
-            paginationPageSize: 5,
+            paginationPageSize: 50,
             enableColumnResizing: true,
             enableFiltering: true,
             rowHeight: 35, // set height to each row
