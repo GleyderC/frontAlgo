@@ -51,7 +51,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                 '<a ng-click="grid.appScope.getPDF(row.entity.pdfInfo.md5)"  class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
                 '<a ng-click="grid.appScope.getExcel(row.entity.excelInfo.md5)" class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></a>' +
                 '<a title="Process MarginCall Message" ng-click="grid.appScope.processMCMessage(row.entity)" class="btn btn-sm uigrid-btn" ng-class="{ \'btn-success\': row.entity.processMCMessage.success, \'btn-danger\': !row.entity.processMCMessage.success}" >' +
-                '<i class="fa fa-file-excel-o"></i>' +
+                '   <i class="fa fa-file-excel-o"></i>' +
                 '</a>' +
                 '</div>',
                 enableColumnMenu: false,
@@ -91,6 +91,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
         $scope.viewMessage = function (row) {
             $scope.messageSelected = row;
         };
+
         $scope.processMCMessage = function (MCMessage) {
 
             MCMessage.marginCallID = $scope.MarginCallDetail.marginCall.id;
@@ -154,20 +155,31 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                         let remainingMandatoryFields = false;
                         let fields = _that.fileDefinitions.selected.fieldMaps;
 
-                        for (let i = 0; i < fields.length; i++) {
+                        /*for (let i = 0; i < fields.length; i++) {
 
                             if (fields[i].mandatory == true)
                                 fields[i].checked = false;
-                        }
+                        }*/
+
+                        angular.forEach(fields, function (field) {
+                            field.checked = false;
+                        });
+
+                        angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
+                            col.colDefinitionInfo = {};
+                        });
 
                         angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col, index) {
 
-                            if (angular.isUndefined(col.colDefinitionInfo) || col.colDefinitionInfo.mandatory != true)
-                                return;
+                            //if (angular.isUndefined(col.colDefinitionInfo) || col.colDefinitionInfo.mandatory != true)
+                            //   return;
+
+                            if (angular.isUndefined(col.colDefinitionInfo))
+                               return;
 
                             for (let i = 0; i < fields.length; i++) {
 
-                                if (fields[i].mandatory == true) {
+                                //if (fields[i].mandatory == true) {
 
                                     if (col.colDefinitionInfo.columnField === fields[i].columnField) {
 
@@ -176,7 +188,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
                                     }
 
-                                }
+                                //}
 
                             }
 
@@ -225,6 +237,8 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                                 minWidth: 180,
                                 width: 257,
                                 headerCellTemplate: 'headerTemplate.html',
+                                indexCol: indexCol
+
                             });
 
                             if (rowsCount < _that.MCMessageInformation.rawTable.rawData[indexCol].length) {
@@ -257,9 +271,38 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
 
                     $scope.save = function () {
-                        //console.log("Press Ok")
+
+                        let objRequest = {};
+
+                        objRequest = {
+                            marginCallId: MCMessage.marginCallID,
+                            contractId: MCMessage.contractId,
+                            mcMessageId: MCMessage.id,
+                            mappingDefinition: {
+                                fileType: _that.fileDefinitions.selected.fileType,
+                                fileNameIncludes: "", //TODO
+                                fields: []
+                            }
+                        };
+
+                        angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
+
+                            if (angular.isUndefined(col.colDefinitionInfo))
+                                return;
+
+                            objRequest.fields.push({
+                                inputPosition: col.indexCol,
+                                fieldMap: col.colDefinitionInfo.columnField,
+                                format: col.colDefinitionInfo.dataFormat
+                            });
+
+                        });
+
+                        MarginCallService.SaveMappingDefinition(objRequest);
+                        
                         $uibModalInstance.close();
-                        toastr.success("Mapping Definition was saved", "Success:")
+                        toastr.success("Mapping Definition was saved", "Success:");
+
                     };
 
                     $scope.cancel = function () {
@@ -289,4 +332,5 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
             });
 
         }
+
     }]);

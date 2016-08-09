@@ -6,7 +6,7 @@
             margin: 0 3px 3px 3px;
         }
 
-        .ui-select-bootstrap.open{
+        .ui-select-bootstrap.open {
             z-index: 99999 !important;
         }
 
@@ -89,7 +89,8 @@
                     ng-model="col.colDef.colDefinitionInfo.dataFormat"
                     theme="bootstrap"
                     append-to-body="true"
-                    on-select="grid.appScope.MCProcessMessage.checkMandatoryFields($item, $model)" ng-disabled="col.colDef.colDefinitionInfo == undefined">
+                    on-select="grid.appScope.MCProcessMessage.checkMandatoryFields($item, $model)"
+                    ng-disabled="col.colDef.colDefinitionInfo == undefined">
                 <ui-select-match allow-clear="true" placeholder="Select Type...">
                     {{$select.selected.name}}
                 </ui-select-match>

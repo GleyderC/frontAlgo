@@ -96,11 +96,13 @@
 <script src="assets/vendor/sifter/sifter.js"></script>
 <script src="assets/vendor/microplugin/src/microplugin.js"></script>
 <script src="assets/vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
-<script src="assets/vendor/angular-md5/angular-md5.min.js"></script>
 <script src="assets/vendor/angular-input-masks/angular-input-masks-standalone.js"></script>
 <script src="assets/vendor/angular-websocket/dist/angular-websocket.js"></script>
 <script src="assets/vendor/split-pane/split-pane.js"></script>
 <script src="assets/vendor/angular-split-pane/angular-split-pane.js"></script>
+<script src="assets/vendor/angular-md5/angular-md5.js"></script>
+<script src="assets/vendor/ng-file-upload/ng-file-upload.js"></script>
+<script src="assets/vendor/ng-file-upload-shim/ng-file-upload-shim.js"></script>
 <!-- endbower -->
 
 <!-- BEGIN PAGE SPINNER -->

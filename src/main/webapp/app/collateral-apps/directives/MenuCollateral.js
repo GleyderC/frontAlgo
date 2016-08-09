@@ -125,14 +125,14 @@ DashboardApp.service('MenuService', function () {
                         {
                             head: {
                                 icon: 'fa fa-lock',
-                                text: 'Security'
+                                text: 'Securities'
                             },
                             childWorkspace: {
                                 tabList: [
                                     {
                                         head: {
                                             icon: 'fa fa-search',
-                                            text: 'Search Security'
+                                            text: 'Search Securities'
                                         },
                                         templateUrl: paths.views + '/configuration/Security/main.html',
                                         autoload: true

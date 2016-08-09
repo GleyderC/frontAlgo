@@ -3,9 +3,9 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('SecurityController', [ '$scope',
-    'localStorageService', 'SecurityService', 'uiGridConstants',
-    function ( $scope, localStorageService, SecurityService, uiGridConstants ) {
+DashboardApp.controller('SecurityController', ['$scope',
+    'localStorageService', 'SecurityService', 'uiGridConstants', 'ModalService',
+    function ($scope, localStorageService, SecurityService, uiGridConstants, ModalService) {
 
         /* Cargando datos en legal entity ui-grid*/
         $scope.gridSecurityOptions = {
@@ -39,25 +39,26 @@ DashboardApp.controller('SecurityController', [ '$scope',
         };
 
         $scope.gridSecurityOptions.columnDefs = [
-            {field: 'isin',
+            {
+                field: 'isin',
                 sort: {
                     direction: uiGridConstants.ASC,
                     priority: 0
                 }
             },
-            {field: 'issuerLEI' },
+            {field: 'issuerLEI'},
             {field: 'collateralType.name'},
-            {field: 'collateralType.fundingCost', cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'collateralCategory.name' },
-            {field: 'issuer' },
-            {field: 'country' },
-            {field: 'price',cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'currency' },
-            {field: 'description' },
-            {field: 'interestRate',cellFilter: 'number:2' },
-            {field: 'lotSize',cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'priceBase',cellFilter: 'number:0', cellClass:'collateral-money' },
-            {field: 'issuerType' }
+            {field: 'collateralType.fundingCost', cellFilter: 'number:0', cellClass: 'collateral-money'},
+            {field: 'collateralCategory.name'},
+            {field: 'issuer'},
+            {field: 'country'},
+            {field: 'price', cellFilter: 'number:0', cellClass: 'collateral-money'},
+            {field: 'currency'},
+            {field: 'description'},
+            {field: 'interestRate', cellFilter: 'number:2'},
+            {field: 'lotSize', cellFilter: 'number:0', cellClass: 'collateral-money'},
+            {field: 'priceBase', cellFilter: 'number:0', cellClass: 'collateral-money'},
+            {field: 'issuerType'}
         ];
 
         SecurityService.getAll().then(function (result) {
@@ -67,5 +68,67 @@ DashboardApp.controller('SecurityController', [ '$scope',
             $scope.gridSecurityOptions.data = $scope.Securities;
 
         });
+
+        $scope.MappingUpload = function () {
+
+            ModalService.open({
+                templateUrl: "modalUploadMappingFile.html",
+                size: 'lg',
+                rendered: function () {
+                    App.initComponents();
+                },
+                //controllerAs: 'MCUploadMapping',
+                controller: function (toastr, $scope, $uibModalInstance, $sanitize, Upload, $timeout, URL_CONFIG) {
+
+                    $scope.$watch('files', function (newVal) {
+                        $scope.upload($scope.files);
+                    });
+
+                    $scope.log = '';
+
+                    $scope.upload = function (file) {
+
+                        if (file) {
+
+                            if (!file.$error) {
+                                Upload.upload({
+                                    url: URL_CONFIG.API_URL + '/servlet/Mapping/UploadFile',
+                                    headers : {
+                                        'Content-Type': file.type,
+                                        'file-name': file.name
+                                    },
+                                    data: {
+                                        file: file
+                                    }
+                                }).then(function (resp) {
+                                    $timeout(function () {
+                                        $scope.log = 'file: ' +
+                                            resp.config.data.file.name +
+                                            ', Response: ' + JSON.stringify(resp.data) +
+                                            '\n' + $scope.log;
+                                    });
+
+                                    toastr.success("File Uploaded", "Success:");
+
+                                }, null, function (evt) {
+                                    var progressPercentage = parseInt(100.0 *
+                                        evt.loaded / evt.total);
+                                    $scope.log = 'progress: ' + progressPercentage +
+                                        '% ' + evt.config.data.file.name + '\n' +
+                                        $scope.log;
+                                });
+
+                            }
+                        }
+                    };
+
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+
+                },
+                resolve: {}
+            });
+        }
 
     }]);

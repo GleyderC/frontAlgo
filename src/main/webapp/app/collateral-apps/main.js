@@ -15,7 +15,8 @@ var CollateralApp = angular.module("CollateralApp", [
     "LocalStorageModule",
     "toastr",
     "ui.utils.masks",
-    "shagstrom.angular-split-pane"
+    "shagstrom.angular-split-pane",
+    "ngFileUpload"
 ]);
 
 var paths = {
