@@ -43,12 +43,12 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td style="font-size: 12px;" id="counterPartyAName" >{{currentContract.counterpartyA.name}}</td>
+									<td style="font-size: 12px;" id="counterPartyAName" >{{currentContract.collateralContract.counterpartyA.name}}</td>
 									<td style="font-size: 12px;" id="startDate" >{{startDate |date:'yyyy-MM-dd' }}</td>
 									<td style="font-size: 12px;" id="endDate" >{{endDate | date: 'yyyy-MM-dd' }}</td>
-									<td style="font-size: 12px;" id="status" >{{currentContract.status}}</td>
+									<td style="font-size: 12px;" id="status" >{{currentContract.collateralContract.status}}</td>
 									<td style="font-size: 12px;" id="" >{{currentContract.collateralLiabilityType}}</td>
-									<td style="font-size: 12px;" id="currency">{{currentContract.baseCurrency}}</td>
+									<td style="font-size: 12px;" id="currency">{{currentContract.collateralContract.baseCurrency}}</td>
 									<td style="font-size: 12px;" id="interestTotal">{{InterestTotal | currency : ''}}</td>
 								</tr>
 							</tbody>

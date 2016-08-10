@@ -124,6 +124,7 @@
     <div class="col-md-4">
         <div class="portlet light bordered" style="margin-bottom:0">
             <strong>Disputes</strong>
+            <a href="#!" ng-click="updateDispute(dispute)" ng-show="disputeEdit"> <i class="fa fa-save"></i></a>
             <div class="portlet-body form" style="font-size: 11px;">
                 <form class="form-horizontal" role="form" id="mc-disputes">
 
@@ -146,7 +147,7 @@
                             </div>
                             <label class="control-label col-md-2">Tolerance % </label>
                             <div class="col-md-4">
-                                <input ui-number-mask="2" type="text" ng-model="tolerancePercentage" ng-change="changeTolerance(tolerancePercentage);" class="form-control collateral-money " ui-number="0" placeholder="">
+                                <input type="text" ng-model="tolerancePercentage" ng-change="changeTolerance(tolerancePercentage);" class="form-control collateral-money " placeholder="" maxlength="5">
                             </div>
 
                         </div>
@@ -168,12 +169,6 @@
                             </div>
 
                         </div>
-						<div class="row">
-							<br/>
-							<div class="col-md-4 pull-right">
-							
-								<button class="btn btn green" ng-click="updateDispute(dispute)" ng-show="disputeEdit">Save</button>
-							</div>
 						</div>
                     </div>
                 </form>
