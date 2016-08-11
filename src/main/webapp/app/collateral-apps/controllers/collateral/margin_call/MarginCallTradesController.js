@@ -18,6 +18,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             paginationPageSizes: [15, 50, 100, 200, 500],
             paginationPageSize: 50,
             enableColumnResizing: true,
+            enableCellEdit : false, 
             enableFiltering: true,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
@@ -47,11 +48,11 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             	width: 90
                 
             },
-            {field: 'trade.tradeType', name: 'type'},
-            {field: 'trade.tradeSubType', name:'subType'},
-            {field: 'trade.description', name:'Description' },
-            {field: 'trade.notional',  name:'Notional', cellFilter: 'number:0', cellClass:'collateral-money'  },
-            {field: 'trade.currency', name:'Currency',
+            {field: 'trade.tradeType', name: 'type',enableCellEdit : false},
+            {field: 'trade.tradeSubType', name:'subType' ,enableCellEdit : false},
+            {field: 'trade.description', name:'Description',enableCellEdit : false },
+            {field: 'trade.notional',  name:'Notional', cellFilter: 'number:0', enableCellEdit : false, cellClass:'collateral-money'  },
+            {field: 'trade.currency', name:'Currency',enableCellEdit : false,
                 filter : {
                     type : uiGridConstants.filter.SELECT,
                     selectOptions : [ {
@@ -67,7 +68,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                     }
                 }
             },
-            {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'number:2', cellClass:'collateral-money' },
+            {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'number:2', cellClass:'collateral-money',
+            	enableCellEdit : false},
+            
             {field: 'ownPricing.priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'number:2', cellClass:'collateral-money'},
             {field: 'npvCounterParty', name:'Diff', cellFilter:'number:2',enableCellEdit:false},
@@ -75,11 +78,12 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             	field: 'differencePercent', 
             	name:'Diff(%)', 
             	cellFilter:'number:2',
-            	enableCellEdit:false,
+            	
             	sort: {
                     direction: uiGridConstants.DESC,
                     priority: 1
                 },
+                enableCellEdit : false,
                 cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
                 	let val = grid.getCellValue(row,col);
                 	val =  val < 0 ?  val * -1 : val ;               	
@@ -90,7 +94,13 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                     }
                   }
             },
-            {field: 'ownPricing.Counterparty', name:'npv (Counterparty)', cellClass:'collateral-money',cellFilter:'number:2'}
+            {	
+            	field: 'ownPricing.Counterparty', 
+            	name:'npv (Counterparty)', 
+            	enableCellEdit : true,
+            	cellClass:'collateral-money',
+            	cellFilter:'number:2'
+            }
             
 
         ];
