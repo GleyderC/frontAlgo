@@ -4,5 +4,11 @@ angular.module('DashboardApp')
         this.getAll = function () {
             return $request.get('/servlet/Security/SelectAll');
         }
+        this.getByIsin = function(isin){
+        	  var param  = {
+        			  isin : isin
+        	  };
+        	  return $request.post('/servlet/Security/Select',param);
+        };
 
     }]);

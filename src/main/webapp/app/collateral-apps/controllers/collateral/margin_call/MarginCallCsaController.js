@@ -2,8 +2,8 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout',
-    function ($scope, uiGridConstants, MarginCallService, $timeout) {
+DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout','SecurityService',
+    function ($scope, uiGridConstants, MarginCallService, $timeout,Security) {
 	$scope.active=1;
 	
 
@@ -35,6 +35,19 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 			],
 			onRegisterApi  : function(gridApi){
 				$scope.gridPostedApi = gridApi;
+				gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
+            		if(newValue == oldValue){
+            			return false;
+            		}
+            		Security.getByIsin(newValue).success(function(data){
+            			rowEntity["currency"] = data.dataResponse.currency;
+            			rowEntity["description"] = data.dataResponse.description;
+            			rowEntity["lotSize"] = data.dataResponse.lotSize;
+            			rowEntity["price"] = data.dataResponse.price;
+            			
+            		});
+
+				});
 			}
 	};
 	$scope.gridMCCsaAllocReceived = {
@@ -57,6 +70,19 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 			 ],
 			 onRegisterApi  : function(gridApi){
 					$scope.gridReceivedApi = gridApi;
+					gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
+	            		if(newValue == oldValue){
+	            			return false;
+	            		}
+	            		Security.getByIsin(newValue).success(function(data){
+	            			rowEntity["currency"] = data.dataResponse.currency;
+	            			rowEntity["description"] = data.dataResponse.description;
+	            			rowEntity["lotSize"] = data.dataResponse.lotSize;
+	            			rowEntity["price"] = data.dataResponse.price;
+	            			
+	            		});
+	            		
+					});
 				}
 	};
 	$scope.$watchCollection('$parent.post',function(newV,oldV){
