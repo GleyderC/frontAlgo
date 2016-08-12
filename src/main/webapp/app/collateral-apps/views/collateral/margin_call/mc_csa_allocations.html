@@ -1,6 +1,6 @@
 <div ng-controller="MarginCallCsaController as mcCsaAlloc">
-		<uib-tabset > 
-			<uib-tab index="1" active="" disable="tabPosted.disabled"> 
+		<uib-tabset active="active" > 
+			<uib-tab index="1" disable="tabPosted.disabled"> 
 				<uib-tab-heading> 
 					<i class=""></i>Posted
 				</uib-tab-heading>
@@ -25,7 +25,7 @@
 		
 		                	</div>
 		                	<div class="btn-group">
-	                        <a type="submit" class="btn" uib-popover="" popover-trigger="mouseenter" ng-click="" ng-disabled="">
+	                        <a type="submit" class="btn" uib-popover="" popover-trigger="mouseenter" ng-click="addSecurity()" ng-disabled="">
 	                            <i class="fa fa-plus"></i>
 	                        </a>	
 	                		</div>
@@ -105,7 +105,7 @@
 		
 		                	</div>
 		                	<div class="btn-group">
-		                        <a type="submit" class="btn" uib-popover="" popover-trigger="mouseenter" ng-click="" ng-disabled="">
+		                        <a type="submit" class="btn" uib-popover="" popover-trigger="mouseenter" ng-click="addSecurity()" ng-disabled="">
 		                            <i class="fa fa-plus"></i>
 		                        </a>	
 		

@@ -4,9 +4,20 @@ var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout',
     function ($scope, uiGridConstants, MarginCallService, $timeout) {
+	$scope.active=1;
+	
+
+	$scope.addSecurity = function() {
+		if($scope.active ==2 ){
+			$scope.$parent.receive.push({isin :""});
+		}else{
+			$scope.$parent.post.push({isin :""});
+		}
+		
+	};
 	$scope.gridMCCsaAllocPosted = {
 			columnDefs: [
-				{ name: "isin",  field : "isin" } ,
+				{ name: "isin",  field : "isin",enableCellEdit:true } ,
 				{ name: "currency",  field : "currency" } ,
 				{ name: "sense",  field : "sense" } ,
 				{ name: "description",  field : "description" } ,
@@ -23,7 +34,7 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 				{ name: "folder",  field : "folder" } 
 			],
 			onRegisterApi  : function(gridApi){
-				
+				$scope.gridPostedApi = gridApi;
 			}
 	};
 	$scope.gridMCCsaAllocReceived = {
@@ -43,7 +54,10 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 					{ name: "baseCurrrency",  field : "baseCurrrency" } ,
 					{ name: "SPrating",  field : "SPrating" } ,
 					{ name: "folder",  field : "folder" } 
-			 ]
+			 ],
+			 onRegisterApi  : function(gridApi){
+					$scope.gridReceivedApi = gridApi;
+				}
 	};
 	$scope.$watchCollection('$parent.post',function(newV,oldV){
 			if(oldV == newV){
