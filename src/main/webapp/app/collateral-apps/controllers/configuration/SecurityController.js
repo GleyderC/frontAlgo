@@ -7,6 +7,20 @@ DashboardApp.controller('SecurityController', ['$scope',
     'localStorageService', 'SecurityService', 'uiGridConstants', 'ModalService',
     function ($scope, localStorageService, SecurityService, uiGridConstants, ModalService) {
 
+	
+		$scope.addSecurity = function(){
+
+            $scope.$workspaceTabsMgm.addTab({
+                head: {
+                    icon: 'fa fa-bank',
+                    text: 'New Security'
+                },
+                templateUrl: paths.views + "/configuration/Security/security_form.html",
+                closable: true,
+                autoload: true
+            }, [3, 3]);
+
+		};
         /* Cargando datos en legal entity ui-grid*/
         $scope.gridSecurityOptions = {
             showGridFooter: true,

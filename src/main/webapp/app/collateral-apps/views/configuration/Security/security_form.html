@@ -1,0 +1,84 @@
+<div id="legal-entity-tabs" ng-controller="LegalEntityController" du-smooth-scroll du-scrollspy>
+    <!-- BEGIN CHART PORTLET-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-bank font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze" ng-bind="security.name || 'New Security'"> </span>
+                <span class="caption-helper" ng-if="security.id!=-1" ng-bind="security.id"> </span>
+
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+                <a href="javascript:;" class="reload"> </a>
+            </div>
+        </div>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+           <div class="row">
+          		<form class="form-horizontal ng-pristine ng-valid ng-valid-maxlength ng-valid-min ng-valid-max ng-valid-time" role="form" id="le-bilateral-ag-left-side">
+            <div class="form-body row">
+                <div class="col-md-6">
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">ISIN</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+                        </div>
+                    </div>
+
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Issuer LEI</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                        </div>
+						</div>
+						
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Country</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                        </div>
+                    	</div>
+          	  
+          	  
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Price</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                        </div>
+                        </div>
+                        
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Currency</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                        </div>
+						</div>
+						
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Description</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                        </div>
+          	  			</div>
+          	  		</div>
+          	  	</div>
+          	  		
+          	  		
+        </form>
+           </div>
+            <div class="row">
+                <div class="form-actions">
+                    <div class="col-md-offset-5 col-md-7">
+                        <button type="submit" class="btn green" ng-click="saveSecurity(security)">Save</button>
+                        <button type="button" class="btn default" ng-click="cancel()">Cancel</button>
+                    </div>
+                </div>
+                <!--/form-actions-->
+            </div>
+            <!--</div> row-->
+        </div>
+    </div>
+    <!-- END CHART PORTLET-->
+</div>
