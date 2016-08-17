@@ -110,6 +110,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Bilateral Contract'
                             },
                             childWorkspace: {
+                                id: "BilateralContractWS",
                                 tabList: [
                                     {
                                         head: {
@@ -125,14 +126,14 @@ DashboardApp.service('MenuService', function () {
                         {
                             head: {
                                 icon: 'fa fa-lock',
-                                text: 'Securities'
+                                text: 'Security'
                             },
                             childWorkspace: {
                                 tabList: [
                                     {
                                         head: {
                                             icon: 'fa fa-search',
-                                            text: 'Search Securities'
+                                            text: 'Search Security'
                                         },
                                         templateUrl: paths.views + '/configuration/Security/main.html',
                                         autoload: true
