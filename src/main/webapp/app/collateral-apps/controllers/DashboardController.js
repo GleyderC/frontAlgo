@@ -128,10 +128,12 @@ angular.module('CollateralApp').controller('DashboardController',
         		newMessage= JSON.parse(msg.data);
     			if(newMessage.signal == "SGN_MC1_MESSAGE_RECEIVED"){
     				toastr.info("New MC1 Margin Call Entry ","Message Received",{closeButton: true});
-    				if($scope.Messages.length==0){
-    					$scope.Messages  =  newMessage.marginCall.messages ;
-    				}else{
-    					$scope.Messages.push(newMessage.marginCall.messages[newMessage.marginCall.messages.length-1]);
+    				if(newMessage.hasOwnProperty("marginCall")){
+	    				if($scope.Messages.length==0){
+	    					$scope.Messages  =  newMessage.marginCall.messages ;
+	    				}else{
+	    					$scope.Messages.push(newMessage.marginCall.messages[newMessage.marginCall.messages.length-1]);
+	    				}
     				}
     			}
     			if(newMessage.signal == "SGN_NEW_USER_MESSAGE"){
