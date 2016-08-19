@@ -1,5 +1,253 @@
 <div class="portlet light" ng-controller="SecurityController">
 
+    <!-- MODAL MAPPING FILE -->
+    <style>
+
+        .cellHeader-uiSelect .ui-select-container {
+            margin: 0 3px 3px 3px;
+        }
+
+        .ui-select-bootstrap.open {
+            z-index: 99999 !important;
+        }
+
+    </style>
+
+    <script type="text/ng-template" id="headerTemplate.html">
+
+        <div
+                role="columnheader"
+                ng-class="{ 'sortable': sortable }"
+                ui-grid-one-bind-aria-labelledby-grid="col.uid + '-header-text ' + col.uid + '-sortdir-text'"
+                aria-sort="{{col.sort.direction == asc ? 'ascending' : ( col.sort.direction == desc ? 'descending' : (!col.sort.direction ? 'none' : 'other'))}}">
+            <div
+                    role="button"
+                    tabindex="0"
+                    class="ui-grid-cell-contents ui-grid-header-cell-primary-focus"
+                    col-index="renderIndex"
+                    title="TOOLTIP">
+    <span
+            class="ui-grid-header-cell-label"
+            ui-grid-one-bind-id-grid="col.uid + '-header-text'">
+      {{ col.displayName CUSTOM_FILTERS }}
+    </span>
+                <span
+                        ui-grid-one-bind-id-grid="col.uid + '-sortdir-text'"
+                        ui-grid-visible="col.sort.direction"
+                        aria-label="{{getSortDirectionAriaLabel()}}">
+      <i
+              ng-class="{ 'ui-grid-icon-up-dir': col.sort.direction == asc, 'ui-grid-icon-down-dir': col.sort.direction == desc, 'ui-grid-icon-blank': !col.sort.direction }"
+              title="{{isSortPriorityVisible() ? i18n.headerCell.priority + ' ' + ( col.sort.priority + 1 )  : null}}"
+              aria-hidden="true">
+     </i>
+     <sub
+             ui-grid-visible="isSortPriorityVisible()"
+             class="ui-grid-sort-priority-number">
+       {{col.sort.priority + 1}}
+     </sub>
+    </span>
+
+            </div>
+
+            <div
+                    role="button"
+                    tabindex="0"
+                    ui-grid-one-bind-id-grid="col.uid + '-menu-button'"
+                    class="ui-grid-column-menu-button"
+                    ng-if="grid.options.enableColumnMenus && !col.isRowHeader  && col.colDef.enableColumnMenu !== false"
+                    ng-click="toggleMenu($event)"
+                    ng-class="{'ui-grid-column-menu-button-last-col': isLastCol}"
+                    ui-grid-one-bind-aria-label="i18n.headerCell.aria.columnMenuButtonLabel"
+                    aria-haspopup="true">
+                <i
+                        class="ui-grid-icon-angle-down"
+                        aria-hidden="true">
+                    &nbsp;
+                </i>
+            </div>
+
+            <div ui-grid-filter></div>
+        </div>
+
+        <div class="cellHeader-uiSelect" ng-if="grid.appScope.MCProcessMessage.fileDefinitions.selected">
+            <ui-select
+                    ng-model="col.colDef.colDefinitionInfo"
+                    theme="bootstrap"
+                    append-to-body="true"
+                    on-select="grid.appScope.MCProcessMessage.checkMandatoryFields($item, $model)">
+                <ui-select-match allow-clear="true" placeholder="Select Field...">
+                    {{$select.selected.columnField}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="colField in grid.appScope.MCProcessMessage.fileDefinitions.selected.fieldMaps | filter: $select.search"
+                        ui-disable-choice="colField.checked">
+                    <div ng-bind-html="colField.columnField | highlight: $select.search"></div>
+                    <small ng-bind-html="colField.dataFormat | highlight: $select.search"></small>
+                </ui-select-choices>
+            </ui-select>
+
+            <ui-select
+                    ng-model="col.colDef.colDefinitionInfo.dataFormat"
+                    theme="bootstrap"
+                    append-to-body="true"
+                    on-select="grid.appScope.MCProcessMessage.checkMandatoryFields($item, $model)"
+                    ng-disabled="col.colDef.colDefinitionInfo == undefined">
+                <ui-select-match allow-clear="true" placeholder="Select Type...">
+                    {{$select.selected.name}}
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="colFormat.key as colFormat in grid.appScope.MCProcessMessage.columnDataFormat | filter: $select.search">
+                    <div ng-bind-html="colFormat.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+
+        </div>
+
+    </script>
+
+    <script type="text/ng-template" id="modalProcessMCMessage.html">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="modal-title">Configure mapping for automated Reading</h4>
+                </div>
+                <div class="col-md-4">
+
+                    <span class="text-success" ng-if="MCProcessMessage.fileDefinitions.selected.allFieldsMapped">
+                        <i class="fa fa-check" aria-hidden="true"></i> Mandatory Fields Mapped
+                    </span>
+
+                    <span class="text-danger" ng-if="!MCProcessMessage.fileDefinitions.selected.allFieldsMapped">
+                        <i class="fa fa-times" aria-hidden="true"></i> Mandatory Fields UnMapped
+                    </span>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                    <div class="row">
+
+                        <!-- START FILE DEFINITION SECTION -->
+                        <div class="col-md-12">
+
+                            <!-- MC INPUT FILE INFO LEFT SECTION -->
+                            <div class="col-md-9"><!-- START UP SECTION -->
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">File Type</label>
+                                            <div class="col-md-9">
+
+                                                <textarea class="form-control" ng-readonly="true"
+                                                          ng-model="MCProcessMessage.fileDefinitions.selected.fileType"></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Keywords</label>
+                                            <div class="col-md-9">
+
+                                                <textarea class="form-control"
+                                                          ng-model="MCProcessMessage.fileDefinitions.selected.keywords"></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3">Mapping Status</label>
+                                            <div class="col-md-9">
+
+                                                <textarea class="form-control"
+                                                          ng-model="MCProcessMessage.MCMessageInformation.error"
+                                                          ng-readonly="true"></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--END UP SECTION -->
+
+                                <!-- START DOWN SECTION-->
+                                <div class="row" style="margin-top: 10px;">
+
+                                    <div class="col-md-12">
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">File Content</label>
+
+
+                                            <ui-select ng-model="MCProcessMessage.fileDefinitions.selected"
+                                                       theme="select2" class="col-md-10">
+                                                <ui-select-match placeholder="Select File Content...">
+                                                    {{$select.selected.fileDescription}}
+                                                </ui-select-match>
+                                                <ui-select-choices
+                                                        repeat="fileDefinition in MCProcessMessage.fileDefinitions | filter: $select.search">
+                                                    <div ng-bind-html="fileDefinition.fileDescription | highlight: $select.search"></div>
+                                                    <small ng-bind-html="fileDefinition.documentType | highlight: $select.search"></small>
+                                                </ui-select-choices>
+                                            </ui-select>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- START MANDATORY FIELDS SECTION -->
+                            <div class="col-md-3">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Mandatory Fields:</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                       <span class="badge badge-mandatory-field"
+                                             ng-repeat="field in MCProcessMessage.fileDefinitions.selected.fieldMaps"
+                                             ng-if="field.mandatory"
+                                             ng-class="field.checked ? 'badge-success': 'badge-danger'">
+                                                <i class="fa"
+                                                   ng-class="field.checked ? 'fa-check': 'fa-times'"
+                                                   aria-hidden="true"></i> {{ field.columnField }}
+                                            </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- END MANDATORY FIELDS SECTION -->
+
+                        </div>
+                        <!-- END FILE DEFINITION SECTION -->
+                        <div class="col-md-12" style="overflow: auto; min-height: 280px;"><!-- START DOWN SECTION -->
+
+                            <div class="row">
+                                <div ui-grid="MCProcessMessage.gridProcessMCMessages" ui-grid-auto-resize
+                                     ui-grid-resize-columns ui-grid-pagination
+                                     class="grid" style="height: 300px;"></div>
+                            </div>
+
+                        </div><!-- END DOWN SECTION -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="save()">Save</button>
+        </div>
+    </script>
+
+    <!-- MODAL UPLOAD FILE -->
     <script type="text/ng-template" id="modalUploadMappingFile.html">
         <div class="modal-header">
             <div class="row">
@@ -52,7 +300,7 @@
 
         <div class="modal-footer">
             <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
-            <!--<button class="btn btn-primary" type="button" ng-click="save()">Save</button>-->
+            <button class="btn btn-primary" type="button" ng-if="processingMappingFile" ng-click="processMappingFile()">Process File</button>
         </div>
     </script>
 
