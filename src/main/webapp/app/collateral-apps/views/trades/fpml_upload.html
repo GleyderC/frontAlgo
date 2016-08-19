@@ -19,22 +19,7 @@
                          style="width: 350px; height: 100px; padding-top: 35px;"><span>Drop Files here or click to upload</span>
                     </div>
                     <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-                    Files:
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>File Name</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="f in files">
-                            <th scope="row">{{ $index + 1 }}</th>
-                            <td>{{f.name}} {{f.$error}} {{f.$errorParam}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
+                    <br>
                     <div class="panel panel-info" style="height: 180px; overflow: auto;">
                         <div class="panel-heading">Upload Log:</div>
                         <div class="panel-body">
@@ -75,11 +60,61 @@
                 </div>
             </div>
         </div>
-        <div class="portlet-body">
-            <div ui-ace="{
-              theme:'eclipse',
-              mode: 'xml'
-            }" style="height: 200px;"></div>
+        <div class="portlet-body row">
+            <div class="panel panel-info" style="overflow: auto;">
+                <div class="panel-heading">FPML XML Editor:</div>
+                <div class="panel-body">
+                    <div class="col-md-offset-11">
+                        <div class="btn-group">
+                            <button type="submit" class="btn green" ngclipboard data-clipboard-text="{{fpml_string}}"
+                                    uib-popover="Copy to Clipboard" popover-trigger="mouseenter">
+                                <i class="fa fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div  class="col-md-12">
+                        <div id="fpml_file"
+                             ui-ace="{
+                             onChange: fpmlChange,
+                              theme:'eclipse',
+                              mode: 'xml'
+                            }" ng-model="fpml_string"
+                             style="height: 200px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div  class="col-md-offset-5 col-md-7">
+                <div class="btn-group">
+                    <button class="btn green" ng-click="InsertTrades()" ng-disabled="insert_flag">
+                        <i class="fa fa-check"></i>  {{fpml_action}}
+                    </button>
+                </div>
+                <button type="button" class="btn default" ng-click="clean()">
+                    <i class="fa fa-eraser"></i>Clean
+                </button>
+            </div>
+            <br><br>
+            <div class="panel panel-info" style="overflow: auto;">
+                <div class="panel-heading">JSON Log:</div>
+                <div class="panel-body">
+                    <div class="col-md-offset-11">
+                        <div class="btn-group">
+                            <button type="submit" class="btn green" ngclipboard data-clipboard-text="{{json_string}}"
+                                    uib-popover="Copy to Clipboard" popover-trigger="mouseenter">
+                                <i class="fa fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div  class="col-md-12">
+                        <div id="trades_json_file" ui-ace="{
+                          theme:'eclipse',
+                          mode: 'json'
+                        }" readonly style="height: 200px;" ng-model="json_string"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

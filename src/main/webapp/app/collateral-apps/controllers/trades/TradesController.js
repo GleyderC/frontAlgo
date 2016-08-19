@@ -4,9 +4,18 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('TradesController', ['$scope',
-    'localStorageService', 'uiGridConstants', 'ModalService',
-    function ($scope, localStorageService, uiGridConstants, ModalService) {
-        
+    'localStorageService', 'uiGridConstants', 'ModalService', 'TradesService',
+    function ($scope, localStorageService, uiGridConstants, ModalService, TradesService) {
+
+        $scope.clean = function () {
+            $scope.fpml_string = "";
+            $scope.json_string = "";
+            $scope.fpml_action = "Insert";
+            $scope.insert_flag = true;
+        }
+
+        $scope.clean();
+
         $scope.TradesUpload = function () {
 
             ModalService.open({
@@ -68,6 +77,29 @@ DashboardApp.controller('TradesController', ['$scope',
                 },
                 resolve: {}
             });
+        }
+
+        $scope.fpmlChange = function () {
+            if($scope.fpml_string != "")
+                $scope.insert_flag = false;
+
+        }
+        $scope.InsertTrades = function () {
+            if($scope.fpml_string != ""){
+                $scope.fpml_action = "Inserting...";
+                $scope.insert_flag = true;
+
+                TradesService.InsertTrade($scope.fpml_string).then(function (result) {
+                    $scope.json_string = JSON.stringify(result.data, null, '\t');
+                    $scope.fpml_action = "Insert";
+                    $scope.insert_flag = false;
+
+                }, function(error) {
+                    $scope.fpml_action = "Insert";
+                    $scope.insert_flag = false;
+
+                });
+            }
         }
 
     }]);
