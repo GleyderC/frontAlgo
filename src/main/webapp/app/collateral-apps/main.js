@@ -16,7 +16,8 @@ var CollateralApp = angular.module("CollateralApp", [
     "toastr",
     "ui.utils.masks",
     "shagstrom.angular-split-pane",
-    "ngFileUpload"
+    "ngFileUpload",
+    "ui.ace"
 ]);
 
 var paths = {
@@ -423,6 +424,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /*IssuerRisk Controller*/
                             'collateral-apps/controllers/risk/IssuerRiskController.js',
                             'collateral-apps/controllers/risk/CountryRiskController.js',
+
+                            /*Trades Controller*/
+                            'collateral-apps/controllers/trades/TradesController.js',
 
                             /* Profile Menu */
                             'collateral-apps/controllers/admin/UserProfileController.js'

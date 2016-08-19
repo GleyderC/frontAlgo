@@ -194,6 +194,25 @@ DashboardApp.service('MenuService', function () {
                     ]
                 },
 
+            },
+            {
+                head: {
+                    icon: 'fa fa-money',
+                    text: 'Trades'
+                },
+                childWorkspace : {
+                    tabList:[
+                        {
+                            head: {
+                                icon: 'fa fa-upload',
+                                text: 'FPML upload'
+                            },
+                            templateUrl: paths.views + '/trades/fpml_upload.html',
+                            autoload : true
+                        }
+                    ]
+                },
+
             }
         ]
     }

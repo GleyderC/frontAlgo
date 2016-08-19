@@ -103,6 +103,8 @@
 <script src="assets/vendor/angular-md5/angular-md5.js"></script>
 <script src="assets/vendor/ng-file-upload/ng-file-upload.js"></script>
 <script src="assets/vendor/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+<script src="assets/vendor/ace-builds/src-min-noconflict/ace.js"></script>
+<script src="assets/vendor/angular-ui-ace/ui-ace.js"></script>
 <!-- endbower -->
 
 <!-- BEGIN PAGE SPINNER -->

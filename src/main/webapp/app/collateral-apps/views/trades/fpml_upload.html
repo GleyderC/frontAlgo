@@ -1,0 +1,82 @@
+<div class="portlet light" ng-controller="TradesController">
+
+    <script type="text/ng-template" id="modalUploadTradesFile.html">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="modal-title">Upload Trades File</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+
+                    <div ngf-drop ngf-select ng-model="files" class="drop-box center-block"
+                         ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
+                         ngf-pattern="'.xml'"
+                         style="width: 350px; height: 100px; padding-top: 35px;"><span>Drop Files here or click to upload</span>
+                    </div>
+                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                    Files:
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>File Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="f in files">
+                            <th scope="row">{{ $index + 1 }}</th>
+                            <td>{{f.name}} {{f.$error}} {{f.$errorParam}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="panel panel-info" style="height: 180px; overflow: auto;">
+                        <div class="panel-heading">Upload Log:</div>
+                        <div class="panel-body">
+                            <div>
+                                <pre>{{log}}</pre>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
+            <!--<button class="btn btn-primary" type="button" ng-click="save()">Save</button>-->
+        </div>
+    </script>
+
+    <div class="row portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-money font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze"> Trades</span>
+                <span class="caption-helper">Upload</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group">
+                    <button class="btn sbold blue" ng-click="TradesUpload()"> Upload Trades File
+                        <i class="fa fa-upload"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div ui-ace style="height: 500px;"></div>
+        </div>
+    </div>
+</div>
