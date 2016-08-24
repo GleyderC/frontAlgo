@@ -36,7 +36,7 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
             views: {
                 'content@home':
                 {
-                    templateUrl: paths.views + "/configuration/LegalEntity/legal_entity.html",
+                    templateUrl: paths.views + "/static_data/LegalEntity/legal_entity.html",
                 }
             },
             resolve: {
@@ -59,7 +59,7 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
             views: {
                 'content@home':
                 {
-                    templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                    templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                 }
             },
             resolve: {

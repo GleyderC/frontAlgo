@@ -50,7 +50,7 @@
 	        			icon : "fa fa-calculator",
 	        			text : "Edit "
 	        		},
-	                templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+	                templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                   closable: true,
                   autoload: true
         	},[3,2]);

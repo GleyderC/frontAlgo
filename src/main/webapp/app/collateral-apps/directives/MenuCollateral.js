@@ -82,8 +82,8 @@ DashboardApp.service('MenuService', function () {
             },
             {
                 head: {
-                    icon: 'fa fa-cogs',
-                    text: 'Configuration'
+                    icon: 'fa fa-database',
+                    text: 'Static Data'
                 },
                 childWorkspace: {
                     tabList: [
@@ -99,7 +99,7 @@ DashboardApp.service('MenuService', function () {
                                             icon: 'fa fa-search',
                                             text: 'Search Legal Entity'
                                         },
-                                        templateUrl: paths.views + '/configuration/LegalEntity/legal_entity.html',
+                                        templateUrl: paths.views + '/static_data/LegalEntity/legal_entity.html',
                                         autoload: true
                                     }]
                             }
@@ -117,7 +117,7 @@ DashboardApp.service('MenuService', function () {
                                             icon: 'fa fa-search',
                                             text: 'Search Bilateral Agreements'
                                         },
-                                        templateUrl: paths.views + '/configuration/BilateralAgreements/bilateral_a_add_search.html',
+                                        templateUrl: paths.views + '/static_data/BilateralAgreements/bilateral_a_add_search.html',
                                         autoload: true
                                     }
                                 ]
@@ -135,7 +135,7 @@ DashboardApp.service('MenuService', function () {
                                             icon: 'fa fa-search',
                                             text: 'Search Security'
                                         },
-                                        templateUrl: paths.views + '/configuration/Security/main.html',
+                                        templateUrl: paths.views + '/static_data/Security/main.html',
                                         autoload: true
                                     }
                                 ]
@@ -146,7 +146,7 @@ DashboardApp.service('MenuService', function () {
                                 icon: 'fa fa-cog',
                                 text: 'Integration'
                             },
-                            templateUrl: paths.views + '/configuration/Integration/integration.html',
+                            templateUrl: paths.views + '/static_data/Integration/integration.html',
                             autoload: true
                         },
                     ]
@@ -209,6 +209,59 @@ DashboardApp.service('MenuService', function () {
                             },
                             templateUrl: paths.views + '/trades/fpml_upload.html',
                             autoload : true
+                        }
+                    ]
+                },
+
+            },
+            {
+                head: {
+                    icon: 'fa fa-cogs',
+                    text: 'Configuration'
+                },
+                childWorkspace : {
+                    tabList: [
+                        {
+                            head: {
+                                icon: 'fa fa-users',
+                                text: 'Users management'
+                            },
+                            childWorkspace: {
+                                tabList:[
+                                    {
+                                        head: {
+                                            icon: 'fa fa-user',
+                                            text: 'User'
+                                        },
+                                        templateUrl: paths.views + '/configuration/users_management/users.html',
+                                        autoload: true
+                                    },
+                                    {
+                                        head: {
+                                            icon: 'fa fa-group',
+                                            text: 'Groups'
+                                        },
+                                        templateUrl: paths.views + '/configuration/users_management/groups.html',
+                                        autoload: true
+                                    },
+                                    {
+                                        head: {
+                                            icon: 'fa fa-user-plus',
+                                            text: 'Users-Group'
+                                        },
+                                        templateUrl: paths.views + '/configuration/users_management/users_group.html',
+                                        autoload: true
+                                    },
+                                    {
+                                        head: {
+                                            icon: 'fa fa-unlock-alt',
+                                            text: 'Group Permissions'
+                                        },
+                                        templateUrl: paths.views + '/configuration/users_management/group_permissions.html',
+                                        autoload: true
+                                    },
+                                ]
+                            }
                         }
                     ]
                 },

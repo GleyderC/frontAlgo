@@ -138,7 +138,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                     icon: 'fa fa-bank',
                     text: 'New Legal Entity',
                 },
-                templateUrl: paths.views + "/configuration/le_form_container.html",
+                templateUrl: paths.views + "/static_data/le_form_container.html",
                 closable: true,
                 autoload: true
             }, [3, 1]);
@@ -155,7 +155,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                     icon: 'fa fa-bank',
                     text: 'Editing Legal Entity',
                 },
-                templateUrl: paths.views + "/configuration/le_form_container.html",
+                templateUrl: paths.views + "/static_data/le_form_container.html",
                 parameters: {
                     legalEntity: row.entity
                 },
@@ -358,43 +358,43 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
         {
             id: 'le-general-data',
             title: 'General Data',
-            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_general_data.html',
+            templateUrl: 'collateral-apps/views/static_data/LegalEntity/le_general_data.html',
             icon: 'icon-note'
         },
         {
             id: 'le-contact-info',
             title: 'Contact info',
-            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_contact_info.html',
+            templateUrl: 'collateral-apps/views/static_data/LegalEntity/le_contact_info.html',
             icon: 'icon-user'
         },
         {
             id: 'le-regulatory',
             title: 'Regulatory Settings',
-            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_regulatory.html',
+            templateUrl: 'collateral-apps/views/static_data/LegalEntity/le_regulatory.html',
             icon: ''
         },
         {
             id: 'le-risk-profile',
             title: 'Risk Profiles',
-            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_risk_profile.html',
+            templateUrl: 'collateral-apps/views/static_data/LegalEntity/le_risk_profile.html',
             icon: ''
         },
         {
             id: 'le-billateral-a',
             title: 'Bilateral agreements',
-            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_billateral_a.html',
+            templateUrl: 'collateral-apps/views/static_data/LegalEntity/le_billateral_a.html',
             icon: ''
         },
         {
             id: 'le-clearing-a',
             title: 'Clearing agreements',
-            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_clearing_a.html',
+            templateUrl: 'collateral-apps/views/static_data/LegalEntity/le_clearing_a.html',
             icon: ''
         },
         {
             id: 'le-sdi',
             title: 'SDI',
-            templateUrl: 'collateral-apps/views/configuration/LegalEntity/le_sdi.html',
+            templateUrl: 'collateral-apps/views/static_data/LegalEntity/le_sdi.html',
             icon: ''
         }
     ];
