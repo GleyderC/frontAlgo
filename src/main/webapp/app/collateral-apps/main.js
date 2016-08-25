@@ -432,7 +432,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/trades/TradesController.js',
 
                             /* Profile Menu */
-                            'collateral-apps/controllers/admin/UserProfileController.js'
+                            'collateral-apps/controllers/admin/UserProfileController.js',
+                            /* Users Managment Controller */
+                            'collateral-apps/controllers/configuration/users_management/UsersController.js'
                         ],
                         serie: true,
                         cache: false
