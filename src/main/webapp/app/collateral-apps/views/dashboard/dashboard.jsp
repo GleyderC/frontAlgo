@@ -61,17 +61,7 @@
 						<div class="topbar-actions">
 
 
-							<!--ADMIN SECTION START-->
-							<div class="btn-group-red btn-group btn-admin-options" ng-if="userRol == 'admin'">
-								<button type="button" class="btn btn-sm md-skip"
-										ng-click="userManagementModal()">
-									<i class="fa fa-users"></i>
-								</button>
-								<!--<ul class="dropdown-menu-v2" role="menu">
-									<li class="active"><a href="#">Users Management</a></li>
-								</ul>-->
-							</div>
-							<!--ADMIN SECTION END-->
+							<!--ADMIN SECTION START--><!--ADMIN SECTION END-->
 
 							<!-- BEGIN GROUP NOTIFICATION -->
 							<div ng-controller="NotificationsController"

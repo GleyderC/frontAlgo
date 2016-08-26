@@ -50,6 +50,9 @@
     .grid-collateral{
         height: 570px;
     }
+    .collateral-editor{
+        height: 200px;
+    }
 }
 @media (min-height: 768px) {
     .split-pane {
@@ -67,9 +70,6 @@
     .grid-collateral{
         height: 670px;
     }
-    .grid-user{
-        height:200px;
-    }
 }
 @media (min-height: 992px) {
     .split-pane {
@@ -86,5 +86,8 @@
     }
     .grid-collateral{
         height: 870px;
+    }
+    .collateral-editor{
+        height: 300px;
     }
 }

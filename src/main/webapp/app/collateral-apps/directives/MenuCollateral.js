@@ -257,7 +257,7 @@ DashboardApp.service('MenuService', function () {
                                             icon: 'fa fa-unlock-alt',
                                             text: 'Group Permissions'
                                         },
-                                        templateUrl: paths.views + '/configuration/users_management/group_permissions.html',
+                                        templateUrl: paths.views + '/configuration/users_management/group_permission.html',
                                         autoload: true
                                     },
                                 ]
