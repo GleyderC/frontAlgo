@@ -65,7 +65,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-blackboard',
                             text: 'Main'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_main.html",
+                        templateUrl: paths.views + "/static_data/BilateralAgreements/bilateral_a_main.html",
                         autoload: true
                     },
                     {
@@ -73,7 +73,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-list-alt',
                             text: 'CSA Margin'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_csa_margins.html",
+                        templateUrl: paths.views + "/static_data/BilateralAgreements/bilateral_a_csa_margins.html",
                         autoload: true
                     },
                     {
@@ -81,7 +81,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-piggy-bank',
                             text: 'Eligible currencies'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_eligible_currencies.html",
+                        templateUrl: paths.views + "/static_data/BilateralAgreements/bilateral_a_eligible_currencies.html",
                         autoload: true
                     },
                     {
@@ -89,7 +89,7 @@ DashboardApp.controller(
                             icon: 'glyphicon glyphicon-eye-open',
                             text: 'Eligible securities'
                         },
-                        templateUrl: paths.views + "/configuration/BilateralAgreements/bilateral_a_eligible_securities.html",
+                        templateUrl: paths.views + "/static_data/BilateralAgreements/bilateral_a_eligible_securities.html",
                         autoload: true
                     }
                 ]
@@ -127,7 +127,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                     icon: 'fa fa-thumbs-o-up',
                     text: 'New Bilateral Agreement',
                 },
-                templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                 closable: true,
                 autoload: true
             }, [3, 2]);
@@ -140,7 +140,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                     icon: 'fa fa-thumbs-o-up',
                     text: 'Edit Bilateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs([1, 2]).tabList.length) + ')'
                 },
-                templateUrl: paths.views + "/configuration/BilateralAgreements/index.html",
+                templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                 parameters: {
                     BilateralContract: row.entity
                 },

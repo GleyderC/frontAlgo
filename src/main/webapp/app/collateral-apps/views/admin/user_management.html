@@ -1,7 +1,7 @@
 <div class="modal-header">
     <h4 class="modal-title">Users Management</h4>
 </div>
-<div class="modal-body" style="min-height: 400px;">
+<div class="modal-body" style="min-height: 600px;">
 
     <uib-tabset active="active" class="menu-collateral-container">
         <uib-tab index="0">
@@ -38,7 +38,29 @@
                                 </div>
 
                             </div>
+                            <div class="col-md-offset-5 col-md-7">
+                                <div class="btn-group">
+                                    <button class="btn green ng-binding">
+                                        Save
+                                    </button>
+                                </div>
+                                <button type="button" class="btn default">
+                                    <i class="fa fa-eraser"></i>Clean
+                                </button>
+                            </div>
                         </div>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div ui-grid="UserMgm.gridGroupsOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
+                                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                                     class="grid" style="height: 350px;"></div>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -108,9 +130,27 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="col-md-offset-5 col-md-7">
+                                <div class="btn-group">
+                                    <button class="btn green ng-binding">
+                                        Save
+                                    </button>
+                                </div>
+                                <button type="button" class="btn default">
+                                    <i class="fa fa-eraser"></i>Clean
+                                </button>
+                            </div>
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
 
+                                <div ui-grid="UserMgm.gridUsersOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
+                                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                                     class="grid" style="height: 250px;"></div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,7 +195,7 @@
 
                                 <div ui-grid="UserMgm.gridOptions" ui-grid-exporter
                                      ui-grid-auto-resize
-                                     class="grid" style="height: 200px;"></div>
+                                     class="grid" style="height: 400px;"></div>
 
                             </div>
                         </div>

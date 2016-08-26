@@ -15,7 +15,7 @@ DashboardApp.controller('SecurityController', ['$scope',
                     icon: 'fa fa-bank',
                     text: 'New Security'
                 },
-                templateUrl: paths.views + "/configuration/Security/security_form.html",
+                templateUrl: paths.views + "/static_data/Security/security_form.html",
                 closable: true,
                 autoload: true
             }, [3, 3]);

@@ -67,6 +67,9 @@
     .grid-collateral{
         height: 670px;
     }
+    .grid-user{
+        height:200px;
+    }
 }
 @media (min-height: 992px) {
     .split-pane {

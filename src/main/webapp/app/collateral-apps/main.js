@@ -385,10 +385,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/collateral/AgreementsService.js',
                             'collateral-apps/services/collateral/InterestService.js',
 
-                            'collateral-apps/services/configuration/LegalEntityService.js',
-                            'collateral-apps/services/configuration/BilateralContractService.js',
-                            'collateral-apps/services/configuration/SecurityService.js',
-                            'collateral-apps/services/configuration/IntegrationService.js',
+                            'collateral-apps/services/static_data/LegalEntityService.js',
+                            'collateral-apps/services/static_data/BilateralContractService.js',
+                            'collateral-apps/services/static_data/SecurityService.js',
+                            'collateral-apps/services/static_data/IntegrationService.js',
 
                             'collateral-apps/services/user_message/UserMessageService.js',
 
@@ -397,13 +397,13 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/trades/TradesService.js',
 
                             /* Legal Entity Controller js */
-                            'collateral-apps/controllers/configuration/LegalEntityController.js',
+                            'collateral-apps/controllers/static_data/LegalEntityController.js',
                             /* Bilateral Controller js */
-                            'collateral-apps/controllers/configuration/BilateralAgreementsController.js',
+                            'collateral-apps/controllers/static_data/BilateralAgreementsController.js',
                             /* Security Controller*/
-                            'collateral-apps/controllers/configuration/SecurityController.js',
+                            'collateral-apps/controllers/static_data/SecurityController.js',
                             /* Integration Controller*/
-                            'collateral-apps/controllers/configuration/IntegrationController.js',
+                            'collateral-apps/controllers/static_data/IntegrationController.js',
 
                             /* Agreements Controller js */
                             'collateral-apps/controllers/collateral/agreements/AgreementsController.js',
@@ -432,7 +432,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/trades/TradesController.js',
 
                             /* Profile Menu */
-                            'collateral-apps/controllers/admin/UserProfileController.js'
+                            'collateral-apps/controllers/admin/UserProfileController.js',
+                            /* Users Managment Controller */
+                            'collateral-apps/controllers/configuration/users_management/UsersController.js'
                         ],
                         serie: true,
                         cache: false
