@@ -124,23 +124,30 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
               });
 
-         };       
-        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
-            $scope.Trades = result.data.dataResponse.trades;
-            $scope.gridTradesOptions.data = $scope.Trades;
-            $scope.pool  =  result.data.dataResponse.poolDisplays;
-            $scope.disputesDetail = result.data.dataResponse.marginCall.marginCallElementsByLiabilityType[$scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeCalculationDetail
-            $scope.Trades.forEach(function(v,k){
-            	if($scope.disputesDetail[v.trade.internalId]!==undefined){
-            		v.ownPricing.priceInBaseCurrency  = $scope.disputesDetail[v.trade.internalId].myValue;
-            		v.npvCounterParty =   	 	  $scope.disputesDetail[v.trade.internalId].difference;
-            		v.ownPricing["Counterparty"]  = $scope.disputesDetail[v.trade.internalId].counterparty;
-            		v.differencePercent   =$scope.disputesDetail[v.trade.internalId].differencePercentage;
-            	}  	
-            });
-            $scope.gridTradesOptions.data = $scope.Trades;
+         };
+         
+         
+        $scope.$watchCollection("$parent.Trades",function(nV,oV){
+        	$scope.gridTradesOptions.data = nV;
         });
-
+        $scope.loadData = function(){
+        	
+	        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
+	            $scope.Trades = result.data.dataResponse.trades;
+	            $scope.gridTradesOptions.data = $scope.Trades;
+	            $scope.pool  =  result.data.dataResponse.poolDisplays;
+	            $scope.disputesDetail = result.data.dataResponse.marginCall.marginCallElementsByLiabilityType[$scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeCalculationDetail
+	            $scope.Trades.forEach(function(v,k){
+	            	if($scope.disputesDetail[v.trade.internalId]!==undefined){
+	            		v.ownPricing.priceInBaseCurrency  = $scope.disputesDetail[v.trade.internalId].myValue;
+	            		v.npvCounterParty =   	 	  $scope.disputesDetail[v.trade.internalId].difference;
+	            		v.ownPricing["Counterparty"]  = $scope.disputesDetail[v.trade.internalId].counterparty;
+	            		v.differencePercent   =$scope.disputesDetail[v.trade.internalId].differencePercentage;
+	            	}  	
+	            });
+	            $scope.gridTradesOptions.data = $scope.Trades;
+	        });
+        };
         $scope.updateDisputeDetail = function(disputeList){
         	var param =  {
         			marginCallId : $scope.currentMarginCall.marginCalls[0].id,

@@ -57,7 +57,7 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
             			}else{
 
             	            ModalService.open({
-            	                templateUrl: paths.views + "/configuration/Security/modal_form.html",
+            	                templateUrl: paths.views + "/static_data/Security/modal_form.html",
             	                size: 'lg',
             	                rendered: function () {
             	                    App.initComponents();
@@ -113,7 +113,7 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 	            			}else{
 
 	            	            ModalService.open({
-	            	                templateUrl: paths.views + "/configuration/Security/modal_form.html",
+	            	                templateUrl: paths.views + "/static_data/Security/modal_form.html",
 	            	                size: 'lg',
 	            	                rendered: function () {
 	            	                    App.initComponents();

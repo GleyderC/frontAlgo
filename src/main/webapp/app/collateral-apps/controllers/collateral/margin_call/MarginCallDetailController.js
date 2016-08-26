@@ -12,18 +12,16 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         $scope.post = [];
         $scope.receive = [];
         $scope.tabClicked   =function(tab){
+        	$scope.loadData();
         	if(tab.id=="mc-csa-allocations"){
         		  $scope.tabs2[0].disabled = true;
-        		  $scope.tabs2[0].active = false;
-        		  
-        		  
-        		  $scope.tabs2[1].active = true; 
-
-        	}else{
+        	}
+        	else{
         		  $scope.tabs2[0].disabled = false;
         	}
         };
-       
+        $scope.Trades = [];
+        $scope.pool = [];
         $scope.Inventory = {} ;
         $scope.threshold = 0;
         $scope.minimumTransferAmount = 0;
@@ -57,62 +55,64 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         		 $scope.callAmount  = Amount;
         	}
         };
-        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
-            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
-            $scope.Trades = result.data.dataResponse.trades;
-            $scope.posted 	= result.data.dataResponse.postedCollateral;
-            $scope.received = result.data.dataResponse.receivedCollateral;
-            $scope.Messages = result.data.dataResponse.marginCall.messages;
-            $scope.MarginCallDetail = result.data.dataResponse;
-            $scope.Inventory  =  $scope.posted.concat($scope.received);
-            $scope.pool  =  result.data.dataResponse.poolDisplays;
-            //Collateral Liability 
-            let collateralLiabType = Object.keys($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType);
-            $scope.collateralLiabilityType = collateralLiabType[0];  
-            
-            
-			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType);
-			
-			$scope.setCallAmount($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType,$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallAmount);
-
-			$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType);
-            if($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.exposurePlusNettedIa > 0 ){
-            	$scope.threshold  = $scope.MarginCallDetail.contract.partyBThreshold;
-            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyB; 
-            	
-            }else{
-            	$scope.threshold  = $scope.MarginCallDetail.contract.partyAThreshold;
-            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyA; 
-            }
-            
-            $scope.tolerance = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.tolerance;
-            $scope.myValue = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.myValue;
-            $scope.disputeStatus = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeStatusEnum;
-        	
-            $scope.dispute = {
-            		contractId    : $scope.MarginCallDetail.contract.internalId,
-            		marginCallId  : $scope.currentMarginCall.marginCalls[0].id,
-            		disputeCalculations  : {
-            			counterpartyValue : 0,
-            			difference 		: 0 ,
-            			differencePercentage 		: 0 ,
-            			disputeStatus : $scope.disputeStatus, 
-            			tolerance 	  : $scope.tolerance * 100 ,
-            			myValue   	  : $scope.myValue ,
-            			disputeComments : "",
-            			agreedMargin : 0
-            		}
-            		
-            		
-            }; 
-            $scope.$watchCollection("dispute.disputeCalculations",function(n,o){
-            	if(_.isEqual(n,o)){
-            		return false; 
-            	}
-            	$scope.disputeEdit = true ;
-            });
-
-        });
+        $scope.loadData = function(){
+	        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
+	            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
+	            $scope.Trades = result.data.dataResponse.trades;
+	            $scope.posted 	= result.data.dataResponse.postedCollateral;
+	            $scope.received = result.data.dataResponse.receivedCollateral;
+	            $scope.Messages = result.data.dataResponse.marginCall.messages;
+	            $scope.MarginCallDetail = result.data.dataResponse;
+	            $scope.Inventory  =  $scope.posted.concat($scope.received);
+	            $scope.pool  =  result.data.dataResponse.poolDisplays;
+	            //Collateral Liability 
+	            let collateralLiabType = Object.keys($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType);
+	            $scope.collateralLiabilityType = collateralLiabType[0];  
+	            
+	            
+				$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType);
+				
+				$scope.setCallAmount($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType,$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallAmount);
+	
+				$scope.setMarginCallType($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.marginCallType);
+	            if($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.exposurePlusNettedIa > 0 ){
+	            	$scope.threshold  = $scope.MarginCallDetail.contract.partyBThreshold;
+	            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyB; 
+	            	
+	            }else{
+	            	$scope.threshold  = $scope.MarginCallDetail.contract.partyAThreshold;
+	            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyA; 
+	            }
+	            
+	            $scope.tolerance = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.tolerance;
+	            $scope.myValue = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.myValue;
+	            $scope.disputeStatus = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeStatusEnum;
+	        	
+	            $scope.dispute = {
+	            		contractId    : $scope.MarginCallDetail.contract.internalId,
+	            		marginCallId  : $scope.currentMarginCall.marginCalls[0].id,
+	            		disputeCalculations  : {
+	            			counterpartyValue : 0,
+	            			difference 		: 0 ,
+	            			differencePercentage 		: 0 ,
+	            			disputeStatus : $scope.disputeStatus, 
+	            			tolerance 	  : $scope.tolerance * 100 ,
+	            			myValue   	  : $scope.myValue ,
+	            			disputeComments : "",
+	            			agreedMargin : 0
+	            		}
+	            		
+	            		
+	            }; 
+	            $scope.$watchCollection("dispute.disputeCalculations",function(n,o){
+	            	if(_.isEqual(n,o)){
+	            		return false; 
+	            	}
+	            	$scope.disputeEdit = true ;
+	            });
+	
+	        });
+        };
 
         $scope.tabs1 = [
                         {
@@ -159,23 +159,19 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
                             title: 'Trades (underlyings)',
                             templateUrl: 'collateral-apps/views/collateral/margin_call/mc_trades.html',
                             icon: '',
-                            active : true,
                             disabled : false
                         },
                         {
                             id: 'mc-collateral-inventory',
                             title: 'Position',
                             templateUrl: 'collateral-apps/views/collateral/margin_call/mc_collateral_inventory.html',
-                            icon: '',
-                            active : true
-                            
+                            icon: ''
                         },
                         {
                             id: 'mc-collateral-pool',
                             title: 'Pool',
                             templateUrl: 'collateral-apps/views/collateral/margin_call/mc_collateral_pool.html',
-                            icon: '',
-                            	active : true
+                            icon: ''
                         }
 
                     ];
@@ -190,6 +186,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         	});
         };
       
+        
         this.sendMargin = function () {
             $scope.sendFlag = true;
             var result = MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA").
@@ -202,6 +199,6 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
                 });
 
         };
-       
+       $scope.loadData();
 
     }]);

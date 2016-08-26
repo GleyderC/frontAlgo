@@ -46,7 +46,7 @@
                     </tbody>
                     </table>
                     <uib-tabset >
-                        <uib-tab  ng-click="tabClicked(tab)" index="$index + 1" ng-repeat="tab in tabs1" active="tab.active" disable="tab.disabled">
+                        <uib-tab  ng-click="tabClicked(tab)" index="$index + 1" ng-repeat="tab in tabs1" disable="tab.disabled">
                             <uib-tab-heading>
                                 <i class="{{tab.icon}}"></i>{{tab.title}}
                             </uib-tab-heading>
@@ -54,7 +54,7 @@
                         </uib-tab>
                     </uib-tabset>
                     <uib-tabset active="tab2Active">
-                        <uib-tab  index="$index + 1" ng-repeat="tab in tabs2" active="tab.active" disable="tab.disabled">
+                        <uib-tab  index="$index + 1" ng-repeat="tab in tabs2"  disable="tab.disabled"  select="loadData();">
                             <uib-tab-heading>
                                 <i class="{{tab.icon}}"></i>{{tab.title}}
                             </uib-tab-heading>
