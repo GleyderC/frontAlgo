@@ -2,8 +2,8 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout','SecurityService',
-    function ($scope, uiGridConstants, MarginCallService, $timeout,Security) {
+DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout','SecurityService','ModalService',
+    function ($scope, uiGridConstants, MarginCallService, $timeout,Security,ModalService) {
 	$scope.active=1;
 	
 
@@ -39,14 +39,35 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
             		if(newValue == oldValue){
             			return false;
             		}
+            		if(colDef.name=="quantity" || colDef.name=="lotSize"){
+            			rowEntity["notional"] = rowEntity["quantity"]  *rowEntity["lotSize"] ; 
+            			rowEntity["amount"] = rowEntity["notional"]  *rowEntity["price"] ;
+            		}
+            		if(colDef.name=="price" ){
+            			rowEntity["amount"] = rowEntity["notional"]  *rowEntity["price"] ;
+            		}
+            		if(colDef.name==="isin"){
             		Security.getByIsin(newValue).success(function(data){
-            			rowEntity["currency"] = data.dataResponse.currency;
-            			rowEntity["description"] = data.dataResponse.description;
-            			rowEntity["lotSize"] = data.dataResponse.lotSize;
-            			rowEntity["price"] = data.dataResponse.price;
-            			
-            		});
+            			if(data.hasOwnProperty("dataResponse")){
+            				
+		            			rowEntity["currency"] = data.dataResponse.currency;
+		            			rowEntity["description"] = data.dataResponse.description;
+		            			rowEntity["lotSize"] = data.dataResponse.lotSize;
+		            			rowEntity["price"] = data.dataResponse.price;
+            			}else{
 
+            	            ModalService.open({
+            	                templateUrl: paths.views + "/configuration/Security/modal_form.html",
+            	                size: 'lg',
+            	                rendered: function () {
+            	                    App.initComponents();
+            	                },
+            	                controllerAs: 'SecurityController'
+            	                    
+            	            });
+            			}
+            		});
+            		}
 				});
 			}
 	};
@@ -74,15 +95,36 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 	            		if(newValue == oldValue){
 	            			return false;
 	            		}
+	            		if(colDef.name=="quantity" || colDef.name=="lotSize"){
+	            			rowEntity["notional"] = rowEntity["quantity"]  *rowEntity["lotSize"] ; 
+	            			rowEntity["amount"] = rowEntity["notional"]  *rowEntity["price"] ;
+	            		}
+	            		if(colDef.name=="price" ){
+	            			rowEntity["amount"] = rowEntity["notional"]  *rowEntity["price"] ;
+	            		}
+	            		if(colDef.name==="isin"){
 	            		Security.getByIsin(newValue).success(function(data){
-	            			rowEntity["currency"] = data.dataResponse.currency;
-	            			rowEntity["description"] = data.dataResponse.description;
-	            			rowEntity["lotSize"] = data.dataResponse.lotSize;
-	            			rowEntity["price"] = data.dataResponse.price;
-	            			
+	            			if(data.hasOwnProperty("dataResponse")){
+	            				
+			            			rowEntity["currency"] = data.dataResponse.currency;
+			            			rowEntity["description"] = data.dataResponse.description;
+			            			rowEntity["lotSize"] = data.dataResponse.lotSize;
+			            			rowEntity["price"] = data.dataResponse.price;
+	            			}else{
+
+	            	            ModalService.open({
+	            	                templateUrl: paths.views + "/configuration/Security/modal_form.html",
+	            	                size: 'lg',
+	            	                rendered: function () {
+	            	                    App.initComponents();
+	            	                },
+	            	                controllerAs: 'SecurityController'
+	            	                    
+	            	            });
+	            			}
 	            		});
-	            		
-					});
+	            		}
+					});        
 				}
 	};
 	$scope.$watchCollection('$parent.post',function(newV,oldV){
@@ -90,11 +132,28 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 				return false;
 			}
 			$scope.gridMCCsaAllocPosted.data = newV;
+//			angular.forEach($scope.gridMCCsaAllocPosted.data, function(row) {
+//			    row.getNotional= function() {
+//			      return row.lotSize * row.quantity;
+//			    };
+//			    row.getAmount = function() {
+//			      return row.getNotinal() * row.price;
+//			    };
+//			  });
 	});
 	$scope.$watchCollection('$parent.receive',function(newV,oldV){
 		if(oldV == newV){
 			return false;
 		}
 		$scope.gridMCCsaAllocReceived.data = newV;
+//		angular.forEach($scope.gridMCCsaAllocReceived.data, function(row) {
+//		    row.getNotional= function() {
+//		      return row.lotSize * row.quantity;
+//		    };
+//		    row.getAmount = function() {
+//			      return row.getNotinal() * row.price;
+//			    };
+//		    
+//		  });
 	});
 }]);
