@@ -64,6 +64,8 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
             	                },
             	                controllerAs: 'SecurityController'
             	                    
+            	            }).close(function(){
+            	            	$scope.$parent.loadData();
             	            });
             			}
             		});
@@ -120,6 +122,8 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 	            	                },
 	            	                controllerAs: 'SecurityController'
 	            	                    
+	            	            }).close(function(){
+	            	            	$scope.$parent.loadData();
 	            	            });
 	            			}
 	            		});
