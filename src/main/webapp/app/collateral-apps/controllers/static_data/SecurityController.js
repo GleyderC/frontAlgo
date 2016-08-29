@@ -4,12 +4,21 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('SecurityController', ['$scope',
-    'localStorageService', 'SecurityService', 'uiGridConstants', 'ModalService',
-    function ($scope, localStorageService, SecurityService, uiGridConstants, ModalService) {
+    'localStorageService', 'SecurityService', 'uiGridConstants', 'ModalService','toastr',
+    function ($scope, localStorageService, SecurityService, uiGridConstants, ModalService,$toastr) {
 
-
+		$scope.currencyList = localStorageService.get("CurrencyEnum");
+		$scope.countryList = localStorageService.get("CountryEnum");
+		
+		$scope.security  = {};
+		$scope.saveSecurity  = function(security){
+			SecurityService.save(security).success(function(resp){
+				$toastr.info("Security  created! ","The new security has been created successfully");
+				$scope.security  = {};
+				
+			});
+		};
         $scope.addSecurity = function () {
-
             $scope.$workspaceTabsMgm.addTab({
                 head: {
                     icon: 'fa fa-bank',
@@ -77,10 +86,7 @@ DashboardApp.controller('SecurityController', ['$scope',
 
         SecurityService.getAll().then(function (result) {
             $scope.Securities = result.data.dataResponse;
-
-
             $scope.gridSecurityOptions.data = $scope.Securities;
-
         });
 
         $scope.MappingUpload = function () {

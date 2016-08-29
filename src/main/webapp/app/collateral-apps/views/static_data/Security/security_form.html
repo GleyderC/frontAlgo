@@ -23,49 +23,97 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">ISIN</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+                            <input type="text" class="form-control input-medium" ng-model="security.isin" ng-disabled="false">
                         </div>
                     </div>
 
 	                    <div class="form-group col-md-12">
 	                        <label class="control-label col-md-3">Issuer LEI</label>
 	                        <div class="col-md-9">
-	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                            <input type="text" class="form-control input-medium" ng-model="security.issuerLei" ng-disabled="false">
 	                        </div>
 						</div>
 						
 	                    <div class="form-group col-md-12">
-	                        <label class="control-label col-md-3">Country</label>
-	                        <div class="col-md-9">
-	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
-	                        </div>
+	                           <label class="col-md-3 control-label">Country</label>
+                                    <div class="col-md-9">
+                                        <ui-select ng-model="security.countryList.selected" theme="select2" class="input-medium">
+                                            <ui-select-match placeholder="Select Country...">{{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="country in countryList | filter: $select.search">
+                                                <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                                <small ng-bind-html="country.key | highlight: $select.search"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
                     	</div>
           	  
           	  
 	                    <div class="form-group col-md-12">
 	                        <label class="control-label col-md-3">Price</label>
 	                        <div class="col-md-9">
-	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                            <input type="text" class="form-control input-medium"  ng-disabled="false">
 	                        </div>
                         </div>
                         
 	                    <div class="form-group col-md-12">
 	                        <label class="control-label col-md-3">Currency</label>
-	                        <div class="col-md-9">
-	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
-	                        </div>
+	                         <div class="col-md-9">
+                                        <ui-select ng-model="security.currencyList.selected" theme="select2" class="input-medium">
+                                            <ui-select-match placeholder="Select Country...">{{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="currency in currencyList | filter: $select.search">
+                                                <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                                                <small ng-bind-html="currency.key | highlight: $select.search"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
 						</div>
 						
 	                    <div class="form-group col-md-12">
 	                        <label class="control-label col-md-3">Description</label>
 	                        <div class="col-md-9">
-	                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-acacia-soft-ref" ng-disabled="false">
+	                            <input type="text" class="form-control input-medium" ng-model="security.description"ng-disabled="false">
 	                        </div>
           	  			</div>
-          	  		</div>
+          	  	</div>
+          	  	<div class="col-md-6">
+		          	  	<div class="form-group col-md-12">
+		                        <label class="control-label col-md-3">Interest rate</label>
+		                        <div class="col-md-9">
+		                            <input type="text" class="form-control input-medium" ng-model="security.interestRate" ng-disabled="false">
+		                        </div>
+		                    </div>
+
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">End Date</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" ng-model="security.endDate" ng-disabled="false">
+	                        </div>
+						</div>
+						
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Lot Size</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" ng-model="security.lotSize" ng-disabled="false">
+	                        </div>
+                    	</div>
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Price Base</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium" ng-model="security.priceBase"  ng-disabled="false">
+	                        </div>
+                        </div>
+                        
+	                    <div class="form-group col-md-12">
+	                        <label class="control-label col-md-3">Issuer Type</label>
+	                        <div class="col-md-9">
+	                            <input type="text" class="form-control input-medium"ng-model="security.interestRate" ng-disabled="false">
+	                        </div>
+						</div>
           	  	</div>
           	  		
-          	  		
+          	  	</div>	
         </form>
            </div>
             <div class="row">

@@ -10,5 +10,7 @@ angular.module('DashboardApp')
         	  };
         	  return $request.post('/servlet/Security/Select',param);
         };
-
+        this.save  = function(security){
+        	return $request.post('/servlet/Security/Insert',security);
+        };
     }]);
