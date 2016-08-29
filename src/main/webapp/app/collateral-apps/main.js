@@ -436,7 +436,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /* Users Managment Controller */
                             'collateral-apps/controllers/configuration/users_management/UsersController.js',
                             'collateral-apps/controllers/configuration/users_management/GroupsController.js',
-                            'collateral-apps/controllers/configuration/users_management/GroupPermissionController.js'
+                            'collateral-apps/controllers/configuration/users_management/GroupPermissionController.js',
+                            'collateral-apps/controllers/configuration/users_management/UsersGroupController.js'
 
 
                         ],

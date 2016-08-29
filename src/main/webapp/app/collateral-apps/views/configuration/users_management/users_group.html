@@ -1,0 +1,35 @@
+<div class="portlet light bordered" ng-controller="UsersGroupController">
+    <div class="portlet-title">
+        <div class="caption font-green-sharp">
+            <span class="caption-subject bold uppercase"> Assign users to groups</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    <label class="col-md-offset-3 col-md-1 control-label">Group</label>
+                    <div class="col-md-8">
+
+                        <ui-select ng-model="UserMgm.group.selected" theme="selectize" title="Choose a Group" class="input-large">
+                            <ui-select-match placeholder="Select or search a Group...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="group in UserMgm.groupList | filter: $select.search">
+                                <span ng-bind-html="group.name | highlight: $select.search"></span>
+                                <small ng-bind-html="group.code | highlight: $select.search"></small>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-3 col-lg-offset-2">
+                <multiselect-dual multiselect-elements="usersGroup" class="users_group"></multiselect-dual>
+            </div>
+        </div>
+    </div>
+</div>

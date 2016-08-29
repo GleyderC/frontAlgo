@@ -53,6 +53,12 @@
     .collateral-editor{
         height: 200px;
     }
+    .users_group .panel-multiselect {
+
+        width: 400px;
+        height: 400px;
+
+    }
 }
 @media (min-height: 768px) {
     .split-pane {
@@ -89,5 +95,11 @@
     }
     .collateral-editor{
         height: 300px;
+    }
+    .users_group .panel-multiselect {
+
+        width: 500px;
+        height: 700px;
+
     }
 }

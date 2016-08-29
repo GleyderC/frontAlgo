@@ -5,39 +5,37 @@
         </div>
     </div>
     <div class="portlet-body">
-        <div class="slimScrollDiv">
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="col-md-3 control-label">Name</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control input-medium" placeholder="Enter Name of Group">
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    <label class="col-md-3 control-label">Description</label>
-                        <div class="col-md-9">
-                            <textarea class="form-control input-medium" placeholder="Enter Name of Group"></textarea>
-                        </div>
-                </div>
-                <div class="col-md-offset-5 col-md-7">
-                    <div class="btn-group">
-                        <button class="btn green ng-binding">
-                            Save
-                        </button>
-                    </div>
-                    <button type="button" class="btn default">
-                        <i class="fa fa-eraser"></i>Clean
-                    </button>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="col-md-3 control-label">Name</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control input-medium" placeholder="Enter Name of Group">
                 </div>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <div ui-grid="gridGroupsOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
-                         ui-grid-resize-columns ui-grid-selection ui-grid-pagination
-                         class="grid grid-collateral"></div>
-
+            <div class="form-group col-md-6">
+                <label class="col-md-3 control-label">Description</label>
+                    <div class="col-md-9">
+                        <textarea class="form-control input-medium" placeholder="Enter Name of Group"></textarea>
+                    </div>
+            </div>
+            <div class="col-md-offset-5 col-md-7">
+                <div class="btn-group">
+                    <button class="btn green ng-binding">
+                        Save
+                    </button>
                 </div>
+                <button type="button" class="btn default">
+                    <i class="fa fa-eraser"></i>Clean
+                </button>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div ui-grid="gridGroupsOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
+                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                     class="grid grid-collateral"></div>
+
             </div>
         </div>
     </div>
