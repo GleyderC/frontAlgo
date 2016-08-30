@@ -4,14 +4,17 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('UsersController', ['$scope',
-    'localStorageService', 'uiGridConstants', 'ModalService',
-    function ($scope, localStorageService, uiGridConstants, ModalService) {
+    'localStorageService', 'uiGridConstants', 'ModalService','UsersService',
+    function ($scope, localStorageService, uiGridConstants, ModalService, UsersService) {
 
         $scope.gridUsersOptions = {
 
             columnDefs: [
                 {
-                    field: 'name',
+                    field: 'login',
+                },
+                {
+                    field: 'firstname',
                 },
                 {
                     field: 'lastname',
@@ -49,8 +52,12 @@ DashboardApp.controller('UsersController', ['$scope',
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
-            },
-            data: [{name:"Daniel",lastname:"Nebrera",email:"danielnebrera@commonsms.com"}]
+            }
+            //data: [{name:"Daniel",lastname:"Nebrera",email:"danielnebrera@commonsms.com"}]
         }
 
+        UsersService.getAll().then(function (result) {
+            $scope.Users= result.data.dataResponse;
+            $scope.gridUsersOptions.data = $scope.Users;
+        });
     }]);

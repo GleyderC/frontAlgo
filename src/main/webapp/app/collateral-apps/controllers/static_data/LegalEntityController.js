@@ -77,7 +77,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 {field: 'LEI', enableCellEdit: false},
                 {field: 'BIC', enableCellEdit: false},
                 {
-                    field: 'rolList',
+                    field: 'rolListArray',
                     displayName: 'Roles',
                     cellFilter: 'stringArrayFilter',
                     enableCellEdit: false
@@ -101,7 +101,14 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
              });
              legal.countryId = country[0];
              });*/
+
             $scope.legalEntities.forEach(function (legalEntity) {
+
+                legalEntity.rolListArray = [];
+                
+                angular.forEach(legalEntity.rolList, function( rol ) {
+                    legalEntity.rolListArray.push(rol.rolType);
+                });
 
                 //Insert mother Legal Entity
                 var MotherLegal = $scope.legalEntities.filter(function (legal) {
@@ -322,7 +329,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         $scope.holidays.selectedItems = $scope.legalEntity.financialCalendarList;
 
-        $scope.rols.selectedItems = $scope.legalEntity.rolList;
+        $scope.rols.selectedItems = $scope.legalEntity.rolListArray;
 
         $scope.country = {selected: {id: -1}};
         var country = $scope.countries.filter(function (country) {
