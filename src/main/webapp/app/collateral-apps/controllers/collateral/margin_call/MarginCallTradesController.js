@@ -129,6 +129,8 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
          
         $scope.$watchCollection("$parent.Trades",function(nV,oV){
         	$scope.gridTradesOptions.data = nV;
+        	$scope.gridApi.core.refresh();
+    		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
         });
         $scope.loadData = function(){
         	
@@ -148,6 +150,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
 	            $scope.gridTradesOptions.data = $scope.Trades;
 	        });
         };
+        
         $scope.updateDisputeDetail = function(disputeList){
         	var param =  {
         			marginCallId : $scope.currentMarginCall.marginCalls[0].id,
@@ -161,7 +164,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         		var disputeDetailResult = resp.dataResponse.disputeCalculations.disputeCalculationDetail;
         		$scope.Trades.forEach(function(vTrade, kTrade){
         			Object.keys(disputeDetailResult).forEach(function(v,k){
-        				if(parseInt(v)==vTrade.ownPricing.tradeId){
+        				if(parseInt(v)==vTrade.ownPricing.id){
         					vTrade.npvCounterParty	  = disputeDetailResult[v].difference;
         					 vTrade.differencePercent   	=disputeDetailResult[v].differencePercentage;
         				}

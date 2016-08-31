@@ -104,6 +104,18 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            		
 	            		
 	            }; 
+	            if($scope.MarginCallDetail.marginCall.disputeCalculations.hasOwnProperty("disputeCalculationDetail")){
+	            	$scope.disputeDetailResult = $scope.MarginCallDetail.marginCall.disputeCalculations.disputeCalculationDetail;
+	        		$scope.Trades.forEach(function(vTrade, kTrade){
+	        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
+	        				if(parseInt(v)==vTrade.ownPricing.id){
+	        					vTrade.npvCounterParty	  = $scope.disputeDetailResult[v].difference;
+	        					 vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
+	        				}
+	        			});
+	        		});
+	            	
+	            }
 	            $scope.$watchCollection("dispute.disputeCalculations",function(n,o){
 	            	if(_.isEqual(n,o)){
 	            		return false; 
