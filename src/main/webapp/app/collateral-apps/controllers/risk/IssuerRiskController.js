@@ -136,7 +136,6 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
         }
 
         $scope.filterIssuerRisk = function (){ 
-          console.log($scope.legalEntityPO);
           if($scope.legalEntityPO.selected!==undefined){
             RiskService.getExposureByIssuer($scope.legalEntityPO.selected.id,"LE",
             	

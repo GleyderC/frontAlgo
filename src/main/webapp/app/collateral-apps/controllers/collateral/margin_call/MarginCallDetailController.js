@@ -104,7 +104,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            		
 	            		
 	            }; 
-	            if($scope.MarginCallDetail.marginCall.disputeCalculations.hasOwnProperty("disputeCalculationDetail")){
+	            if($scope.MarginCallDetail.marginCall["disputeCalculationsCall"] != undefined && $scope.MarginCallDetail.marginCall["disputeCalculations"].hasOwnProperty("disputeCalculationDetail")){
 	            	$scope.disputeDetailResult = $scope.MarginCallDetail.marginCall.disputeCalculations.disputeCalculationDetail;
 	        		$scope.Trades.forEach(function(vTrade, kTrade){
 	        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
