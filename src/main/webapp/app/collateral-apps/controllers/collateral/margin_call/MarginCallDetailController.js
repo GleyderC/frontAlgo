@@ -22,7 +22,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         };
         $scope.Trades = [];
         $scope.pool = [];
-        $scope.Inventory = {} ;
+        $scope.Inventory = [];
         $scope.threshold = 0;
         $scope.minimumTransferAmount = 0;
         $scope.marginCallType  = "";
