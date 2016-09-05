@@ -189,7 +189,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
         }
 
         $scope.filterIssuerRisk = function () {
-
+        	if($scope.legalEntityPO.selected !==undefined) {
             RiskService.getExposureByCountry($scope.legalEntityPO.selected.id,"LE",
                 $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name,
                 $scope.sovereign,$scope.public,$scope.corporate).then(function (result) {
@@ -246,6 +246,7 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                 
                 $scope.drawHighMap(IssuersRiskCountry);
             });
+        }
         }
 
         LegalEntityService.getAll().then(function (result) {

@@ -135,9 +135,11 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
             }
         }
 
-        $scope.filterIssuerRisk = function () {
-
+        $scope.filterIssuerRisk = function (){ 
+          console.log($scope.legalEntityPO);
+          if($scope.legalEntityPO.selected!==undefined){
             RiskService.getExposureByIssuer($scope.legalEntityPO.selected.id,"LE",
+            	
                 $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name).then(function (result) {
 
                 let postedArray = [];
@@ -159,6 +161,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                         availableArray.push({name:Risk.name, y: Risk.availableAmount});
 
                 });
+                
                 //console.log(postedArray);
                 $scope.gridIssuerRiskOptions.data = _that.IssuersRisk;
 
@@ -167,6 +170,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                 $scope.drawPieChart('Received',receiveArray,'gchart_pie_received');
                 $scope.drawPieChart('Available',availableArray,'gchart_pie_available');
             });
+          }
         }
 
         LegalEntityService.getAll().then(function (result) {
