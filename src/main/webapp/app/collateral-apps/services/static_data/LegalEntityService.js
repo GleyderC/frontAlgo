@@ -2,7 +2,7 @@ angular.module('DashboardApp')
     .service('LegalEntityService', ['$request', 'toastr', function ($request, toastr) {
         var LegalEntity = {};
 
-        var legalEntities = [];
+        //var legalEntities = [];
 
         this.getAll = function () {
             return $request.get('/servlet/LegalEntity/SelectAll');
@@ -30,7 +30,7 @@ angular.module('DashboardApp')
                             console.log("Insert");
                             console.log(Response.data.dataResponse);
                             legalEntity.id = Response.data.dataResponse;
-                            legalEntities.push(legalEntity);
+                            //legalEntities.push(legalEntity);
                             toastr.success("Successfully stored data", "Success");
                         }
                     );

@@ -60,4 +60,36 @@ DashboardApp.controller('UsersController', ['$scope',
             $scope.Users= result.data.dataResponse;
             $scope.gridUsersOptions.data = $scope.Users;
         });
+
+        function buildUserData() {
+
+            $scope.legalEntityMother = {selected: {id: -1}};
+
+            $scope.country = {selected: {id: -1}};
+
+            $scope.User =
+            {
+                id: -1,
+                name: "",
+                firstName: "",
+                lastName: "",
+                login: "",
+                password: "",
+                email: "",
+                isActive: true
+
+            };
+            $scope.isEditLegal = false;
+
+            //console.log($scope.legalEntities);
+
+        }
+
+        buildUserData();
+
+        $scope.editRow = function (grid, row) {
+
+            console.log(row.entity);
+            $scope.User = row.entity;
+        };
     }]);
