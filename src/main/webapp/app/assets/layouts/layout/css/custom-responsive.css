@@ -76,6 +76,9 @@
     .grid-collateral{
         height: 670px;
     }
+    .collateral-editor{
+        height: 300px;
+    }
 }
 @media (min-height: 992px) {
     .split-pane {
@@ -92,9 +95,6 @@
     }
     .grid-collateral{
         height: 870px;
-    }
-    .collateral-editor{
-        height: 300px;
     }
     .users_group .panel-multiselect {
 

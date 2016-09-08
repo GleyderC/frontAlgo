@@ -14,10 +14,10 @@ DashboardApp.controller('UsersController', ['$scope',
                     field: 'login',
                 },
                 {
-                    field: 'firstname',
+                    field: 'firstName',
                 },
                 {
-                    field: 'lastname',
+                    field: 'lastName',
                 },
                 {
                     field: 'email',
@@ -61,11 +61,7 @@ DashboardApp.controller('UsersController', ['$scope',
             $scope.gridUsersOptions.data = $scope.Users;
         });
 
-        function buildUserData() {
-
-            $scope.legalEntityMother = {selected: {id: -1}};
-
-            $scope.country = {selected: {id: -1}};
+        $scope.clean = function() {
 
             $scope.User =
             {
@@ -79,17 +75,36 @@ DashboardApp.controller('UsersController', ['$scope',
                 isActive: true
 
             };
-            $scope.isEditLegal = false;
+            $scope.isEditUser = false;
 
-            //console.log($scope.legalEntities);
-
+            console.log("clean");
         }
 
-        buildUserData();
+        $scope.clean();
 
         $scope.editRow = function (grid, row) {
 
-            console.log(row.entity);
             $scope.User = row.entity;
+            console.log($scope.User);
+            $scope.isEditUser = true;
+        }
+
+        $scope.saveUser = function () {
+            console.log($scope.isEditUser);
+
+            if (!$scope.isEditUser) {
+                $scope.gridUsersOptions.data.push($scope.User);
+            }
+            UsersService.set($scope.User, $scope.isEditUser);
+
+            $scope.clean();
+        }
+
+        $scope.deleteRow = function (grid, row) {
+
+            var index = $scope.gridUsersOptions.data.indexOf(row.entity);
+            $scope.gridUsersOptions.data.splice(index, 1);
+            UsersService.delete(row.entity.id);
+
         };
     }]);

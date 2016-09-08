@@ -613,5 +613,12 @@ i.close-tab-icon:hover {
     text-shadow: 0px 0px 1px rgba(0, 0, 0, 1);
 }
 
+.error {
+    border-color: red;
+}
+
+.warning {
+    border-color: yellow;
+}
 
 /*MULTISELECT STYLES*/
