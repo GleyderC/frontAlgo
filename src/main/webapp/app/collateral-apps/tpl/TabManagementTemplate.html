@@ -16,7 +16,7 @@
             <div class="slide-animate" ng-include="tab.templateUrl"></div>
         </div>
         <div class="tabs-container" ng-if="tab.childWorkspace.tabList.length > 0">
-            <workspace-Tabs id=" {{ 'InternalTabManager' + $index }} "
+            <workspace-Tabs
                             data-workspace-info="tab.childWorkspace"></workspace-Tabs>
         </div>
     </uib-tab>

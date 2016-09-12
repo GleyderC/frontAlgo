@@ -95,8 +95,8 @@ DashboardApp.controller(
                 ]
             };
 
-            this.saveBilateralAgr = function(){
-                toastr.success("Info Saved","Good")
+            this.saveBilateralAgr = function () {
+                toastr.success("Info Saved", "Good");
             }
 
         }]);
@@ -151,7 +151,9 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
         }
 
         $scope.deleteRow = function (grid, row) {
-            console.log("deleting")
+            var index = $scope.gridOptions.data.indexOf(row.entity);
+            $scope.gridOptions.data.splice(index, 1);
+            BilateralContractService.delete(row.entity.id);
         }
 
         $scope.gridOptions = {
@@ -230,7 +232,7 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
     this.status = true;
 
     //Notification TimePicker
-    this.notification  = new Date();
+    this.notification = new Date();
     this.hstep = 1;
     this.mstep = 1;
 
@@ -254,13 +256,12 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
 
         this.contractCode = BilContract.contractCode;
         this.legalEntityPrimary = {id: BilContract.counterpartyA.id, name: BilContract.counterpartyA.name};
-        this.legalEntityCounterparty = {id:  BilContract.counterpartyB.id, name: BilContract.counterpartyB.name};
+        this.legalEntityCounterparty = {id: BilContract.counterpartyB.id, name: BilContract.counterpartyB.name};
         this.baseCurrency = {id: BilContract.baseCurrency}
         this.contractType = {key: BilContract.bilateralContractType};
         this.autoSendTime = {};
-        this.autoSendTime.iLocalMillis = BilContract.autoSendTime[0].iLocalMillis
-        this.autoSendTime.iChronology = BilContract.autoSendTime[0].iChronology.iBase.iMinDaysInFirstWeek;
-
+        this.autoSendTime.iLocalMillis = BilContract.autoSendTimes[0].autoSendTime.iLocalMillis
+        this.autoSendTime.iChronology = BilContract.autoSendTimes[0].autoSendTime.iChronology.iBase.iMinDaysInFirstWeek;
 
         this.callFrequency = {key: BilContract.marginFrequency};
         this.callOffset = BilContract.callOffset;
@@ -342,10 +343,10 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
     var supportedindexes = $scope.BilateralAgreements.staticData.supportedindexes;
 
     //clean index array
-    angular.forEach(supportedindexes, function(index, key){
-       if(!index.key){
-           supportedindexes.splice(key,1);
-       }
+    angular.forEach(supportedindexes, function (index, key) {
+        if (!index.key) {
+            supportedindexes.splice(key, 1);
+        }
     });
 
     var interestDateRules = [
@@ -369,38 +370,90 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
     this.interestDateRuleOnly = true;
     this.rollInterestPricipal = true;
 
-    this.modalAddCurrencty = function(){
+    this.modalAddCurrencty = function (parameters) {
+
+        if(!parameters)
+        {
+            parameters = {};
+        }
+
         ModalService.open({
             templateUrl: "modalAddCurrency.html",
             size: 'lg',
             rendered: function () {
                 App.initComponents();
             },
-            controller: function (toastr, $scope, $uibModalInstance) {
+            resolve: {  params: parameters },
+            controller: function (toastr, $scope, $uibModalInstance, params) {
+
+                let editing = false;
 
                 //SETTING DEFAULT VALUES
-                //$scope.baseCurrency = { id: '' };
+                $scope.baseCurrency  = {};
+                $scope.currenciesList = currenciesList;
+                $scope.supportedindexesList = supportedindexes;
                 $scope.compounding = false;
                 $scope.includeInterestPosition = false;
                 $scope.adjustmentCurrency = false;
                 $scope.projectInterestPosition = false;
+                $scope.hairCut = 0;
                 $scope.inverse = false;
-                $scope.floor = false;
-                $scope.supportedindexesList = supportedindexes;
-                $scope.currenciesList = currenciesList;
+
+                //Fixed Rate 'EligCurRate'
+                $scope.interestDateRuleOnlyFixedRate = 0;
+
+                //Floating Rate
+                $scope.index = 0;
                 $scope.tenor = '';
+                $scope.spread = 0;
+                $scope.factor = 0;
+                $scope.floor = false;
+                $scope.floorAmount = 0;
+
+                //EDIT START
+
+                if( typeof params === 'object' && params.currency !== undefined )
+                {
+                    editing = true;
+
+                    //SETTING DEFAULT VALUES
+                    $scope.compounding = params.compounding;
+                    $scope.baseCurrency.id = params.currency;
+                    $scope.baseCurrency.codigo = params.currency;
+                    $scope.includeInterestPosition = params.included;
+                    $scope.adjustmentCurrency = params.adjustmentCurrency;
+                    $scope.projectInterestPosition = params.projected;
+                    $scope.hairCut = params.hairCut;
+                    $scope.inverse = params.hairCutMethod == "REGULAR" ? false : true;
+
+                    //Fixed Rate 'EligCurRate'
+                    $scope.interestDateRuleOnlyFixedRate = params.fixedRate;
+
+                    //Floating Rate
+                    $scope.index = params.index;
+                    $scope.tenor = params.tenor;
+                    $scope.spread = params.spread;
+                    $scope.factor = params.factor;
+                    $scope.floor = params.floor;
+                    $scope.floorAmount = params.floorAmount;
+                }
+                //EDIT END
 
                 $scope.save = function () {
                     //console.log("Press Ok")
 
-                    if(!$scope.baseCurrency)
+                    if(editing === true)
                     {
+                        _that.gridOptions.data.splice(_that.gridOptions.data.indexOf(params),1);
+                    }
+
+                    if (!$scope.baseCurrency) {
                         toastr.error("Please, fill all fields");
                         return false;
                     }
 
-                    if($scope.EligCurRate == 'fixed'){
-                        if(!$scope.index) {
+                    if ($scope.EligCurRate == 'fixed') {
+                        if (!$scope.index) {
                             $scope.index = {
                                 key: '',
                                 name: ''
@@ -424,8 +477,7 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
                         projected: $scope.projectInterestPosition,
                         adjustmentCurrency: $scope.adjustmentCurrency,
                         hairCut: $scope.hairCut,
-                        hairCutMethod: $scope.inverse == false ? "REGULAR" : "INVERSE",
-                        basisConvention: $scope.basisConvention
+                        hairCutMethod: $scope.inverse == false ? "REGULAR" : "INVERSE"
 
                     });
 
@@ -443,11 +495,12 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
     };
 
     $scope.editRow = function (grid, row) {
-        console.log("editing")
+        _that.modalAddCurrencty(row.entity);
     }
 
     $scope.deleteRow = function (grid, row) {
-        console.log("deleting")
+        var index = this.gridOptions.data.indexOf(row.entity);
+        this.gridOptions.data.splice(index, 1);
     }
 
     this.gridOptions = {

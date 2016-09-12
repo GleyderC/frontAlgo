@@ -44,6 +44,85 @@ angular.module('DashboardApp')
 
                 //$scope.workspace.tabList[0].childWorkspace.active = 2;
 
+                $scope.workspaceTabs.addTabByID = function (tabConfig, tabID) {
+
+                    let deferred = $q.defer();
+
+                    if (!!$scope.workspaceTabs.maxTabs && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
+                        $toastr.error("It has reached the maximum allowed tabs", "Error Opening", {closeButton: true})
+                        deferred.reject("limit exceeded tabs");
+                        return false;
+                    }
+
+                    let globalTabConfig = {
+                        head: {
+                            icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
+                            text: ''
+                        },
+                        content: '',
+                        templateUrl: '',
+                        resolve: {
+                            formData: []
+                        },
+                        disabled: false,
+                        closable: false,
+                        callback: function () {
+                        }
+                    };
+
+                    if (!!tabConfig && typeof tabConfig === 'object') {
+
+                        if (!!tabConfig.head && !!tabConfig.head.text) {
+                            globalTabConfig.head.text = tabConfig.head.text;
+                        }
+
+                        if (!!tabConfig.content) {
+                            globalTabConfig.content = tabConfig.content;
+                        }
+
+                        if (!!tabConfig.templateUrl) {
+                            globalTabConfig.templateUrl = tabConfig.templateUrl;
+                        }
+
+                        if (!!tabConfig.resolve) {
+                            globalTabConfig.resolve = tabConfig.resolve;
+                        }
+
+                        if (!!tabConfig.disabled) {
+                            globalTabConfig.disabled = tabConfig.disabled;
+                        }
+
+                        if (!!tabConfig.closable) {
+                            globalTabConfig.closable = tabConfig.closable;
+                        }
+
+                        if (!!tabConfig.autoload) {
+                            globalTabConfig.autoload = tabConfig.autoload;
+                        }
+
+                        if (!!tabConfig.callback && tabConfig.callback === 'function') {
+                            globalTabConfig.callback = tabConfig.callback;
+                        }
+
+                        if (!!tabConfig.head && !!tabConfig.head.icon) {
+                            globalTabConfig.head.icon = tabConfig.head.icon;
+                        }
+
+                        if (!!tabConfig.parameters) {
+                            globalTabConfig.parameters = tabConfig.parameters;
+                            $scope.parameters = tabConfig.parameters;
+                        }
+                        else
+                        {
+                            $scope.parameters = {};
+                        }
+
+                    }
+
+                    console.log($scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs,'idBilateralC'));
+                    
+                };
+
                 $scope.workspaceTabs.addTab = function (tabConfig, coordinates) {
 
                     let deferred = $q.defer();
@@ -311,7 +390,25 @@ angular.module('DashboardApp')
                         $scope.workspaceTabs.active++;
                 }
 
-                //GETTING A WOARKSPACE TABS BY COORDINATES
+                //GETTING A WOARKSPACE TABS BY ID
+                $scope.workspaceTabs.getWorkspaceTabsByID = function (workspaceList, wsID) {
+
+                    angular.forEach(workspaceList.childWorkspace, function(workspace){
+
+                        if(workspace.id === wsID)
+                        {
+                            return workspace.childWorkspace;
+                        }
+                        else {
+
+                            return $scope.workspaceTabs.getWorkspaceTabsByID(workspace.childWorkspace, wsID);
+
+                        }
+                        
+                    });
+
+                };
+
                 $scope.workspaceTabs.getWorkspaceTabs = function (coordinates) {
 
                     if (!angular.isArray(coordinates) && !!coordinates) {
