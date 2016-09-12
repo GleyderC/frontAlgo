@@ -1,42 +1,43 @@
 angular.module('DashboardApp')
-    .service('UsersService', ['$request', 'toastr', function ($request, toastr) {
+    .service('GroupsService', ['$request', 'toastr', function ($request, toastr) {
 
         this.getAll = function () {
-            return $request.get('/servlet/User/SelectAll');
+            return $request.get('/servlet/UserGroups/SelectAll');
         }
 
-        this.getById = function (idUser) {
-            return $request.get('/servlet/User/Select');
+        this.getById = function (idUserGroups) {
+            return $request.get('/servlet/UserGroups/Select');
         }
 
-        this.set = function (User, isUpdate) {
+        this.set = function (UserGroups, isUpdate) {
+            console.log(UserGroups);
             if (isUpdate) {
                 //console.log("Update");
-                $request.put('/servlet/User/Update', User)
+                $request.put('/servlet/UserGroups/Update', UserGroups)
                     .then(function (Response) {
                             toastr.success("Data successfully updated", "Success");
                         }
                     );
             }
             else
-                $request.post('/servlet/User/Insert', User)
+                $request.post('/servlet/UserGroups/Insert', UserGroups)
                     .then(function (Response) {
                             //console.log("Insert");
-                            User.id = Response.data.dataResponse;
+                            UserGroups.id = Response.data.dataResponse;
                             toastr.success("Successfully stored data", "Success");
                         }
                     );
         }
 
-        this.delete = function (idUser) {
+        this.delete = function (idUserGroups) {
             var params = {
 
-                "id": idUser
+                "id": idUserGroups
             };
 
             //console.log(params);
 
-            $request.delete('/servlet/User/Delete', params)
+            $request.delete('/servlet/UserGroups/Delete', params)
                 .then(function (Response) {
 
                     toastr.success("Data successfully removed", "Success")

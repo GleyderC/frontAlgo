@@ -5,69 +5,61 @@
         </div>
     </div>
     <div class="portlet-body">
-        <form name="userForm">
+        <form name="userForm" ng-submit="saveUser()">
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="col-md-3 control-label">Login</label>
+                <div class="form-group col-md-6" >
+                    <label for="login" class="col-md-3 control-label">Login</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control input-medium" placeholder="Enter User Login" name="login"
-                               ng-model="User.login"
-                               data-ng-class='{ error: userForm.login.$invalid && !userForm.$pristine }' required>
-
+                        <input type="text" class="form-control input-medium" placeholder="Enter User Login" name="login" id="login"
+                               ng-model="User.login" required>
+                        <!--span ng-show="userForm.login.$error.required && !userForm.login.$pristine" class="help-block">Your Login is requiered</span-->
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="col-md-3 control-label">Name</label>
+                <div class="form-group col-md-6" >
+                    <label for="firstName" class="col-md-3 control-label">Name</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control input-medium" placeholder="Enter Firstame" name="firstName"
-                               ng-model="User.firstName"
-                               data-ng-class='{ error: userForm.firstName.$invalid && !userForm.$pristine }' required>
+                        <input type="text" class="form-control input-medium" placeholder="Enter Firstame" name="firstName" id="firstName"
+                               ng-model="User.firstName" required>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label class="col-md-3 control-label">Last Name</label>
+                <div class="form-group col-md-6" >
+                    <label for="lastName" class="col-md-3 control-label">Last Name</label>
                     <div class="col-md-9">
-                        <input class="form-control input-medium" placeholder="Enter Lastname" name="lastName"
-                               ng-model="User.lastName"
-                               data-ng-class='{ error: userForm.lastName.$invalid && !userForm.$pristine }' required>
-
-
+                        <input class="form-control input-medium" placeholder="Enter Lastname" name="lastName" id="lastName"
+                               ng-model="User.lastName"} required>
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label class="col-md-3 control-label">Email Address</label>
+                <div class="form-group col-md-6" >
+                    <label for="email" class="col-md-3 control-label">Email Address</label>
                     <div class="col-md-9">
                         <div class="input-group">
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-envelope"></i>
                                                 </span>
-                            <input type="email" class="form-control input-medium" name="email"
-                                   placeholder="Email Address" ng-model="User.email"
-                                   data-ng-class='{ error: userForm.email.$invalid && !userForm.$pristine, warning: exampleForm.email.$error.email }' required>
-
+                            <input type="email" class="form-control input-medium" name="email" id="email"
+                                   placeholder="Email Address" ng-model="User.email" required>
+                            <!--span ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="glyphicon glyphicon-remove" aria-hidden="true"></span-->
                         </div>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="col-md-3 control-label">Password</label>
+                    <label for="password" class="col-md-3 control-label">Password</label>
                     <div class="col-md-9">
                         <div class="input-group">
                                     <span class="input-group-addon">
                                                     <i class="fa fa-lock"></i>
                                                 </span>
-                            <input type="password" class="form-control input-medium" name="password"
-                                   placeholder="Password" ng-model="User.password"
-                                   data-ng-class='{ error: userForm.password.$invalid && !userForm.$pristine }' required>
-
+                            <input type="password" class="form-control input-medium" name="password" id="password"
+                                   placeholder="Password" ng-model="User.password" required>
                         </div>
                     </div>
                 </div>
                 <br>
                 <div class="col-md-offset-5 col-md-7">
                     <div class="btn-group">
-                        <button class="btn green ng-binding" data-ng-disabled='!userForm.$valid' ng-click="saveUser()">
+                        <button type="submit" class="btn green ng-binding" ng-disabled="userForm.$invalid">
                             Save
                         </button>
                     </div>

@@ -397,6 +397,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/trades/TradesService.js',
 
                             'collateral-apps/services/configuration/UsersService.js',
+                            'collateral-apps/services/configuration/GroupsService.js',
 
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/static_data/LegalEntityController.js',

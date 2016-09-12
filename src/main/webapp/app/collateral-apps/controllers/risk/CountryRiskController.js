@@ -255,14 +255,16 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
             $scope.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: 0, otherName:""});
 
             let legalEntities = result.data.dataResponse;
-            legalEntities.forEach(function(legal){
+            legalEntities.forEach(function(legalEntity){
+                if(legalEntity != null){
+                    if(legalEntity.rolList == "PO"){
+                        $scope.legalEntitiesPO.push(legalEntity);
+                    }
+                    else if(legalEntity.rolList == "COUNTERPARTY"){
+                        $scope.legalEntitiesCounterParty.push(legalEntity);
+                    }
+                }
 
-                if(legal.rolList == "PO"){
-                    $scope.legalEntitiesPO.push(legal);
-                }
-                else if(legal.rolList == "COUNTERPARTY"){
-                    $scope.legalEntitiesCounterParty.push(legal);
-                }
 
             });
 

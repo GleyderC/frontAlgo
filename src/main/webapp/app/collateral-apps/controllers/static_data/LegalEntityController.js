@@ -8,7 +8,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
     function (LegalEntityService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
 
         /* Cargando datos en legal entity ui-grid*/
-
+        $scope.legalEntities = [];
         $scope.gridLegalEntityOptions = {
             showGridFooter: true,
             paginationPageSizes: [12, 50, 100, 200, 500],
@@ -94,7 +94,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
         };
 
         LegalEntityService.getAll().then(function (result) {
-            $scope.legalEntities = result.data.dataResponse;
+            let legalEntities = result.data.dataResponse;
             /*$scope.legalEntities.forEach(function(legal){
              var country = $scope.countries.filter(function (country) {
              return country.key == legal.countryId;
@@ -102,26 +102,31 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
              legal.countryId = country[0];
              });*/
 
-            $scope.legalEntities.forEach(function (legalEntity) {
+            legalEntities.forEach(function (legalEntity) {
+                if(legalEntity != null){
 
-                legalEntity.rolListArray = [];
-                
-                angular.forEach(legalEntity.rolList, function( rol ) {
-                    legalEntity.rolListArray.push(rol.rolType);
-                });
+                    $scope.legalEntities.push(legalEntity);
+                    legalEntity.rolListArray = [];
 
-                //Insert mother Legal Entity
-                var MotherLegal = $scope.legalEntities.filter(function (legal) {
-                    if (legal.id == legalEntity.motherLegalEntity)
-                        return legal.name;
-                    else return "";
+                    angular.forEach(legalEntity.rolList, function( rol ) {
+                        legalEntity.rolListArray.push(rol.rolType);
+                    });
 
-                });
+                    //Insert mother Legal Entity
+                    var MotherLegal = $scope.legalEntities.filter(function (legal) {
+                        if (legal != null && legal.id == legalEntity.motherLegalEntity)
+                            return legal.name;
+                        else return "";
 
-                if (MotherLegal[0]) {
-                    legalEntity.namemotherLegalEntity = MotherLegal[0].name;
+                    });
+
+                    if (MotherLegal[0]) {
+                        legalEntity.namemotherLegalEntity = MotherLegal[0].name;
+                    }
                 }
-            });
+
+            })
+            //console.log($scope.legalEntities);
             $scope.gridLegalEntityOptions.data = $scope.legalEntities;
 
         });
@@ -186,21 +191,26 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.legalEntities = [];
 
         LegalEntityService.getAll().then(function (result) {
-            $scope.legalEntities = result.data.dataResponse;
+            let legalEntities = result.data.dataResponse;
 
-            $scope.legalEntities.forEach(function (legalEntity) {
+            legalEntities.forEach(function (legalEntity) {
 
-                //Insert mother Legal Entity
-                var MotherLegal = $scope.legalEntities.filter(function (legal) {
-                    if (legal.id == legalEntity.motherLegalEntity)
-                        return legal.name;
-                    else return "";
+                if(legalEntity != null){
+                    $scope.legalEntities.push(legalEntity);
 
-                });
+                    //Insert mother Legal Entity
+                    var MotherLegal = $scope.legalEntities.filter(function (legal) {
+                        if (legal.id == legalEntity.motherLegalEntity)
+                            return legal.name;
+                        else return "";
 
-                if (MotherLegal[0]) {
-                    legalEntity.namemotherLegalEntity = MotherLegal[0].name;
+                    });
+
+                    if (MotherLegal[0]) {
+                        legalEntity.namemotherLegalEntity = MotherLegal[0].name;
+                    }
                 }
+
             });
 
         });

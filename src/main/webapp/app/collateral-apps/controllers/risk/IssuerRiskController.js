@@ -178,15 +178,17 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
             $scope.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: 0, otherName:""});
 
             let legalEntities = result.data.dataResponse;
-            legalEntities.forEach(function(legal){
-
-                if(legal.rolList == "PO"){
-                    $scope.legalEntitiesPO.push(legal);
+            legalEntities.forEach(function(legalEntity){
+                if(legalEntity != null){
+                    angular.forEach(legalEntity.roleList, function( rol ) {
+                        if(rol.roleType == "PO"){
+                            $scope.legalEntitiesPO.push(legalEntity);
+                        }
+                        else if(rol.roleType == "COUNTERPARTY"){
+                            $scope.legalEntitiesCounterParty.push(legalEntity);
+                        }
+                    });
                 }
-                else if(legal.rolList == "COUNTERPARTY"){
-                    $scope.legalEntitiesCounterParty.push(legal);
-                }
-
              });
 
             //inicializando combos

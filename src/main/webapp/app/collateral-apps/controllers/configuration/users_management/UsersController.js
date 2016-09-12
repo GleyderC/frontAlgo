@@ -77,7 +77,7 @@ DashboardApp.controller('UsersController', ['$scope',
             };
             $scope.isEditUser = false;
 
-            console.log("clean");
+            //console.log("clean");
         }
 
         $scope.clean();
@@ -85,12 +85,12 @@ DashboardApp.controller('UsersController', ['$scope',
         $scope.editRow = function (grid, row) {
 
             $scope.User = row.entity;
-            console.log($scope.User);
+            //console.log($scope.User);
             $scope.isEditUser = true;
         }
 
         $scope.saveUser = function () {
-            console.log($scope.isEditUser);
+            //console.log($scope.isEditUser);
 
             if (!$scope.isEditUser) {
                 $scope.gridUsersOptions.data.push($scope.User);

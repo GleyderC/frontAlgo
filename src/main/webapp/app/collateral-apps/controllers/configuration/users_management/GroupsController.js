@@ -4,8 +4,8 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('GroupsController', ['$scope',
-    'localStorageService', 'uiGridConstants', 'ModalService',
-    function ($scope, localStorageService, uiGridConstants, ModalService) {
+    'localStorageService', 'uiGridConstants', 'ModalService', 'GroupsService',
+    function ($scope, localStorageService, uiGridConstants, ModalService, GroupsService) {
 
         $scope.gridGroupsOptions = {
 
@@ -51,4 +51,52 @@ DashboardApp.controller('GroupsController', ['$scope',
             },
             data: [{name:"test",description:""}]
         }
+
+        GroupsService.getAll().then(function (result) {
+            $scope.Groups= result.data.dataResponse;
+            $scope.gridGroupsOptions.data = $scope.Groups;
+        });
+
+        $scope.clean = function() {
+
+            $scope.Group =
+            {
+                "id": -1,
+                "name": "",
+                "description": "",
+                "usersList": [],
+                "isActive": true
+            }
+            $scope.isEditGroup = false;
+
+            //console.log("clean");
+        }
+
+        $scope.clean();
+
+        $scope.editRow = function (grid, row) {
+
+            $scope.Group = row.entity;
+            //console.log($scope.Group);
+            $scope.isEditGroup = true;
+        }
+
+        $scope.saveGroup = function () {
+            console.log($scope.isEditGroup);
+
+            if (!$scope.isEditGroup) {
+                $scope.gridGroupsOptions.data.push($scope.Group);
+            }
+            GroupsService.set($scope.Group, $scope.isEditGroup);
+
+            $scope.clean();
+        }
+
+        $scope.deleteRow = function (grid, row) {
+
+            var index = $scope.gridGroupsOptions.data.indexOf(row.entity);
+            $scope.gridGroupsOptions.data.splice(index, 1);
+            GroupsService.delete(row.entity.id);
+
+        };
     }]);
