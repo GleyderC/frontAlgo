@@ -257,12 +257,14 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
             let legalEntities = result.data.dataResponse;
             legalEntities.forEach(function(legalEntity){
                 if(legalEntity != null){
-                    if(legalEntity.rolList == "PO"){
-                        $scope.legalEntitiesPO.push(legalEntity);
-                    }
-                    else if(legalEntity.rolList == "COUNTERPARTY"){
-                        $scope.legalEntitiesCounterParty.push(legalEntity);
-                    }
+                    angular.forEach(legalEntity.roleList, function( rol ) {
+                        if(rol.roleType == "PO"){
+                            $scope.legalEntitiesPO.push(legalEntity);
+                        }
+                        else if(rol.roleType == "COUNTERPARTY"){
+                            $scope.legalEntitiesCounterParty.push(legalEntity);
+                        }
+                    });
                 }
 
 

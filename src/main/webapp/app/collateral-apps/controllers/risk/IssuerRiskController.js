@@ -76,7 +76,8 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                             beta: 0
                         },
                         plotShadow: true,
-                        marginTop:0
+                        marginTop:0,
+                        marginLeft: 0
                     },
                     title: {
                         text: '<span id="titleMargin"> '+ title +' </span>'
@@ -86,7 +87,7 @@ DashboardApp.controller('IssuerRiskController', [ '$scope',
                     },
                     plotOptions: {
                         pie: {
-                            center: ['50%', '50%'],
+                            //center: ['50%', '50%'],
                             allowPointSelect: true,
                             cursor: 'pointer',
                             depth: 35,

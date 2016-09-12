@@ -4,27 +4,20 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('UsersGroupController', ['$scope',
-    'localStorageService', 'uiGridConstants', 'ModalService',
-    function ($scope, localStorageService, uiGridConstants, ModalService) {
+    'localStorageService', 'uiGridConstants', 'ModalService', 'GroupsService',
+    function ($scope, localStorageService, uiGridConstants, ModalService, GroupsService) {
 
-        $scope.usersGroup = {
-            searchSelect: true,
-            searchSelected: true,
-            data: [
-                {
-                    "id": 1,
-                    "firstName": "Admin",
-                    "name":"admin",
-                    "lastName": "",
-                    "login": "admin",
-                    "password": "admin",
-                    "email": "admin@email.com",
-                    "isActive": true,
-                    "groupIDsList": [
-                        1
-                    ]
+        $scope.UsersGroup = {};
+        $scope.UsersGroup.Groups = [];
+        $scope.UsersGroup.Group = {selected: {id: -1}};
+        GroupsService.getAll().then(function (result) {
+            let groups = result.data.dataResponse;
+            angular.forEach(groups, function (group) {
+                if(group!=null){
+                    $scope.UsersGroup.Groups.push(group);
                 }
-            ]
-        };
+            });
+            console.log($scope.UsersGroup.Groups);
+        });
 
     }]);

@@ -11,7 +11,7 @@ angular.module('DashboardApp')
             if(counterPartyId == 0)
                 param.counterPartyType = "";
 
-            //console.log(param);
+            console.log(param);
 
             return $request.post('/servlet/ExposureByIssuer/SelectAll',param);
         }
