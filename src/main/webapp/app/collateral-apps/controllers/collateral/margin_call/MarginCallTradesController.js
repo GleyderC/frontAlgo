@@ -128,6 +128,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
          
          
         $scope.$watchCollection("$parent.Trades",function(nV,oV){
+        	if(nV===oV){
+        		return false; 
+        	}
         	$scope.gridTradesOptions.data = nV;
         	$scope.gridApi.core.refresh();
     		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
