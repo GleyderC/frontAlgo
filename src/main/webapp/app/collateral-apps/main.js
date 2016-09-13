@@ -388,13 +388,15 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/services/static_data/LegalEntityService.js',
                             'collateral-apps/services/static_data/BilateralContractService.js',
                             'collateral-apps/services/static_data/SecurityService.js',
-                            'collateral-apps/services/static_data/IntegrationService.js',
 
                             'collateral-apps/services/user_message/UserMessageService.js',
 
                             'collateral-apps/services/risk/RiskService.js',
 
-                            'collateral-apps/services/trades/TradesService.js',
+                            'collateral-apps/services/integration_reporting/TradesService.js',
+                            'collateral-apps/services/integration_reporting/IntegrationService.js',
+                            'collateral-apps/services/integration_reporting/ScheduledTaskService.js',
+
 
                             'collateral-apps/services/configuration/UsersService.js',
                             'collateral-apps/services/configuration/GroupsService.js',
@@ -405,8 +407,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/static_data/BilateralAgreementsController.js',
                             /* Security Controller*/
                             'collateral-apps/controllers/static_data/SecurityController.js',
-                            /* Integration Controller*/
-                            'collateral-apps/controllers/static_data/IntegrationController.js',
 
                             /* Agreements Controller js */
                             'collateral-apps/controllers/collateral/agreements/AgreementsController.js',
@@ -431,8 +431,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/risk/IssuerRiskController.js',
                             'collateral-apps/controllers/risk/CountryRiskController.js',
 
-                            /*Trades Controller*/
-                            'collateral-apps/controllers/trades/TradesController.js',
+                            /*Integration&Reporting Controller*/
+                            'collateral-apps/controllers/integration_reporting/TradesController.js',
+                            'collateral-apps/controllers/integration_reporting/IntegrationController.js',
+                            'collateral-apps/controllers/integration_reporting/ScheduledTaskController.js',
 
                             /* Profile Menu */
                             'collateral-apps/controllers/UserProfileController.js',

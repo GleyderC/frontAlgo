@@ -108,9 +108,12 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                     $scope.legalEntities.push(legalEntity);
                     legalEntity.rolListArray = [];
 
-                    angular.forEach(legalEntity.rolList, function( rol ) {
-                        legalEntity.rolListArray.push(rol.rolType);
+                    angular.forEach(legalEntity.roleList, function( rol ) {
+                        legalEntity.rolListArray.push(rol.roleType);
                     });
+
+                    if(legalEntity.id == 690182110)
+                    console.log(legalEntity.rolListArray);
 
                     //Insert mother Legal Entity
                     var MotherLegal = $scope.legalEntities.filter(function (legal) {
@@ -167,7 +170,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                     icon: 'fa fa-bank',
                     text: 'Editing Legal Entity',
                 },
-                templateUrl: paths.views + "/static_data/le_form_container.html",
+                templateUrl: paths.views + "/static_data/LegalEntity/le_form_container.html",
                 parameters: {
                     legalEntity: row.entity
                 },
@@ -267,7 +270,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 motherLegalEntity: -1,
                 cdsMarketDataName: "",
                 contactPersonList: [],
-                rolList: [],
+                roleList: [],
                 ccpOwnClientAccounts: [],
                 ccpMyClientsAccounts: [],
                 rwaMultiplier: 0,

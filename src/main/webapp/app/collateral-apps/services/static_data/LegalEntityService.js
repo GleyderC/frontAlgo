@@ -28,7 +28,7 @@ angular.module('DashboardApp')
                 $request.post('/servlet/LegalEntity/Insert', legalEntity)
                     .then(function (Response) {
                             console.log("Insert");
-                            console.log(Response.data.dataResponse);
+                            //console.log(Response.data.dataResponse);
                             legalEntity.id = Response.data.dataResponse;
                             //legalEntities.push(legalEntity);
                             toastr.success("Successfully stored data", "Success");

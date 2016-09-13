@@ -140,15 +140,7 @@ DashboardApp.service('MenuService', function () {
                                     }
                                 ]
                             }
-                        },
-                        {
-                            head: {
-                                icon: 'fa fa-cog',
-                                text: 'Integration'
-                            },
-                            templateUrl: paths.views + '/static_data/Integration/integration.html',
-                            autoload: true
-                        },
+                        }
                     ]
                 }
             },
@@ -197,17 +189,41 @@ DashboardApp.service('MenuService', function () {
             },
             {
                 head: {
-                    icon: 'fa fa-money',
-                    text: 'Trades'
+                    icon: 'fa fa-edit',
+                    text: 'Integration & Reporting'
                 },
                 childWorkspace : {
                     tabList:[
                         {
                             head: {
-                                icon: 'fa fa-upload',
+                                icon: 'fa fa-cloud-upload',
                                 text: 'FPML upload'
                             },
-                            templateUrl: paths.views + '/trades/fpml_upload.html',
+                            templateUrl: paths.views + '/integration_reporting/FpmlUpload/fpml_upload.html',
+                            autoload : true
+                        },
+                        {
+                            head: {
+                                icon: 'fa fa-upload',
+                                text: 'Manual Files upload'
+                            },
+                            templateUrl: paths.views + '/integration_reporting/ManualFileUpload/manual_file_upload.html',
+                            autoload : true
+                        },
+                        {
+                            head: {
+                                icon: 'fa fa-check-square-o',
+                                text: 'Audit'
+                            },
+                            templateUrl: paths.views + '/integration_reporting/Integration/integration.html',
+                            autoload : true
+                        },
+                        {
+                            head: {
+                                icon: 'fa fa-play-circle-o',
+                                text: 'Scheduled Task'
+                            },
+                            templateUrl: paths.views + '/integration_reporting/ScheduledTask/scheduled_task.html',
                             autoload : true
                         }
                     ]
