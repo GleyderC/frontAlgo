@@ -59,6 +59,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
 	            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
 	            $scope.Trades = result.data.dataResponse.trades;
+	            $scope.ownPricing  = result.data.dataResponse.marginCall.ownPricing; 
 	            $scope.posted 	= result.data.dataResponse.postedCollateral;
 	            $scope.received = result.data.dataResponse.receivedCollateral;
 	            $scope.Messages = result.data.dataResponse.marginCall.messages;
@@ -116,6 +117,13 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	        		});
 	            	
 	            }
+	            if(Object.keys($scope.ownPricing.tradesPricingsByTradeId).length>0) {
+            		$scope.Trades.forEach(function(vTrade, kTrade){
+            			vTrade.priceInBaseCurrency =   $scope.ownPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInBaseCurrency;
+            			vTrade.priceInTradeCurrency =   $scope.ownPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInTradeCurrency;
+            		});
+
+            	}
 	            $scope.$watchCollection("dispute.disputeCalculations",function(n,o){
 	            	if(_.isEqual(n,o)){
 	            		return false; 
