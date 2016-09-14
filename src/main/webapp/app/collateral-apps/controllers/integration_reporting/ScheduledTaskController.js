@@ -57,6 +57,9 @@ DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService'
                     '<a title="Run Task" ng-click="grid.appScope.RunTask(row.entity)" class="btn btn-sm green-jungle uigrid-btn">' +
                     '   <i class="fa fa-play"></i>' +
                     '</a>' +
+                    '<a title="View Log" ng-click="grid.appScope.ViewLog(row.entity)" class="btn btn-sm blue-madison uigrid-btn">' +
+                    '   <i class="fa fa-search-plus"></i>' +
+                    '</a>' +
                     '</div>',
                     enableColumnMenu: false,
                     width: 180,
