@@ -109,7 +109,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            	$scope.disputeDetailResult = $scope.MarginCallDetail.marginCall.disputeCalculations.disputeCalculationDetail;
 	        		$scope.Trades.forEach(function(vTrade, kTrade){
 	        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
-	        				if(parseInt(v)==vTrade.ownPricing.id){
+	        				if(parseInt(v)==vTrade.trade.internalId){
 	        					vTrade.npvCounterParty	  = $scope.disputeDetailResult[v].difference;
 	        					 vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
 	        				}
