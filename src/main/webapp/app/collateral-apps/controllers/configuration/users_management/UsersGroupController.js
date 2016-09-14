@@ -17,7 +17,7 @@ DashboardApp.controller('UsersGroupController', ['$scope',
                     $scope.UsersGroup.Groups.push(group);
                 }
             });
-            console.log($scope.UsersGroup.Groups);
+            //console.log($scope.UsersGroup.Groups);
         });
 
     }]);

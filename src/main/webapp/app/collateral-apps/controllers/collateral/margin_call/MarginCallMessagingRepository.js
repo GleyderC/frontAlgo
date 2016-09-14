@@ -42,7 +42,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                     priority: 0
                 }
             },
-            {field: 'date.dateMessage', name: 'date', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'",},
+            {field: 'date.dateMessage', name: 'date', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'"},
             {field: 'sentReceived', name: 'direction'},
             {
                 name: 'Action',

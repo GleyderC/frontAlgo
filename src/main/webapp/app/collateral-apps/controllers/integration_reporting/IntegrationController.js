@@ -45,16 +45,26 @@ DashboardApp.controller('IntegrationController', [ '$scope',
                     priority: 0
                 }
             },
-            {field: 'mode' },
-            {field: 'loading'},
-            {field: 'log' }
+            {field: 'integrationMode' },
+            //{field: 'loading'},
+            {field: 'Time', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'" }
         ];
 
         IntegrationService.getAll().then(function (result) {
-            $scope.Integrations = result.data.dataResponse;
+            var date = new Date();
 
+            var month = date.getMonth()+1;
+            var day = date.getDate();
 
-            $scope.gridIntegrationOptions.data = $scope.Integrations;
+            var today = date.getFullYear() + '-' +
+                (month<10 ? '0' : '') + month + '-' +
+                (day<10 ? '0' : '') + day;
+            console.log(today);
+            if(result.data.dataResponse[today] != undefined) {
+                $scope.Integrations = result.data.dataResponse[today];
+
+                $scope.gridIntegrationOptions.data = $scope.Integrations;
+            }
 
         });
 
