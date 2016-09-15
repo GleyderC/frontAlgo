@@ -460,10 +460,12 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
             };
             var rowTmp = {};
             rowTmp.entity = newContact;
-            $scope.editRow($scope.gridContactPersonOptions, rowTmp);
+            $scope.editRow($scope.gridContactPersonOptions, rowTmp, 'lg');
         };
 
-        $scope.editRow = RowEditorModalService.editRow;
+        $scope.editRow = function (grid, row) {
+            RowEditorModalService.openModal(grid, row, 'lg', false);
+        }
 
         $scope.deleteRow = function (grid, row) {
 

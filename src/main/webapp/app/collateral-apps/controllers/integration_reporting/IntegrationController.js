@@ -47,25 +47,36 @@ DashboardApp.controller('IntegrationController', [ '$scope',
             },
             {field: 'integrationMode' },
             //{field: 'loading'},
-            {field: 'Time', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'" }
+            {field: 'time', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'" }
         ];
 
-        IntegrationService.getAll().then(function (result) {
-            var date = new Date();
+       this.refresh = function () {
+           IntegrationService.getAll().then(function (result) {
+               var date = new Date();
 
-            var month = date.getMonth()+1;
-            var day = date.getDate();
+               var month = date.getMonth()+1;
+               var day = date.getDate();
 
-            var today = date.getFullYear() + '-' +
-                (month<10 ? '0' : '') + month + '-' +
-                (day<10 ? '0' : '') + day;
-            console.log(today);
-            if(result.data.dataResponse[today] != undefined) {
-                $scope.Integrations = result.data.dataResponse[today];
+               var today = date.getFullYear() + '-' +
+                   (month<10 ? '0' : '') + month + '-' +
+                   (day<10 ? '0' : '') + day;
 
-                $scope.gridIntegrationOptions.data = $scope.Integrations;
-            }
+               if(result.data.dataResponse[today] != undefined) {
+                   $scope.Integrations = result.data.dataResponse[today];
 
-        });
+                   $scope.Integrations.forEach(function (Integration) {
+
+                       if(Integration != null){
+
+                           Integration.time = new Date(Integration.uploadTime.iLocalMillis);
+                       }
+                   });
+                   $scope.gridIntegrationOptions.data = $scope.Integrations;
+                   
+               }
+
+           });
+       }
+        this.refresh();
 
     }]);

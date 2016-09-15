@@ -1,4 +1,4 @@
-<div class="portlet light" ng-controller="IntegrationController">
+<div class="portlet light" ng-controller="IntegrationController as IntegrationCtrl">
     <div class="row portlet light bordered" id="legal-entity-table">
         <div class="portlet-title">
             <div class="caption">
@@ -19,6 +19,18 @@
             </div>
         </div>
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="btn-group">
+                        <button type="submit" class="btn green" uib-popover="Refresh"
+                                popover-trigger="mouseenter" ng-click="IntegrationCtrl.refresh()">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="portlet-body">
             <div class="row">
                 <div ui-grid="gridIntegrationOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
