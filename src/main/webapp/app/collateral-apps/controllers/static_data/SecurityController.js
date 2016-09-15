@@ -84,10 +84,14 @@ DashboardApp.controller('SecurityController', ['$scope',
             {field: 'issuerType'}
         ];
 
-        SecurityService.getAll().then(function (result) {
-            $scope.Securities = result.data.dataResponse;
-            $scope.gridSecurityOptions.data = $scope.Securities;
-        });
+        this.refresh = function () {
+            SecurityService.getAll().then(function (result) {
+                $scope.Securities = result.data.dataResponse;
+                $scope.gridSecurityOptions.data = $scope.Securities;
+            });
+        }
+
+        this.refresh();
 
         $scope.MappingUpload = function () {
 

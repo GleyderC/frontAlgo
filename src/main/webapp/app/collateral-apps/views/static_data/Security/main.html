@@ -1,4 +1,4 @@
-<div class="portlet light" ng-controller="SecurityController">
+<div class="portlet light" ng-controller="SecurityController as SecurityCtrl">
 
     <!-- MODAL MAPPING FILE -->
     <style>
@@ -331,6 +331,18 @@
             </div>
         </div>
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="btn-group">
+                        <button type="submit" class="btn green" uib-popover="Refresh"
+                                popover-trigger="mouseenter" ng-click="SecurityCtrl.refresh()">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="portlet-body">
             <div class="row">
                 <div ui-grid="gridSecurityOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
