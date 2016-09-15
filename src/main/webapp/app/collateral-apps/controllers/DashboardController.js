@@ -8,7 +8,8 @@ angular.module('CollateralApp').controller('DashboardController',
         'localStorageService',
         'MenuService',
 		'ModalService',
-        function ($rootScope, $scope, $request,$socket, toastr,localStorageService, $menuService, ModalService) {
+		'UserMessageService',
+        function ($rootScope, $scope, $request,$socket, toastr,localStorageService, $menuService, ModalService,UserMessage) {
 
             $scope.$workspaceTabsMgm = $menuService.MenuTree;
 
@@ -46,7 +47,6 @@ angular.module('CollateralApp').controller('DashboardController',
     				}
     			}
     			if(newMessage.signal == "SGN_NEW_USER_MESSAGE"){
-    				newMessage = [newMessage];
     				toastr.info("New user message ","Message Received",{closeButton: true});
     				data = [{
     						id : 1, 
@@ -58,7 +58,9 @@ angular.module('CollateralApp').controller('DashboardController',
     				}];
 	    			$scope.unReadMessages 		=   data.concat($scope.unReadMessages); 
 	    			$scope.qtyMessages 			=   $scope.unReadMessages.length;
-	    			$scope.gridUserMessagesData =   data.concat($scope.gridUserMessagesData);
+	    			UserMessage.getByDate(moment().format("YYYY-MM-DD")).success(function(data){
+ 	    				$scope.gridUserMessagesData = data.dataResponse;
+ 	    			});
     			}
     		});
 
