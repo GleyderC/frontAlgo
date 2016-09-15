@@ -4,8 +4,9 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService', '$scope', 'elementService',
-    '$timeout', 'localStorageService', 'uiGridConstants',
-    function (ScheduledTaskService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
+    '$timeout', 'localStorageService', 'uiGridConstants','RowEditorModalService',
+    function (ScheduledTaskService, $scope, elementService, $timeout, localStorageService,
+              uiGridConstants,RowEditorModalService) {
 
         /* Cargando datos en ScheduledTask ui-grid*/
         $scope.ScheduledTasks = [];
@@ -46,7 +47,7 @@ DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService'
                         priority: 0
                     }
                 },
-                {field: 'time', enableCellEdit: false, cellFilter: "date:'yyyy-MM-dd hh:mm:ss'"},
+                {field: 'time', enableCellEdit: false, cellFilter: "date:'hh:mm:ss'"},
                 {field: 'standardReportType', enableCellEdit: false},
                 {field: 'importDocumentType', enableCellEdit: false},
                 {
@@ -57,8 +58,8 @@ DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService'
                     '<a title="Run Task" ng-click="grid.appScope.RunTask(row.entity)" class="btn btn-sm green-jungle uigrid-btn">' +
                     '   <i class="fa fa-play"></i>' +
                     '</a>' +
-                    '<a title="View Log" ng-click="grid.appScope.ViewLog(row.entity)" class="btn btn-sm blue-madison uigrid-btn">' +
-                    '   <i class="fa fa-search-plus"></i>' +
+                    '<a title="View Log" ng-click="grid.appScope.ViewLog(grid, row)" class="btn btn-sm blue-madison uigrid-btn">' +
+                    '   <i class="fa fa-eye"></i>' +
                     '</a>' +
                     '</div>',
                     enableColumnMenu: false,
@@ -69,13 +70,34 @@ DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService'
             ]
         };
 
+        //set templateUrl with id modal edit
+        RowEditorModalService.templateUrl = 'view-log.html';
+
+        $scope.ViewLog = function (grid, row) {
+            RowEditorModalService.openModal(grid, row, 'sm', true);
+        }
+
+        $scope.RunTask = function (task) {
+            ScheduledTaskService.runTask(task.id).then(function (result) {
+                let Task = result.data.dataResponse;
+                if(Task != null){
+                    console.log(Task.log);
+
+                    let log = $scope.ScheduledTasks.filter(function (Task) {
+                        return Task.TaskLog == Task.log;
+                    });
+                    console.log(log);
+                }
+            });
+
+        }
         ScheduledTaskService.getAll().then(function (result) {
             let ScheduledTasks = result.data.dataResponse;
 
             ScheduledTasks.forEach(function (ScheduledTask) {
                 if(ScheduledTask != null) {
 
-                    ScheduledTask.time = new Date(ScheduledTask.actionTime.iLocalMillis);
+                    ScheduledTask.time = new Date(ScheduledTask.actionTime.iLocalMillis).getTime();
                     $scope.ScheduledTasks.push(ScheduledTask);
                 }
 

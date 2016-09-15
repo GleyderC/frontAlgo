@@ -1,7 +1,7 @@
 angular.module('DashboardApp')
     .factory('RowEditorModalService', ['$uibModal', function ($uibModal) {
         var service = {};
-        service.editRow = editRow;
+        service.openModal = openModal;
 
         service.templateUrl = '';
         service.controller = function($scope, $uibModalInstance, grid, row) {
@@ -27,11 +27,11 @@ angular.module('DashboardApp')
 
         };
 
-        function editRow(grid, row) {
+        function openModal(grid, row, size, backdrop) {
             $uibModal.open({
                 templateUrl: service.templateUrl,
-                size: 'lg',
-                backdrop: false,
+                size: size,
+                backdrop: backdrop,
                 controller: ['$scope', '$uibModalInstance', 'grid', 'row', service.controller],
                 controllerAs: 'vm',
                 resolve: {
