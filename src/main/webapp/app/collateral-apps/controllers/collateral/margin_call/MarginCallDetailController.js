@@ -60,7 +60,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
 	            $scope.Trades = result.data.dataResponse.trades;
 	            $scope.ownPricing  = result.data.dataResponse.marginCall.ownPricing;
-	            $scope.counterPartyPricing  = result.data.dataResponse.marginCall.counterPartyPricing;
+	            $scope.counterPartyPricing  = result.data.dataResponse.marginCall.counterpartyPricing;
 	            
 	            $scope.posted 	= result.data.dataResponse.postedCollateral;
 	            $scope.received = result.data.dataResponse.receivedCollateral;
@@ -112,7 +112,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	        		$scope.Trades.forEach(function(vTrade, kTrade){
 	        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
 	        				if(parseInt(v)==vTrade.trade.internalId){
-	        					vTrade.npvCounterParty	  = $scope.disputeDetailResult[v].difference;
+	        					vTrade.npvCounterParty_diff	  = $scope.disputeDetailResult[v].difference;
 	        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
 	        				}
 	        			});
@@ -127,7 +127,19 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
             		
             	}
 	            if(Object.keys($scope.counterPartyPricing.tradesPricingsByTradeId).length>0) {
-	            	vTrade.npvCounterParty	=	$scope.counterpartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInTradeCurrency;
+	            	if($scope.MarginCallDetail.marginCall["disputeCalculations"].hasOwnProperty("disputeCalculationDetail")){
+		            	$scope.disputeDetailResult = $scope.MarginCallDetail.marginCall.disputeCalculations.disputeCalculationDetail;
+//		            	vTrade.npvCounterParty	 = $scope.disputesDetail[v.trade.internalId].counterparty;
+		            	$scope.Trades.forEach(function(vTrade, kTrade){
+		        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
+		        				if(parseInt(v)==vTrade.trade.internalId){
+		        					vTrade.npvCounterParty_diff	  = $scope.disputeDetailResult[v].difference;
+		        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
+		        				}
+		        			});
+		        			vTrade.npvCounterParty  = $scope.counterPartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInTradeCurrency;
+		        		});
+	            	}
 	            }
 	            $scope.$watchCollection("dispute.disputeCalculations",function(n,o){
 	            	if(_.isEqual(n,o)){

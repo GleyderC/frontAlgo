@@ -73,7 +73,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             
             {field: 'priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'number:2', cellClass:'collateral-money'},
-            {field: 'npvCounterParty', name:'Diff', cellFilter:'number:2',enableCellEdit:false},
+            {field: 'npvCounterParty_diff', name:'Diff', cellFilter:'number:2',enableCellEdit:false},
             {
             	field: 'differencePercent', 
             	name:'Diff(%)', 
@@ -95,7 +95,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                   }
             },
             {	
-            	field: 'ownPricing.Counterparty', 
+            	field: 'npvCounterParty', 
             	name:'npv (Counterparty)', 
             	enableCellEdit : true,
             	cellClass:'collateral-money',
