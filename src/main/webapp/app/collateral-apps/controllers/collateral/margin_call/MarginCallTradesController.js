@@ -68,10 +68,10 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                     }
                 }
             },
-            {field: 'ownPricing.price', name:'Npv (Curr)', cellFilter: 'number:2', cellClass:'collateral-money',
+            {field: 'priceInTradeCurrency', name:'Npv (Curr)', cellFilter: 'number:2', cellClass:'collateral-money',
             	enableCellEdit : false},
             
-            {field: 'ownPricing.priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
+            {field: 'priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'number:2', cellClass:'collateral-money'},
             {field: 'npvCounterParty', name:'Diff', cellFilter:'number:2',enableCellEdit:false},
             {
@@ -141,6 +141,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
 	            $scope.Trades = result.data.dataResponse.trades;
 	            $scope.gridTradesOptions.data = $scope.Trades;
 	            $scope.pool  =  result.data.dataResponse.poolDisplays;
+	            $scope.ownPricing = resutl.data.dataResponse.marginCall.ownPricing;
 	            $scope.disputesDetail = result.data.dataResponse.marginCall.marginCallElementsByLiabilityType[$scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeCalculationDetail
 	            $scope.Trades.forEach(function(v,k){
 	            	if($scope.disputesDetail[v.trade.internalId]!==undefined){
@@ -149,6 +150,11 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
 	            		v.ownPricing["Counterparty"]  = $scope.disputesDetail[v.trade.internalId].counterparty;
 	            		v.differencePercent   =$scope.disputesDetail[v.trade.internalId].differencePercentage;
 	            	}  	
+	            	if(Object.keys($scope.ownPricing.tradesPricingsByTradeId).length>0) {
+	            		v.priceInBaseCurrency = v.ownPricing.tradesPricingByTradeId[v.trade.internalId].priceInBaseCurrency;
+	            		v.Pricing.priceInTradeCurrency = v.ownPricing.tradesPricingByTradeId[v.trade.internalId].priceInTradeCurrency;
+
+	            	}
 	            });
 	            $scope.gridTradesOptions.data = $scope.Trades;
 	        });

@@ -7,17 +7,20 @@
     	$scope.gridUserMessages = {
     			data: [],
     			columnDefs : [
-				{ 	name:"From",
-					field : "hasBeenSentByEmail"
-				},
-				{ name: "Title ", 
-					field : "messageContentBasic"},
-				{
-					name :"Action",
-					cellTemplate : "<div class='text-center' > <button class='btn btn-sm btn-primary uigrid-btn'  ng-click='grid.appScope.viewMessage(row.entity)'> <i class='fa fa-eye'></i></button></div>"
-						
-				}
-    			          ],
+					{ 	name:"From",
+						field : "hasBeenSentByEmail"
+					},
+					{ name: "Title ", 
+						field : "messageContentBasic"},
+					{
+						name :"Action",
+						cellTemplate : "<div class='text-center' > <button class='btn btn-sm btn-primary uigrid-btn'  ng-click='grid.appScope.viewMessage(row.entity)'> <i class='fa fa-eye'></i></button></div>"
+							
+					}
+				],
+    			onRegisterApi : function(gridApi){
+    			                	$scope.gridApi = gridApi;
+    			}    	
     	} ;
     	
     	$scope.messageContent  = {} ;
@@ -35,4 +38,12 @@
  	    		}
     	};
     	$scope.getNewMessages();
+    	   $scope.$watchCollection("$parent.gridUserMessagesData",function(nV,oV){
+           	if(nV===oV){
+           		return false; 
+           	}
+           	$scope.gridUserMessages.data = nV;
+           	$scope.gridApi.core.refresh();
+       		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+           });
 }]);
