@@ -59,7 +59,9 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
 	            //$scope.marginCallTrade = result.data.dataResponse.marginCall;
 	            $scope.Trades = result.data.dataResponse.trades;
-	            $scope.ownPricing  = result.data.dataResponse.marginCall.ownPricing; 
+	            $scope.ownPricing  = result.data.dataResponse.marginCall.ownPricing;
+	            $scope.counterPartyPricing  = result.data.dataResponse.marginCall.counterPartyPricing;
+	            
 	            $scope.posted 	= result.data.dataResponse.postedCollateral;
 	            $scope.received = result.data.dataResponse.receivedCollateral;
 	            $scope.Messages = result.data.dataResponse.marginCall.messages;
@@ -111,7 +113,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
 	        				if(parseInt(v)==vTrade.trade.internalId){
 	        					vTrade.npvCounterParty	  = $scope.disputeDetailResult[v].difference;
-	        					 vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
+	        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
 	        				}
 	        			});
 	        		});
@@ -119,11 +121,14 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            }
 	            if(Object.keys($scope.ownPricing.tradesPricingsByTradeId).length>0) {
             		$scope.Trades.forEach(function(vTrade, kTrade){
-            			vTrade.priceInBaseCurrency =   $scope.ownPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInBaseCurrency;
+            			vTrade.priceInBaseCurrency 	=   $scope.ownPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInBaseCurrency;
             			vTrade.priceInTradeCurrency =   $scope.ownPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInTradeCurrency;
             		});
-
+            		
             	}
+	            if(Object.keys($scope.counterpartyPricing.tradesPricingsByTradeId).length>0) {
+	            	vTrade.npvCounterParty	=	$scope.counterpartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInTradeCurrency;
+	            }
 	            $scope.$watchCollection("dispute.disputeCalculations",function(n,o){
 	            	if(_.isEqual(n,o)){
 	            		return false; 
