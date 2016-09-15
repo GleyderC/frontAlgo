@@ -126,7 +126,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
             		});
             		
             	}
-	            if(Object.keys($scope.counterpartyPricing.tradesPricingsByTradeId).length>0) {
+	            if(Object.keys($scope.counterPartyPricing.tradesPricingsByTradeId).length>0) {
 	            	vTrade.npvCounterParty	=	$scope.counterpartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInTradeCurrency;
 	            }
 	            $scope.$watchCollection("dispute.disputeCalculations",function(n,o){
