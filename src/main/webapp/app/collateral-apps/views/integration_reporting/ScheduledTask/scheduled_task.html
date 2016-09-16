@@ -40,7 +40,24 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                {{ScheduledTasks.TaskLog}}
+                <div class="col-md-12 portlet light bordered">
+                    <div class="alert alert-info" ng-bind="entity.log" ng-show="entity.log!=''">
+                        <strong>Log:</strong> You have 198 unread messages. </div>
+
+                    <div class="row" ng-if="entity.log!=''">
+                        <div class="col-md-offset-11">
+                            <div class="btn-group">
+                                <button type="submit" class="btn green" ngclipboard data-clipboard-text="{{entity.log}}"
+                                        uib-popover="Copy to Clipboard" popover-trigger="mouseenter">
+                                    <i class="fa fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning" ng-show="entity.log==''">
+                        <strong>Warning!</strong> You Must Run this Task </div>
+                </div>
             </div>
         </div>
     </script>

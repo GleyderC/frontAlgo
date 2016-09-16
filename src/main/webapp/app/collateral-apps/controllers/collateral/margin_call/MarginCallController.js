@@ -113,6 +113,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                 {
                     name: 'Currency',
                     field: 'contract.baseCurrency',
+                    width: 50,
                     filter: {
                         type: uiGridConstants.filter.SELECT,
                         selectOptions: [{
@@ -136,8 +137,9 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                 {
                     name: 'VM',
                     field: 'marginCallAmount',
-                    width: 50,
-                    cellClass:'collateral-money'
+                    width: 120,
+                    cellClass:'collateral-money',
+                    cellFilter:'number:2'
 
                 },
                 { name: 'IM', width: 50, cellClass:'collateral-money' },

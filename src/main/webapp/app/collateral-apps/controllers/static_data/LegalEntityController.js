@@ -434,7 +434,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         });
 
         //set templateUrl with id modal edit
-        RowEditorModalService.templateUrl = 'edit-modal-contact.html';
+        //RowEditorModalService.templateUrl = 'edit-modal-contact.html';
 
         /*ui-grid contactPerson*/
         $scope.addRow = function () {
@@ -464,7 +464,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
         };
 
         $scope.editRow = function (grid, row) {
-            RowEditorModalService.openModal(grid, row, 'lg', false);
+            RowEditorModalService.openModal('edit-modal-contact.html', grid, row, 'lg', false);
         }
 
         $scope.deleteRow = function (grid, row) {
