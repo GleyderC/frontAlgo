@@ -137,7 +137,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 		        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
 		        				}
 		        			});
-		        			vTrade.npvCounterParty  = $scope.counterPartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInTradeCurrency;
+		        			vTrade.npvCounterParty  = $scope.counterPartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInBaseCurrency;
 		        		});
 	            	}
 	            }
