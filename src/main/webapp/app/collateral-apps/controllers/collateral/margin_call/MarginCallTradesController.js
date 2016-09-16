@@ -116,7 +116,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             		}
             		$scope.disputeDetailEdit = true;
             		$scope.disputeList[rowEntity.trade.internalId] ={
-            				myValue : rowEntity.ownPricing.priceInBaseCurrency,
+            				myValue : rowEntity.priceInBaseCurrency,
             				"counterpartyValue" : parseFloat(newValue.replace(/,/,'')),
             				"agreedValue" : parseFloat(newValue.replace(/,/,''))
             				
@@ -173,8 +173,8 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         		var disputeDetailResult = resp.dataResponse.disputeCalculations.disputeCalculationDetail;
         		$scope.Trades.forEach(function(vTrade, kTrade){
         			Object.keys(disputeDetailResult).forEach(function(v,k){
-        				if(parseInt(v)==vTrade.ownPricing.id){
-        					vTrade.npvCounterParty	  = disputeDetailResult[v].difference;
+        				if(parseInt(v)==vTrade.trade.internalId){
+        					vTrade.npvCounterParty_diff	  = disputeDetailResult[v].difference;
         					 vTrade.differencePercent   	=disputeDetailResult[v].differencePercentage;
         				}
         			});
