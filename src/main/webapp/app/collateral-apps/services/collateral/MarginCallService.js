@@ -24,29 +24,73 @@ angular.module('DashboardApp')
 //        	let md5 = $md5.createHash(url);
         	$request.getFile("/servlet/File/Select/?fileMD5="+url);
         };
-        this.sendIssueMarginCall = function (marginCallId,collateralLiabilityType) {
-            var MarginSent = "";
-            var defered = $q.defer();
-            var promise = defered.promise;
-
-            var params = {
+        this.sendIssueMarginCall = function (marginCallId, collateralLiabilityType, action) {
+            let params = {
 
                 "marginCallId": marginCallId,
                 "collateralLiabilityType": collateralLiabilityType
             };
+            //console.log(params);
+            let result = '';
 
-            $request.post('/servlet/MarginCall/ActionIssueMarginCall/',params)
-                .then(function (Response) {
-                    MarginSent = "sent";
-                    toastr.success("Margin Call Issuance Sent by e-mail ","Success");
-                    defered.resolve(MarginSent);
-                },
-                function (error) {
-                    defered.reject(error);
-                });
+            if(action == 'ActionIssueMarginCall'){
+                result = $request.post('/servlet/MarginCall/ActionIssueMarginCall/',params)
+                    .then(function (Response) {
+                        MarginSent = "sent";
+                        toastr.success("Message Sent","Success");
+                        return Response;
+                    });
+            }
+            else if(action == 'ActionIssueDispute'){
+                result = $request.post('/servlet/MarginCall/ActionIssueDispute/',params)
+                    .then(function (Response) {
+                        MarginSent = "sent";
+                        toastr.success("Message Sent","Success");
+                        return Response;
+                    });
+            }
+            else if(action == 'ActionSendAgreeMarginCall'){
+                result = $request.post('/servlet/MarginCall/ActionSendAgreeMarginCall/',params)
+                    .then(function (Response) {
+                        MarginSent = "sent";
+                        toastr.success("Message Sent","Success");
+                        return Response;
+                    });
+            }
+            else if(action == 'SendAllocationProposal'){
+                result = $request.post('/servlet/MarginCall/SendAllocationProposal/',params)
+                    .then(function (Response) {
+                        MarginSent = "sent";
+                        toastr.success("Message Sent","Success");
+                        return Response;
+                    });
+            }
+            else if(action == 'SendRejectAllocationProposal'){
+                result = $request.post('/servlet/MarginCall/SendRejectAllocationProposal/',params)
+                    .then(function (Response) {
+                        MarginSent = "sent";
+                        toastr.success("Message Sent","Success");
+                        return Response;
+                    });
+            }
+            else if(action == 'SendAgreeAllocationProposal'){
+                result = $request.post('/servlet/MarginCall/SendAgreeAllocationProposal/',params)
+                    .then(function (Response) {
+                        MarginSent = "sent";
+                        toastr.success("Message Sent","Success");
+                        return Response;
+                    });
+            }
+            else if(action == 'SendToBackOffice'){
+                result = $request.post('/servlet/MarginCall/SendToBackOffice/',params)
+                    .then(function (Response) {
+                        MarginSent = "sent";
+                        toastr.success("Message Sent","Success");
+                        return Response;
+                    });
+            }
 
-
-            return promise;
+            return result;
         };
         
         this.updateDispute  = function(dispute){

@@ -98,7 +98,7 @@
 
                 },
                 {
-                    name : 'Exposure / Collateral',
+                    name : 'NetExposure',
                      enableFiltering: false,
                  }  ,
                 {

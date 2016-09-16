@@ -224,18 +224,25 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         };
       
         
-        this.sendMargin = function () {
+        this.sendMargin = function (action) {
             $scope.sendFlag = true;
-            var result = MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA").
-                then(function (result) {
-                    $scope.sendFlag = false;
-            },
-                function (error) {
-                    console.error(error);
-                    $scope.sendFlag = false;
-                });
 
+			MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA", action).then(function (result) {
+				if(result != ''){
+					$scope.sendFlag = false;
+
+					$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.status = result.data.dataResponse.marginCallElementsByLiabilityType.status;
+
+					$scope.loadData();
+				}
+				else{
+					console.log("Error. Debe especificarse la acción a ejecutar");
+				}
+
+			},
+				function (error) {
+					console.error(error);
+					$scope.sendFlag = false;
+				});
         };
-       $scope.loadData();
-
     }]);
