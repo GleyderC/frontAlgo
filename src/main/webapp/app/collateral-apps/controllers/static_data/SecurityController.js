@@ -237,9 +237,9 @@ DashboardApp.controller('SecurityController', ['$scope',
                                             field.checked = false;
                                         });
 
-                                        angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
+                                        /*angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
                                             col.colDefinitionInfo = {};
-                                        });
+                                        });*/
 
                                         angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col, index) {
 
@@ -340,7 +340,7 @@ DashboardApp.controller('SecurityController', ['$scope',
 
                                         let objRequest = {};
 
-                                        objRequest = {
+                                        /*objRequest = {
                                             marginCallId: MCMessage.marginCallID,
                                             contractId: MCMessage.contractId,
                                             mcMessageId: MCMessage.id,
@@ -364,7 +364,7 @@ DashboardApp.controller('SecurityController', ['$scope',
 
                                         });
 
-                                        MarginCallService.SaveMappingDefinition(objRequest);
+                                        MarginCallService.SaveMappingDefinition(objRequest);*/
 
                                         $uibModalInstance.close();
                                         toastr.success("Mapping Definition was saved", "Success:");

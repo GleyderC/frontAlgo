@@ -53,8 +53,32 @@ angular.module('DashboardApp')
         	  return $request.post('/servlet/MarginCallAndContract/UpdateDispute/',dispute); 
         };
 
+        /*MarginCallService.getMCMessages().then(function (Response){
 
-        //Process Margin Call Message
+         let msgs = Response.data.dataResponse.marginCall.messages;
+
+         if( angular.isArray(msgs) && msgs.length > 0 )
+         {
+         angular.forEach( msgs, function( msg ){
+
+         msg.date.dateMessage = new Date(msg.date.iMillis);
+         $scope.gridMessagesOptions.data.push(msg);
+
+         });
+         }
+
+         });*/
+        //Processing Margin Call Message
+        this.getMCMessages = function (){
+
+            return $request.post('/servlet/MarginCall/NextMarginCall', { id: 1 } ).then(function (Response) {
+
+                return $request.post('/servlet/MarginCallAndContract/SelectDetailById', { id: Response.data.dataResponse.id });
+
+            });
+
+        }
+
         this.ProcessMCMessage  = function(params){
         	  return $request.post('/servlet/Mapping/ProcessMCMessage',params);
         };

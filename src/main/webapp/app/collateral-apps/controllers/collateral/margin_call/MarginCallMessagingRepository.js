@@ -74,12 +74,27 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
         });
 
         $scope.getNewMessages = function (MarginCallId) {
+
+            $scope.gridMessagesOptions.data = [];
+            
             MarginCallService.getDetail($scope.MarginCallDetail.marginCall.id).then(function (result) {
+
+                if (typeof result.data.dataResponse != 'object' && typeof result.data.dataResponse.marginCall != 'object'){
+
+                    return false;
+
+                }
+
                 $scope.Messages = result.data.dataResponse.marginCall.messages;
+                
                 $scope.Messages.forEach(function (message) {
+
                     message.date.dateMessage = new Date(message.date.iMillis);
+
                 });
+
                 $scope.gridMessagesOptions.data = $scope.Messages;
+
             });
         };
         $scope.getPDF = function (url) {
@@ -165,9 +180,16 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                             field.checked = false;
                         });
 
-                        angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
-                            col.colDefinitionInfo = {};
-                        });
+                        /*angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
+
+                            if ( angular.isUndefined( col.colDefinitionInfo ) == true )
+                            {
+
+                                col.colDefinitionInfo = {};
+
+                            }
+
+                        });*/
 
                         angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col, index) {
 
