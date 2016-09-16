@@ -71,22 +71,25 @@ DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService'
         };
 
         //set templateUrl with id modal edit
-        RowEditorModalService.templateUrl = 'view-log.html';
+        //RowEditorModalService.templateUrl = 'view-log.html';
 
         $scope.ViewLog = function (grid, row) {
-            RowEditorModalService.openModal(grid, row, 'sm', true);
+            RowEditorModalService.openModal('view-log.html', grid, row, 'md', true);
         }
 
         $scope.RunTask = function (task) {
             ScheduledTaskService.runTask(task.id).then(function (result) {
                 let Task = result.data.dataResponse;
                 if(Task != null){
-                    console.log(Task.log);
+                    //console.log(Task.log);
 
-                    let log = $scope.ScheduledTasks.filter(function (Task) {
-                        return Task.TaskLog == Task.log;
+                    $scope.ScheduledTasks.forEach(function (ScheduledTask) {
+                        if(ScheduledTask != null & ScheduledTask.id == Task.id) {
+
+                            ScheduledTask.log = Task.log;
+                        }
+
                     });
-                    console.log(log);
                 }
             });
 

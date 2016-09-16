@@ -27,9 +27,9 @@ angular.module('DashboardApp')
 
         };
 
-        function openModal(grid, row, size, backdrop) {
+        function openModal(templateUrl, grid, row, size, backdrop) {
             $uibModal.open({
-                templateUrl: service.templateUrl,
+                templateUrl: templateUrl,
                 size: size,
                 backdrop: backdrop,
                 controller: ['$scope', '$uibModalInstance', 'grid', 'row', service.controller],
