@@ -147,16 +147,16 @@ DashboardApp.service('MenuService', function () {
             {
                 head: {
                     icon: 'fa fa-warning',
-                    text: 'Risk'
+                    text: 'Collateral Dashboard'
                 },
                 childWorkspace : {
                     tabList:[
                         {
                             head: {
                                 icon: '',
-                                text: 'Issuer Risk'
+                                text: 'CounterParty Risk'
                             },
-                            templateUrl: paths.views + '/risk/issuer_risk.html',
+                            templateUrl: paths.views + '/risk/counterparty_risk.html',
                             autoload : true
                         },
                         {
@@ -170,9 +170,9 @@ DashboardApp.service('MenuService', function () {
                         {
                             head: {
                                 icon: '',
-                                text: 'CounterParty Risk'
+                                text: 'Issuer Risk'
                             },
-                            templateUrl: paths.views + '/risk/counterparty_risk.html',
+                            templateUrl: paths.views + '/risk/issuer_risk.html',
                             autoload : true
                         },
                         {

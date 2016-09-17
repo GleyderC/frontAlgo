@@ -63,43 +63,44 @@
             columnDefs: [
                 {
                     name : 'Principal',
-                    field: 'counterpartyA.name',
+                    field: 'contract.counterpartyA.name',
                     headerCellClass: $scope.highlightFilteredHeader
                 },
                 {
                     name : 'Fund/Clearing Broker',
-                    field: 'ccpName',
+                    field: 'contract.ccpName',
                     enableFiltering:false	
                     
                 },
                 {
                     name : 'Counterparty',
-                    field: 'counterpartyB.name',
+                    field: 'contract.counterpartyB.name',
                     headerCellClass: $scope.highlightFilteredHeader
                 },
 
                 {
 
                     name : 'Contract Type',
-                    field: 'contractType',
+                    field: 'contract.contractType',
                     headerCellClass: $scope.highlightFilteredHeader
                 },
                 {
                     name : 'Rating',
-                    field: 'counterpartyB.riskProfile.SPRating',
+                    field: 'contract.counterpartyB.riskProfile.SPRating',
                     enableFiltering: false,
                     width: 80
                 },
                 {
                     name : 'Margin Freq',
-                    field: 'marginFrequency',
+                    field: 'contract.marginFrequency',
                     enableFiltering:false,
                     width: 80
 
                 },
                 {
                     name : 'Exposure / Collateral',
-                     enableFiltering: false,
+                    field: 'netExposure',
+                    enableFiltering: false,
                  }  ,
                 {
                 	 name: 'Actions',
@@ -142,40 +143,41 @@
                 arr["counterpartyB"] = {};
                 arr["counterpartyA"] = {};
                 data.dataResponse.forEach(function(v,k){
-                	if(v.hasOwnProperty("clearingMemberLegalEntity")){//CCPHouseAccount 
+                    //console.log(v.contract);
+                	if(v.contract.hasOwnProperty("clearingMemberLegalEntity")){//CCPHouseAccount
                 		v["counterpartyA"] 	= {};
-                		v["counterpartyA"]  = v.clearingMemberLegalEntity;
+                		v["counterpartyA"]  = v.contract.clearingMemberLegalEntity;
                 		v["counterpartyB"]  = {};
-                		v["counterpartyB"]["name"]= v.ccpName;
-                		v.ccpName  = "";
+                		v["counterpartyB"]["name"]= v.contract.ccpName;
+                		v.contract.ccpName  = "";
                 		//Be careful 
                 		//v["counterpartyB"]["riskProfile"]  = {};
                 		//v["counterpartyB"]["riskProfile"]["SPRating"]  = v.clearingMemberLegalEntity.riskProfile.SPRating;
                 	}
-                	if(v.hasOwnProperty("client") && v.hasOwnProperty("clearingBroker")){
+                	if(v.contract.hasOwnProperty("client") && v.contract.hasOwnProperty("clearingBroker")){
                 		v["counterpartyA"] 	= {};
-                		v["counterpartyA"]  = v.client;
+                		v["counterpartyA"]  = v.contract.client;
                 		v["contractType"] = "CCP Client Clearing"
-//                		v["clearingBroker"]  = v.clearingBroker;
-                		v["ccpName"]  = v.clearingBroker.name;
-                		v["counterpartyB"]  = {}; 
-                		v["counterpartyB"]["name"] =  v.accountName;
-                		v["counterpartyB"]["otherName"] =  v.accountName;
+//                		v["clearingBroker"]  = v.contract.clearingBroker;
+                		v["ccpName"]  = v.contract.clearingBroker.name;
+                		v["counterpartyB"]  = {};
+                		v["counterpartyB"]["name"] =  v.contract.accountName;
+                		v["counterpartyB"]["otherName"] =  v.contract.accountName;
                 	}
                 	
                 	//Building ui grid Select for filter
-                    if (v.hasOwnProperty("contractType")) {
-                    	if(v.contractType.toUpperCase()==="BILATERAL"){
-                    		let bilateralContractType = v.bilateralContractType;
-                    		v.contractType =  v.bilateralContractType;
+                    if (v.contract.hasOwnProperty("contractType")) {
+                    	if(v.contract.contractType.toUpperCase()==="BILATERAL"){
+                    		let bilateralContractType = v.contract.bilateralContractType;
+                    		v.contract.contractType =  v.contract.bilateralContractType;
                     	}
-                		arr["contractType"][v.contractType] = v.contractType;
+                		arr["contractType"][v.contract.contractType] = v.contract.contractType;
                 	}
-                	if(v.hasOwnProperty("counterpartyA")){
-                		arr["counterpartyA"][v.counterpartyA.otherName]= v.counterpartyA; 
+                	if(v.contract.hasOwnProperty("counterpartyA")){
+                		arr["counterpartyA"][v.contract.counterpartyA.otherName]= v.contract.counterpartyA;
                 	}
-                	if(v.hasOwnProperty("counterpartyB")){
-                		arr["counterpartyB"][v.counterpartyB.otherName] = v.counterpartyB; 
+                	if(v.contract.hasOwnProperty("counterpartyB")){
+                		arr["counterpartyB"][v.contract.counterpartyB.otherName] = v.contract.counterpartyB;
                 	}
                 });
                 if(Object.keys(arr.contractType).length>0){
