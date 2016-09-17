@@ -436,6 +436,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/integration_reporting/IntegrationController.js',
                             'collateral-apps/controllers/integration_reporting/ScheduledTaskController.js',
 
+                            /* Files Upload Controller */
+                            'collateral-apps/controllers/integration_reporting/IRFileUploadController.js',
+
                             /* Profile Menu */
                             'collateral-apps/controllers/UserProfileController.js',
                             /* Users Managment Controller */

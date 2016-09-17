@@ -1,4 +1,4 @@
-<div class="portlet light" ng-controller="SecurityController">
+<div class="portlet light" ng-controller="IRFileUploadController">
 
 	<!-- MODAL MAPPING FILE -->
 	<style>
@@ -300,11 +300,11 @@
 
 		<div class="modal-footer">
 			<button class="btn btn-warning" type="button" ng-click="cancel()">Close</button>
-			<button class="btn btn-primary" type="button" ng-if="processingMappingFile" ng-click="processMappingFile()">Process File</button>
+			<button class="btn btn-primary" type="button" ng-show="processingMappingFile" ng-click="processMappingFile()">Process File</button>
 		</div>
 	</script>
 
-	<div class="row portlet light bordered">
+	<div class="row portlet light bordered" style="min-height: 500px;">
 		<div class="portlet-title">
 			<div class="caption">
 				<i class="fa fa-lock font-dark font-green-haze"></i>
