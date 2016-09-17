@@ -68,8 +68,7 @@
                 },
                 {
                     name : 'Fund/Clearing Broker',
-                    field: 'contract.ccpName',
-                    enableFiltering:false	
+                    field: 'contract.ccpName'
                     
                 },
                 {
@@ -87,21 +86,18 @@
                 {
                     name : 'Rating',
                     field: 'contract.counterpartyB.riskProfile.SPRating',
-                    enableFiltering: false,
                     width: 80
                 },
                 {
                     name : 'Margin Freq',
                     field: 'contract.marginFrequency',
-                    enableFiltering:false,
                     width: 80
 
                 },
                 {
-                    name : 'Exposure / Collateral',
                     field: 'netExposure',
-                    enableFiltering: false,
-                 }  ,
+                    cellFilter: 'number:2', cellClass:'collateral-money'
+                 },
                 {
                 	 name: 'Actions',
                      cellTemplate: paths.views + '/collateral/agreements/agr_action_buttons.html',

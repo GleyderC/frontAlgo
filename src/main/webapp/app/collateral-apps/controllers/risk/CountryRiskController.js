@@ -145,8 +145,8 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                         }
                     },
                     dataLabels: {
-                        enabled: true,
-                        format: "{point.iso-a2}"
+                        /*enabled: true,
+                        format: "{point.iso-a2}"*/
                     },
                     point:{
                         events:{
