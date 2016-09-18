@@ -47,7 +47,8 @@ DashboardApp.controller('IntegrationController', [ '$scope',
             },
             {field: 'integrationMode' },
             //{field: 'loading'},
-            {field: 'time', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'" }
+            {field: 'time', cellFilter: "date:'yyyy-MM-dd hh:mm:ss'" },
+            {field: 'log'}
         ];
 
        this.refresh = function () {
