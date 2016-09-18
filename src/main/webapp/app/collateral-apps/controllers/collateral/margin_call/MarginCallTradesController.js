@@ -73,11 +73,12 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             
             {field: 'priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'number:2', cellClass:'collateral-money'},
-            {field: 'npvCounterParty_diff', name:'Diff', cellFilter:'number:2',enableCellEdit:false},
+            {field: 'npvCounterParty_diff', name:'Diff', cellFilter:'number:2',enableCellEdit:false,cellClass :'collateral-money'},
             {
             	field: 'differencePercent', 
             	name:'Diff(%)', 
             	cellFilter:'number:2',
+            	cellClass :'collateral-money',
             	
             	sort: {
                     direction: uiGridConstants.DESC,
@@ -85,7 +86,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                 },
                 enableCellEdit : false,
                 cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                	let val = grid.getCellValue(row,col);
+                	 val = grid.getCellValue(row,col);
                 	val =  val < 0 ?  val * -1 : val ;               	
                     if (val > $scope.tolerance) {
                     	return 'text-danger';
