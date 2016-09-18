@@ -300,7 +300,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     v.contract["counterpartyA"] = {};
                     v.contract["counterpartyA"] = v.client;
                     v.contract["contractType"] = "CCP Client Clearing";
-                    v.contract["ccpName"] = v.clearingBroker.name;
+                    v.contract["ccpName"] = v.contract.ccpName;
                     v.contract["counterpartyB"] = {};
                     v.contract["counterpartyB"]["name"] = v.contract.ccpName;
                 }
