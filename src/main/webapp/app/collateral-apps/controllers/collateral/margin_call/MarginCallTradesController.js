@@ -78,8 +78,6 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             	field: 'differencePercent', 
             	name:'Diff(%)', 
             	cellFilter:'number:2',
-            	cellClass :'collateral-money',
-            	
             	sort: {
                     direction: uiGridConstants.DESC,
                     priority: 1
@@ -89,9 +87,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                 	 val = grid.getCellValue(row,col);
                 	val =  val < 0 ?  val * -1 : val ;               	
                     if (val > $scope.tolerance) {
-                    	return 'text-danger';
+                    	return 'text-danger collateral-money';
                     }else{
-                    	return '';
+                    	return 'collateral-money ';
                     }
                   }
             },
