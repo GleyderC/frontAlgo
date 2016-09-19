@@ -113,7 +113,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
 	        				if(parseInt(v)==vTrade.trade.internalId){
 	        					vTrade.npvCounterParty_diff	  = $scope.disputeDetailResult[v].difference;
-	        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
+	        					 vTrade.differencePercent   	=Number(($scope.disputeDetailResult[v].differencePercentage*100).toString().match(/^\d+(?:\.\d{0,2})?/)) ;
 	        				}
 	        			});
 	        		});
@@ -134,7 +134,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 		        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
 		        				if(parseInt(v)==vTrade.trade.internalId){
 		        					vTrade.npvCounterParty_diff	  = $scope.disputeDetailResult[v].difference;
-		        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
+		        					 vTrade.differencePercent   	=Number(($scope.disputeDetailResult[v].differencePercentage*100).toString().match(/^\d+(?:\.\d{0,2})?/)) ;
 		        				}
 		        			});
 		        			vTrade.npvCounterParty  = $scope.counterPartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInBaseCurrency;

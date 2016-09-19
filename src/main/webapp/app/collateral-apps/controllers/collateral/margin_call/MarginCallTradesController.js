@@ -77,14 +77,13 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             {
             	field: 'differencePercent', 
             	name:'Diff(%)', 
-            	cellFilter:'number:2',
             	sort: {
                     direction: uiGridConstants.DESC,
                     priority: 1
                 },
                 enableCellEdit : false,
                 cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                	 val = grid.getCellValue(row,col);
+                	let val = grid.getCellValue(row,col);
                 	val =  val < 0 ?  val * -1 : val ;               	
                     if (val > $scope.tolerance) {
                     	return 'text-danger collateral-money';
@@ -174,7 +173,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         			Object.keys(disputeDetailResult).forEach(function(v,k){
         				if(parseInt(v)==vTrade.trade.internalId){
         					vTrade.npvCounterParty_diff	  = disputeDetailResult[v].difference;
-        					 vTrade.differencePercent   	=disputeDetailResult[v].differencePercentage;
+        					 vTrade.differencePercent   	=Number((disputeDetailResult[v].differencePercentage*100).toString().match(/^\d+(?:\.\d{0,2})?/)) ;
         				}
         			});
         		});
