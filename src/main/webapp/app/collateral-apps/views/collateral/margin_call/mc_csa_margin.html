@@ -151,21 +151,23 @@
                             </div>
 
                         </div>
+                        
                         <div class="row">
                             <label class="control-label col-md-2">Dispute comments</label>
                             <div class="col-md-10">
                                 <textarea class="form-control " ng-model="dispute.disputeCalculations.disputeComments"  rows="3"></textarea>
                             </div>
                         </div>
+                        <br/>
                         <div class="row" ng-show="dispute.disputeCalculations.difference!=0">
 							 
-                            <label class="control-label col-md-2">Difference</label>
+                            <label class="control-label col-md-2"><strong>Difference</strong></label>
                             <div class="col-md-4">
-                                <label class="control-label collateral-money" >{{dispute.disputeCalculations.difference | number:2}}</label>
+	                            <input ui-number-mask="2" disabled class="collateral-money form-control border-purple text-difference" ng-model="dispute.disputeCalculations.difference" />
                             </div>
-                            <label class="control-label col-md-2">Difference %</label>
+                            <label class="control-label col-md-2"> <strong>Difference</strong> </label>
                             <div class="col-md-4">
-                                <label class="control-label collateral-money" >{{dispute.disputeCalculations.differencePercentage | number:2}}% </label>
+								<input disabled class="collateral-money  form-control border-purple text-difference" ng-model="dispute.disputeCalculations.differencePercentage" />
                             </div>
 
                         </div>
