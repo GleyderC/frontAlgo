@@ -136,18 +136,18 @@
                             </div>
                             <label class="control-label col-md-2">CrPrty call</label>
                             <div class="col-md-4">
-                                <input ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.counterpartyValue" class="form-control collateral-money" placeholder="">
+                                <input ng-keypress="keyPressDispute($event,dispute)" ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.counterpartyValue" class="form-control collateral-money" placeholder="">
                             </div>
                         </div>
                         <div class="row">
 
                             <label class="control-label col-md-2">Agreed margin</label>
                             <div class="col-md-4">
-                                <input ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.agreedMargin"  class="form-control collateral-money" placeholder="">
+                                <input ng-keypress="keyPressDispute($event,dispute)" ui-number-mask="2" type="text" ng-model="dispute.disputeCalculations.agreedMargin"  class="form-control collateral-money" placeholder="">
                             </div>
                             <label class="control-label col-md-2">Tolerance % </label>
                             <div class="col-md-4">
-                                <input type="text" ng-model="tolerancePercentage" ng-change="changeTolerance(tolerancePercentage);" class="form-control collateral-money " placeholder="" maxlength="5">
+                                <input ng-keypress="keyPressDispute($event,dispute)"type="text" ng-model="tolerancePercentage" ng-change="changeTolerance(tolerancePercentage);" class="form-control collateral-money " placeholder="" maxlength="5">
                             </div>
 
                         </div>
@@ -155,7 +155,7 @@
                         <div class="row">
                             <label class="control-label col-md-2">Dispute comments</label>
                             <div class="col-md-10">
-                                <textarea class="form-control " ng-model="dispute.disputeCalculations.disputeComments"  rows="3"></textarea>
+                                <textarea ng-keypress="keyPressDispute($event,dispute)" class="form-control " ng-model="dispute.disputeCalculations.disputeComments"  rows="3"></textarea>
                             </div>
                         </div>
                         <br/>
@@ -167,7 +167,7 @@
                             </div>
                             <label class="control-label col-md-2"> <strong>Difference</strong> </label>
                             <div class="col-md-4">
-								<input disabled class="collateral-money  form-control border-purple text-difference" ng-model="dispute.disputeCalculations.differencePercentage" />
+								<input  disabled class="collateral-money  form-control border-purple text-difference" ng-model="dispute.disputeCalculations.differencePercentage" />
                             </div>
 
                         </div>

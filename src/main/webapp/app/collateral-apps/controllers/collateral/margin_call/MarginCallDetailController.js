@@ -223,7 +223,11 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         		$toastr.success("Dispute updated successfully","Update dispute data",{closeButton: true});
         	});
         };
-      
+       $scope.keyPressDispute  = function(event,dispute){
+    	 if(event.which==13 && !!!window.event.shiftKey){
+    		 $scope.updateDispute(dispute);
+    	 }  
+       };
         
         this.sendMargin = function (action) {
             $scope.sendFlag = true;
