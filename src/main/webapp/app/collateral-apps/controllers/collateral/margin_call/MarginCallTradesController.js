@@ -105,7 +105,6 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
          
         $scope.disputeDetailEdit = false;
         $scope.disputeList  = {};
-        
         $scope.gridTradesOptions.onRegisterApi = function(gridApi){
             	$scope.gridApi = gridApi;
             	gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
@@ -119,7 +118,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             				"agreedValue" : parseFloat(newValue.replace(/,/,''))
             				
             		}; 
+            		$scope.updateDisputeDetail($scope.disputeList);
             		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+            		
               });
 
          };
