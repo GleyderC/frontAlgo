@@ -1,3 +1,4 @@
+'use strict'
 angular.module('DashboardApp')
     .service('MarginCallService',['$request','toastr','$q','localStorageService','md5',function ($request, toastr, $q, $localStorage,$md5) {
        

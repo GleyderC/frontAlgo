@@ -1,3 +1,4 @@
+'use strict'
 angular.module('DashboardApp')
     .service('ScheduledTaskService', ['$request', 'toastr', function ($request, toastr) {
 
