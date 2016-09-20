@@ -218,8 +218,8 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         	MarginCallService.updateDispute(dispute).success(function(resp){
         		$scope.dispute.disputeCalculations.disputeStatus   = resp.dataResponse.disputeCalculations.disputeStatusEnum;
         		$scope.dispute.disputeCalculations.difference   = resp.dataResponse.disputeCalculations.difference;
-        		$scope.dispute.disputeCalculations.differencePercentage   =  (resp.dataResponse.disputeCalculations.differencePercentage* 100 ).toString().match(/^\d+(?:\.\d{0,2})?/) + " %";
-
+        		$scope.dispute.disputeCalculations.differencePercentage   =  resp.dataResponse.disputeCalculations.differencePercentage;
+        		$scope.differencePercentage_text     =   (resp.dataResponse.disputeCalculations.differencePercentage* 100 ).toString().match(/^\d+(?:\.\d{0,2})?/) + " %";
         		$toastr.success("Dispute updated successfully","Update dispute data",{closeButton: true});
         	});
         };
