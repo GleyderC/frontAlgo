@@ -9,7 +9,6 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
             paginationPageSize: 5,
-            enableColumnResizing: true,
             enableFiltering: false,
             rowHeight: 35, // set height to each row
             onRegisterApi: function (gridApi) {
@@ -24,7 +23,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             { name: "description",  field : "description" } ,
 			//{ name: "date",  field : "date" } ,
 			//{ name: "maturity",  field : "maturity" } ,
-			{ name: "coupon",  field : "coupon" } ,
+			{ name: "coupon",  field : "coupon" , cellClass: "collateral-money"} ,
 			{ name: "frequency",  field : "frequency" } ,
 			{ name: "quantity",  field : "quantity",cellFilter: 'number:0', cellClass:'collateral-money'  } ,
 			{ name: "lotSize",  field : "lotSize" ,cellFilter:'number:2', cellClass:'collateral-money'} ,
@@ -62,13 +61,13 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             $scope.Inventory  =  $scope.posted.concat($scope.received);
             $scope.gridInventoryOptions.data  = $scope.Inventory  ;
         });
-
-        $scope.$watchCollection('$parent.Inventory', function (newInventory, oldInventory) {
-            if (newInventory === oldInventory) {
-                return false;
-            }
-            $scope.gridInventoryOptions.data  = newInventory;
-            $scope.gridApi.core.refresh();
-    		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
-        });
+//
+//        $scope.$watchCollection('$parent.Inventory', function (newInventory, oldInventory) {
+//            if (newInventory === oldInventory) {
+//                return false;
+//            }
+//            $scope.gridInventoryOptions.data  = newInventory;
+//            $scope.gridApi.core.refresh();
+//    		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+//        });
 }]);

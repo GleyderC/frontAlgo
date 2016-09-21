@@ -1,3 +1,4 @@
+'use strict'
 angular.module('DashboardApp')
     .service('MarginCallService',['$request','toastr','$q','localStorageService','md5',function ($request, toastr, $q, $localStorage,$md5) {
        
@@ -36,7 +37,7 @@ angular.module('DashboardApp')
             if(action == 'ActionIssueMarginCall'){
                 result = $request.post('/servlet/MarginCall/ActionIssueMarginCall/',params)
                     .then(function (Response) {
-                        MarginSent = "sent";
+                    	let MarginSent = "sent";
                         toastr.success("Message Sent","Success");
                         return Response;
                     });
@@ -44,7 +45,7 @@ angular.module('DashboardApp')
             else if(action == 'ActionIssueDispute'){
                 result = $request.post('/servlet/MarginCall/ActionIssueDispute/',params)
                     .then(function (Response) {
-                        MarginSent = "sent";
+                        let MarginSent = "sent";
                         toastr.success("Message Sent","Success");
                         return Response;
                     });
@@ -52,7 +53,7 @@ angular.module('DashboardApp')
             else if(action == 'ActionSendAgreeMarginCall'){
                 result = $request.post('/servlet/MarginCall/ActionSendAgreeMarginCall/',params)
                     .then(function (Response) {
-                        MarginSent = "sent";
+                    	let MarginSent = "sent";
                         toastr.success("Message Sent","Success");
                         return Response;
                     });
@@ -60,7 +61,7 @@ angular.module('DashboardApp')
             else if(action == 'SendAllocationProposal'){
                 result = $request.post('/servlet/MarginCall/SendAllocationProposal/',params)
                     .then(function (Response) {
-                        MarginSent = "sent";
+                    	let MarginSent = "sent";
                         toastr.success("Message Sent","Success");
                         return Response;
                     });
@@ -68,7 +69,7 @@ angular.module('DashboardApp')
             else if(action == 'SendRejectAllocationProposal'){
                 result = $request.post('/servlet/MarginCall/SendRejectAllocationProposal/',params)
                     .then(function (Response) {
-                        MarginSent = "sent";
+                    	let MarginSent = "sent";
                         toastr.success("Message Sent","Success");
                         return Response;
                     });
@@ -76,7 +77,7 @@ angular.module('DashboardApp')
             else if(action == 'SendAgreeAllocationProposal'){
                 result = $request.post('/servlet/MarginCall/SendAgreeAllocationProposal/',params)
                     .then(function (Response) {
-                        MarginSent = "sent";
+                    	let MarginSent = "sent";
                         toastr.success("Message Sent","Success");
                         return Response;
                     });
@@ -84,7 +85,7 @@ angular.module('DashboardApp')
             else if(action == 'SendToBackOffice'){
                 result = $request.post('/servlet/MarginCall/SendToBackOffice/',params)
                     .then(function (Response) {
-                        MarginSent = "sent";
+                    	let MarginSent = "sent";
                         toastr.success("Message Sent","Success");
                         return Response;
                     });

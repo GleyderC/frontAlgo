@@ -39,7 +39,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         };
 //      Dispute
         $scope.disputeEdit = false ;
-        
+
         $scope.setMarginCallType = function(marginCallType){
         	let marginTypeList = {}; 
         	$scope.marginCallType = localStorage.get("MarginCallType");
@@ -113,7 +113,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
 	        				if(parseInt(v)==vTrade.trade.internalId){
 	        					vTrade.npvCounterParty_diff	  = $scope.disputeDetailResult[v].difference;
-	        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
+	        					 vTrade.differencePercent   	=Number(($scope.disputeDetailResult[v].differencePercentage*100).toString().match(/^\d+(?:\.\d{0,2})?/)) ;
 	        				}
 	        			});
 	        		});
@@ -134,7 +134,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 		        			Object.keys($scope.disputeDetailResult).forEach(function(v,k){
 		        				if(parseInt(v)==vTrade.trade.internalId){
 		        					vTrade.npvCounterParty_diff	  = $scope.disputeDetailResult[v].difference;
-		        					vTrade.differencePercent   	=$scope.disputeDetailResult[v].differencePercentage;
+		        					 vTrade.differencePercent   	=Number(($scope.disputeDetailResult[v].differencePercentage*100).toString().match(/^\d+(?:\.\d{0,2})?/)) ;
 		        				}
 		        			});
 		        			vTrade.npvCounterParty  = $scope.counterPartyPricing.tradesPricingsByTradeId[vTrade.trade.internalId].priceInBaseCurrency;
@@ -218,11 +218,16 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         	MarginCallService.updateDispute(dispute).success(function(resp){
         		$scope.dispute.disputeCalculations.disputeStatus   = resp.dataResponse.disputeCalculations.disputeStatusEnum;
         		$scope.dispute.disputeCalculations.difference   = resp.dataResponse.disputeCalculations.difference;
-        		$scope.dispute.disputeCalculations.differencePercentage   = resp.dataResponse.disputeCalculations.differencePercentage;
+        		$scope.dispute.disputeCalculations.differencePercentage   =  resp.dataResponse.disputeCalculations.differencePercentage;
+        		$scope.differencePercentage_text     =   (resp.dataResponse.disputeCalculations.differencePercentage* 100 ).toString().match(/^\d+(?:\.\d{0,2})?/) + " %";
         		$toastr.success("Dispute updated successfully","Update dispute data",{closeButton: true});
         	});
         };
-      
+       $scope.keyPressDispute  = function(event,dispute){
+    	 if(event.which==13 && !!!window.event.shiftKey){
+    		 $scope.updateDispute(dispute);
+    	 }  
+       };
         
         this.sendMargin = function (action) {
             $scope.sendFlag = true;

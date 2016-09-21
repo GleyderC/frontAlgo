@@ -300,12 +300,12 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     v.contract["counterpartyA"] = {};
                     v.contract["counterpartyA"] = v.client;
                     v.contract["contractType"] = "CCP Client Clearing";
-                    v.contract["ccpName"] = v.clearingBroker.name;
+                    v.contract["ccpName"] = v.contract.ccpName;
                     v.contract["counterpartyB"] = {};
                     v.contract["counterpartyB"]["name"] = v.contract.ccpName;
                 }
 
-                if (v.contract.hasOwnProperty("contractType")) {
+                if (v.contract["contractType"] !=undefined) {
                     if (v.contract.contractType.toUpperCase() === "BILATERAL") {
                         let
                             bilateralContractType = v.contract.bilateralContractType;
@@ -314,10 +314,10 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     arr["contractType"][v.marginCalls[0].contractType] = v.marginCalls[0].contractType;
 
                 }
-                if (v.contract.hasOwnProperty("counterpartyA")) {
+                if (v.contract["counterpartyA"] != undefined) {
                     arr["counterpartyA"][v.contract.counterpartyA.name] = v.contract.counterpartyA;
                 }
-                if (v.contract.hasOwnProperty("counterpartyB")) {
+                if (v.contract["counterpartyB"] != undefined) {
                     arr["counterpartyB"][v.contract.counterpartyB.name] = v.contract.counterpartyB;
                 }
 

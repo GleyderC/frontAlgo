@@ -73,12 +73,10 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             
             {field: 'priceInBaseCurrency', displayName:'Npv ('+ $scope.currentMarginCall.contract.baseCurrency +')',
                 cellFilter: 'number:2', cellClass:'collateral-money'},
-            {field: 'npvCounterParty_diff', name:'Diff', cellFilter:'number:2',enableCellEdit:false},
+            {field: 'npvCounterParty_diff', name:'Diff', cellFilter:'number:2',enableCellEdit:false,cellClass :'collateral-money'},
             {
             	field: 'differencePercent', 
             	name:'Diff(%)', 
-            	cellFilter:'number:2',
-            	
             	sort: {
                     direction: uiGridConstants.DESC,
                     priority: 1
@@ -88,9 +86,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
                 	let val = grid.getCellValue(row,col);
                 	val =  val < 0 ?  val * -1 : val ;               	
                     if (val > $scope.tolerance) {
-                    	return 'text-danger';
+                    	return 'text-danger collateral-money';
                     }else{
-                    	return '';
+                    	return 'collateral-money ';
                     }
                   }
             },
@@ -107,7 +105,6 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
          
         $scope.disputeDetailEdit = false;
         $scope.disputeList  = {};
-        
         $scope.gridTradesOptions.onRegisterApi = function(gridApi){
             	$scope.gridApi = gridApi;
             	gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
@@ -121,7 +118,9 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
             				"agreedValue" : parseFloat(newValue.replace(/,/,''))
             				
             		}; 
+            		$scope.updateDisputeDetail($scope.disputeList);
             		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+            		
               });
 
          };
@@ -175,7 +174,7 @@ DashboardApp.controller('MarginCallTradesController', ['$scope', 'uiGridConstant
         			Object.keys(disputeDetailResult).forEach(function(v,k){
         				if(parseInt(v)==vTrade.trade.internalId){
         					vTrade.npvCounterParty_diff	  = disputeDetailResult[v].difference;
-        					 vTrade.differencePercent   	=disputeDetailResult[v].differencePercentage;
+        					 vTrade.differencePercent   	=Number((disputeDetailResult[v].differencePercentage*100).toString().match(/^\d+(?:\.\d{0,2})?/)) ;
         				}
         			});
         		});
