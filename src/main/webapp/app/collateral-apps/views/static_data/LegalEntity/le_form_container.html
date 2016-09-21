@@ -6,7 +6,6 @@
                 <i class="fa fa-bank font-dark font-green-haze"></i>
                 <span class="caption-subject bold uppercase font-green-haze" ng-bind="legalEntity.name || 'New Legal Entity'"> </span>
                 <span class="caption-helper" ng-if="legalEntity.id!=-1" ng-bind="legalEntity.id"> </span>
-
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse"> </a>
@@ -27,7 +26,7 @@
             <div class="row">
                 <div class="form-actions">
                     <div class="col-md-offset-5 col-md-7">
-                        <button type="submit" class="btn green" ng-click="saveLegalEntity(legalEntity)">Save</button>
+                        <button type="submit" class="btn green" ng-click="saveLegalEntity()">Save</button>
                         <button type="button" class="btn default" ng-click="cancel()">Cancel</button>
                     </div>
                 </div>

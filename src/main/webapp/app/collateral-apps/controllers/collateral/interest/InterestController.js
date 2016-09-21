@@ -11,12 +11,11 @@ var DashboardApp = angular.module('DashboardApp');
             '$request',
             '$interval',
             'localStorageService',
-            'elementService',
             'uiGridConstants',
             'InterestService',
             'AgreementsService',
             function ($scope, $document, $timeout, $request,
-                      $interval, $localStorage, elementService,
+                      $interval, $localStorage,
                       uiGridConstants,
                       Interest,
                       Agreements
