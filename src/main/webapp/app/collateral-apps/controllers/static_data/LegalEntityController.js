@@ -93,6 +93,10 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
             ]
         };
         $scope.gridLegalEntityOptions.data = [];
+        $scope.gridLegalEntityOptions.addNewRow = function (row) {
+            $scope.gridLegalEntityOptions.data.push(row);
+            return row;
+        }
 
         LegalEntityService.getAll().then(function (result) {
             let legalEntities = result.data.dataResponse;
@@ -134,7 +138,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 }
 
             });
-            //console.log($scope.legalEntities);
+
             $scope.gridLegalEntityOptions.data = $scope.legalEntities;
 
         });
@@ -159,6 +163,9 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                     text: 'New Legal Entity',
                 },
                 templateUrl: paths.views + "/static_data/LegalEntity/le_form_container.html",
+                parameters: {
+                    AddlegalEntitiesGrid: $scope.gridLegalEntityOptions.addNewRow
+                },
                 closable: true,
                 autoload: true
             }, [3, 1]);
@@ -329,7 +336,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             }
 
             if (!$scope.isEditLegal) {
-                //$scope.gridLegalEntityOptions.data.push($scope.legalEntity);
+                $scope.parameters.AddlegalEntitiesGrid($scope.legalEntity);
             }
             LegalEntityService.set($scope.legalEntity, $scope.isEditLegal);
 

@@ -15,9 +15,9 @@ angular.module('DashboardApp')
         }
 
         this.set = function (legalEntity, isUpdate) {
-            console.log(legalEntity);
+            //console.log(legalEntity);
             if (isUpdate) {
-                console.log("Update");
+                //console.log("Update");
                 $request.put('/servlet/LegalEntity/Update', legalEntity)
                     .then(function (Response) {
                             toastr.success("Data successfully updated", "Success");
@@ -27,7 +27,7 @@ angular.module('DashboardApp')
             else
                 $request.post('/servlet/LegalEntity/Insert', legalEntity)
                     .then(function (Response) {
-                            console.log("Insert");
+                            //console.log("Insert");
                             //console.log(Response.data.dataResponse);
                             legalEntity.id = Response.data.dataResponse;
                             //legalEntities.push(legalEntity);
