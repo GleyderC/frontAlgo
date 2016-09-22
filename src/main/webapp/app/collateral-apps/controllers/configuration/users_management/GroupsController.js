@@ -57,7 +57,7 @@ DashboardApp.controller('GroupsController', ['$scope',
             $scope.gridGroupsOptions.data = $scope.Groups;
         });
 
-        $scope.clean = function() {
+        $scope.cancel = function() {
 
             $scope.Group =
             {
@@ -72,7 +72,7 @@ DashboardApp.controller('GroupsController', ['$scope',
             //console.log("clean");
         }
 
-        $scope.clean();
+        $scope.cancel();
 
         $scope.editRow = function (grid, row) {
 
@@ -82,14 +82,14 @@ DashboardApp.controller('GroupsController', ['$scope',
         }
 
         $scope.saveGroup = function () {
-            console.log($scope.isEditGroup);
+            //console.log($scope.isEditGroup);
 
             if (!$scope.isEditGroup) {
                 $scope.gridGroupsOptions.data.push($scope.Group);
             }
             GroupsService.set($scope.Group, $scope.isEditGroup);
 
-            $scope.clean();
+            $scope.cancel();
         }
 
         $scope.deleteRow = function (grid, row) {
