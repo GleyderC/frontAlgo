@@ -104,12 +104,12 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
              });*/
 
             legalEntities.forEach(function (legalEntity) {
-                if(legalEntity != null){
+                if (legalEntity != null) {
 
-                    angular.forEach(legalEntity.roleList, function( rolLegal, key ) {
+                    angular.forEach(legalEntity.roleList, function (rolLegal, key) {
 
-                        angular.forEach(localStorageService.get('RolType'), function( rol ) {
-                            if(rolLegal.roleType!= undefined && rolLegal.roleType.toUpperCase() == rol.name.toUpperCase()){
+                        angular.forEach(localStorageService.get('RolType'), function (rol) {
+                            if (rolLegal.roleType != undefined && rolLegal.roleType.toUpperCase() == rol.name.toUpperCase()) {
                                 legalEntity.roleList[key].name = rol.name;
                                 legalEntity.roleList[key].key = rol.key;
                             }
@@ -198,7 +198,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
     }]);
 
 DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope',
-    '$timeout', 'localStorageService', 'uiGridConstants','DashboardService',
+    '$timeout', 'localStorageService', 'uiGridConstants', 'DashboardService',
     function (LegalEntityService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService) {
 
         $scope.$on('$includeContentLoaded', function () {
@@ -212,7 +212,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             legalEntities.forEach(function (legalEntity) {
 
-                if(legalEntity != null){
+                if (legalEntity != null) {
                     $scope.legalEntities.push(legalEntity);
 
                     //Insert mother Legal Entity
@@ -307,10 +307,9 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         $scope.saveLegalEntity = function () {
 
-            if($scope.legalEntity.roleList.length > 0)
-            {
+            if ($scope.legalEntity.roleList.length > 0) {
                 $scope.legalEntity.roleList.forEach(function (rol) {
-                    if(rol.id == undefined){
+                    if (rol.id == undefined) {
                         rol.legalEntityId = $scope.legalEntity.id;
                         DashboardService.generateId().then(function (result) {
                             rol.id = result.data.dataResponse;
@@ -318,7 +317,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                     }
                 });
             }
-            
+
             if ($scope.legalEntityMother.selected) {
                 $scope.legalEntity.motherLegalEntity = $scope.legalEntityMother.selected.id;
                 $scope.legalEntity.namemotherLegalEntity = $scope.legalEntityMother.selected.name;
@@ -335,6 +334,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             LegalEntityService.set($scope.legalEntity, $scope.isEditLegal);
 
             buildLegalData();
+
         }
 
         $scope.cancel = function () {
@@ -348,6 +348,19 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.legalEntity = $scope.parameters.legalEntity;
 
         $scope.legalEntityMother = {selected: {id: -1}};
+
+        $scope.holidays.selectedItems = $scope.legalEntity.financialCalendarList;
+
+        $scope.rols.selectedItems = [];
+
+        angular.forEach($scope.legalEntity.roleList, function (item, index) {
+            if (angular.isUndefined(item.key)) {
+                $scope.legalEntity.roleList.splice(index, 1);
+            }
+        });
+
+        angular.copy($scope.legalEntity.roleList, $scope.rols.selectedItems);
+
         if ($scope.legalEntity.motherLegalEntity != -1) {
             LegalEntityService.getById($scope.legalEntity.motherLegalEntity).then(function (result) {
                 var legalEntityMother = result.data.dataResponse;
@@ -355,12 +368,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 $scope.legalEntityMother.selected = legalEntityMother;
             });
         }
-
-        $scope.holidays.selectedItems = $scope.legalEntity.financialCalendarList;
-
-
-        $scope.rols.selectedItems = $scope.legalEntity.roleList;
-        //console.log($scope.rols);
 
         $scope.country = {selected: {id: -1}};
         var country = $scope.countries.filter(function (country) {
@@ -719,14 +726,14 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
             data: []
         };
 
-        if($scope.legalEntity.id <= 0 || !$scope.legalEntity.id)
+        if ($scope.legalEntity.id <= 0 || !$scope.legalEntity.id)
             return false;
 
-        LegalEntityService.getAllCCPClientAccounts($scope.legalEntity.id).then(function(result){
+        LegalEntityService.getAllCCPClientAccounts($scope.legalEntity.id).then(function (result) {
 
             let ccp_client_accounts = result.data.dataResponse;
 
-            angular.forEach(ccp_client_accounts, function(client_account){
+            angular.forEach(ccp_client_accounts, function (client_account) {
 
                 $scope.gridClearingAgreementsOptions.data.push({
                     principal: client_account.client.name,
@@ -740,11 +747,11 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
 
         });
 
-        LegalEntityService.getAllCCPHouseAccounts($scope.legalEntity.id).then(function(result){
+        LegalEntityService.getAllCCPHouseAccounts($scope.legalEntity.id).then(function (result) {
 
             let ccp_house_accounts = result.data.dataResponse;
 
-            angular.forEach(ccp_house_accounts, function(house_account){
+            angular.forEach(ccp_house_accounts, function (house_account) {
 
                 $scope.gridClearingAgreementsOptions.data.push({
                     principal: house_account.clearingMemberLegalEntity.name,

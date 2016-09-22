@@ -15,15 +15,24 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
             return {
                 post: function ($scope, element, attributes) {
 
-                    if ($scope.multiselectElements == undefined)
+                    if ($scope.multiselectElements == undefined) {
                         $scope.multiselectElements = new Object();
+                    }
+
+                    if ($scope.multiselectElements.msOptions == undefined) {
+                        $scope.multiselectElements.msOptions = [];
+                    }
+
+                    if ($scope.multiselectElements.msSelected == undefined) {
+                        $scope.multiselectElements.msSelected = [];
+                    }
 
                     //Array Initial Data
-                    if ($scope.multiselectElements.data == undefined || $scope.multiselectElements.data.length == 0) {
+                    if ($scope.multiselectElements.data == undefined) {
                         $scope.multiselectElements.data = [];
                     }
 
-                    if ($scope.multiselectElements.selectedItems == undefined || $scope.multiselectElements.selectedItems.length == 0) {
+                    if ($scope.multiselectElements.selectedItems == undefined) {
                         $scope.multiselectElements.selectedItems = [];
                     }
 
@@ -37,13 +46,12 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
 
                     //Items to Select
                     $scope.multiselectElements.msOptions = $scope.multiselectElements.data;
-                    $scope.multiselectElements.msSelected = $scope.multiselectElements.selectedItems;
 
-                    $scope.$watch('multiselectElements.data', function(newVal, oldVal){
+                    $scope.$watch('multiselectElements.data', function (newVal, oldVal) {
                         $scope.multiselectElements.msOptions = newVal;
                     });
 
-                    $scope.$watch('multiselectElements.selectedItems', function(newVal, oldVal){
+                    $scope.$watch('multiselectElements.selectedItems', function (newVal, oldVal) {
                         $scope.multiselectElements.selectElementsByArray(newVal);
                     });
 
@@ -119,20 +127,36 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
 
                     //SELECT ITEM BY KEY
                     $scope.multiselectElements.selectElementByKey = function (key) {
+
                         var skip = false;
 
+                        if (key === '')
+                            return false;
+
                         angular.forEach($scope.multiselectElements.msOptions, function (item, index) {
+
                             if (skip) {
                                 return false;
                             }
 
                             if (item.hide == undefined || item.hide == false) {
-                                if (item.key == key) {
-                                    $scope.multiselectElements.selectElement(item, index);
-                                    skip = true;
+
+                                if (angular.isObject(key)) {
+                                    if (item.key == key.key) {
+                                        $scope.multiselectElements.selectElement(item, index);
+                                        skip = true;
+                                    }
                                 }
+                                else {
+                                    if (item.key == key) {
+                                        $scope.multiselectElements.selectElement(item, index);
+                                        skip = true;
+                                    }
+                                }
+
                             }
                         });
+
                     };
 
                     $scope.multiselectElements.selectElementsByArray = function (arrayKeys) {
@@ -181,7 +205,7 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
 
 angular.module('DashboardApp').filter('highlight', function ($sce) {
     return function (text, phrase) {
-        
+
         if (phrase) {
 
             text = text.replace(new RegExp('(' + phrase + ')', 'gi'),
