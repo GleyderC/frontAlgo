@@ -314,6 +314,8 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         $scope.saveLegalEntity = function () {
 
+            $scope.legalEntity.roleList = $scope.rols.msSelected;
+
             if ($scope.legalEntity.roleList.length > 0) {
                 $scope.legalEntity.roleList.forEach(function (rol) {
                     if (rol.id == undefined) {
@@ -322,6 +324,12 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                             rol.id = result.data.dataResponse;
                         });
                     }
+                });
+            }
+
+            if($scope.holidays.msSelected.length > 0){
+                $scope.holidays.msSelected.forEach(function (holiday) {
+                    $scope.legalEntity.financialCalendarList.push(holiday.key);
                 });
             }
 
@@ -337,7 +345,9 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             if (!$scope.isEditLegal) {
                 $scope.parameters.AddlegalEntitiesGrid($scope.legalEntity);
+
             }
+
             LegalEntityService.set($scope.legalEntity, $scope.isEditLegal);
 
             buildLegalData();
@@ -360,12 +370,11 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
         $scope.rols.selectedItems = [];
 
-        angular.forEach($scope.legalEntity.roleList, function (item, index) {
+      /*  angular.forEach($scope.legalEntity.roleList, function (item, index) {
             if (angular.isUndefined(item.key)) {
                 $scope.legalEntity.roleList.splice(index, 1);
             }
-        });
-
+        });*/
         angular.copy($scope.legalEntity.roleList, $scope.rols.selectedItems);
 
         if ($scope.legalEntity.motherLegalEntity != -1) {
@@ -658,8 +667,7 @@ DashboardApp.controller('LEBilateralController', ['$scope', '$log', 'toastr', 'R
 
             $scope.gridBilateralAgreementsOptions.data = result.data.dataResponse;
 
-        })
-
+        });
 
     }]);
 
