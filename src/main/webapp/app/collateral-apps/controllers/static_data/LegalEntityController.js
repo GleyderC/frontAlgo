@@ -3,9 +3,9 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$scope', 'elementService',
+DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants',
-    function (LegalEntityService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
+    function (LegalEntityService, $scope, $timeout, localStorageService, uiGridConstants) {
 
         /* Cargando datos en legal entity ui-grid*/
         $scope.legalEntities = [];
@@ -77,7 +77,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 {field: 'LEI', enableCellEdit: false},
                 {field: 'BIC', enableCellEdit: false},
                 {
-                    field: 'rolListArray',
+                    field: 'roleList',
                     displayName: 'Roles',
                     cellFilter: 'stringArrayFilter',
                     enableCellEdit: false
@@ -92,6 +92,11 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 }
             ]
         };
+        $scope.gridLegalEntityOptions.data = [];
+        $scope.gridLegalEntityOptions.addNewRow = function (row) {
+            $scope.gridLegalEntityOptions.data.push(row);
+            return row;
+        }
 
         LegalEntityService.getAll().then(function (result) {
             let legalEntities = result.data.dataResponse;
@@ -103,17 +108,20 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
              });*/
 
             legalEntities.forEach(function (legalEntity) {
-                if(legalEntity != null){
+                if (legalEntity != null) {
 
-                    $scope.legalEntities.push(legalEntity);
-                    legalEntity.rolListArray = [];
+                    angular.forEach(legalEntity.roleList, function (rolLegal, key) {
 
-                    angular.forEach(legalEntity.roleList, function( rol ) {
-                        legalEntity.rolListArray.push(rol.roleType);
+                        angular.forEach(localStorageService.get('RolType'), function (rol) {
+                            if (rolLegal.roleType != undefined && rolLegal.roleType.toUpperCase() == rol.name.toUpperCase()) {
+                                legalEntity.roleList[key].name = rol.name;
+                                legalEntity.roleList[key].key = rol.key;
+                            }
+                        });
+
                     });
 
-                    if(legalEntity.id == 690182110)
-                    console.log(legalEntity.rolListArray);
+                    $scope.legalEntities.push(legalEntity);
 
                     //Insert mother Legal Entity
                     var MotherLegal = $scope.legalEntities.filter(function (legal) {
@@ -126,10 +134,11 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                     if (MotherLegal[0]) {
                         legalEntity.namemotherLegalEntity = MotherLegal[0].name;
                     }
+
                 }
 
-            })
-            //console.log($scope.legalEntities);
+            });
+
             $scope.gridLegalEntityOptions.data = $scope.legalEntities;
 
         });
@@ -153,7 +162,10 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                     icon: 'fa fa-bank',
                     text: 'New Legal Entity',
                 },
-                templateUrl: paths.views + "/static_data/le_form_container.html",
+                templateUrl: paths.views + "/static_data/LegalEntity/le_form_container.html",
+                parameters: {
+                    AddlegalEntitiesGrid: $scope.gridLegalEntityOptions.addNewRow
+                },
                 closable: true,
                 autoload: true
             }, [3, 1]);
@@ -180,12 +192,21 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
 
             //elementService.scrollToElement("legal-entity-tabs", 80);
         };
+        // Delete legalEntity
+        $scope.deleteRow = function (grid, row) {
+
+            var index = $scope.gridLegalEntityOptions.data.indexOf(row.entity);
+            $scope.gridLegalEntityOptions.data.splice(index, 1);
+            LegalEntityService.delete(row.entity.id);
+
+        }
+
 
     }]);
 
-DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope', 'elementService',
-    '$timeout', 'localStorageService', 'uiGridConstants',
-    function (LegalEntityService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
+DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope',
+    '$timeout', 'localStorageService', 'uiGridConstants', 'DashboardService',
+    function (LegalEntityService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService) {
 
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();
@@ -198,7 +219,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
             legalEntities.forEach(function (legalEntity) {
 
-                if(legalEntity != null){
+                if (legalEntity != null) {
                     $scope.legalEntities.push(legalEntity);
 
                     //Insert mother Legal Entity
@@ -291,33 +312,45 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             return row.entity.isBranch ? 'Yes' : 'No';
         };
 
-        $scope.saveLegalEntity = function (legalEntity) {
+        $scope.saveLegalEntity = function () {
+
+            $scope.legalEntity.roleList = $scope.rols.msSelected;
+
+            if ($scope.legalEntity.roleList.length > 0) {
+                $scope.legalEntity.roleList.forEach(function (rol) {
+                    if (rol.id == undefined) {
+                        rol.legalEntityId = $scope.legalEntity.id;
+                        DashboardService.generateId().then(function (result) {
+                            rol.id = result.data.dataResponse;
+                        });
+                    }
+                });
+            }
+
+            if($scope.holidays.msSelected.length > 0){
+                $scope.holidays.msSelected.forEach(function (holiday) {
+                    $scope.legalEntity.financialCalendarList.push(holiday.key);
+                });
+            }
 
             if ($scope.legalEntityMother.selected) {
-                legalEntity.motherLegalEntity = $scope.legalEntityMother.selected.id;
-                legalEntity.namemotherLegalEntity = $scope.legalEntityMother.selected.name;
+                $scope.legalEntity.motherLegalEntity = $scope.legalEntityMother.selected.id;
+                $scope.legalEntity.namemotherLegalEntity = $scope.legalEntityMother.selected.name;
 
             }
             if ($scope.country.selected) {
                 //console.log($scope.country.selected);
-                legalEntity.countryId = $scope.country.selected.key;
+                $scope.legalEntity.countryId = $scope.country.selected.key;
             }
-
 
             if (!$scope.isEditLegal) {
-                $scope.gridLegalEntityOptions.data.push(legalEntity);
+                $scope.parameters.AddlegalEntitiesGrid($scope.legalEntity);
+
             }
-            LegalEntityService.set(legalEntity, $scope.isEditLegal);
+
+            LegalEntityService.set($scope.legalEntity, $scope.isEditLegal);
 
             buildLegalData();
-        }
-
-        // Delete legalEntity
-        $scope.deleteRow = function (grid, row) {
-
-            var index = $scope.gridLegalEntityOptions.data.indexOf(row.entity);
-            $scope.gridLegalEntityOptions.data.splice(index, 1);
-            LegalEntityService.delete(row.entity.id);
 
         }
 
@@ -332,6 +365,18 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.legalEntity = $scope.parameters.legalEntity;
 
         $scope.legalEntityMother = {selected: {id: -1}};
+
+        $scope.holidays.selectedItems = $scope.legalEntity.financialCalendarList;
+
+        $scope.rols.selectedItems = [];
+
+      /*  angular.forEach($scope.legalEntity.roleList, function (item, index) {
+            if (angular.isUndefined(item.key)) {
+                $scope.legalEntity.roleList.splice(index, 1);
+            }
+        });*/
+        angular.copy($scope.legalEntity.roleList, $scope.rols.selectedItems);
+
         if ($scope.legalEntity.motherLegalEntity != -1) {
             LegalEntityService.getById($scope.legalEntity.motherLegalEntity).then(function (result) {
                 var legalEntityMother = result.data.dataResponse;
@@ -339,10 +384,6 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 $scope.legalEntityMother.selected = legalEntityMother;
             });
         }
-
-        $scope.holidays.selectedItems = $scope.legalEntity.financialCalendarList;
-
-        $scope.rols.selectedItems = $scope.legalEntity.rolListArray;
 
         $scope.country = {selected: {id: -1}};
         var country = $scope.countries.filter(function (country) {
@@ -356,7 +397,12 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
 
 DashboardApp.filter('stringArrayFilter', function () {
     return function (myArray) {
-        return myArray.join(', ');
+        //console.log(myArray)
+        var roles = [];
+        angular.forEach(myArray, function (rol) {
+            roles.push(rol.name);
+        });
+        return roles.join(', ');
     };
 });
 DashboardApp.filter('mapBranch', function () {
@@ -424,10 +470,10 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
 DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'RowEditorModalService', 'uiGridConstants',
     function ($scope, $log, toastr, RowEditorModalService, uiGridConstants) {
 
+        //console.log($scope.legalEntity.contactPersonList);
+
         $scope.$watchCollection('$parent.legalEntity.contactPersonList', function (newContactPerson, oldContactPerson) {
-            if (newContactPerson === oldContactPerson) {
-                return false;
-            }
+
             $scope.gridContactPersonOptions.data = newContactPerson;
             //console.log($scope.gridContactPersonOptions.data);
 
@@ -512,7 +558,7 @@ DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'R
                     priority: 0
                 }
             },
-            {field: 'firstName',},
+            {field: 'firstName'},
             {field: 'city'},
             {field: 'state'},
             {field: 'phone'},
@@ -621,8 +667,7 @@ DashboardApp.controller('LEBilateralController', ['$scope', '$log', 'toastr', 'R
 
             $scope.gridBilateralAgreementsOptions.data = result.data.dataResponse;
 
-        })
-
+        });
 
     }]);
 
@@ -696,14 +741,14 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
             data: []
         };
 
-        if($scope.legalEntity.id <= 0 || !$scope.legalEntity.id)
+        if ($scope.legalEntity.id <= 0 || !$scope.legalEntity.id)
             return false;
 
-        LegalEntityService.getAllCCPClientAccounts($scope.legalEntity.id).then(function(result){
+        LegalEntityService.getAllCCPClientAccounts($scope.legalEntity.id).then(function (result) {
 
             let ccp_client_accounts = result.data.dataResponse;
 
-            angular.forEach(ccp_client_accounts, function(client_account){
+            angular.forEach(ccp_client_accounts, function (client_account) {
 
                 $scope.gridClearingAgreementsOptions.data.push({
                     principal: client_account.client.name,
@@ -717,11 +762,11 @@ DashboardApp.controller('LEClearingAgrController', ['$scope', '$log', 'toastr', 
 
         });
 
-        LegalEntityService.getAllCCPHouseAccounts($scope.legalEntity.id).then(function(result){
+        LegalEntityService.getAllCCPHouseAccounts($scope.legalEntity.id).then(function (result) {
 
             let ccp_house_accounts = result.data.dataResponse;
 
-            angular.forEach(ccp_house_accounts, function(house_account){
+            angular.forEach(ccp_house_accounts, function (house_account) {
 
                 $scope.gridClearingAgreementsOptions.data.push({
                     principal: house_account.clearingMemberLegalEntity.name,

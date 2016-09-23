@@ -3,9 +3,9 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService', '$scope', 'elementService',
+DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants','RowEditorModalService',
-    function (ScheduledTaskService, $scope, elementService, $timeout, localStorageService,
+    function (ScheduledTaskService, $scope, $timeout, localStorageService,
               uiGridConstants,RowEditorModalService) {
 
         /* Cargando datos en ScheduledTask ui-grid*/
@@ -151,9 +151,9 @@ DashboardApp.controller('SearchScheduledTaskController', ['ScheduledTaskService'
 
     }]);
 
-DashboardApp.controller('ScheduledTaskController', ['ScheduledTaskService', '$scope', 'elementService',
+DashboardApp.controller('ScheduledTaskController', ['ScheduledTaskService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants',
-    function (ScheduledTaskService, $scope, elementService, $timeout, localStorageService, uiGridConstants) {
+    function (ScheduledTaskService, $scope, $timeout, localStorageService, uiGridConstants) {
 
         $scope.$on('$includeContentLoaded', function () {
             App.initAjax();

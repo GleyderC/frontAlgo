@@ -266,7 +266,10 @@ DashboardApp.service('MenuService', function () {
                                             text: 'Users-Group'
                                         },
                                         templateUrl: paths.views + '/configuration/users_management/users_group.html',
-                                        autoload: true
+                                        autoload: true,
+                                        onSelect: function () {
+                                            
+                                        }
                                     },
                                     {
                                         head: {

@@ -8,8 +8,8 @@ DashboardApp.filter('statusArrayFilter', function() {
     };
 });
 var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', '$document', '$timeout', '$request',
-    '$interval', 'localStorageService', 'elementService', 'uiGridConstants', 'MarginCallService','ArrayService',
-    function ($scope, $document, $timeout, $request, $interval, $localStorage, elementService,
+    '$interval', 'localStorageService', 'uiGridConstants', 'MarginCallService','ArrayService',
+    function ($scope, $document, $timeout, $request, $interval, $localStorage,
               uiGridConstants, MarginCallService, ArrayService) {
 
         $scope.$on('$includeContentLoaded', function () {

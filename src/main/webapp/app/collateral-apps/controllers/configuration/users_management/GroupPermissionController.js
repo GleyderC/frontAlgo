@@ -4,8 +4,8 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('GroupPermissionController', ['$scope',
-    'localStorageService', 'uiGridConstants', 'ModalService',
-    function ($scope, localStorageService, uiGridConstants, ModalService) {
+    'localStorageService', 'uiGridConstants', 'ModalService','GroupsService',
+    function ($scope, localStorageService, uiGridConstants, ModalService, GroupsService) {
 
         $scope.gridGroupPermissionOptions = {
 
@@ -21,21 +21,29 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                 {
                     field: 'access',
                     name: 'Access',
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+                    width: 110,
+                    enableSorting: false,
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD"/>'
                 },
                 {
                     field: 'create',
                     name: 'Create',
+                    width: 110,
+                    enableSorting: false,
                     cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
                 },
                 {
                     field: 'update',
                     name: 'Update',
+                    width: 110,
+                    enableSorting: false,
                     cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
                 },
                 {
                     field: 'delete',
                     name: 'Delete',
+                    width: 110,
+                    enableSorting: false,
                     cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
                 },
             ],
@@ -69,4 +77,8 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                     description: ''
                 }]
         }
+        GroupsService.getAll().then(function (result) {
+            $scope.Groups= result.data.dataResponse;
+        });
     }]);
+

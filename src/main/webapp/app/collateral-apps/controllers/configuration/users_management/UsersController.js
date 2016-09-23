@@ -61,7 +61,7 @@ DashboardApp.controller('UsersController', ['$scope',
             $scope.gridUsersOptions.data = $scope.Users;
         });
 
-        $scope.clean = function() {
+        $scope.cancel = function() {
 
             $scope.User =
             {
@@ -80,7 +80,7 @@ DashboardApp.controller('UsersController', ['$scope',
             //console.log("clean");
         }
 
-        $scope.clean();
+        $scope.cancel();
 
         $scope.editRow = function (grid, row) {
 
@@ -97,7 +97,7 @@ DashboardApp.controller('UsersController', ['$scope',
             }
             UsersService.set($scope.User, $scope.isEditUser);
 
-            $scope.clean();
+            $scope.cancel();
         }
 
         $scope.deleteRow = function (grid, row) {
