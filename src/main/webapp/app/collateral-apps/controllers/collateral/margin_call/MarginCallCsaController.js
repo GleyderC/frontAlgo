@@ -139,40 +139,26 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 				return false;
 			}
 			$scope.gridMCCsaAllocPosted.data = newV;
-//			angular.forEach($scope.gridMCCsaAllocPosted.data, function(row) {
-//			    row.getNotional= function() {
-//			      return row.lotSize * row.quantity;
-//			    };
-//			    row.getAmount = function() {
-//			      return row.getNotinal() * row.price;
-//			    };
-//			  });
 	});
 	$scope.totalAmountAllocated  = 0;
-
+	$scope.coverage  = 0  ;
     $scope.$watch(function () { return Data.getTotalAA(); }, function (newValue, oldValue) {
-        if (newValue !== oldValue) $scope.totalAmountAllocated = newValue;
+        if (newValue !== oldValue){
+        	$scope.totalAmountAllocated = newValue;
+        	$scope.coverage = $scope.$parent.dispute.disputeCalculations.agreedMargin - $scope.totalAmountAllocated;
+        }
     });
-	
-//    $scope.$watch("$parent.totalAmountAllocated", function (newV, oldV) {
-//    	console.log(newV);
-//        if(newV != oldV){
-//        	$scope.totalAmountAllocated = newV;
-//        }
-//    });
 	$scope.$watchCollection('$parent.receive',function(newV,oldV){
 		if(oldV == newV){
 			return false;
 		}
 		$scope.gridMCCsaAllocReceived.data = newV;
-//		angular.forEach($scope.gridMCCsaAllocReceived.data, function(row) {
-//		    row.getNotional= function() {
-//		      return row.lotSize * row.quantity;
-//		    };
-//		    row.getAmount = function() {
-//			      return row.getNotinal() * row.price;
-//			    };
-//		    
-//		  });
 	});
+	$scope.getBoderColor=  function(){
+			if($scope.totalAmountAllocated >= $scope.$parent.dispute.disputeCalculations.agreedMargin){
+				return 'border-green';
+			}else{
+				return 'border-red';
+			}
+	}
 }]);

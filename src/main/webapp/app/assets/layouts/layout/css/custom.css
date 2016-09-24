@@ -2,6 +2,12 @@
 .border-purple{
 	border-color: rebeccapurple
 }
+.border-green{
+	border-color: green
+}
+.border-red{
+	border-color: red
+}
 .text-difference{
 	font-size : 12px
 }
