@@ -106,7 +106,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            $scope.disputeStatus = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeStatusEnum;
 	            
 	            $scope.dispute["contractId"]  = $scope.MarginCallDetail.contract.internalId;
-	        	$scope.dispute["marginCallId"]  = $scope.MarginCallDetail.contract.internalId;
+	        	$scope.dispute["marginCallId"]  = $scope.currentMarginCall.marginCalls[0].id;
 	        	$scope.dispute["status"]  = $scope.disputeStatus;
 	        	$scope.dispute["tolerance"]  = $scope.myValue *100;
 	        	$scope.dispute["myValue"]  = $scope.myValue;
@@ -224,7 +224,10 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         	MarginCallService.updateDispute(dispute).success(function(resp){
         		$scope.dispute.disputeCalculations.disputeStatus   = resp.dataResponse.disputeCalculations.disputeStatusEnum;
         		$scope.dispute.disputeCalculations.difference   = resp.dataResponse.disputeCalculations.difference;
+        		$scope.dispute.disputeCalculations.tolerance= resp.dataResponse.disputeCalculations.tolerance;
+        						$scope.tolerancePercentage =  resp.dataResponse.disputeCalculations.tolerance;
         		$scope.dispute.disputeCalculations.differencePercentage   =  resp.dataResponse.disputeCalculations.differencePercentage;
+        		
         		$scope.differencePercentage_text     =   (resp.dataResponse.disputeCalculations.differencePercentage* 100 ).toString().match(/^\d+(?:\.\d{0,2})?/) + " %";
         		$toastr.success("Dispute updated successfully","Update dispute data",{closeButton: true});
         	});
