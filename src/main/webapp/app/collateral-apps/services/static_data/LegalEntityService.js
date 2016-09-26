@@ -15,7 +15,7 @@ angular.module('DashboardApp')
         }
 
         this.set = function (legalEntity, isUpdate) {
-            //console.log(legalEntity);
+            console.log(legalEntity);
             if (isUpdate) {
                 //console.log("Update");
                 $request.put('/servlet/LegalEntity/Update', legalEntity)

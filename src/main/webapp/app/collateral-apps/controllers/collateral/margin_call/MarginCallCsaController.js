@@ -2,8 +2,8 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout','SecurityService','ModalService',
-    function ($scope, uiGridConstants, MarginCallService, $timeout,Security,ModalService) {
+DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants', 'MarginCallService','$timeout','SecurityService','ModalService','DataMCDetail',
+    function ($scope, uiGridConstants, MarginCallService, $timeout,Security,ModalService,Data) {
 	$scope.active=1;
 	
 
@@ -14,21 +14,24 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 			$scope.$parent.post.push({isin :""});
 		}
 		
+		
+		
 	};
+	
 	$scope.gridMCCsaAllocPosted = {
 			columnDefs: [
 				{ name: "isin",  field : "isin",enableCellEdit:true } ,
 				{ name: "currency",  field : "currency" } ,
 				{ name: "sense",  field : "sense" } ,
 				{ name: "description",  field : "description" } ,
-				{ name: "coupon",  field : "coupon" ,cellClass: "collateral-money"} ,
-				{ name: "frequency",  field : "frequency" } ,
-				{ name: "quantity",  field : "quantity",cellClass: "collateral-money" } ,
-				{ name: "lotSize",  field : "lotSize" ,cellClass: "collateral-money"} ,
-				{ name: "notional",  field : "notional" ,cellClass: "collateral-money"} ,
-				{ name: "price",  field : "price" ,cellClass: "collateral-money"} ,
-				{ name: "amount",  field : "amount" ,cellClass: "collateral-money"} ,
-				{ name: "npvBaseCurrency",  field : "npvBaseCurrency" ,cellClass: "collateral-money"} ,
+				{ name: "coupon",    field : "coupon" ,cellClass: "collateral-money" ,cellFilter:'number:2'} ,
+				{ name: "frequency",filter:"number:2",  field : "frequency" } ,
+				{ name: "quantity",  field : "quantity",cellClass: "collateral-money" ,cellFilter:'number:0'} ,
+				{ name: "lotSize",  field : "lotSize" ,cellClass: "collateral-money",cellFilter:'number:2'} ,
+				{ name: "notional",  field : "notional" ,cellClass: "collateral-money",cellFilter:'number:2'} ,
+				{ name: "price",  field : "price" ,cellClass: "collateral-money",cellFilter:'number:2'} ,
+				{ name: "amount",  field : "amount" ,cellClass: "collateral-money",cellFilter:'number:2'} ,
+				{ name: "npvBaseCurrency",  field : "npvBaseCurrency" ,cellClass: "collateral-money",cellFilter:'number:2'} ,
 				{ name: "baseCurrrency",  field : "baseCurrrency" } ,
 				{ name: "SPrating",  field : "SPrating" } ,
 				{ name: "folder",  field : "folder" } 
@@ -136,28 +139,26 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 				return false;
 			}
 			$scope.gridMCCsaAllocPosted.data = newV;
-//			angular.forEach($scope.gridMCCsaAllocPosted.data, function(row) {
-//			    row.getNotional= function() {
-//			      return row.lotSize * row.quantity;
-//			    };
-//			    row.getAmount = function() {
-//			      return row.getNotinal() * row.price;
-//			    };
-//			  });
 	});
+	$scope.totalAmountAllocated  = 0;
+	$scope.coverage  = 0  ;
+    $scope.$watch(function () { return Data.getTotalAA(); }, function (newValue, oldValue) {
+        if (newValue !== oldValue){
+        	$scope.totalAmountAllocated = newValue;
+        	$scope.coverage = $scope.$parent.dispute.disputeCalculations.agreedMargin - $scope.totalAmountAllocated;
+        }
+    });
 	$scope.$watchCollection('$parent.receive',function(newV,oldV){
 		if(oldV == newV){
 			return false;
 		}
 		$scope.gridMCCsaAllocReceived.data = newV;
-//		angular.forEach($scope.gridMCCsaAllocReceived.data, function(row) {
-//		    row.getNotional= function() {
-//		      return row.lotSize * row.quantity;
-//		    };
-//		    row.getAmount = function() {
-//			      return row.getNotinal() * row.price;
-//			    };
-//		    
-//		  });
 	});
+	$scope.getBoderColor=  function(){
+			if($scope.totalAmountAllocated >= $scope.$parent.dispute.disputeCalculations.agreedMargin){
+				return 'border-green';
+			}else{
+				return 'border-red';
+			}
+	}
 }]);

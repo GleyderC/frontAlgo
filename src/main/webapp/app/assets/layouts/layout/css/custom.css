@@ -1,11 +1,4 @@
 /* here you can put your own css to customize and override the theme */
-.border-purple {
-    border-color: rebeccapurple
-}
-
-.text-difference {
-    font-size: 12px
-}
 
 .page-sidebar {
     -webkit-transition: all 400ms ease;
@@ -13,6 +6,22 @@
     -ms-transition: all 400ms ease;
     -o-transition: all 400ms ease;
     transition: all 400ms ease;
+}
+
+.border-purple {
+    border-color: rebeccapurple
+}
+
+.border-green{
+	border-color: green
+}
+
+.border-red{
+	border-color: red
+}
+
+.text-difference{
+	font-size : 12px
 }
 
 .page-sidebar .page-sidebar-menu > li.active > a > .selected, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .selected {

@@ -10,7 +10,7 @@
 		                        <a type="submit" class="btn" uib-popover="" popover-trigger="mouseenter" ng-click="" ng-disabled="">
 		                            <i class="fa fa-floppy-o" ></i>
 		                        </a>	
-		
+			
 		                	</div>
 		                	<div class="btn-group">
 		                        <a type="submit" class="btn" uib-popover="" popover-trigger="mouseenter" ng-click="" ng-disabled="">
@@ -43,8 +43,8 @@
 								<div class="form-group">
 									<label class="control-label col-md-3 text-right">Amount</label>
 									<div class="col-md-8">
-										<input type="text"
-											class="form-control ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty  ng-valid-required"
+										<input disabled ui-number-mask="2" type="text" ng-model="totalAmountAllocated"
+											class="form-control collateral-moneyl"
 											required="required">
 			
 									</div>
@@ -54,8 +54,8 @@
 								<div class="form-group">
 									<label class="control-label col-md-5 text-right">Agreed Margin Call	</label>
 									<div class="col-md-5">
-										<input type="text"
-											class="form-control ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty  ng-valid-required"
+										<input type="text" ui-number-mask="2" ng-model="dispute.disputeCalculations.agreedMargin" disabled
+											class="form-control collateral-money"
 											required="required">
 			
 									</div>
@@ -63,10 +63,10 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label class="control-label col-md-3 text-right">Remaining</label>
+									<label class="control-label col-md-3 text-right">Coverage</label>
 									<div class="col-md-8">
 										<input type="text"
-											class="form-control ng-pristine ng-untouched ng-valid ng-isolate-scope ng-not-empty  ng-valid-required"
+											class="form-control collateral-money" ui-number-mask="2" ng-model="coverage" ng-class="getBoderColor()" value="{{dispute.disputeCalculations.agreedMargin-totalAmountAllocated}}"
 											required="required">
 			
 									</div>

@@ -30,6 +30,8 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         $scope.reCallAmount    =  "";
         $scope.tolerancePercentage = 0 ; // input manually
         $scope.tolerance =  0; 
+        $scope.totalAmountAllocated =  0 ; 
+        
         
         $scope.changeTolerance = function(tolerancePercentage){ //calculated
         	tolerancePercentage = tolerancePercentage.replace(/%/,'');
@@ -37,9 +39,20 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         	$scope.tolerance = tolerancePercentage/100; 	 
         	
         };
-//      Dispute
+//      Dispute data Structure
         $scope.disputeEdit = false ;
-
+        $scope.dispute = {
+        		disputeCalculations  : {
+        			counterpartyValue : 0,
+        			difference 		: 0 ,
+        			differencePercentage 		: 0 ,
+        			disputeComments : "",
+        			agreedMargin : 0
+        		}
+        		
+        		
+        }; 
+        
         $scope.setMarginCallType = function(marginCallType){
         	let marginTypeList = {}; 
         	$scope.marginCallType = localStorage.get("MarginCallType");
@@ -87,26 +100,19 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyA; 
 	            }
 	            
+//	        	Disppute Data
 	            $scope.tolerance = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.tolerance;
 	            $scope.myValue = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.myValue;
 	            $scope.disputeStatus = $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.csaDisputesCalculations.disputeStatusEnum;
+	            
+	            $scope.dispute["contractId"]  = $scope.MarginCallDetail.contract.internalId;
+	        	$scope.dispute["marginCallId"]  = $scope.currentMarginCall.marginCalls[0].id;
+	        	$scope.dispute["status"]  = $scope.disputeStatus;
+	        	$scope.dispute["tolerance"]  = $scope.myValue *100;
+	        	$scope.dispute["myValue"]  = $scope.myValue;
+//	        	
 	        	
-	            $scope.dispute = {
-	            		contractId    : $scope.MarginCallDetail.contract.internalId,
-	            		marginCallId  : $scope.currentMarginCall.marginCalls[0].id,
-	            		disputeCalculations  : {
-	            			counterpartyValue : 0,
-	            			difference 		: 0 ,
-	            			differencePercentage 		: 0 ,
-	            			disputeStatus : $scope.disputeStatus, 
-	            			tolerance 	  : $scope.tolerance * 100 ,
-	            			myValue   	  : $scope.myValue ,
-	            			disputeComments : "",
-	            			agreedMargin : 0
-	            		}
-	            		
-	            		
-	            }; 
+	        	
 	            if($scope.MarginCallDetail.marginCall["disputeCalculationsCall"] != undefined && $scope.MarginCallDetail.marginCall["disputeCalculations"].hasOwnProperty("disputeCalculationDetail")){
 	            	$scope.disputeDetailResult = $scope.MarginCallDetail.marginCall.disputeCalculations.disputeCalculationDetail;
 	        		$scope.Trades.forEach(function(vTrade, kTrade){
@@ -218,7 +224,10 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         	MarginCallService.updateDispute(dispute).success(function(resp){
         		$scope.dispute.disputeCalculations.disputeStatus   = resp.dataResponse.disputeCalculations.disputeStatusEnum;
         		$scope.dispute.disputeCalculations.difference   = resp.dataResponse.disputeCalculations.difference;
+        		$scope.dispute.disputeCalculations.tolerance= resp.dataResponse.disputeCalculations.tolerance;
+        						$scope.tolerancePercentage =  resp.dataResponse.disputeCalculations.tolerance;
         		$scope.dispute.disputeCalculations.differencePercentage   =  resp.dataResponse.disputeCalculations.differencePercentage;
+        		
         		$scope.differencePercentage_text     =   (resp.dataResponse.disputeCalculations.differencePercentage* 100 ).toString().match(/^\d+(?:\.\d{0,2})?/) + " %";
         		$toastr.success("Dispute updated successfully","Update dispute data",{closeButton: true});
         	});
@@ -251,3 +260,20 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 				});
         };
     }]);
+
+
+DashboardApp.factory('DataMCDetail', function(){
+    var data =
+        {
+            totalAmountAllocated: 0
+        };
+    
+    return {
+        getTotalAA: function () {
+            return data.totalAmountAllocated;
+        },
+        setTotalAA: function (totalAmountAllocated) {
+            data.totalAmountAllocated= totalAmountAllocated;
+        }
+    };
+});
