@@ -82,10 +82,12 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
 
                     //ADD ELEMENTS DYNAMIC
                     $scope.multiselectElements.addElement = function (id, name) {
+
                         $scope.multiselectElements.data.push({
                             key: id,
                             name: name
                         });
+
                     }
 
                     //GET ALL ELEMENTS
@@ -114,8 +116,17 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
                     //SELECT A ITEM
                     $scope.multiselectElements.selectElement = function (item, index) {
 
-                        item.hide = true;
+                        let repeat = false;
 
+                        $scope.multiselectElements.selectedItems.filter(function (obj) {
+
+                            if(obj.key === item.key){
+                                repeat = true;
+                                return false;
+                            }
+
+                        });
+                        item.hide = true;
                         $scope.multiselectElements.msSelected.push(
                             {
                                 key: item.key,
@@ -123,6 +134,15 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
                                 optionIndex: index
                             }
                         );
+
+                        if(repeat === false){
+
+                            if( angular.isFunction( $scope.multiselectElements.callbackAddItem )){
+                                $scope.multiselectElements.callbackAddItem(item);
+                            }
+                        }
+
+
                     }
 
                     //SELECT ITEM BY KEY
@@ -169,10 +189,13 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
 
                     //UNSELECT A ITEM
                     $scope.multiselectElements.unselectElement = function (item, $index) {
-
+                        
                         $scope.multiselectElements.msOptions[item.optionIndex].hide = false;
                         $scope.multiselectElements.msSelected.splice($index, 1);
 
+                        if( angular.isFunction( $scope.multiselectElements.callbackDeleteItem )){
+                            $scope.multiselectElements.callbackDeleteItem(item);
+                        }
                     }
 
                     //SELECT ALL ITEMS IN ARRAY
@@ -188,6 +211,7 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
 
                     //UNSELECT ALL ITEMS IN ARRAY
                     $scope.multiselectElements.unselectAll = function () {
+
                         if ($scope.multiselectElements.msSelected.length == 0)
                             return true;
 

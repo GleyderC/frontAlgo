@@ -5,12 +5,17 @@ angular.module('DashboardApp')
             return $request.get('/servlet/UserGroups/SelectAll');
         }
 
-        this.getById = function (idUserGroups) {
-            return $request.get('/servlet/UserGroups/Select');
+        this.getById = function (IdUserGroups) {
+
+            var param = {id: IdUserGroups};
+            //console.log(param);
+
+            return $request.post('/servlet/UserGroups/Select', param);
+
         }
 
         this.set = function (UserGroups, isUpdate) {
-            console.log(UserGroups);
+
             if (isUpdate) {
                 //console.log("Update");
                 $request.put('/servlet/UserGroups/Update', UserGroups)
@@ -23,7 +28,7 @@ angular.module('DashboardApp')
                 $request.post('/servlet/UserGroups/Insert', UserGroups)
                     .then(function (Response) {
                             //console.log("Insert");
-                            UserGroups.id = Response.data.dataResponse;
+                            //UserGroups.id = Response.data.dataResponse;
                             toastr.success("Successfully stored data", "Success");
                         }
                     );
@@ -42,6 +47,30 @@ angular.module('DashboardApp')
 
                     toastr.success("Data successfully removed", "Success")
                 });
+        }
+        this.addUser = function(IdGroup,IdUser){
+
+            var params = {
+                "userGroupID": IdGroup,
+                "userID": IdUser
+            }
+            $request.post('/servlet/UserGroups/AddUser',params)
+                .then(function (Response) {
+                    toastr.success("Successfully stored data", "Success");
+                });
+
+        }
+        this.deleteUser = function(IdGroup,IdUser){
+
+            var params = {
+                "userGroupID": IdGroup,
+                "userID": IdUser
+            }
+            $request.post('/servlet/UserGroups/DeleteUser',params)
+                .then(function (Response) {
+                    toastr.success("Data successfully removed", "Success")
+                });
+
         }
 
     }]);

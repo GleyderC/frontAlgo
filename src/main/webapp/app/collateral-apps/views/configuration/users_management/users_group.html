@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <ui-select ng-model="UsersGroup.selected" theme="select2" title="Choose a Group" class="input-large">
+                        <ui-select ng-model="UsersGroup.selected" theme="select2" title="Choose a Group" class="input-large"  ng-change="filterGroup()">
                             <ui-select-match placeholder="Select or search a Group...">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="group in UsersGroups | filter: $select.search">
                                 <span ng-bind-html="group.name | highlight: $select.search"></span>
@@ -34,7 +34,7 @@
 
         <div class="row">
             <div class="col-md-offset-3 col-lg-offset-2">
-                <multiselect-dual multiselect-elements="usersGroup" class="users_group"></multiselect-dual>
+                <multiselect-dual multiselect-elements="Users" class="users_group"></multiselect-dual>
             </div>
         </div>
     </div>
