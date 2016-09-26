@@ -54,8 +54,8 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
             if (newInventory === oldInventory) {
                 return false;
             }
-            $scope.gridInventoryOptions.data  = newInventory;
-//            $scope.gridApi.core.refresh();
+            $scope.gridInventoryOptions.data  = newInventory; 
+//            $scope.gridInventoryOptions.api.core.refresh();
 //    		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
         });
 }]);
