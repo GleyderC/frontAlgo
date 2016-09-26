@@ -56,7 +56,7 @@
         </form>
         <!-- END LOGIN FORM -->
         <!-- BEGIN FORGOT PASSWORD FORM -->
-        <form class="forget-form"  action="index.html" method="post">
+        <form class="forget-form"  action="index.jsp" method="post">
             <h3 class="font-green">Forget Password ?</h3>
             <p> Enter your e-mail address below to reset your password. </p>
             <div class="form-group">
@@ -76,10 +76,6 @@
             });
         </script>
     </div>
-
-    <!-- BEGIN FOOTER -->
-        <div data-ng-include="'collateral-apps/views/footer.jsp'"> </div>
-    <!-- END FOOTER -->
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="assets/pages/scripts/login.min.js" type="text/javascript"></script>

@@ -2,7 +2,7 @@ var TableDatatablesManaged = function () {
 
     var initTable1 = function () {
 
-        var table = $('.colaterall-datatable');
+        var table = $('#sample_1');
 
         // begin first table
         table.dataTable({
@@ -17,8 +17,8 @@ var TableDatatablesManaged = function () {
                 "info": "Showing _START_ to _END_ of _TOTAL_ records",
                 "infoEmpty": "No records found",
                 "infoFiltered": "(filtered1 from _MAX_ total records)",
-                "search": "Search:",
                 "lengthMenu": "Show _MENU_",
+                "search": "Search:",
                 "zeroRecords": "No matching records found",
                 "paginate": {
                     "previous":"Prev",

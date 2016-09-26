@@ -31,9 +31,11 @@
     "angular-md5": "^0.1.10",
     "ng-file-upload-shim": "^12.0.4",
     "ng-file-upload": "^12.0.4",
-    "ngclipboard": "^1.1.1"
+    "ngclipboard": "^1.1.1",
+    "angular-translate": "^2.12.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+  },
   "appPath": "src/main/webapp/app",
   "moduleName": "collateralApp",
   "overrides": {
@@ -49,6 +51,11 @@
         "themes/smoothness/theme.css",
         "themes/smoothness/jquery-ui.min.css",
         "jquery-ui.min.js"
+      ]
+    },
+    "angular-translate": {
+      "main":  [
+	"angular-translate.min.js"
       ]
     }
   }

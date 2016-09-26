@@ -1,26 +1,62 @@
 /* here you can put your own css to customize and override the theme */
-.border-purple{
-	border-color: rebeccapurple
+.border-purple {
+    border-color: rebeccapurple
 }
-.text-difference{
-	font-size : 12px
+
+.text-difference {
+    font-size: 12px
 }
-.page-content {
+
+.page-sidebar {
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
+    -ms-transition: all 400ms ease;
+    -o-transition: all 400ms ease;
+    transition: all 400ms ease;
+}
+
+.page-sidebar .page-sidebar-menu > li.active > a > .selected, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .selected {
+    display: none !important;
+}
+
+/*.page-content {
+    width: 100%;
     padding: 5px;
     margin: 0;
     background-color: #616d76;
+}*/
+
+.main-body-content{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.ui-view-content{
+    width: 100%;
+    height: 563px;
+    min-height: 672px;
+    background-color: rgb(79, 90, 103);
+
+}
+
+.page-footer {
+    float: right;
+    margin-right: 10%;
+    font-weight: bold;
 }
 
 .page-logo {
     width: 20px;
 }
 
-.page-logo span {
-
+.page-header.navbar .page-logo .logo-default {
+    margin: 6px 0 0;
+    width: 26px;
+    border-radius: 3px;
 }
 
-.page-content {
-    width: 100%;
+.page-logo span {
+
 }
 
 .container-fluid .page-content {
@@ -110,19 +146,17 @@ div.action-button-container {
     margin-top: 10px;
 }
 
-div.btn-admin-options
-{
+div.btn-admin-options {
     float: left;
     margin-right: 15px;
 }
 
-div.btn-admin-options button
-{
+div.btn-admin-options button {
     background: #fafcfb !important;
     color: rgba(51, 51, 51, 0.5) !important;
 }
 
-div.btn-admin-options button i{
+div.btn-admin-options button i {
     font-size: 15px !important;
 }
 
@@ -490,25 +524,22 @@ i.close-tab-icon:hover {
 
 /*UI-SELECT*/
 
-.select2-results .select2-highlighted
-{
+.select2-results .select2-highlighted {
     color: #212121;
 }
 
-.select2-results .select2-disabled
-{
+.select2-results .select2-disabled {
     color: #666;
     background: rgb(253, 253, 253);
 }
 
-.row-space{
+.row-space {
     margin-top: 1px;
     margin-bottom: 2px;
 }
 
 /* MARGIN CALL SECTION */
-.badge-mandatory-field
-{
+.badge-mandatory-field {
     margin-left: 1px;
     margin-right: 1px;
 }
@@ -526,7 +557,7 @@ i.close-tab-icon:hover {
     padding-top: 7px;
 }
 
-.drop-box span{
+.drop-box span {
     cursor: pointer;
 }
 

@@ -12612,9 +12612,6 @@ Custimized Bootstrap Wells
         .widget-gradient .widget-gradient-body .widget-gradient-body-actions li a {
           color: #fff; }
           .widget-gradient .widget-gradient-body .widget-gradient-body-actions li a:hover {
-            /*color: #a1afbb;*/
-            text-decoration: none; }
-            .widget-gradient .widget-gradient-body .widget-gradient-body-actions li:hover {
             color: #a1afbb;
             text-decoration: none; }
 

@@ -1,0 +1,105 @@
+@media (min-width: 1200px) {
+    .container {
+
+        width: 1280px;
+
+    }
+}
+
+@media (min-width: 992px) {
+    .page-header .navbar-collapse {
+        margin-top: 75px;
+        margin-left: 1px;
+    }
+
+    .page-header .topbar-actions {
+        top: 5px;
+    }
+
+    .page-header .navbar-fixed-top {
+        background: #616d76;
+        padding: 9px 25px;
+    }
+
+    .wrapper {
+        margin-top: 0;
+    }
+
+    .modal-xlg .modal-dialog {
+        width: 1200px !important;
+    }
+
+    .modal-full-size .modal-dialog {
+        margin-top: 10px;
+        width: 95% !important;
+    }
+}
+@media (max-height: 767px) {
+    .split-pane {
+        min-height: 650px !important;
+    }
+    #country-risk-map{
+        height: 640px !important;
+    }
+    #grid-country-risk{
+        height: 600px;
+    }
+    .issuer_map_chart{
+        height: 300px;
+    }
+    .grid-collateral{
+        height: 570px;
+    }
+    .collateral-editor{
+        height: 200px;
+    }
+    .users_group .panel-multiselect {
+
+        width: 400px;
+        height: 400px;
+
+    }
+}
+@media (min-height: 768px) {
+    .split-pane {
+        min-height: 650px !important;
+    }
+    #country-risk-map{
+        height: 640px !important;
+    }
+    #grid-country-risk{
+        height: 1200px;
+    }
+    .issuer_map_chart{
+        height: 500px;
+    }
+    .grid-collateral{
+        height: 670px;
+    }
+    .collateral-editor{
+        height: 300px;
+    }
+}
+@media (min-height: 992px) {
+    .split-pane {
+        min-height: 970px !important;
+    }
+    #country-risk-map{
+        height: 960px !important;
+    }
+    #grid-country-risk{
+        height: 1800px;
+    }
+    #grid_issuer_risk{
+        height: 900px;
+    }
+    .grid-collateral{
+        height: 870px;
+    }
+    .users_group .panel-multiselect {
+
+        width: 500px;
+        height: 700px;
+
+    }
+}

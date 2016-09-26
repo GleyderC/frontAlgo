@@ -1,6 +1,6 @@
 /***
-Collateral AngularJS App Main Script
-***/
+ Collateral AngularJS App Main Script
+ ***/
 
 /* Collateral App */
 var CollateralApp = angular.module("CollateralApp", [
@@ -24,7 +24,7 @@ var CollateralApp = angular.module("CollateralApp", [
 var paths = {
 
     views: "collateral-apps/views",
-    tpls:   "collateral-apps/tpl"
+    tpls: "collateral-apps/tpl"
 
 };
 
@@ -46,21 +46,21 @@ CollateralApp.config(function ($sceProvider) {
 // ## End Strict Context Escaping Config
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
-CollateralApp.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {
+CollateralApp.config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
         // global configs go here
     });
 }]);
 
 //AngularJS v1.3.x workaround for old style controller declarition in HTML
-CollateralApp.config(['$controllerProvider', function($controllerProvider) {
-  // this option might be handy for migrating old apps, but please don't use it
-  // in new ones!
-  $controllerProvider.allowGlobals();
+CollateralApp.config(['$controllerProvider', function ($controllerProvider) {
+    // this option might be handy for migrating old apps, but please don't use it
+    // in new ones!
+    $controllerProvider.allowGlobals();
 }]);
 
 //notification with angular-toastr
-CollateralApp.config(function(toastrConfig) {
+CollateralApp.config(function (toastrConfig) {
     angular.extend(toastrConfig, {
         allowHtml: false,
         closeButton: false,
@@ -90,10 +90,10 @@ CollateralApp.config(function(toastrConfig) {
 
 /********************************************
  END: BREAKING CHANGE in AngularJS v1.3.x:
-*********************************************/
+ *********************************************/
 
 /* Setup global settings */
-CollateralApp.factory('settings', ['$rootScope', function($rootScope, $urlSettings) {
+CollateralApp.factory('settings', ['$rootScope', function ($rootScope, $urlSettings) {
     // supported languages
     var settings = {
 
@@ -115,9 +115,9 @@ CollateralApp.factory('settings', ['$rootScope', function($rootScope, $urlSettin
 
 
 /* Setup App Main Controller */
-CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageService', function($scope, $request, $localStorage) {
-    
-    $scope.$on('$viewContentLoaded', function() {
+CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageService', function ($scope, $request, $localStorage) {
+
+    $scope.$on('$viewContentLoaded', function () {
         App.initComponents(); // init core components
         Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
@@ -125,51 +125,51 @@ CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageSe
 }]);
 
 /***
-Layout Partials.
-By default the partials are loaded through AngularJS ng-include directive. In case they loaded in server side(e.g: PHP include function) then below partial
-initialization can be disabled and Layout.init() should be called on page load complete as explained above.
-***/
+ Layout Partials.
+ By default the partials are loaded through AngularJS ng-include directive. In case they loaded in server side(e.g: PHP include function) then below partial
+ initialization can be disabled and Layout.init() should be called on page load complete as explained above.
+ ***/
 
 /* Setup Layout Part - Header */
-CollateralApp.controller('HeaderController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+CollateralApp.controller('HeaderController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
         Layout.initHeader(); // init header
     });
 }]);
 
 /* Setup Layout Part - Sidebar */
-CollateralApp.controller('SidebarController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+CollateralApp.controller('SidebarController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
         Layout.initSidebar(); // init sidebar
     });
 }]);
 
 /* Setup Layout Part - Quick Sidebar */
-CollateralApp.controller('QuickSidebarController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-       setTimeout(function(){
+CollateralApp.controller('QuickSidebarController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
+        setTimeout(function () {
             QuickSidebar.init(); // init quick sidebar
         }, 2000)
     });
 }]);
 
 /* Setup Layout Part - Sidebar */
-CollateralApp.controller('PageHeadController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+CollateralApp.controller('PageHeadController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
         Demo.init(); // init theme panel
     });
 }]);
 
 /* Setup Layout Part - Theme Panel */
-CollateralApp.controller('ThemePanelController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+CollateralApp.controller('ThemePanelController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
         Demo.init(); // init theme panel
     });
 }]);
 
 /* Setup Layout Part - Footer */
-CollateralApp.controller('FooterController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
+CollateralApp.controller('FooterController', ['$scope', function ($scope) {
+    $scope.$on('$includeContentLoaded', function () {
         //Layout.initFooter(); // init footer
     });
 }]);
@@ -178,7 +178,7 @@ CollateralApp.controller('FooterController', ['$scope', function($scope) {
 /* ###### Collateral Request Service #####*/
 
 //interceptor all request
-CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageService', '$log', function ($q, $injector, $localStorage, $log) {
+CollateralApp.factory('httpGlobalInterceptor', ['$q', '$injector', 'localStorageService', '$log', function ($q, $injector, $localStorage, $log) {
     return {
         'request': function (config) {
             config.headers = config.headers || {};
@@ -187,9 +187,9 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageS
             }
             return config;
         },
-        'requestError': function(rejection) {
+        'requestError': function (rejection) {
 
-            $injector.get('toastr').error("Error sending data to the server","Server Error",{closeButton: true});
+            $injector.get('toastr').error("Error sending data to the server", "Server Error", {closeButton: true});
             $log.warn("There is an error. Reason:");
             $log.debug("http_code: " + rejection.status + ", Response: " + rejection.statusText);
 
@@ -198,13 +198,13 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageS
             }
             return $q.reject(rejection);
         },
-        'response': function(response) {
+        'response': function (response) {
 
             return response;
         },
-        'responseError': function(response) {
-            
-            $injector.get('toastr').error("Acess to the requested resource has been denied","Unauthorized Error",{closeButton: true});
+        'responseError': function (response) {
+
+            $injector.get('toastr').error("Acess to the requested resource has been denied", "Unauthorized Error", {closeButton: true});
             $log.warn("There is an error. Reason:");
             $log.debug("http_code: " + response.status + ", Response: " + response.statusText);
 
@@ -216,42 +216,40 @@ CollateralApp.factory('httpGlobalInterceptor',['$q', '$injector', 'localStorageS
     };
 }]);
 
-CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',function($rootScope,$http, URL_CONFIG, $log){
+CollateralApp.factory('$request', ['$rootScope', '$http', 'URL_CONFIG', '$log', function ($rootScope, $http, URL_CONFIG, $log) {
 
-    
+
     var request = {};
-    request.getFile = function(urlRelative){
-    	window.open(URL_CONFIG.API_URL+''+urlRelative,"_blank");
+    request.getFile = function (urlRelative) {
+        window.open(URL_CONFIG.API_URL + '' + urlRelative, "_blank");
     };
-    request.get = function  (urlRelative, dataRequest)
-    {
+    request.get = function (urlRelative, dataRequest) {
         var config_request = {};
-        if( !!dataRequest && typeof dataRequest === 'object' ){
+        if (!!dataRequest && typeof dataRequest === 'object') {
             config_request = {
                 params: dataRequest
             };
         }
 
-        return $http.get( URL_CONFIG.API_URL + '' + urlRelative, config_request);
+        return $http.get(URL_CONFIG.API_URL + '' + urlRelative, config_request);
 
     }
 
-    request.post = function (urlRelative, dataRequest){
+    request.post = function (urlRelative, dataRequest) {
 
-        return $http.post( URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
-
-    }
-
-    request.put = function (urlRelative, dataRequest){
-
-        return $http.put( URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
+        return $http.post(URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
 
     }
 
-    request.delete = function  (urlRelative, dataRequest)
-    {
+    request.put = function (urlRelative, dataRequest) {
+
+        return $http.put(URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
+
+    }
+
+    request.delete = function (urlRelative, dataRequest) {
         var config_request = {};
-        if( !!dataRequest && typeof dataRequest === 'object' ){
+        if (!!dataRequest && typeof dataRequest === 'object') {
             config_request =
             {
                 data: dataRequest
@@ -259,7 +257,7 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
         }
 
         //return $http.delete( URL_CONFIG.API_URL + '' + urlRelative, config_request);
-        return $http.post( URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
+        return $http.post(URL_CONFIG.API_URL + '' + urlRelative, dataRequest);
 
     }
 
@@ -268,19 +266,19 @@ CollateralApp.factory('$request',['$rootScope','$http','URL_CONFIG','$log',funct
 }]);
 
 /*Web socket connection */
-CollateralApp.factory('$socket',['$websocket', '$rootScope','$http','URL_CONFIG','$log','localStorageService',
-                         function($websocket,$rootScope,$http, URL_CONFIG, $log,localStorage){
-		var ws  = $websocket(URL_CONFIG.WS_URL);
-		ws.onOpen(function(){
-            		console.debug("Socket Connected");
+CollateralApp.factory('$socket', ['$websocket', '$rootScope', '$http', 'URL_CONFIG', '$log', 'localStorageService',
+    function ($websocket, $rootScope, $http, URL_CONFIG, $log, localStorage) {
+        var ws = $websocket(URL_CONFIG.WS_URL);
+        ws.onOpen(function () {
+            console.debug("Socket Connected");
 //            		ws.send(JSON.stringify({signal : "SGN_USER_NAME" , userName : localStorage.get("userName")}));
-            		ws.send(JSON.stringify({signal : "SGN_USER_NAME" , userName : "userName"}));
-            });
-		
-	return ws ;
-}]);
+            ws.send(JSON.stringify({signal: "SGN_USER_NAME", userName: "userName"}));
+        });
+
+        return ws;
+    }]);
 /*Default Setup $http Service*/
-CollateralApp.config(['$httpProvider', function($httpProvider){
+CollateralApp.config(['$httpProvider', function ($httpProvider) {
 
     //default config all requets
     $httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
@@ -291,20 +289,19 @@ CollateralApp.config(['$httpProvider', function($httpProvider){
 
 
 /* Setup Rounting For All Pages */
-CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider ) {
+CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("login");
 
     $stateProvider
 
-        //login
+    //login
         .state('login', {
             url: '/login',
             data: {pageTitle: 'Collateral User Login'},
 
             views: {
-                'main-content@':
-                {
+                'main-content@': {
                     templateUrl: paths.views + '/login/user_login.jsp',
                     controller: 'LoginController',
                     controllerAs: 'loginCtrl',
@@ -329,27 +326,23 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
         })
 
         // Home
+
         .state('home', {
             url: "/home",
 
             data: {pageTitle: 'Collateral'},
 
             views: {
-                'header@': {
-                    templateUrl: 'collateral-apps/views/header.jsp',
-                },
-                'main-content@':
-                {
+                'main-content@': {
                     templateUrl: paths.views + "/dashboard/dashboard.jsp",
                     controller: 'DashboardController',
                     controllerAs: 'dashboardCtrl',
                 }
             },
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        name: 'DashboardApp',
-                        insertBefore: '#ng_load_plugins_before', // load dependencies before load page inside the element
                         files: [
 
                             /* select css*/
@@ -421,7 +414,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             /* Interest Controller js */
                             'collateral-apps/controllers/collateral/interest/InterestController.js',
                             'collateral-apps/controllers/collateral/interest/InterestDetailController.js',
-                            
+
                             /*UserMessage Controller*/
                             'collateral-apps/controllers/user_message/UserMessageController.js',
                             /*UserMessage Controller*/
@@ -447,11 +440,18 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'collateral-apps/controllers/configuration/users_management/GroupPermissionController.js',
                             'collateral-apps/controllers/configuration/users_management/UsersGroupController.js'
 
-
                         ],
                         serie: true,
                         cache: false
-                    });
+                    }).then(
+                        function (result) {
+                            return;
+                        },
+                        function (error) {
+                            console.error("Error loading dependencies")
+                            console.error(error)
+                        }
+                    );
                 }]
             }
         })
@@ -459,9 +459,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
 }]);
 
 /* Init global settings and run the app */
-CollateralApp.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
+CollateralApp.run(["$rootScope", "settings", "$state", function ($rootScope, settings, $state) {
     $rootScope.$state = $state; // state to be accessed from view
     $rootScope.$settings = settings; // state to be accessed from view
-    var msj = "Hi, Developer ^_^";
-    console.log("%c"+msj,"font-size: 15px;font-weight: bold; color: darkblue;")
+    var msj = "Welcome, Developer =D";
+    console.log("%c" + msj, "font-size: 15px;font-weight: bold; color: #2b3643;")
 }]);
