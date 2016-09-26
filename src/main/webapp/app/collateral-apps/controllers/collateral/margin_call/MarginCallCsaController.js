@@ -34,7 +34,8 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 				{ name: "npvBaseCurrency",  field : "npvBaseCurrency" ,cellClass: "collateral-money",cellFilter:'number:2'} ,
 				{ name: "baseCurrrency",  field : "baseCurrrency" } ,
 				{ name: "SPrating",  field : "SPrating" } ,
-				{ name: "folder",  field : "folder" } 
+				{ name: "folder",  field : "folder" } ,
+				{ name: "Action",   cellTemplate : '<div class="text-center"> <a ng-click="grid.appScope.remove(row.entity,grid)" href="#!" aria-label="Remove"><i class="fa fa-times red" aria-hidden="true"></i> </a>'  }
 			],
 			onRegisterApi  : function(gridApi){
 				$scope.gridPostedApi = gridApi;
@@ -92,7 +93,8 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 					{ name: "npvBaseCurrency",  field : "npvBaseCurrency" ,cellClass:"collateral-money"} ,
 					{ name: "baseCurrrency",  field : "baseCurrrency", } ,
 					{ name: "SPrating",  field : "SPrating" } ,
-					{ name: "folder",  field : "folder" } 
+					{ name: "folder",  field : "folder" },
+					{ name: "Action",   cellTemplate : '<div class="text-center"> <a ng-click="grid.appScope.remove(row.entity,grid)" href="#!" aria-label="Remove"><i class="fa fa-times red" aria-hidden="true"></i> </a>'  }
 			 ],
 			 onRegisterApi  : function(gridApi){
 					$scope.gridReceivedApi = gridApi;
@@ -133,6 +135,21 @@ DashboardApp.controller('MarginCallCsaController', ['$scope', 'uiGridConstants',
 	            		}
 					});        
 				}
+	};
+	$scope.remove = function(entity,grid){
+		var index = grid.options.data.indexOf(entity);
+    	grid.options.data.splice(index, 1);
+    	if(entity.sense==="RECEIVE"){ 
+    		entity.sense = "POSTED";
+    		$scope.$parent.Inventory.push(entity);
+    		$scope.totalAmountAllocated =  $scope.totalAmountAllocated - entity.amount;
+        	Data.setTotalAA($scope.totalAmountAllocated);
+    	}
+    	if(entity.sense==="PAY"){
+    		entity.sense = "RECEIVED";
+    		$scope.$parent.Inventory.push(entity);
+    	}
+		
 	};
 	$scope.$watchCollection('$parent.post',function(newV,oldV){
 			if(oldV == newV){

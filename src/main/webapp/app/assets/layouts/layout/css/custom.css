@@ -19,6 +19,9 @@
 .border-red{
 	border-color: red
 }
+.red{
+       color: red;
+}
 
 .text-difference{
 	font-size : 12px
