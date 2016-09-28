@@ -14,7 +14,7 @@ var Layout = function () {
 
     // Set proper height for sidebar and content. The content and sidebar height must be synced always.
     var handleSidebarAndContentHeight = function () {
-        var content = $('.page-content');
+        var content = $('.page-content:first');
         var sidebar = $('.page-sidebar');
         var body = $('body');
         var height;
@@ -43,6 +43,11 @@ var Layout = function () {
                 if ((height + headerHeight + footerHeight) <= App.getViewPort().height) {
                     height = App.getViewPort().height - headerHeight - footerHeight;
                 }
+            }
+
+            if( $("div.menu-collateral-management").outerHeight() > 0)
+            {
+                height+=($("div.menu-collateral-management").outerHeight()*0.6);
             }
             content.attr('style', 'min-height:' + height + 'px');
         }
@@ -216,8 +221,8 @@ var Layout = function () {
 
             var url = $(this).attr("href");
             var menuContainer = $('.page-sidebar ul');
-            var pageContent = $('.page-content');
-            var pageContentBody = $('.page-content .page-content-body');
+            var pageContent = $('.page-content:first');
+            var pageContentBody = $('.page-content .page-content-body:first');
 
             menuContainer.children('li.active').removeClass('active');
             menuContainer.children('arrow.open').removeClass('open');
@@ -259,13 +264,13 @@ var Layout = function () {
         });
 
         // handle ajax link within main content
-        $('.page-content').on('click', '.ajaxify', function (e) {
+        $('.page-content:first').on('click', '.ajaxify', function (e) {
             e.preventDefault();
             App.scrollTop();
 
             var url = $(this).attr("href");
-            var pageContent = $('.page-content');
-            var pageContentBody = $('.page-content .page-content-body');
+            var pageContent = $('.page-content:first');
+            var pageContentBody = $('.page-content .page-content-bodyfirst');
 
             App.startPageLoading();
 
