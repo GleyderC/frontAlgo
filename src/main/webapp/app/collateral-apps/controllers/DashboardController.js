@@ -13,6 +13,13 @@ angular.module('CollateralApp').controller('DashboardController',
 
             $scope.$workspaceTabsMgm = $menuService.MenuTree;
 
+			$scope.logTabs = function (){
+				console.log($scope.$workspaceTabsMgm)
+			}
+
+			$scope.testFuncion = function(){
+				console.log($scope.$workspaceTabsMgm.getWorkspaceTabsByID($scope.$workspaceTabsMgm,'BilateralContractWS'))
+			}
 			//SET USER TYPE
 			localStorageService.set('user_rol', 'admin');
 			

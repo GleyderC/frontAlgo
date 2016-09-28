@@ -12,6 +12,8 @@ DashboardApp.directive('menuCollateral', ['$rootScope', function ($rootScope) {
 }]);
 
 DashboardApp.service('MenuService', function () {
+    var _that = this;
+
     this.MenuTree = {
         active: 1,
         tabList: [
@@ -36,38 +38,38 @@ DashboardApp.service('MenuService', function () {
                                 icon: 'fa fa-phone',
                                 text: 'Margin Call'
                             },
-                            childWorkspace : {
-                            	tabList:[
-                            	         {
-                                             head: {
-                                                 icon: 'fa fa-home',
-                                                 text: 'Main'
-                                             },
-                                             templateUrl: paths.views + '/collateral/margin_call/main.html',
-                                             autoload:true
-                                         },
-                            	]
+                            childWorkspace: {
+                                tabList: [
+                                    {
+                                        head: {
+                                            icon: 'fa fa-home',
+                                            text: 'Main'
+                                        },
+                                        templateUrl: paths.views + '/collateral/margin_call/main.html',
+                                        autoload: true
+                                    },
+                                ]
                             },
-                            autoload:true
+                            autoload: true
                         },
                         {
                             head: {
                                 icon: 'fa fa-calculator',
                                 text: 'Interest'
                             },
-                            childWorkspace : {
-                            	tabList:[
-                            	         {
-                                             head: {
-                                                 icon: 'fa fa-home',
-                                                 text: 'Main'
-                                             },
-                                             templateUrl: paths.views + '/collateral/interest/main.html',
-                                             autoload : true 
-                                         },
-                            	]
+                            childWorkspace: {
+                                tabList: [
+                                    {
+                                        head: {
+                                            icon: 'fa fa-home',
+                                            text: 'Main'
+                                        },
+                                        templateUrl: paths.views + '/collateral/interest/main.html',
+                                        autoload: true
+                                    },
+                                ]
                             },
-                            
+
                         }
                     ]
                 }
@@ -93,7 +95,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Legal Entity'
                             },
                             childWorkspace: {
-                                tabList:[
+                                tabList: [
                                     {
                                         head: {
                                             icon: 'fa fa-search',
@@ -149,15 +151,15 @@ DashboardApp.service('MenuService', function () {
                     icon: 'fa fa-warning',
                     text: 'Collateral Dashboard'
                 },
-                childWorkspace : {
-                    tabList:[
+                childWorkspace: {
+                    tabList: [
                         {
                             head: {
                                 icon: '',
                                 text: 'CounterParty Risk'
                             },
                             templateUrl: paths.views + '/risk/counterparty_risk.html',
-                            autoload : true
+                            autoload: true
                         },
                         {
                             head: {
@@ -165,7 +167,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Country Risk'
                             },
                             templateUrl: paths.views + '/risk/country_risk.html',
-                            autoload : true
+                            autoload: true
                         },
                         {
                             head: {
@@ -173,7 +175,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Issuer Risk'
                             },
                             templateUrl: paths.views + '/risk/issuer_risk.html',
-                            autoload : true
+                            autoload: true
                         },
                         {
                             head: {
@@ -181,7 +183,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'FX Risk'
                             },
                             templateUrl: paths.views + '/risk/fx_risk.html',
-                            autoload : true
+                            autoload: true
                         }
                     ]
                 },
@@ -192,15 +194,15 @@ DashboardApp.service('MenuService', function () {
                     icon: 'fa fa-edit',
                     text: 'Integration & Reporting'
                 },
-                childWorkspace : {
-                    tabList:[
+                childWorkspace: {
+                    tabList: [
                         {
                             head: {
                                 icon: 'fa fa-cloud-upload',
                                 text: 'FPML upload'
                             },
                             templateUrl: paths.views + '/integration_reporting/FpmlUpload/fpml_upload.html',
-                            autoload : true
+                            autoload: true
                         },
                         {
                             head: {
@@ -208,7 +210,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Manual Files upload'
                             },
                             templateUrl: paths.views + '/integration_reporting/ManualFileUpload/manual_file_upload.html',
-                            autoload : true
+                            autoload: true
                         },
                         {
                             head: {
@@ -216,7 +218,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Audit'
                             },
                             templateUrl: paths.views + '/integration_reporting/Integration/integration.html',
-                            autoload : true
+                            autoload: true
                         },
                         {
                             head: {
@@ -224,7 +226,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Scheduled Task'
                             },
                             templateUrl: paths.views + '/integration_reporting/ScheduledTask/scheduled_task.html',
-                            autoload : true
+                            autoload: true
                         }
                     ]
                 },
@@ -235,7 +237,7 @@ DashboardApp.service('MenuService', function () {
                     icon: 'fa fa-cogs',
                     text: 'Configuration'
                 },
-                childWorkspace : {
+                childWorkspace: {
                     tabList: [
                         {
                             head: {
@@ -243,7 +245,7 @@ DashboardApp.service('MenuService', function () {
                                 text: 'Users management'
                             },
                             childWorkspace: {
-                                tabList:[
+                                tabList: [
                                     {
                                         head: {
                                             icon: 'fa fa-user',
@@ -268,7 +270,7 @@ DashboardApp.service('MenuService', function () {
                                         templateUrl: paths.views + '/configuration/users_management/users_group.html',
                                         autoload: true,
                                         onSelect: function () {
-                                            
+
                                         }
                                     },
                                     {
@@ -288,4 +290,41 @@ DashboardApp.service('MenuService', function () {
             }
         ]
     }
+
+    this.linkParents = function (tree) {
+
+        let CMtree = {};
+
+        if (!angular.isUndefined(tree)) {
+            CMtree = tree;
+        }
+        else {
+            CMtree = _that.MenuTree
+        }
+
+        if (angular.isArray(CMtree.tabList) && CMtree.tabList.length > 0) {
+
+            angular.forEach(CMtree.tabList, function (ws) {
+
+                if (angular.isUndefined(ws.wsParent)) {
+
+                    ws.wsParent = CMtree;
+
+                }
+
+                if (!angular.isUndefined(ws.childWorkspace)) {
+
+                    _that.linkParents(ws.childWorkspace);
+
+                }
+
+            });
+        }
+    }
 });
+
+DashboardApp.run(['MenuService', function ($menuService) {
+
+    $menuService.linkParents();
+
+}]);

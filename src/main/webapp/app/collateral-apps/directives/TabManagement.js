@@ -36,7 +36,7 @@ angular.module('DashboardApp')
                 if (attrs.id !== undefined) {
                     $scope.workspaceTabs.id = attrs.id;
                 }
-                else {
+                else if (angular.isUndefined($scope.workspaceTabs.id)) {
                     let hash = parseInt(Date.now() * Math.random()).toString(16); //CREATE HEXADECIMAL HASH
                     element.attr("id", hash);
                     $scope.workspaceTabs.id = hash;
@@ -44,7 +44,7 @@ angular.module('DashboardApp')
 
                 //$scope.workspace.tabList[0].childWorkspace.active = 2;
 
-                $scope.workspaceTabs.addTabByID = function (tabConfig, tabID) {
+                $scope.workspaceTabs.addTabByID = function (tabConfig, WStabID) {
 
                     let deferred = $q.defer();
 
@@ -112,15 +112,18 @@ angular.module('DashboardApp')
                             globalTabConfig.parameters = tabConfig.parameters;
                             $scope.parameters = tabConfig.parameters;
                         }
-                        else
-                        {
+                        else {
                             $scope.parameters = {};
                         }
 
                     }
 
-                    console.log($scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs,'idBilateralC'));
-                    
+                    let workSpaceFound = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, WStabID);
+                    if( !angular.isUndefined(workSpaceFound) )
+                    {
+                        workSpaceFound.tabList.push(globalTabConfig);
+                    }
+
                 };
 
                 $scope.workspaceTabs.addTab = function (tabConfig, coordinates) {
@@ -191,14 +194,13 @@ angular.module('DashboardApp')
                             globalTabConfig.parameters = tabConfig.parameters;
                             $scope.parameters = tabConfig.parameters;
                         }
-                        else
-                        {
+                        else {
                             $scope.parameters = {};
                         }
 
                     }
 
-                    if(!coordinates)
+                    if (!coordinates)
                         coordinates = [];
 
                     let ws = $scope.workspaceTabs.getWorkspaceTabs(coordinates);
@@ -240,11 +242,11 @@ angular.module('DashboardApp')
 
                             //REMOVE ICON LOADING
                             /*if (!!tabConfig.head.icon) {
-                                $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = tabConfig.head.icon;
-                            }
-                            else {
-                                $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = '';
-                            }*/
+                             $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = tabConfig.head.icon;
+                             }
+                             else {
+                             $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = '';
+                             }*/
 
                             //RESOLVE SECTION
 
@@ -393,19 +395,82 @@ angular.module('DashboardApp')
                 //GETTING A WOARKSPACE TABS BY ID
                 $scope.workspaceTabs.getWorkspaceTabsByID = function (workspaceList, wsID) {
 
-                    angular.forEach(workspaceList.childWorkspace, function(workspace){
+                    let result;
 
-                        if(workspace.id === wsID)
-                        {
-                            return workspace.childWorkspace;
+                    if (workspaceList.id === wsID) {
+
+                        result = workspaceList;
+
+                    }
+
+                    if (result == undefined) {
+
+                        angular.forEach(workspaceList.tabList, function (workspace) {
+
+                            if (!angular.isUndefined(result)) {
+
+                                return true;
+
+                            }
+
+                            if (workspace.id === wsID) {
+
+                                result = workspace.childWorkspace;
+
+                            }
+                            else {
+
+                                if ( !angular.isUndefined( workspace.childWorkspace ) ) {
+
+                                    var tempWS = $scope.workspaceTabs.getWorkspaceTabsByID(workspace.childWorkspace, wsID);
+
+                                    if (tempWS != false) {
+
+                                        result = tempWS;
+
+                                    }
+
+                                }
+
+                            }
+
+                        });
+
+                    }
+
+
+                    if (!angular.isUndefined(result)) {
+
+                        return result;
+
+                    }
+                    else {
+
+                        return false;
+
+                    }
+
+                };
+
+                $scope.workspaceTabs.setWSTabsFocusByID = function (wsID, focusIndex) {
+
+                    let workSpaceFound = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, wsID);
+
+                    if( !angular.isUndefined(workSpaceFound) )
+                    {
+
+                        do {
+
+                            let wsParent = workSpaceFound.wsParent;
+
+                            
+
                         }
-                        else {
+                        while( !angular.isUndefined(wsParent) );
 
-                            return $scope.workspaceTabs.getWorkspaceTabsByID(workspace.childWorkspace, wsID);
+                        console.log(wsParent)
 
-                        }
-                        
-                    });
+                    }
 
                 };
 
@@ -461,8 +526,7 @@ angular.module('DashboardApp')
                             }
                             else if (!workspaceChild) {
 
-                                if(!rootNode.childWorkspace)
-                                {
+                                if (!rootNode.childWorkspace) {
                                     badCoord = true;
                                     console.error("Bad Coord!");
                                     return false;
@@ -477,9 +541,8 @@ angular.module('DashboardApp')
                                     console.error("Bad Coord!")
                                     return false;
                                 }
-                                if(!workspaceChild.childWorkspace)
-                                {
-                                    workspaceChild.childWorkspace= {};
+                                if (!workspaceChild.childWorkspace) {
+                                    workspaceChild.childWorkspace = {};
                                 }
                                 workspaceChild = workspaceChild.childWorkspace.tabList[coord];
 
@@ -489,8 +552,7 @@ angular.module('DashboardApp')
 
                         if (!!workspaceChild) {
 
-                            if(!workspaceChild.childWorkspace)
-                            {
+                            if (!workspaceChild.childWorkspace) {
                                 workspaceChild.childWorkspace = {
                                     active: 1,
                                     tabList: []
@@ -499,7 +561,7 @@ angular.module('DashboardApp')
 
                             return workspaceChild.childWorkspace;
                         }
-                        else{
+                        else {
 
                             return false;
 
@@ -638,7 +700,7 @@ angular.module('DashboardApp')
 
                         if (parameters.hasOwnProperty(key)) {
 
-                            if(!!parameters[key])
+                            if (!!parameters[key])
                                 $scope.parameters[key] = parameters[key];
 
                         }
