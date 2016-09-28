@@ -16,12 +16,13 @@ DashboardApp.controller('UsersGroupController', ['$scope',
             callbackAddItem: function (item) {
                 GroupsService.addUser($scope.UsersGroup.selected.id,item.id);
             },
-            callbackDeleteItem: function (item) {
-                let usersId = $scope.Users.selectedItems.filter(function (obj) {
+            callbackDeleteItem: function (item, index) {
+                let usersId = $scope.Users.data.filter(function (obj) {
                     if(obj.key === item.key)
                         return obj.id;
                 })
                 GroupsService.deleteUser($scope.UsersGroup.selected.id,usersId[0].id);
+                $scope.Users.selectedItems.splice(index, 1);
             }
         };
 
