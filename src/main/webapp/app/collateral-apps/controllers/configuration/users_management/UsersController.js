@@ -92,12 +92,15 @@ DashboardApp.controller('UsersController', ['$scope',
         $scope.saveUser = function () {
             //console.log($scope.isEditUser);
 
-            if (!$scope.isEditUser) {
-                $scope.gridUsersOptions.data.push($scope.User);
-            }
-            UsersService.set($scope.User, $scope.isEditUser);
+            UsersService.set($scope.User, $scope.isEditUser).then(function (userId) {
 
-            $scope.cancel();
+                if (!$scope.isEditUser && userId!=0) {
+                    $scope.gridUsersOptions.data.push($scope.User);
+                    $scope.cancel();
+                }
+
+            });
+
         }
 
         $scope.deleteRow = function (grid, row) {

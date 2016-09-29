@@ -84,12 +84,18 @@ DashboardApp.controller('GroupsController', ['$scope',
         $scope.saveGroup = function () {
             //console.log($scope.isEditGroup);
 
-            if (!$scope.isEditGroup) {
-                $scope.gridGroupsOptions.data.push($scope.Group);
-            }
-            GroupsService.set($scope.Group, $scope.isEditGroup);
+            GroupsService.set($scope.Group, $scope.isEditGroup).then(function (groupId) {
 
-            $scope.cancel();
+
+                if (!$scope.isEditGroup && groupId != 0) {
+
+                    $scope.gridGroupsOptions.data.push($scope.Group);
+                    $scope.cancel();
+
+                }
+
+            })
+
         }
 
         $scope.deleteRow = function (grid, row) {

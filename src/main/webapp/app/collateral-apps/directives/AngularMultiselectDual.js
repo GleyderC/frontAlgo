@@ -190,11 +190,19 @@ angular.module('DashboardApp').directive('multiselectDual', [function ($filter) 
                     //UNSELECT A ITEM
                     $scope.multiselectElements.unselectElement = function (item, $index) {
 
-                        $scope.multiselectElements.msOptions[item.optionIndex].hide = false;
-                        $scope.multiselectElements.msSelected.splice($index, 1);
-
                         if( angular.isFunction( $scope.multiselectElements.callbackDeleteItem )){
-                            $scope.multiselectElements.callbackDeleteItem(item, $index);
+                           $scope.multiselectElements.callbackDeleteItem(item, $index).then(function (result) {
+                               console.log(result)
+                               if(result == true){
+                                   $scope.multiselectElements.msOptions[item.optionIndex].hide = false;
+                                   $scope.multiselectElements.msSelected.splice($index, 1);
+                               }
+                           });
+                        }
+
+                        else{
+                            $scope.multiselectElements.msOptions[item.optionIndex].hide = false;
+                            $scope.multiselectElements.msSelected.splice($index, 1);
                         }
                     }
 

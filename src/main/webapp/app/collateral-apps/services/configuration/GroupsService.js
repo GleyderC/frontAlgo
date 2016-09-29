@@ -1,5 +1,5 @@
 angular.module('DashboardApp')
-    .service('GroupsService', ['$request', 'toastr', function ($request, toastr) {
+    .service('GroupsService', ['$request', 'toastr', '$q', function ($request, toastr, $q) {
 
         this.getAll = function () {
             return $request.get('/servlet/UserGroups/SelectAll');
@@ -15,6 +15,8 @@ angular.module('DashboardApp')
         }
 
         this.set = function (UserGroups, isUpdate) {
+            let defered = $q.defer();
+            let promise = defered.promise;
 
             if (isUpdate) {
                 //console.log("Update");
@@ -27,11 +29,21 @@ angular.module('DashboardApp')
             else
                 $request.post('/servlet/UserGroups/Insert', UserGroups)
                     .then(function (Response) {
-                            //console.log("Insert");
-                            //UserGroups.id = Response.data.dataResponse;
+                        let groupId = Response.data.dataResponse;
+
+                        if(groupId == 0){
+
+                            toastr.error("Group's Name already exists", "Error");
+
+                        }
+                        else {
+
                             toastr.success("Successfully stored data", "Success");
                         }
-                    );
+                        defered.resolve(groupId);
+
+                    });
+            return promise;
         }
 
         this.delete = function (idUserGroups) {
@@ -62,15 +74,31 @@ angular.module('DashboardApp')
         }
         this.deleteUser = function(IdGroup,IdUser){
 
+            let defered = $q.defer();
+            let promise = defered.promise;
+
             var params = {
                 "userGroupID": IdGroup,
                 "userID": IdUser
             }
             $request.post('/servlet/UserGroups/DeleteUser',params)
                 .then(function (Response) {
-                    toastr.success("Data successfully removed", "Success")
+                    if(Response.data.dataResponse == "Successfully removed User") {
+                        toastr.success("Successfully removed User", "Success");
+                        defered.resolve("Successfully removed User");
+                    }
+                    else if(Response.data.dataResponse == "User not found") {
+                        toastr.error("User not found", "Success");
+                        defered.resolve("User not found");
+                    }
+                    else if(Response.data.dataResponse == "The user can not be removed"){
+                        toastr.warning("The user can not be removed", "Warning");
+                        defered.resolve("The user can not be removed");
+
+                    }
                 });
 
+            return promise;
         }
 
     }]);
