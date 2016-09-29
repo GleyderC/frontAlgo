@@ -302,24 +302,23 @@ DashboardApp.service('MenuService', function () {
             CMtree = _that.MenuTree
         }
 
-        if (angular.isArray(CMtree.tabList) && CMtree.tabList.length > 0) {
+        angular.forEach(CMtree.tabList, function (ws, index) {
 
-            angular.forEach(CMtree.tabList, function (ws) {
 
-                if (angular.isUndefined(ws.wsParent)) {
+            if (!angular.isUndefined(ws.childWorkspace)) {
 
-                    ws.wsParent = CMtree;
+                if ( angular.isUndefined(ws.childWorkspace.wsParent) ) {
 
-                }
-
-                if (!angular.isUndefined(ws.childWorkspace)) {
-
-                    _that.linkParents(ws.childWorkspace);
+                    ws.childWorkspace.wsParent = CMtree;
+                    ws.childWorkspace.indexParent = index;
 
                 }
 
-            });
-        }
+                _that.linkParents(ws.childWorkspace);
+
+            }
+
+        });
     }
 });
 

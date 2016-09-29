@@ -452,23 +452,58 @@ angular.module('DashboardApp')
 
                 };
 
-                $scope.workspaceTabs.setWSTabsFocusByID = function (wsID, focusIndex) {
+                $scope.workspaceTabs.setWSTabsFocusByID = function (wsID, focusTabIndex) {
 
                     let workSpaceFound = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, wsID);
+                    let i = 0;
+                    let wsParent;
 
                     if( !angular.isUndefined(workSpaceFound) )
                     {
 
-                        do {
+                        if ( !angular.isNumber(focusTabIndex) ){
 
-                            let wsParent = workSpaceFound.wsParent;
-
-                            
+                            focusTabIndex = 1;
 
                         }
-                        while( !angular.isUndefined(wsParent) );
 
-                        console.log(wsParent)
+                        workSpaceFound.active = focusTabIndex;
+
+                        do {
+
+                            if( angular.isUndefined(wsParent) ){
+
+                                wsParent = workSpaceFound.wsParent;
+
+                                if( !angular.isUndefined(wsParent) ){
+                                    wsParent.active = (workSpaceFound.indexParent + 1);
+                                }
+                                else
+                                {
+                                    wsParent.active = 1;
+                                }
+
+                            }
+                            else
+                            {
+
+                                let index = wsParent.indexParent;
+                                wsParent = wsParent.wsParent;
+
+                                if( !angular.isUndefined(wsParent) ){
+
+                                    if( !angular.isUndefined(index) ){
+
+                                        wsParent.active = (index + 1);
+                                    }
+
+                                }
+
+                            }
+
+                            i++;
+                        }
+                        while( !angular.isUndefined(wsParent) && !angular.isUndefined(wsParent) && i < 100 );
 
                     }
 
