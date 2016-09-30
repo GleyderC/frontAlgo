@@ -6,11 +6,17 @@
     -ms-transition: all 400ms ease;
     -o-transition: all 400ms ease;
     transition: all 400ms ease;*/
+    margin-top: 5px;
 }
 
 .page-sidebar-closed .page-sidebar .page-sidebar-menu.page-sidebar-menu-closed .sidebar-search.open .input-group
 {
     z-index: 999;
+}
+
+.page-content-wrapper .page-content
+{
+    padding: 0 !important;
 }
 
 .border-purple {

@@ -33,7 +33,7 @@ angular.module('DashboardApp')
 
                 $scope.workspaceTabs = $scope.$eval(attrs.workspaceInfo);
 
-                if (attrs.id !== undefined) {
+                if (attrs.id !== undefined && angular.isUndefined($scope.workspaceTabs.id)) {
                     $scope.workspaceTabs.id = attrs.id;
                 }
                 else if (angular.isUndefined($scope.workspaceTabs.id)) {
@@ -42,19 +42,45 @@ angular.module('DashboardApp')
                     $scope.workspaceTabs.id = hash;
                 }
 
-                //$scope.workspace.tabList[0].childWorkspace.active = 2;
-
                 $scope.workspaceTabs.addTabByID = function (tabConfig, WStabID) {
 
-                    let deferred = $q.defer();
-
-                    if (!!$scope.workspaceTabs.maxTabs && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
+                    if ($scope.workspaceTabs.maxTabs && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
                         $toastr.error("It has reached the maximum allowed tabs", "Error Opening", {closeButton: true})
                         deferred.reject("limit exceeded tabs");
                         return false;
                     }
 
+                    let workSpaceFound = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, WStabID);
+                    let wsAlreadyExists = false;
+
+                    if (tabConfig.unique) {
+
+                        let indexTabExisting = 0;
+
+                        angular.forEach(workSpaceFound.tabList, function (tab, index) {
+
+                            if( tab.id == tabConfig.id ){
+                                wsAlreadyExists = true;
+                                indexTabExisting = index + 1;
+                            }
+
+                        });
+
+                        if(wsAlreadyExists){
+                            $toastr.error("This tab already exists", "Error", {closeButton: true});
+                            $timeout(function () {
+                                $scope.workspaceTabs.setWSTabsFocusByID(tabConfig.id, indexTabExisting);
+                            });
+
+                            return false;
+                        }
+
+                    }
+
+
+
                     let globalTabConfig = {
+                        id: parseInt(Date.now() * Math.random()).toString(16),
                         head: {
                             icon: 'glyphicon glyphicon-refresh glyphicon-refresh-animate',
                             text: ''
@@ -66,49 +92,61 @@ angular.module('DashboardApp')
                         },
                         disabled: false,
                         closable: false,
+                        unique: false,
+                        autoload: false,
                         callback: function () {
-                        }
+                        },
+                        childWorkspace: {}
                     };
 
-                    if (!!tabConfig && typeof tabConfig === 'object') {
+                    if (tabConfig && typeof tabConfig === 'object') {
 
-                        if (!!tabConfig.head && !!tabConfig.head.text) {
+                        if (tabConfig.id) {
+                            globalTabConfig.id = tabConfig.id;
+                        }
+
+                        if (tabConfig.head && tabConfig.head.text) {
                             globalTabConfig.head.text = tabConfig.head.text;
                         }
 
-                        if (!!tabConfig.content) {
-                            globalTabConfig.content = tabConfig.content;
-                        }
-
-                        if (!!tabConfig.templateUrl) {
-                            globalTabConfig.templateUrl = tabConfig.templateUrl;
-                        }
-
-                        if (!!tabConfig.resolve) {
-                            globalTabConfig.resolve = tabConfig.resolve;
-                        }
-
-                        if (!!tabConfig.disabled) {
-                            globalTabConfig.disabled = tabConfig.disabled;
-                        }
-
-                        if (!!tabConfig.closable) {
-                            globalTabConfig.closable = tabConfig.closable;
-                        }
-
-                        if (!!tabConfig.autoload) {
-                            globalTabConfig.autoload = tabConfig.autoload;
-                        }
-
-                        if (!!tabConfig.callback && tabConfig.callback === 'function') {
-                            globalTabConfig.callback = tabConfig.callback;
-                        }
-
-                        if (!!tabConfig.head && !!tabConfig.head.icon) {
+                        if (tabConfig.head && tabConfig.head.icon) {
                             globalTabConfig.head.icon = tabConfig.head.icon;
                         }
 
-                        if (!!tabConfig.parameters) {
+                        if (tabConfig.content) {
+                            globalTabConfig.content = tabConfig.content;
+                        }
+
+                        if (tabConfig.templateUrl) {
+                            globalTabConfig.templateUrl = tabConfig.templateUrl;
+                        }
+
+                        if (tabConfig.resolve) {
+                            globalTabConfig.resolve = tabConfig.resolve;
+                        }
+
+                        if (tabConfig.disabled) {
+                            globalTabConfig.disabled = tabConfig.disabled;
+                        }
+
+                        if (tabConfig.closable) {
+                            globalTabConfig.closable = tabConfig.closable;
+                        }
+
+                        if (tabConfig.unique) {
+                            globalTabConfig.unique = tabConfig.unique;
+                        }
+
+                        if (tabConfig.autoload) {
+                            globalTabConfig.autoload = tabConfig.autoload;
+                        }
+
+
+                        if (tabConfig.callback && tabConfig.callback === 'function') {
+                            globalTabConfig.callback = tabConfig.callback;
+                        }
+
+                        if (tabConfig.parameters) {
                             globalTabConfig.parameters = tabConfig.parameters;
                             $scope.parameters = tabConfig.parameters;
                         }
@@ -116,13 +154,29 @@ angular.module('DashboardApp')
                             $scope.parameters = {};
                         }
 
+                        if (tabConfig.childWorkspace) {
+                            globalTabConfig.childWorkspace = tabConfig.childWorkspace;
+                        }
                     }
 
-                    let workSpaceFound = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, WStabID);
-                    if( !angular.isUndefined(workSpaceFound) )
-                    {
-                        workSpaceFound.tabList.push(globalTabConfig);
+                    if (!angular.isUndefined(workSpaceFound) && workSpaceFound != false) {
+
+                        $timeout(function () {
+
+                            workSpaceFound.tabList.push(globalTabConfig);
+
+                            $timeout(function () {
+                                $scope.workspaceTabs.setWSTabsFocusByID(WStabID, workSpaceFound.tabList.length);
+                            });
+
+                        });
+
                     }
+
+                    //REFRESH TABS PARENTS
+                    $timeout(function () {
+                        $scope.workspaceTabs.createLinkParent($scope.workspaceTabs, 500);
+                    });
 
                 };
 
@@ -130,7 +184,7 @@ angular.module('DashboardApp')
 
                     let deferred = $q.defer();
 
-                    if (!!$scope.workspaceTabs.maxTabs && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
+                    if ($scope.workspaceTabs.maxTabs && $scope.workspaceTabs.maxTabs < ($scope.workspaceTabs.tabList.length + 1)) {
                         $toastr.error("It has reached the maximum allowed tabs", "Error Opening", {closeButton: true})
                         deferred.reject("limit exceeded tabs");
                         return false;
@@ -152,45 +206,45 @@ angular.module('DashboardApp')
                         }
                     };
 
-                    if (!!tabConfig && typeof tabConfig === 'object') {
+                    if (tabConfig && typeof tabConfig === 'object') {
 
-                        if (!!tabConfig.head && !!tabConfig.head.text) {
+                        if (tabConfig.head && tabConfig.head.text) {
                             globalTabConfig.head.text = tabConfig.head.text;
                         }
 
-                        if (!!tabConfig.content) {
+                        if (tabConfig.content) {
                             globalTabConfig.content = tabConfig.content;
                         }
 
-                        if (!!tabConfig.templateUrl) {
+                        if (tabConfig.templateUrl) {
                             globalTabConfig.templateUrl = tabConfig.templateUrl;
                         }
 
-                        if (!!tabConfig.resolve) {
+                        if (tabConfig.resolve) {
                             globalTabConfig.resolve = tabConfig.resolve;
                         }
 
-                        if (!!tabConfig.disabled) {
+                        if (tabConfig.disabled) {
                             globalTabConfig.disabled = tabConfig.disabled;
                         }
 
-                        if (!!tabConfig.closable) {
+                        if (tabConfig.closable) {
                             globalTabConfig.closable = tabConfig.closable;
                         }
 
-                        if (!!tabConfig.autoload) {
+                        if (tabConfig.autoload) {
                             globalTabConfig.autoload = tabConfig.autoload;
                         }
 
-                        if (!!tabConfig.callback && tabConfig.callback === 'function') {
+                        if (tabConfig.callback && tabConfig.callback === 'function') {
                             globalTabConfig.callback = tabConfig.callback;
                         }
 
-                        if (!!tabConfig.head.icon) {
+                        if (tabConfig.head.icon) {
                             globalTabConfig.head.icon = tabConfig.head.icon;
                         }
 
-                        if (!!tabConfig.parameters) {
+                        if (tabConfig.parameters) {
                             globalTabConfig.parameters = tabConfig.parameters;
                             $scope.parameters = tabConfig.parameters;
                         }
@@ -241,7 +295,7 @@ angular.module('DashboardApp')
                         if (loading_stack.length === 0) {
 
                             //REMOVE ICON LOADING
-                            /*if (!!tabConfig.head.icon) {
+                            /*if (tabConfig.head.icon) {
                              $scope.workspaceTabs.tabList[$scope.workspaceTabs.tabList.length - 1].head.icon = tabConfig.head.icon;
                              }
                              else {
@@ -250,9 +304,9 @@ angular.module('DashboardApp')
 
                             //RESOLVE SECTION
 
-                            if (!!globalTabConfig.resolve) {
+                            if (globalTabConfig.resolve) {
 
-                                if (!!globalTabConfig.resolve.formData.length > 0) {
+                                if (globalTabConfig.resolve.formData.length > 0) {
 
                                     var last_index = $scope.workspaceTabs.tabList.length;
                                     var workspace_tab_container = element.find('div[data-tabid="' + $scope.workspaceTabs.id + last_index + '"][role="tab-content"]');
@@ -329,7 +383,7 @@ angular.module('DashboardApp')
                             }
 
                             //CALLBACK
-                            if (!!globalTabConfig.callback && typeof globalTabConfig.callback === 'function') {
+                            if (globalTabConfig.callback && typeof globalTabConfig.callback === 'function') {
                                 globalTabConfig.callback();
                             }
 
@@ -337,6 +391,11 @@ angular.module('DashboardApp')
                             deferred.resolve(globalTabConfig);
                         }
 
+                    });
+
+                    //REFRESH TABS PARENTS
+                    $timeout(function () {
+                        $scope.workspaceTabs.createLinkParent($scope.workspaceTabs, 500);
                     });
 
                     return deferred.promise;
@@ -420,7 +479,7 @@ angular.module('DashboardApp')
                             }
                             else {
 
-                                if ( !angular.isUndefined( workspace.childWorkspace ) ) {
+                                if (!angular.isUndefined(workspace.childWorkspace)) {
 
                                     var tempWS = $scope.workspaceTabs.getWorkspaceTabsByID(workspace.childWorkspace, wsID);
 
@@ -458,10 +517,9 @@ angular.module('DashboardApp')
                     let i = 0;
                     let wsParent;
 
-                    if( !angular.isUndefined(workSpaceFound) )
-                    {
+                    if (!angular.isUndefined(workSpaceFound) && workSpaceFound != false) {
 
-                        if ( !angular.isNumber(focusTabIndex) ){
+                        if (!angular.isNumber(focusTabIndex)) {
 
                             focusTabIndex = 1;
 
@@ -469,41 +527,42 @@ angular.module('DashboardApp')
 
                         workSpaceFound.active = focusTabIndex;
 
-                        do {
+                        if (!angular.isUndefined(workSpaceFound.wsParent)) {
+                            do {
 
-                            if( angular.isUndefined(wsParent) ){
+                                if (angular.isUndefined(wsParent)) {
 
-                                wsParent = workSpaceFound.wsParent;
+                                    wsParent = workSpaceFound.wsParent;
 
-                                if( !angular.isUndefined(wsParent) ){
-                                    wsParent.active = (workSpaceFound.indexParent + 1);
+                                    if (!angular.isUndefined(wsParent)) {
+                                        wsParent.active = (workSpaceFound.indexParent + 1);
+                                    }
+                                    else {
+                                        wsParent.active = 1;
+                                    }
+
                                 }
-                                else
-                                {
-                                    wsParent.active = 1;
-                                }
+                                else {
 
-                            }
-                            else
-                            {
+                                    let index = wsParent.indexParent;
+                                    wsParent = wsParent.wsParent;
 
-                                let index = wsParent.indexParent;
-                                wsParent = wsParent.wsParent;
+                                    if (!angular.isUndefined(wsParent)) {
 
-                                if( !angular.isUndefined(wsParent) ){
+                                        if (!angular.isUndefined(index)) {
 
-                                    if( !angular.isUndefined(index) ){
+                                            wsParent.active = (index + 1);
+                                        }
 
-                                        wsParent.active = (index + 1);
                                     }
 
                                 }
 
+                                i++;
                             }
+                            while (!angular.isUndefined(wsParent) && !angular.isUndefined(wsParent) && i < 100);
 
-                            i++;
                         }
-                        while( !angular.isUndefined(wsParent) && !angular.isUndefined(wsParent) && i < 100 );
 
                     }
 
@@ -511,7 +570,7 @@ angular.module('DashboardApp')
 
                 $scope.workspaceTabs.getWorkspaceTabs = function (coordinates) {
 
-                    if (!angular.isArray(coordinates) && !!coordinates) {
+                    if (!angular.isArray(coordinates) && coordinates) {
                         console.error("Bad Coord!");
                         return false;
                     }
@@ -585,7 +644,7 @@ angular.module('DashboardApp')
 
                         });
 
-                        if (!!workspaceChild) {
+                        if (workspaceChild) {
 
                             if (!workspaceChild.childWorkspace) {
                                 workspaceChild.childWorkspace = {
@@ -649,7 +708,7 @@ angular.module('DashboardApp')
 
                                 workspace = workspace.childWorkspace;
 
-                                if (!!workspace) {
+                                if (workspace) {
                                     workspace.active = coord;
                                     coord--;
                                     workspace = workspace.tabList[coord];
@@ -707,7 +766,7 @@ angular.module('DashboardApp')
 
                                 workspace = workspace.childWorkspace;
 
-                                if (!!workspace) {
+                                if (workspace) {
                                     //workspace.active = coord;
                                     coord--;
                                     workspace = workspace.tabList[coord];
@@ -735,7 +794,7 @@ angular.module('DashboardApp')
 
                         if (parameters.hasOwnProperty(key)) {
 
-                            if (!!parameters[key])
+                            if (parameters[key])
                                 $scope.parameters[key] = parameters[key];
 
                         }

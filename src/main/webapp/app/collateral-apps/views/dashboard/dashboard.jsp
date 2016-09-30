@@ -492,7 +492,7 @@
                     </form>
                     <!-- END RESPONSIVE QUICK SEARCH FORM -->
                 </li>
-                <li class="nav-item start open">
+                <li class="nav-item start open" id="collateral_management" data-tab-container="root">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-home"></i>
                         <span class="title">Collateral Management</span>
@@ -501,74 +501,74 @@
                     </a>
                     <ul class="sub-menu open" style="display: block;">
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bar-chart"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="cm_agreements"
+                               data-view="/collateral/agreements/index.html" unique>
+                                <i class="fa fa-thumbs-o-up"></i>
                                 <span class="title">Agreements</span>
                                 <!--<span class="selected"></span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bulb"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="cm_margin_call"
+                               data-view="/collateral/margin_call/main.html" unique>
+                                <i class="fa fa-phone"></i>
                                 <span class="title">Margin Call</span>
                                 <!--<span class="badge badge-success">1</span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-graph"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="cm_interest"
+                               data-view="/collateral/interest/main.html">
+                                <i class="fa fa-calculator"></i>
                                 <span class="title">Interest</span>
-                                <!--<span class="badge badge-danger">5</span>-->
+                                <span class="badge badge-info"></span>
                             </a>
                         </li>
                     </ul>
                 </li><!-- #1 Collateral Management -->
-                <li class="nav-item start">
+                <li class="nav-item start" id="collateral_exposures" data-tab-container="root">
                     <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-home"></i>
+                        <i class="fa fa-warning"></i>
                         <span class="title">Collateral Exposures</span>
                         <!--<span class="selected"></span>-->
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bar-chart"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ce_ussuer_risk"
+                               data-view="/risk/issuer_risk.html" unique>
+                                <i class=" "></i>
                                 <span class="title">Issuer Risk</span>
                                 <!--<span class="selected"></span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bulb"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ce_country_risk"
+                               data-view="/risk/country_risk.html" unique>
+                                <i class=" "></i>
                                 <span class="title">Country Risk</span>
                                 <!--<span class="badge badge-success">1</span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-graph"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ce_counterparty_risk"
+                               data-view="/risk/counterparty_risk.html" unique>
+                                <i class=" "></i>
                                 <span class="title">Counterparty Risk </span>
                                 <!--<span class="badge badge-danger">5</span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-graph"></i>
-                                <span class="title">Counterparty Risk </span>
-                                <!--<span class="badge badge-danger">5</span>-->
-                            </a>
-                        </li>
-                        <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-graph"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ce_fx_risk"
+                               data-view="/risk/fx_risk.html" unique>
+                                <i class=" "></i>
                                 <span class="title">Fx Risk </span>
                                 <!--<span class="badge badge-danger">5</span>-->
                             </a>
                         </li>
                     </ul>
                 </li><!-- #2 Collateral Exposures -->
-                <li class="nav-item start">
+                <li class="nav-item start" id="static_data" data-tab-container="root">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-database"></i>
                         <span class="title">Static Data</span>
@@ -577,20 +577,22 @@
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item start">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bar-chart"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="sd_legal_entity"
+                               data-view="/static_data/LegalEntity/legal_entity.html" unique>
+                                <i class="fa fa-bank"></i>
                                 <span class="title">Legal Entities</span>
                                 <!--<span class="selected"></span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bulb"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="sd_bilateral_agreements"
+                               data-view="/static_data/BilateralAgreements/bilateral_a_add_search.html" unique>
+                                <i class="fa fa-briefcase"></i>
                                 <span class="title">Bilteral Agreements</span>
                                 <!--<span class="badge badge-success">1</span>-->
                             </a>
                         </li>
-                        <li class="nav-item start ">
+                        <li class="nav-item start " id="sd_instruments" data-tab-container="static_data">
                             <a href="#" class="nav-link nav-toggle">
                                 <i class="icon-graph"></i>
                                 <span class="title">Instruments </span>
@@ -599,17 +601,28 @@
                             </a>
                             <ul class="sub-menu">
                                 <li class="nav-item ">
-                                    <a href="#" class="nav-link "> Bond definition </a>
+                                    <a href="#" class="nav-link "
+                                       ng-click="displayTabMenu($event)"
+                                       id="sd_inst_bond_definition"
+                                       data-view="/static_data/BilateralAgreements/bilateral_a_add_search.html" unique>
+                                        <i class="fa fa-briefcase"></i>
+                                        <span class="title">Bond definition</span>
+                                    </a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="#" class="nav-link "> Equity definition </a>
+                                    <a href="#" class="nav-link "
+                                       id="sd_inst_equity_definition"
+                                       data-view="#" unique>
+                                        <i class="fa fa-briefcase"></i>
+                                        <span class="title">Equity definition</span>
+                                    </a>
                                 </li>
                             </ul>
 
                         </li>
                     </ul>
                 </li><!-- #3 Static Data -->
-                <li class="nav-item start">
+                <li class="nav-item start" id="integration_reporting" data-tab-container="root">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-edit"></i>
                         <span class="title">Integration & Reporting</span>
@@ -618,43 +631,48 @@
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bar-chart"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ir_fpml_upload"
+                               data-view="/integration_reporting/FpmlUpload/fpml_upload.html" unique>
+                                <i class="fa fa-cloud-upload"></i>
                                 <span class="title">FPML Upload </span>
                                 <!--<span class="selected"></span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bulb"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ir_man_files_upload"
+                               data-view="/integration_reporting/ManualFileUpload/manual_file_upload.html" unique>
+                                <i class="fa fa-upload"></i>
                                 <span class="title">Manual Files upload </span>
                                 <!--<span class="badge badge-success">1</span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-graph"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ir_audit"
+                               data-view="/integration_reporting/Integration/integration.html" unique>
+                                <i class="fa fa-check-square-o"></i>
                                 <span class="title">Audit </span>
                                 <!--<span class="badge badge-danger">5</span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-graph"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ir_report"
+                               data-view="/integration_reporting/Integration/integration.html" unique>
+                                <i class="fa fa-file-text"></i>
                                 <span class="title">Reports </span>
                                 <!--<span class="badge badge-danger">5</span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-graph"></i>
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="ir_scheduled_task"
+                               data-view="/integration_reporting/ScheduledTask/scheduled_task.html" unique>
+                                <i class="fa fa-play-circle-o"></i>
                                 <span class="title">Scheduled Task </span>
                                 <!--<span class="badge badge-danger">5</span>-->
                             </a>
                         </li>
                     </ul>
                 </li><!-- #4 Integration & Reporting -->
-                <li class="nav-item start">
+                <li class="nav-item start" id="main_configuration" data-tab-container="root">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-cogs"></i>
                         <span class="title">Configuration</span>
@@ -663,15 +681,17 @@
                     </a>
                     <ul class="sub-menu">
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bar-chart"></i>
+                            <a href="#" class="nav-link "
+                               ng-click="displayTabMenu($event)" id="ir_resport"
+                               data-view="/integration_reporting/Integration/integration.html" unique>
+                                <i class="fa fa-users"></i>
                                 <span class="title">Users management </span>
                                 <!--<span class="selected"></span>-->
                             </a>
                         </li>
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link ">
-                                <i class="icon-bulb"></i>
+                            <a href="#" class="nav-link "
+                                <i class="fa fa-code-fork"></i>
                                 <span class="title">STP Workflows </span>
                                 <!--<span class="badge badge-success">1</span>-->
                             </a>
@@ -739,9 +759,26 @@
                         </li>
                     </ul>
                 </li><!-- #7 Market Data -->
-                <!--<li class="heading">
-                    <h3 class="uppercase">CM</h3>
-                </li>-->
+                <li class="nav-item start" id="cm_user_messages" data-tab-container="root">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="title">User Messages</span>
+                        <!--<span class="selected"></span>-->
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item start ">
+                            <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="cm_um_meesages"
+                               data-view="/user_message/messages.html" unique>
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="title">User Messages </span>
+                                <!--<span class="selected"></span>-->
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- #8 User Messages -->
+
+
             </ul>
 
             <!-- END SIDEBAR MENU -->

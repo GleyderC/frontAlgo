@@ -14,7 +14,7 @@ DashboardApp.directive('menuCollateral', ['$rootScope', function ($rootScope) {
 DashboardApp.service('MenuService', function () {
     var _that = this;
 
-    this.MenuTree = {
+    this.OLDMenuTree = {
         active: 1,
         tabList: [
             {
@@ -214,7 +214,7 @@ DashboardApp.service('MenuService', function () {
                         },
                         {
                             head: {
-                                icon: 'fa fa-check-square-o',
+                                icon: 'fa-file-text',
                                 text: 'Audit'
                             },
                             templateUrl: paths.views + '/integration_reporting/Integration/integration.html',
@@ -291,6 +291,22 @@ DashboardApp.service('MenuService', function () {
         ]
     }
 
+    this.MenuTree = {
+        id: "root",
+        active: 1,
+        tabList: [
+            {
+                closable: true,
+                head: {
+                    icon: 'fa fa-home',
+                    text: 'Welcome'
+                },
+                templateUrl: paths.views + '/welcome.html',
+                autoload: true
+            }
+        ]
+    };
+
     this.linkParents = function (tree) {
 
         let CMtree = {};
@@ -307,7 +323,7 @@ DashboardApp.service('MenuService', function () {
 
             if (!angular.isUndefined(ws.childWorkspace)) {
 
-                if ( angular.isUndefined(ws.childWorkspace.wsParent) ) {
+                if (angular.isUndefined(ws.childWorkspace.wsParent)) {
 
                     ws.childWorkspace.wsParent = CMtree;
                     ws.childWorkspace.indexParent = index;
