@@ -625,7 +625,7 @@
                 <li class="nav-item start" id="integration_reporting" data-tab-container="root">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="fa fa-edit"></i>
-                        <span class="title">Integration & Reporting</span>
+                        <span class="title">Integration and Reporting</span>
                         <!--<span class="selected"></span>-->
                         <span class="arrow"></span>
                     </a>
@@ -680,17 +680,52 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li class="nav-item start ">
-                            <a href="#" class="nav-link "
-                               ng-click="displayTabMenu($event)" id="ir_resport"
-                               data-view="/integration_reporting/Integration/integration.html" unique>
+                        <li class="nav-item start " id="configuration_" data-tab-container="main_configuration">
+                            <a href="#" class="nav-link nav-toggle">
                                 <i class="fa fa-users"></i>
-                                <span class="title">Users management </span>
-                                <!--<span class="selected"></span>-->
+                                <span class="title">Users management</span>
+                                <!--<span class="badge badge-danger">5</span>-->
+                                <span class="arrow"></span>
                             </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item start ">
+                                    <a href="#" class="nav-link "
+                                       ng-click="displayTabMenu($event)" id="conf_users_management"
+                                       data-view="/configuration/users_management/users.html" unique>
+                                        <i class="fa fa-user"></i>
+                                        <span class="title">User</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a href="#" class="nav-link "
+                                       ng-click="displayTabMenu($event)" id="conf_group_management"
+                                       data-view="/configuration/users_management/groups.html" unique>
+                                        <i class="fa fa-group"></i>
+                                        <span class="title">Groups</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a href="#" class="nav-link "
+                                       ng-click="displayTabMenu($event)" id="conf_users_group"
+                                       data-view="/configuration/users_management/users_group.html" unique>
+                                        <i class="fa fa-user-plus"></i>
+                                        <span class="title">Users - Group </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item start ">
+                                    <a href="#" class="nav-link "
+                                       ng-click="displayTabMenu($event)" id="conf_group_permission"
+                                       data-view="/configuration/users_management/group_permission.html" unique>
+                                        <i class="fa fa-unlock-alt"></i>
+                                        <span class="title">Group Permissions</span>
+                                    </a>
+                                </li>
+                            </ul>
+
                         </li>
+
                         <li class="nav-item start ">
-                            <a href="#" class="nav-link "
+                            <a href="#" class="nav-link ">
                                 <i class="fa fa-code-fork"></i>
                                 <span class="title">STP Workflows </span>
                                 <!--<span class="badge badge-success">1</span>-->

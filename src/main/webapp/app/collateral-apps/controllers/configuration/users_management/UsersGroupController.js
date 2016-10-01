@@ -46,47 +46,52 @@ DashboardApp.controller('UsersGroupController', ['$scope',
 
         $scope.refresh = function () {
             GroupsService.getAll().then(function (result) {
-                $scope.UsersGroups = result.data.dataResponse;
+
+                $scope.UsersGroups = result.data.dataResponse
+                $scope.filterGroup();
             });
         }
 
         $scope.filterGroup = function () {
 
-            let promesasRequestUser = $q.all([UsersService.getAll(),GroupsService.getById($scope.UsersGroup.selected.id)]);
+            if( $scope.UsersGroup.selected.id != -1 ){
 
-            promesasRequestUser.then(function (result) {
+                let promesasRequestUser = $q.all([UsersService.getAll(),GroupsService.getById($scope.UsersGroup.selected.id)]);
 
-                $scope.Users.data = [];
-                $scope.Users.selectedItems = [];
-                $scope.Users.msSelected = [];
+                promesasRequestUser.then(function (result) {
 
-                $scope.Users.data = result[0].data.dataResponse;
+                    $scope.Users.data = [];
+                    $scope.Users.selectedItems = [];
+                    $scope.Users.msSelected = [];
 
-                if($scope.Users.data.length > 0){
-                    $scope.Users.data.forEach(function (user) {
-                        user.name = user.firstName +" "+ user.lastName;
-                        user.key = user.login;
-                    });
-                    
-                    let selectedItems = result[1].data.dataResponse.usersList;
+                    $scope.Users.data = result[0].data.dataResponse;
 
-                    if(selectedItems.length > 0){
-                        selectedItems.forEach(function (userSelected) {
-                            $scope.Users.data.forEach(function (user) {
-                                if(user.id == userSelected.id){
-                                    $scope.Users.selectedItems.push(user);
-                                }
-                            })
+                    if($scope.Users.data.length > 0){
+                        $scope.Users.data.forEach(function (user) {
+                            user.name = user.firstName +" "+ user.lastName;
+                            user.key = user.login;
                         });
+
+                        let selectedItems = result[1].data.dataResponse.usersList;
+
+                        if(selectedItems.length > 0){
+                            selectedItems.forEach(function (userSelected) {
+                                $scope.Users.data.forEach(function (user) {
+                                    if(user.id == userSelected.id){
+                                        $scope.Users.selectedItems.push(user);
+                                    }
+                                })
+                            });
+                        }
+
+
                     }
 
-
-                }
-
-            });
+                });
+            }
 
         }
-        
-        
+
         $scope.refresh();
+
     }]);

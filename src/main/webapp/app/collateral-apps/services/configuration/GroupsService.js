@@ -57,7 +57,7 @@ angular.module('DashboardApp')
             $request.delete('/servlet/UserGroups/Delete', params)
                 .then(function (Response) {
 
-                    toastr.success("Data successfully removed", "Success")
+                    toastr.success("Data successfully removed", "Success");
                 });
         }
         this.addUser = function(IdGroup,IdUser){
@@ -99,6 +99,28 @@ angular.module('DashboardApp')
                 });
 
             return promise;
+        }
+        
+        this.addPermission = function (IdGroup, IdPermission, typePermission) {
+
+            var params = {
+                "userGroupID": IdGroup,
+                "groupPermissionID": IdPermission,
+                "typePermission": typePermission
+            }
+            $request.post('/servlet/UserGroups/AddPermission', params).then(function (result) {
+
+                if(result == true){
+
+                    toastr.success("Permissions Successfully Added", "Success");
+
+                }
+                else{
+
+                    toastr.error("Permissions can not be Added", "Success");
+
+                }
+            });
         }
 
     }]);

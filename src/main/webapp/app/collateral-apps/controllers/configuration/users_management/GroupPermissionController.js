@@ -7,40 +7,43 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
     'localStorageService', 'uiGridConstants', 'ModalService','GroupsService',
     function ($scope, localStorageService, uiGridConstants, ModalService, GroupsService) {
 
+        $scope.UsersGroups = [];
+        $scope.UsersGroup = {selected: {id: -1}};
+
         $scope.gridGroupPermissionOptions = {
 
             columnDefs: [
                 {
-                    field: 'name',
-                    name: 'Name'
+                    field: 'code',
+                    name: 'Code'
                 },
                 {
                     field: 'description',
                     name: 'Description'
                 },
                 {
-                    field: 'access',
+                    field: 'typePermissionMap.ACCESS',
                     name: 'Access',
                     width: 110,
                     enableSorting: false,
                     cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD"/>'
                 },
                 {
-                    field: 'create',
+                    field: 'typePermissionMap.CREATE',
                     name: 'Create',
                     width: 110,
                     enableSorting: false,
                     cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
                 },
                 {
-                    field: 'update',
+                    field: 'typePermissionMap.UPDATE',
                     name: 'Update',
                     width: 110,
                     enableSorting: false,
                     cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
                 },
                 {
-                    field: 'delete',
+                    field: 'typePermissionMap.DELETE',
                     name: 'Delete',
                     width: 110,
                     enableSorting: false,
@@ -68,17 +71,34 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
             },
-            data: [{
-                name: 'Legal Entity',
-                description: ''
-            },
-                {
-                    name: 'Bilateral Contract',
-                    description: ''
-                }]
+            data: []
         }
-        GroupsService.getAll().then(function (result) {
-            $scope.Groups= result.data.dataResponse;
-        });
+
+        $scope.refresh = function () {
+            GroupsService.getAll().then(function (result) {
+                $scope.UsersGroups = result.data.dataResponse;
+            });
+        }
+
+        $scope.filterGroup = function () {
+
+            if( $scope.UsersGroup.selected.id != -1 ){
+                
+                $scope.UsersGroups.filter(function (group) {
+                    if(group.id ==  $scope.UsersGroup.selected.id ){
+                        let permissions= group.permission;
+                        
+                        permissions.forEach(function (permission){
+
+                            $scope.gridGroupPermissionOptions.data.push(permission);
+                        });
+                    }
+                });
+            }
+        }
+
+
+        $scope.refresh();
+
     }]);
 
