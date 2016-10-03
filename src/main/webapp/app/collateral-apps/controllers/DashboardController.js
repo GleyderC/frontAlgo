@@ -82,7 +82,7 @@ angular.module('CollateralApp').controller('DashboardController',
                 currentTabObj.view = angular.element(currentTab).data("view");
                 currentTabObj.unique = angular.element(currentTab).attr("unique") != undefined ? true : false;
 
-                currentTabObj.badgeCounter = angular.element(currentTab).find("span.badge.badge-info");
+                /*currentTabObj.badgeCounter = angular.element(currentTab).find("span.badge.badge-info");
 
                 let badgeCounter = parseInt(currentTabObj.badgeCounter.html(),10);
 
@@ -94,7 +94,7 @@ angular.module('CollateralApp').controller('DashboardController',
                     badgeCounter++;
                 }
 
-                currentTabObj.badgeCounter.html(badgeCounter);
+                currentTabObj.badgeCounter.html(badgeCounter);*/
 
                 let parentTab = angular.element(link.currentTarget).parent().parent().parent().get(0);
                 let parentTabObj = {};

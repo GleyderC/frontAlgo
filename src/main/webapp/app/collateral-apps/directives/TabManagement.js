@@ -67,7 +67,7 @@ angular.module('DashboardApp')
                         });
 
                         if(wsAlreadyExists){
-                            $toastr.error("This tab already exists", "Error", {closeButton: true});
+                            //$toastr.error("This tab already exists", "Error", {closeButton: true});
                             $timeout(function () {
                                 $scope.workspaceTabs.setWSTabsFocusByID(tabConfig.id, indexTabExisting);
                             });

@@ -518,7 +518,7 @@
                         </li>
                         <li class="nav-item start ">
                             <a href="#" class="nav-link " ng-click="displayTabMenu($event)" id="cm_interest"
-                               data-view="/collateral/interest/main.html">
+                               data-view="/collateral/interest/main.html" unique>
                                 <i class="fa fa-calculator"></i>
                                 <span class="title">Interest</span>
                                 <span class="badge badge-info"></span>
