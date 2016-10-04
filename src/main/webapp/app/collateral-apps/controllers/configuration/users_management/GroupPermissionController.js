@@ -92,15 +92,8 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                 
                 $scope.UsersGroups.filter(function (group) {
                     if(group.id ==  $scope.UsersGroup.selected.id ){
-                        let permissions= [];
                         $scope.gridGroupPermissionOptions.data = [];
-                        permissions = group.permission;
-                        
-                        permissions.forEach(function (permission){
-                            if(permission){
-                                $scope.gridGroupPermissionOptions.data.push(permission);
-                            }
-                        });
+                        $scope.gridGroupPermissionOptions.data = group.permission;
                     }
                 });
             }
