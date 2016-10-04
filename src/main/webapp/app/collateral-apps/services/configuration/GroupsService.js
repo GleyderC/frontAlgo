@@ -101,16 +101,17 @@ angular.module('DashboardApp')
             return promise;
         }
         
-        this.addPermission = function (IdGroup, IdPermission, typePermission) {
+        this.setPermission = function (groupID, groupPermission) {
 
             var params = {
-                "userGroupID": IdGroup,
-                "groupPermissionID": IdPermission,
-                "typePermission": typePermission
+                "userGroupID": groupID,
+                "groupPermissionID": groupPermission.id,
+                "typePermission": groupPermission.typePermissionMap
             }
+            //console.log(params);
             $request.post('/servlet/UserGroups/AddPermission', params).then(function (result) {
 
-                if(result == true){
+                if(result.data.dataResponse == true){
 
                     toastr.success("Permissions Successfully Added", "Success");
 
