@@ -39,7 +39,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             $scope.gridApi.selection.getSelectedRows();
             $scope.setCurrentMarginCall(value);
             $scope.$workspaceTabsMgm
-                .addTab({
+                .addTabByID({
                     head: {
                         icon: 'icon-call-in font-dark font-green-haze',
                         text: 'Margin call ('
@@ -52,7 +52,7 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                     autoload: true,
                     parameters: value
 
-                }, [1, 2]);
+                }, 'collateral_management');
         };
         $scope.contractTypeList = [];
         $scope.counterPartyAList = [];

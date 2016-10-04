@@ -163,6 +163,11 @@ angular.module('DashboardApp')
 
                         $timeout(function () {
 
+                            if( angular.isUndefined(workSpaceFound.tabList) )
+                            {
+                                workSpaceFound.tabList = [];
+                            }
+
                             workSpaceFound.tabList.push(globalTabConfig);
 
                             $timeout(function () {
