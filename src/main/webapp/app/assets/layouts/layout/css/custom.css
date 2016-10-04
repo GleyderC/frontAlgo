@@ -689,3 +689,10 @@ i.close-tab-icon:hover {
 }
 
 /*MULTISELECT STYLES*/
+
+
+/* Pane margin call*/ 
+ .split-pane-divider-inner{
+	left : 10px !important;
+	width : 10px !important;
+}
