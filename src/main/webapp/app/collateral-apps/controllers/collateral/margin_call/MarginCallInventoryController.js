@@ -8,7 +8,7 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
         $scope.gridInventoryOptions = {
             showGridFooter: true,
             paginationPageSizes: [15, 50, 100, 200, 500],
-            paginationPageSize: 5,
+            paginationPageSize: 30,
             enableFiltering: false,
             rowHeight: 35, // set height to each row
             onRegisterApi: function (gridApi) {
