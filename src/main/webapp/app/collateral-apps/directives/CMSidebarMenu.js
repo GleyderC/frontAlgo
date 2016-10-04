@@ -58,7 +58,7 @@ angular.module('DashboardApp')
 
                     if (workspaceContainer == false) {
 
-                        workspaceContainer = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, $$scope.workspaceTabs.id);
+                        workspaceContainer = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, $scope.workspaceTabs.id);
 
                     }
 
