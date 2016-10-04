@@ -96,7 +96,10 @@ angular.module('DashboardApp')
                         autoload: false,
                         callback: function () {
                         },
-                        childWorkspace: {}
+                        childWorkspace: {
+                            active: 1,
+                            tabList: []
+                        }
                     };
 
                     if (tabConfig && typeof tabConfig === 'object') {
@@ -162,11 +165,6 @@ angular.module('DashboardApp')
                     if (!angular.isUndefined(workSpaceFound) && workSpaceFound != false) {
 
                         $timeout(function () {
-
-                            if( angular.isUndefined(workSpaceFound.tabList) )
-                            {
-                                workSpaceFound.tabList = [];
-                            }
 
                             workSpaceFound.tabList.push(globalTabConfig);
 

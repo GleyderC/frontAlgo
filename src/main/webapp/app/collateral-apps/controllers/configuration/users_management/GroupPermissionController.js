@@ -97,7 +97,9 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                         permissions = group.permission;
                         
                         permissions.forEach(function (permission){
-                            $scope.gridGroupPermissionOptions.data.push(permission);
+                            if(permission){
+                                $scope.gridGroupPermissionOptions.data.push(permission);
+                            }
                         });
                     }
                 });
