@@ -153,7 +153,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
             //elementService.scrollToElement(element, 80);
 
 
-            $scope.$workspaceTabsMgm.addTab({
+            $scope.$workspaceTabsMgm.addTabByID({
                 head: {
                     icon: 'fa fa-bank',
                     text: 'New Legal Entity',
@@ -164,7 +164,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 },
                 closable: true,
                 autoload: true
-            }, [3, 1]);
+            }, 'static_data');
 
             //buildLegalData();
 
@@ -173,7 +173,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
         // Edit legalEntity
         $scope.editRow = function (grid, row) {
 
-            $scope.$workspaceTabsMgm.addTab({
+            $scope.$workspaceTabsMgm.addTabByID({
                 head: {
                     icon: 'fa fa-bank',
                     text: 'Editing Legal Entity',
@@ -184,7 +184,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 },
                 closable: true,
                 autoload: true
-            }, [3, 1]);
+            }, 'static_data');
 
             //elementService.scrollToElement("legal-entity-tabs", 80);
         };

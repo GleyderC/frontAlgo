@@ -17,6 +17,13 @@
 .page-content-wrapper .page-content
 {
     padding: 0 !important;
+    border-radius: 0 0 0 10px;
+}
+
+.page-header-fixed .page-container
+{
+    background-color: #5e6672;
+    margin-top: 45px;
 }
 
 .border-purple {

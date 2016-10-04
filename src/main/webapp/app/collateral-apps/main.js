@@ -365,6 +365,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/directives/AngularMultiselectDual.js',
                             'collateral-apps/directives/bsSwitch.js',
                             'collateral-apps/directives/TabManagement.js',
+                            'collateral-apps/directives/CMSidebarMenu.js',
                             'collateral-apps/directives/UiSelectWrap.js',
 
                             /* Services */

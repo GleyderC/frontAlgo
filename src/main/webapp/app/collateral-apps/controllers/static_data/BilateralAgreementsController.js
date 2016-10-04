@@ -122,7 +122,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
 
         $scope.addNewBilateralAgreement = function () {
 
-            $scope.$workspaceTabsMgm.addTab({
+            $scope.$workspaceTabsMgm.addTabByID({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
                     text: 'New Bilateral Agreement',
@@ -130,15 +130,15 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                 templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                 closable: true,
                 autoload: true
-            }, [3, 2]);
+            }, 'static_data');
         };
 
         $scope.editRow = function (grid, row) {
 
-            $scope.$workspaceTabsMgm.addTab({
+            $scope.$workspaceTabsMgm.addTabByID({
                 head: {
                     icon: 'fa fa-thumbs-o-up',
-                    text: 'Edit Bilateral Agreement (' + ($scope.$workspaceTabsMgm.getWorkspaceTabs([1, 2]).tabList.length) + ')'
+                    text: 'Editing Bilateral Agreement'
                 },
                 templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                 parameters: {
@@ -146,7 +146,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                 },
                 closable: true,
                 autoload: true
-            }, [3, 2]);
+            }, 'static_data');
 
         }
 

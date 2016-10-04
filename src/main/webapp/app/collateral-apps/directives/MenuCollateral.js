@@ -291,6 +291,7 @@ DashboardApp.service('MenuService', function () {
         ]
     }
 
+    //TAB TREE MENU
     this.MenuTree = {
         id: "root",
         active: 1,
@@ -306,6 +307,9 @@ DashboardApp.service('MenuService', function () {
             }
         ]
     };
+
+    //HTML TREE SIDEBAR
+    this.htmlTreeMenu = {}
 
     this.linkParents = function (tree) {
 
