@@ -9,6 +9,7 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
 
         $scope.UsersGroups = [];
         $scope.UsersGroup = {selected: {id: -1}};
+        $scope.actionPermission =[];
 
         $scope.gridGroupPermissionOptions = {
 
@@ -26,28 +27,28 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                     name: 'Access',
                     width: 110,
                     enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD"/>'
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)"/>'
                 },
                 {
                     field: 'typePermissionMap.CREATE',
                     name: 'Create',
                     width: 110,
                     enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)" />'
                 },
                 {
                     field: 'typePermissionMap.UPDATE',
                     name: 'Update',
                     width: 110,
                     enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)"/>'
                 },
                 {
                     field: 'typePermissionMap.DELETE',
                     name: 'Delete',
                     width: 110,
                     enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" />'
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)"/>'
                 },
             ],
             enableGridMenu: true,
@@ -74,6 +75,11 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
             data: []
         }
 
+        $scope.setTypePermission = function (row, booleanType) {
+
+           GroupsService.setPermission($scope.UsersGroup.selected.id, row);
+
+        }
         $scope.refresh = function () {
             GroupsService.getAll().then(function (result) {
                 $scope.UsersGroups = result.data.dataResponse;
@@ -86,17 +92,17 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                 
                 $scope.UsersGroups.filter(function (group) {
                     if(group.id ==  $scope.UsersGroup.selected.id ){
-                        let permissions= group.permission;
+                        let permissions= [];
+                        $scope.gridGroupPermissionOptions.data = [];
+                        permissions = group.permission;
                         
                         permissions.forEach(function (permission){
-
                             $scope.gridGroupPermissionOptions.data.push(permission);
                         });
                     }
                 });
             }
         }
-
 
         $scope.refresh();
 
