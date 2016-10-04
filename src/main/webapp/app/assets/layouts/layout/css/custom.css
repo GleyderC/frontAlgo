@@ -689,3 +689,20 @@ i.close-tab-icon:hover {
 }
 
 /*MULTISELECT STYLES*/
+
+
+/* Pane margin call*/ 
+ .split-pane-divider-inner{
+	left : 10px !important;
+	width : 10px !important;
+}
+/*Margin call detail buttons*/
+.btn_margin{
+	padding : 0px !important;
+	margin-right : 3px;
+}
+.btn_margin img{
+	width : 60px ; 
+	
+}
+
