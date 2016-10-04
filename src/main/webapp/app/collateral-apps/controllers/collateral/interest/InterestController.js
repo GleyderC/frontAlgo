@@ -28,7 +28,7 @@ var DashboardApp = angular.module('DashboardApp');
               
                 $scope.viewInterestDetail = function(entity){
     				$scope.currentContract= entity;
-    				 $scope.$workspaceTabsMgm.addTab({
+    				 $scope.$workspaceTabsMgm.addTabByID({
 	    	        		head :  {
 	    	        			icon : "fa fa-calculator",
 	    	        			text : entity.collateralContract.counterpartyA.name + " " + entity.collateralLiabilityType + " - "+entity.currency 
@@ -37,7 +37,7 @@ var DashboardApp = angular.module('DashboardApp');
 	                      closable	  : true,
 	                      parameters  : entity,
 	                      autoload: true
-	            	},[1,3]);
+	            	},'collateral_management');
     				 
                 };
                 $scope.gridMainInterests = {
