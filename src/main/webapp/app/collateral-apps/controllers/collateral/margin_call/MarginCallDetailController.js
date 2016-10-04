@@ -47,7 +47,8 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         			difference 		: 0 ,
         			differencePercentage 		: 0 ,
         			disputeComments : "",
-        			agreedMargin : 0
+        			agreedMargin : 0,
+        			myValue :  0 
         		}
         		
         		
@@ -108,8 +109,8 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 	            $scope.dispute["contractId"]  = $scope.MarginCallDetail.contract.internalId;
 	        	$scope.dispute["marginCallId"]  = $scope.currentMarginCall.marginCalls[0].id;
 	        	$scope.dispute["status"]  = $scope.disputeStatus;
-	        	$scope.dispute["tolerance"]  = $scope.myValue *100;
-	        	$scope.dispute["myValue"]  = $scope.myValue;
+	        	$scope.dispute["tolerance"]  = $scope.tolerance ;
+	        	
 //	        	
 	        	
 	        	
@@ -221,6 +222,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         
         $scope.updateDispute     = function(dispute){
         	dispute.disputeCalculations.tolerance = $scope.tolerance;
+        	dispute.disputeCalculations.myValue = $scope.callAmount; 
         	MarginCallService.updateDispute(dispute).success(function(resp){
         		$scope.dispute.disputeCalculations.disputeStatus   = resp.dataResponse.disputeCalculations.disputeStatusEnum;
         		$scope.dispute.disputeCalculations.difference   = resp.dataResponse.disputeCalculations.difference;
