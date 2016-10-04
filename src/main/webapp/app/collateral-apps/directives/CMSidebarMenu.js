@@ -14,7 +14,6 @@ angular.module('DashboardApp')
             },
             templateUrl: paths.tpls + "/CMSidebarMenuTpl.html",
             link: function ($scope, element, attrs) {
-                console.log($scope.htmlTreeMenu)
 
                 $scope.displayTabMenu = function (link) {
 
