@@ -70,6 +70,7 @@ angular.module('DashboardApp')
                     });
 
                     if (!parentTabObj.alreadyExists) {
+
                         workspaceContainer.addTabByID({
                                 id: parentTabObj.id,
                                 head: {
@@ -102,9 +103,7 @@ angular.module('DashboardApp')
 
                 }
 
-                $scope.createParentMenu = function (tabInfo) {
-
-                }
+                //console.log($scope.htmlTreeMenu)
 
             }
         }

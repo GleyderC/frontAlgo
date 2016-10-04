@@ -450,7 +450,7 @@
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
-    <cm-sidebar-menu workspace-tabs="$workspaceTabsMgm"></cm-sidebar-menu>
+    <cm-sidebar-menu html-tree-menu="htmlTreeMenu" workspace-tabs="$workspaceTabsMgm"></cm-sidebar-menu>
     <!-- END SIDEBAR -->
     <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">

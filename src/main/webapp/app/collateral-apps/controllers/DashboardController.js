@@ -15,6 +15,7 @@ angular.module('CollateralApp').controller('DashboardController',
         function ($rootScope, $scope, $request, $socket, toastr, $timeout, localStorageService, $menuService, ModalService, UserMessage) {
 
             $scope.$workspaceTabsMgm = $menuService.MenuTree;
+            $scope.htmlTreeMenu = $menuService.htmlTreeMenu;
             $scope.$workspaceTabsMgm.createLinkParent = $menuService.linkParents;
 
             //SET USER TYPE

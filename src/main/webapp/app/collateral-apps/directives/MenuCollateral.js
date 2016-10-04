@@ -309,7 +309,154 @@ DashboardApp.service('MenuService', function () {
     };
 
     //HTML TREE SIDEBAR
-    this.htmlTreeMenu = {}
+    this.htmlTreeMenu =
+    {
+        menuItems: [
+            {
+                id: 'collateral_management',
+                tabContainer: 'root',
+                head: {
+                    icon: 'icon-home',
+                    title: 'Collateral Management'
+                },
+                subMenuItems: [
+                    {
+                        id: 'cm_agreements',
+                        head: {
+                            icon: 'fa fa-thumbs-o-up',
+                            title: 'Agreements'
+                        },
+                        view: '/collateral/agreements/index.html',
+                        unique: true
+                    },
+                    {
+                        id: 'cm_margin_call',
+                        head: {
+                            icon: 'fa fa-phone',
+                            title: 'Margin Call'
+                        },
+                        view: '/collateral/margin_call/main.html',
+                        unique: true
+                    },
+                    {
+                        id: 'cm_interest',
+                        head: {
+                            icon: 'fa fa-calculator',
+                            title: 'Interest'
+                        },
+                        view: '/collateral/interest/main.html',
+                        unique: true
+                    }
+
+                ]
+            }, /*#1 Collateral Management*/
+            {
+                id: 'collateral_exposures',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-warning',
+                    title: 'Collateral Exposures'
+                },
+                subMenuItems: [
+                    {
+                        id: 'ce_ussuer_risk',
+                        head: {
+                            icon: ' ',
+                            title: 'Issuer Risk'
+                        },
+                        view: '/risk/issuer_risk.html',
+                        unique: true
+                    },
+                    {
+                        id: 'ce_country_risk',
+                        head: {
+                            icon: ' ',
+                            title: 'Country Risk'
+                        },
+                        view: '/risk/country_risk.html',
+                        unique: true
+                    },
+                    {
+                        id: 'ce_counterparty_risk',
+                        head: {
+                            icon: ' ',
+                            title: 'Counterparty Risk'
+                        },
+                        view: '/risk/counterparty_risk.html',
+                        unique: true
+                    },
+                    {
+                        id: 'ce_fx_risk',
+                        head: {
+                            icon: ' ',
+                            title: 'Fx Risk'
+                        },
+                        view: '/risk/issuer_risk.html',
+                        unique: true
+                    }
+                ]
+            }, /*#2 Collateral Exposures*/
+            {
+                id: 'static_data',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-database',
+                    title: 'Static Data'
+                },
+                subMenuItems: [
+                    {
+                        id: 'sd_legal_entity',
+                        head: {
+                            icon: 'fa fa-bank',
+                            title: 'Legal Entities'
+                        },
+                        view: '/static_data/LegalEntity/legal_entity.html',
+                        unique: true
+                    },
+                    {
+                        id: 'sd_bilateral_agreements',
+                        head: {
+                            icon: 'fa fa-briefcase',
+                            title: 'Bilteral Agreements'
+                        },
+                        view: '/static_data/BilateralAgreements/bilateral_a_add_search.html',
+                        unique: true
+                    },
+                    {
+                        id: 'sd_instruments',
+                        tabContainer: 'static_data',
+                        head: {
+                            icon: 'icon-graph',
+                            title: 'Instruments'
+                        },
+                        subMenuItems: [
+                            {
+                                id: 'sd_inst_bond_definition',
+                                head: {
+                                    icon: 'fa fa-lock',
+                                    title: 'Bond definition'
+                                },
+                                view: '/static_data/Security/main.html',
+                                unique: true
+                            },
+                            {
+                                id: 'sd_inst_equity_definition',
+                                head: {
+                                    icon: 'fa fa-lock',
+                                    title: 'Equity definition'
+                                },
+                                view: '#',
+                                unique: true
+                            }
+                        ],
+                        view: '',
+                        unique: true
+                    }
+                ]
+            }, /*#3 Collateral Exposures*/
+        ]
+    }
+
 
     this.linkParents = function (tree) {
 
