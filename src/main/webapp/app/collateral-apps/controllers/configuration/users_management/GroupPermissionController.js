@@ -15,7 +15,7 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
 
             columnDefs: [
                 {
-                    field: 'code',
+                    field: 'key',
                     name: 'Code'
                 },
                 {
@@ -23,33 +23,12 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                     name: 'Description'
                 },
                 {
-                    field: 'typePermissionMap.ACCESS',
-                    name: 'Access',
+                    field: 'permission',
+                    name: 'Permission',
                     width: 110,
                     enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)"/>'
-                },
-                {
-                    field: 'typePermissionMap.CREATE',
-                    name: 'Create',
-                    width: 110,
-                    enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)" />'
-                },
-                {
-                    field: 'typePermissionMap.UPDATE',
-                    name: 'Update',
-                    width: 110,
-                    enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)"/>'
-                },
-                {
-                    field: 'typePermissionMap.DELETE',
-                    name: 'Delete',
-                    width: 110,
-                    enableSorting: false,
-                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity,MODEL_COL_FIELD)"/>'
-                },
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity)" />'
+                }
             ],
             enableGridMenu: true,
             exporterCsvFilename: 'permissions.csv',
@@ -75,9 +54,17 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
             data: []
         }
 
-        $scope.setTypePermission = function (row, booleanType) {
+        $scope.setTypePermission = function (row) {
 
            GroupsService.setPermission($scope.UsersGroup.selected.id, row);
+            //console.log(row);
+
+            $scope.UsersGroups.find(function (group) {
+                if(group.id == $scope.UsersGroup.selected.id){
+                    group.permissions[row.key] = true;
+                    //console.log(group);
+                }
+            });
 
         }
         $scope.refresh = function () {
@@ -90,10 +77,17 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
 
             if( $scope.UsersGroup.selected.id != -1 ){
                 
-                $scope.UsersGroups.filter(function (group) {
+                $scope.UsersGroups.forEach(function (group) {
                     if(group.id ==  $scope.UsersGroup.selected.id ){
                         $scope.gridGroupPermissionOptions.data = [];
-                        $scope.gridGroupPermissionOptions.data = group.permission;
+                        $scope.gridGroupPermissionOptions.data = localStorageService.get('ServiceEnum');
+                        //console.log(group);
+                    }
+                    if($scope.gridGroupPermissionOptions.data.length > 0){
+                        $scope.gridGroupPermissionOptions.data.forEach(function (service) {
+                            service.permission = group.permissions[service.key];
+                        });
+
                     }
                 });
             }
