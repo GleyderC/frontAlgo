@@ -78,7 +78,7 @@
         </div>
         <split-pane class="country_risk">
 
-            <split-pane-component width="50%" class="col-sm-12" style="padding-left: 7px;padding-right: 7px;">
+            <split-pane-component  class="col-sm-12" style="padding-left: 7px;padding-right: 7px;">
                 <div class="portlet-body">
                     <div id="country-risk-map" class="col-md-6 country-risk-map" style="float: left; margin: 0;"></div>
                 </div>
@@ -86,10 +86,10 @@
 
             <split-pane-divider width="5px"></split-pane-divider>
 
-            <split-pane-component class="col-sm-12" style="padding-left: 2px;padding-right: 2px;">
+            <split-pane-component data-width="500px" class="col-sm-12" style="padding-left: 2px;padding-right: 2px;">
                 <div class="row" style="margin-left: 10px;margin-right: 10px;">
-                    <div class="portlet-body">
                         <div class="col-md-12" style="padding: 0px">
+                    <div class="portlet-body">
                             <div id="grid-country-risk" ui-grid="gridCountryRiskOptions" ui-grid-exporter
                                  ui-grid-auto-resize ui-grid-resize-columns ui-grid-pagination ui-grid-expandable class="grid"></div>
                         </div>
