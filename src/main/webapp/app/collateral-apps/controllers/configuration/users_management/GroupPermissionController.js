@@ -23,8 +23,29 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                     name: 'Description'
                 },
                 {
-                    field: 'permission',
-                    name: 'Permission',
+                    field: 'actionPermission.SELECT',
+                    name: 'SELECT',
+                    width: 110,
+                    enableSorting: false,
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity)" />'
+                },
+                {
+                    field: 'actionPermission.INSERT',
+                    name: 'INSERT',
+                    width: 110,
+                    enableSorting: false,
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity)" />'
+                },
+                {
+                    field: 'actionPermission.UPDATE',
+                    name: 'UPDATE',
+                    width: 110,
+                    enableSorting: false,
+                    cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity)" />'
+                },
+                {
+                    field: 'actionPermission.DELETE',
+                    name: 'DELETE',
                     width: 110,
                     enableSorting: false,
                     cellTemplate: '<input type="checkbox" ng-model="MODEL_COL_FIELD" ng-click="grid.appScope.setTypePermission(row.entity)" />'
@@ -56,13 +77,13 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
 
         $scope.setTypePermission = function (row) {
 
-           GroupsService.setPermission($scope.UsersGroup.selected.id, row);
-            //console.log(row);
+            GroupsService.setPermission($scope.UsersGroup.selected.id, row);
 
-            $scope.UsersGroups.find(function (group) {
+            $scope.UsersGroups.forEach(function (group) {
                 if(group.id == $scope.UsersGroup.selected.id){
-                    group.permissions[row.key] = true;
-                    //console.log(group);
+                    group.permissions[row.key].actionPermission = row.actionPermission;
+                    //console.log(group.permissions[row.key].actionPermission);
+
                 }
             });
 
@@ -81,13 +102,11 @@ DashboardApp.controller('GroupPermissionController', ['$scope',
                     if(group.id ==  $scope.UsersGroup.selected.id ){
                         $scope.gridGroupPermissionOptions.data = [];
                         $scope.gridGroupPermissionOptions.data = localStorageService.get('ServiceEnum');
-                        //console.log(group);
-                    }
-                    if($scope.gridGroupPermissionOptions.data.length > 0){
-                        $scope.gridGroupPermissionOptions.data.forEach(function (service) {
-                            service.permission = group.permissions[service.key];
-                        });
-
+                        if($scope.gridGroupPermissionOptions.data.length > 0){
+                            $scope.gridGroupPermissionOptions.data.forEach(function (permission) {
+                                permission.actionPermission = group.permissions[permission.key].actionPermission;
+                            });
+                        }
                     }
                 });
             }
