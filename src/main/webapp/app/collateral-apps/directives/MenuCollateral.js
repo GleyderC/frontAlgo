@@ -310,20 +310,19 @@ DashboardApp.service('MenuService', function () {
 
     //HTML TREE SIDEBAR
     this.htmlTreeMenu =
-    {
-        menuItems: [
+        [
             {
                 id: 'collateral_management',
                 tabContainer: 'root',
                 head: {
-                    icon: 'icon-home',
+                    icon: 'icon-home font-green',
                     title: 'Collateral Management'
                 },
                 subMenuItems: [
                     {
                         id: 'cm_agreements',
                         head: {
-                            icon: 'fa fa-thumbs-o-up',
+                            icon: 'fa fa-thumbs-o-up font-green',
                             title: 'Agreements'
                         },
                         view: '/collateral/agreements/index.html',
@@ -332,7 +331,7 @@ DashboardApp.service('MenuService', function () {
                     {
                         id: 'cm_margin_call',
                         head: {
-                            icon: 'fa fa-phone',
+                            icon: 'fa fa-phone font-green',
                             title: 'Margin Call'
                         },
                         view: '/collateral/margin_call/main.html',
@@ -341,7 +340,7 @@ DashboardApp.service('MenuService', function () {
                     {
                         id: 'cm_interest',
                         head: {
-                            icon: 'fa fa-calculator',
+                            icon: 'fa fa-calculator font-green',
                             title: 'Interest'
                         },
                         view: '/collateral/interest/main.html',
@@ -349,12 +348,12 @@ DashboardApp.service('MenuService', function () {
                     }
 
                 ]
-            }, /*#1 Collateral Management*/
+            }, /* #1 Collateral Management */
             {
                 id: 'collateral_exposures',
                 tabContainer: 'root',
                 head: {
-                    icon: 'fa fa-warning',
+                    icon: 'fa fa-warning font-yellow-gold',
                     title: 'Collateral Exposures'
                 },
                 subMenuItems: [
@@ -395,19 +394,19 @@ DashboardApp.service('MenuService', function () {
                         unique: true
                     }
                 ]
-            }, /*#2 Collateral Exposures*/
+            }, /* #2 Collateral Exposures */
             {
                 id: 'static_data',
                 tabContainer: 'root',
                 head: {
-                    icon: 'fa fa-database',
+                    icon: 'fa fa-database font-blue-steel',
                     title: 'Static Data'
                 },
                 subMenuItems: [
                     {
                         id: 'sd_legal_entity',
                         head: {
-                            icon: 'fa fa-bank',
+                            icon: 'fa fa-bank font-blue-steel',
                             title: 'Legal Entities'
                         },
                         view: '/static_data/LegalEntity/legal_entity.html',
@@ -416,7 +415,7 @@ DashboardApp.service('MenuService', function () {
                     {
                         id: 'sd_bilateral_agreements',
                         head: {
-                            icon: 'fa fa-briefcase',
+                            icon: 'fa fa-briefcase font-blue-steel',
                             title: 'Bilteral Agreements'
                         },
                         view: '/static_data/BilateralAgreements/bilateral_a_add_search.html',
@@ -426,14 +425,14 @@ DashboardApp.service('MenuService', function () {
                         id: 'sd_instruments',
                         tabContainer: 'static_data',
                         head: {
-                            icon: 'icon-graph',
+                            icon: 'icon-graph font-blue-steel',
                             title: 'Instruments'
                         },
                         subMenuItems: [
                             {
                                 id: 'sd_inst_bond_definition',
                                 head: {
-                                    icon: 'fa fa-lock',
+                                    icon: 'fa fa-lock font-blue-steel',
                                     title: 'Bond definition'
                                 },
                                 view: '/static_data/Security/main.html',
@@ -442,7 +441,7 @@ DashboardApp.service('MenuService', function () {
                             {
                                 id: 'sd_inst_equity_definition',
                                 head: {
-                                    icon: 'fa fa-lock',
+                                    icon: 'fa fa-lock font-blue-steel',
                                     title: 'Equity definition'
                                 },
                                 view: '#',
@@ -453,9 +452,233 @@ DashboardApp.service('MenuService', function () {
                         unique: true
                     }
                 ]
-            }, /*#3 Collateral Exposures*/
-        ]
-    }
+            }, /* #3 Collateral Exposures */
+            {
+                id: 'integration_reporting',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-warning font-purple-seance',
+                    title: 'Integration and Reporting'
+                },
+                subMenuItems: [
+                    {
+                        id: 'ir_fpml_upload',
+                        head: {
+                            icon: 'fa fa-cloud-upload font-purple-seance',
+                            title: 'FPML Upload'
+                        },
+                        view: '/integration_reporting/FpmlUpload/fpml_upload.html',
+                        unique: true
+                    },
+                    {
+                        id: 'ir_man_files_upload',
+                        head: {
+                            icon: 'fa fa-upload font-purple-seance',
+                            title: 'Manual Files upload'
+                        },
+                        view: '/integration_reporting/ManualFileUpload/manual_file_upload.html',
+                        unique: true
+                    },
+                    {
+                        id: 'ir_audit',
+                        head: {
+                            icon: 'fa fa-check-square-o font-purple-seance',
+                            title: 'Audit'
+                        },
+                        view: '/integration_reporting/Integration/integration.html',
+                        unique: true
+                    },
+                    {
+                        id: 'ir_report',
+                        head: {
+                            icon: 'fa fa-file-text font-purple-seance',
+                            title: 'Reports'
+                        },
+                        view: '#',
+                        unique: true
+                    },
+                    {
+                        id: 'ir_scheduled_task',
+                        head: {
+                            icon: 'fa fa-play-circle-o font-purple-seance',
+                            title: 'Scheduled Task'
+                        },
+                        view: '/integration_reporting/ScheduledTask/scheduled_task.html',
+                        unique: true
+                    }
+                ]
+            }, /* #4 Integration & Reporting */
+            {
+                id: 'configuration',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-cogs font-green-jungle',
+                    title: 'Configuration'
+                },
+                subMenuItems: [
+                    {
+                        id: 'configuration_user_management',
+                        head: {
+                            icon: 'fa fa-users font-green-jungle',
+                            title: 'Users management'
+                        },
+                        view: '',
+                        subMenuItems: [
+                            {
+                                id: 'conf_users_management',
+                                head: {
+                                    icon: 'fa fa-user font-green-jungle',
+                                    title: 'User'
+                                },
+                                view: '/configuration/users_management/users.html',
+                                unique: true
+                            },
+                            {
+                                id: 'conf_group_management',
+                                head: {
+                                    icon: 'fa fa-group font-green-jungle',
+                                    title: 'Groups'
+                                },
+                                view: '/configuration/users_management/groups.html',
+                                unique: true
+                            },
+                            {
+                                id: 'conf_users_group',
+                                head: {
+                                    icon: 'fa fa-user-plus font-green-jungle',
+                                    title: 'Users - Group'
+                                },
+                                view: '/configuration/users_management/users_group.html',
+                                unique: true
+                            },
+                            {
+                                id: 'conf_group_permission',
+                                head: {
+                                    icon: 'fa fa-unlock-alt font-green-jungle',
+                                    title: 'Group Permissions'
+                                },
+                                view: '/configuration/users_management/group_permission.html',
+                                unique: true
+                            }
+                        ],
+                        unique: true
+                    },
+                    {
+                        id: 'configuration_stp_workflows',
+                        head: {
+                            icon: 'fa fa-code-fork font-green-jungle',
+                            title: 'STP Workflows'
+                        },
+                        view: '#',
+                        unique: true
+                    }
+                ]
+            }, /* #5 Configuration */
+            {
+                id: 'analytics',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-bar-chart font-red-flamingo',
+                    title: 'Analytics'
+                },
+                subMenuItems: [
+                    {
+                        id: 'analytics_portfolio_analysis',
+                        head: {
+                            icon: 'icon-bar-chart font-red-flamingo',
+                            title: 'Portfolio analysis'
+                        },
+                        view: '',
+                        unique: true
+                    },
+                    {
+                        id: 'analytics_trade_analysis',
+                        head: {
+                            icon: 'icon-bulb font-red-flamingo',
+                            title: 'Trade analysis'
+                        },
+                        view: '#',
+                        unique: true
+                    },
+                    {
+                        id: 'analytics_simulation',
+                        head: {
+                            icon: 'icon-graph font-red-flamingo',
+                            title: 'What-if simulation'
+                        },
+                        view: '#',
+                        unique: true
+                    }
+                ]
+            }, /* #6 Analytics */
+            {
+                id: 'market_data',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-line-chart font-purple-soft',
+                    title: 'Market Data'
+                },
+                subMenuItems: [
+                    {
+                        id: 'md_closing_prices',
+                        head: {
+                            icon: 'icon-bar-chart font-purple-soft',
+                            title: 'Closing prices'
+                        },
+                        view: '',
+                        subMenuItems: [
+                            {
+                                id: 'md_cp_fx',
+                                head: {
+                                    icon: ' ',
+                                    title: 'FX'
+                                },
+                                view: '',
+                                unique: true
+                            },
+                            {
+                                id: 'md_cp_bonds',
+                                head: {
+                                    icon: ' ',
+                                    title: 'Bonds'
+                                },
+                                view: '',
+                                unique: true
+                            },
+                            {
+                                id: 'md_cp_fx',
+                                head: {
+                                    icon: ' ',
+                                    title: 'Equities'
+                                },
+                                view: '',
+                                unique: true
+                            }
+                        ],
+                        unique: true
+                    }
+                ]
+            }, /* #7 Market Data */
+            {
+                id: 'cm_user_messages',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-envelope-o font-green-haze',
+                    title: 'User Messages'
+                },
+                subMenuItems: [
+                    {
+                        id: 'cm_um_messages',
+                        head: {
+                            icon: 'fa fa-envelope-o font-green-haze',
+                            title: 'User Messages'
+                        },
+                        view: '/user_message/messages.html',
+                        unique: true
+                    }
+                ]
+            }, /* #8 User Messages */
+        ];
 
 
     this.linkParents = function (tree) {

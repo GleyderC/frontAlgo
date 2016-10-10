@@ -53,6 +53,12 @@ angular.module('DashboardApp')
 
                     parentTabObj.tabContainer = angular.element(parentTab).data("tab-container");
 
+                    if (angular.isUndefined(parentTabObj.tabContainer)) {
+
+                        parentTabObj.tabContainer = "";
+
+                    }
+
                     let workspaceContainer = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, parentTabObj.tabContainer);
 
                     if (workspaceContainer == false) {
@@ -64,7 +70,9 @@ angular.module('DashboardApp')
                     angular.forEach(workspaceContainer.tabList, function (tab) {
 
                         if (tab.id == parentTabObj.id) {
+
                             parentTabObj.alreadyExists = true;
+
                         }
 
                     });
@@ -103,7 +111,38 @@ angular.module('DashboardApp')
 
                 }
 
-                //console.log($scope.htmlTreeMenu)
+            }
+        }
+    }])
+
+    .directive('cmSidebarItemMenu', ['$q', 'toastr', '$timeout', function ($q, $toastr, $timeout) {
+        return {
+            restrict: "E",
+            replace: true,
+            templateUrl: "ItemMenu.html",
+            link: function ($scope, element, attrs) {
+
+                if (angular.isUndefined($scope.TreeMenu)) {
+                    $scope.TreeMenu = $scope.htmlTreeMenu;
+                }
+
+            }
+        }
+    }])
+
+    .directive('cmSidebarSubItemMenu', ['$q', 'toastr', '$timeout', function ($q, $toastr, $timeout) {
+        return {
+            restrict: "E",
+            replace: true,
+            templateUrl: "SubItemMenu.html",
+            link: function ($scope, element, attrs) {
+
+                if (angular.isUndefined($scope.$eval(attrs.menuItems))) {
+                    $scope.subTreeMenu = [];
+                }
+                else {
+                    $scope.subTreeMenu = $scope.$eval(attrs.menuItems);
+                }
 
             }
         }

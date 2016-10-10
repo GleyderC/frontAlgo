@@ -59,14 +59,14 @@ angular.module('DashboardApp')
 
                         angular.forEach(workSpaceFound.tabList, function (tab, index) {
 
-                            if( tab.id == tabConfig.id ){
+                            if (tab.id == tabConfig.id) {
                                 wsAlreadyExists = true;
                                 indexTabExisting = index + 1;
                             }
 
                         });
 
-                        if(wsAlreadyExists){
+                        if (wsAlreadyExists) {
                             //$toastr.error("This tab already exists", "Error", {closeButton: true});
                             $timeout(function () {
                                 $scope.workspaceTabs.setWSTabsFocusByID(tabConfig.id, indexTabExisting);
@@ -76,7 +76,6 @@ angular.module('DashboardApp')
                         }
 
                     }
-
 
 
                     let globalTabConfig = {
@@ -178,8 +177,8 @@ angular.module('DashboardApp')
 
                     //REFRESH TABS PARENTS
                     $timeout(function () {
-                        $scope.workspaceTabs.createLinkParent($scope.workspaceTabs, 500);
-                    });
+                        $scope.workspaceTabs.createLinkParent($scope.workspaceTabs);
+                    }, 500);
 
                 };
 
@@ -398,8 +397,8 @@ angular.module('DashboardApp')
 
                     //REFRESH TABS PARENTS
                     $timeout(function () {
-                        $scope.workspaceTabs.createLinkParent($scope.workspaceTabs, 500);
-                    });
+                        $scope.workspaceTabs.createLinkParent($scope.workspaceTabs);
+                    }, 500);
 
                     return deferred.promise;
 
