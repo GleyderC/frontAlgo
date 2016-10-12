@@ -111,17 +111,6 @@ angular.module('DashboardApp')
 
                 }
 
-            }
-        }
-    }])
-
-    .directive('cmSidebarItemMenu', ['$q', 'toastr', '$timeout', function ($q, $toastr, $timeout) {
-        return {
-            restrict: "E",
-            replace: true,
-            templateUrl: "ItemMenu.html",
-            link: function ($scope, element, attrs) {
-
                 if (angular.isUndefined($scope.TreeMenu)) {
                     $scope.TreeMenu = $scope.htmlTreeMenu;
                 }
@@ -147,3 +136,26 @@ angular.module('DashboardApp')
             }
         }
     }])
+
+    .filter('highlightTextFilter', function ($filter, $sce) {
+
+        return function (items, phrase) {
+
+            let elements = $filter('filter')(items, phrase);
+
+           /* if (phrase) {
+
+                angular.forEach(elements, function (element) {
+
+                    element.head.title = $sce.trustAsHtml(element.head.title.replace(new RegExp('(' + phrase + ')', 'gi'),
+                        '<b>$1</b>'));
+
+                });
+
+            }*/
+
+            return elements;
+
+        }
+
+    })

@@ -1,49 +1,3 @@
-<script type="text/ng-template" id="ItemMenu.html">
-
-    <li class="nav-item start" id="{{ navItem.id }}" data-tab-container="{{ navItem.tabContainer }}"
-        ng-repeat="navItem in TreeMenu">
-        <a href="javascript:;" class="nav-link nav-toggle">
-            <i class="{{ navItem.head.icon }}"></i>
-            <span class="title"> {{ navItem.head.title }} </span>
-            <!--<span class="selected"></span>-->
-            <span class="arrow"></span>
-        </a>
-
-        <cm-sidebar-sub-item-menu menu-items="navItem"></cm-sidebar-sub-item-menu>
-
-    </li>
-
-</script>
-
-<script type="text/ng-template" id="SubItemMenu.html">
-
-
-    <ul class="sub-menu">
-        <li class="nav-item start " ng-repeat="navSubItem in subTreeMenu.subMenuItems" id="{{ subTreeMenu.id }}"
-            data-tab-container="{{ subTreeMenu.tabContainer }}">
-            <a href="#" ng-if="!navSubItem.subMenuItems || navSubItem.subMenuItems.length == 0" id="{{ navSubItem.id }}"
-               class="nav-link " ng-click="displayTabMenu($event)"
-               data-view="{{ navSubItem.view }}" unique="navSubItem.unique">
-                <i class="{{ navSubItem.head.icon }}"></i>
-                <span class="title">{{ navSubItem.head.title }}</span>
-            </a>
-
-            <a href="javascript:;" class="nav-link nav-toggle" ng-if="navSubItem.subMenuItems.length">
-                <i class="{{ navSubItem.head.icon }}"></i>
-                <span class="title"> {{ navSubItem.head.title }} </span>
-                <span class="arrow"></span>
-            </a>
-
-            <cm-sidebar-sub-item-menu ng-if="navSubItem.subMenuItems.length > 0"
-                                      menu-items="navSubItem"></cm-sidebar-sub-item-menu>
-
-        </li>
-    </ul>
-
-
-</script>
-
-
 <div class="page-sidebar-wrapper">
     <!-- BEGIN SIDEBAR -->
     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
@@ -67,17 +21,17 @@
                 <!-- END SIDEBAR TOGGLER BUTTON -->
             </li>
             <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-            <li class="sidebar-search-wrapper hide">
+            <li class="sidebar-search-wrapper">
                 <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
                 <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
                 <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
-                <form class="sidebar-search  " action="#" method="POST">
+                <form class="sidebar-search  " action="#">
                     <a href="javascript:;" class="remove">
                         <i class="icon-close"></i>
                     </a>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search...">
-                                    <span class="input-group-btn">
+                        <input type="text" class="form-control cm-sidebar-search" placeholder="Search..." ng-model="menuSearch">
+                        <span class="input-group-btn">
                                         <a href="javascript:;" class="btn submit">
                                             <i class="icon-magnifier"></i>
                                         </a>
@@ -86,7 +40,18 @@
                 </form>
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
-            <cm-sidebar-item-menu></cm-sidebar-item-menu>
+            <li class="nav-item start" id="{{ navItem.id }}" data-tab-container="{{ navItem.tabContainer }}"
+                ng-repeat="navItem in TreeMenu | highlightTextFilter: menuSearch">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="{{ navItem.head.icon }}"></i>
+                    <span class="title"> {{ navItem.head.title }} </span>
+                    <!--<span class="selected"></span>-->
+                    <span class="arrow"></span>
+                </a>
+
+                <cm-sidebar-sub-item-menu menu-items="navItem"></cm-sidebar-sub-item-menu>
+
+            </li>
 
 
         </ul>
@@ -96,6 +61,33 @@
     </div>
     <!-- END SIDEBAR -->
 </div>
+
+<script type="text/ng-template" id="SubItemMenu.html">
+
+    <ul class="sub-menu">
+        <li class="nav-item start " ng-repeat="navSubItem in subTreeMenu.subMenuItems" id="{{ subTreeMenu.id }}"
+            data-tab-container="{{ subTreeMenu.tabContainer }}">
+            <a href="#" ng-if="!navSubItem.subMenuItems || navSubItem.subMenuItems.length == 0" id="{{ navSubItem.id }}"
+               class="nav-link " ng-click="displayTabMenu($event)"
+               data-view="{{ navSubItem.view }}" unique="navSubItem.unique">
+                <i class="{{ navSubItem.head.icon }}"></i>
+                <span class="title">{{ navSubItem.head.title }}</span>
+            </a>
+
+            <a href="javascript:;" class="nav-link nav-toggle" ng-if="navSubItem.subMenuItems.length">
+                <i class="{{ navSubItem.head.icon }}"></i>
+                <span class="title" ng-bind-html="navSubItem.head.title"></span>
+                <span class="arrow"></span>
+            </a>
+
+            <cm-sidebar-sub-item-menu ng-if="navSubItem.subMenuItems.length > 0"
+                                      menu-items="navSubItem"></cm-sidebar-sub-item-menu>
+
+        </li>
+    </ul>
+
+</script>
+
 <script>
     $(document).ready(function () {
         Layout.initSidebar();
