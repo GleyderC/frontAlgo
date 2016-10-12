@@ -40,7 +40,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">Swap Dealer (SD)</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isSD" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.doddFrankSwapDealer" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">Major Swap Participant (MSP)</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isMSP" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.doddFrankMajorSwapParticipant" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">Prime Broker (PB)</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isPB" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.doddFrankPrimeBroker" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
@@ -67,69 +67,69 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">Executing Broker (EB)</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isEB" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.doddFrankExecutingBroker" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                            </div>
+                        </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3">U.S Person</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isUSPerson" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.doddFrankUSPerson" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                            </div>
+                        </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3">Financial Entity</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isFinancialEntity" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.doddFrankFinancialEntity" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                            </div>
+                        </div>
                         </div>
                         <div class="form-body col-md-6">
                         <legend>CCPs membership for OTC derivatives</legend>
                             <div class="form-group">
                                 <label class="control-label col-md-3">Swap clear</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isSwapClear" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.swapClear" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                            </div>
+                        </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3">Eurex</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isEurex" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.eurex" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                            </div>
+                        </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3">CME OTC</label>
                                 <div class="col-md-9">
-                                            <input bs-switch ng-model="legalEntity.isCME" type="checkbox"
+                                            <input bs-switch ng-model="legalEntity.cmeOTC" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                            </div>
+                        </div>
                             <div class="form-group">
                                     <label class="control-label col-md-3">BME Clearing</label>
                                     <div class="col-md-9">
-                                                <input bs-switch ng-model="legalEntity.isBMEClearing" type="checkbox"
+                                                <input bs-switch ng-model="legalEntity.bmeClearing" type="checkbox"
                                                    switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                    ng-true-value="true" ng-false-value="false">
         
                                     </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
