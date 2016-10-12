@@ -9,6 +9,26 @@
     padding-left: 6px !important;;
 }
 
+.remove-search
+{
+    background-color: transparent;
+    border: none;
+}
+
+.remove-search i
+{
+    -webkit-transition: all 400ms ease-in-out;
+    -moz-transition: all 400ms ease-in-out;
+    -ms-transition: all 400ms ease-in-out;
+    -o-transition: all 400ms ease-in-out;
+    transition: all 400ms ease-in-out;
+}
+
+.remove-search:HOVER i
+{
+    color: whitesmoke;
+}
+
 .page-sidebar-closed .page-sidebar .page-sidebar-menu.page-sidebar-menu-closed .sidebar-search.open .input-group
 {
     z-index: 999;
