@@ -106,9 +106,9 @@ angular.module('DashboardApp')
             var params = {
                 "userGroupID": groupID,
                 "service": groupPermission.key,
-                "permission": groupPermission.permission
+                "actionPermission": groupPermission.actionPermission
             }
-            console.log(params);
+            //console.log(params);
             $request.post('/servlet/UserGroups/AddPermission', params).then(function (result) {
 
                 if(result.data.dataResponse == true){

@@ -53,6 +53,12 @@ angular.module('DashboardApp')
 
                     parentTabObj.tabContainer = angular.element(parentTab).data("tab-container");
 
+                    if (angular.isUndefined(parentTabObj.tabContainer)) {
+
+                        parentTabObj.tabContainer = "";
+
+                    }
+
                     let workspaceContainer = $scope.workspaceTabs.getWorkspaceTabsByID($scope.workspaceTabs, parentTabObj.tabContainer);
 
                     if (workspaceContainer == false) {
@@ -64,7 +70,9 @@ angular.module('DashboardApp')
                     angular.forEach(workspaceContainer.tabList, function (tab) {
 
                         if (tab.id == parentTabObj.id) {
+
                             parentTabObj.alreadyExists = true;
+
                         }
 
                     });
@@ -103,8 +111,51 @@ angular.module('DashboardApp')
 
                 }
 
-                //console.log($scope.htmlTreeMenu)
+                if (angular.isUndefined($scope.TreeMenu)) {
+                    $scope.TreeMenu = $scope.htmlTreeMenu;
+                }
 
             }
         }
     }])
+
+    .directive('cmSidebarSubItemMenu', ['$q', 'toastr', '$timeout', function ($q, $toastr, $timeout) {
+        return {
+            restrict: "E",
+            replace: true,
+            templateUrl: "SubItemMenu.html",
+            link: function ($scope, element, attrs) {
+
+                if (angular.isUndefined($scope.$eval(attrs.menuItems))) {
+                    $scope.subTreeMenu = [];
+                }
+                else {
+                    $scope.subTreeMenu = $scope.$eval(attrs.menuItems);
+                }
+
+            }
+        }
+    }])
+
+    .filter('highlightTextFilter', function ($filter, $sce) {
+
+        return function (items, phrase) {
+
+            let elements = $filter('filter')(items, phrase);
+
+           /* if (phrase) {
+
+                angular.forEach(elements, function (element) {
+
+                    element.head.title = $sce.trustAsHtml(element.head.title.replace(new RegExp('(' + phrase + ')', 'gi'),
+                        '<b>$1</b>'));
+
+                });
+
+            }*/
+
+            return elements;
+
+        }
+
+    })
