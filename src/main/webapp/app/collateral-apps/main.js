@@ -374,7 +374,6 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/services/RowEditorModalService.js',
                             'collateral-apps/services/ModalService.js',
 
-
                             'collateral-apps/services/collateral/MarginCallService.js',
                             'collateral-apps/services/collateral/AgreementsService.js',
                             'collateral-apps/services/collateral/InterestService.js',
@@ -394,6 +393,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 
                             'collateral-apps/services/configuration/UsersService.js',
                             'collateral-apps/services/configuration/GroupsService.js',
+
+                            'collateral-apps/services/analytics/SimulationService.js',
 
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/static_data/LegalEntityController.js',
@@ -439,7 +440,11 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/configuration/users_management/UsersController.js',
                             'collateral-apps/controllers/configuration/users_management/GroupsController.js',
                             'collateral-apps/controllers/configuration/users_management/GroupPermissionController.js',
-                            'collateral-apps/controllers/configuration/users_management/UsersGroupController.js'
+                            'collateral-apps/controllers/configuration/users_management/UsersGroupController.js',
+
+                            /* Analytics Controller*/
+                            'collateral-apps/controllers/analytics/what_if_simulation/SearchSimulationController.js',
+                            'collateral-apps/controllers/analytics/what_if_simulation/SimulationController.js'
 
                         ],
                         serie: true,
