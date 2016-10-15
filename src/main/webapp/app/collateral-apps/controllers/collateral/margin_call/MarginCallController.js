@@ -14,7 +14,8 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
 
         $scope.$on('$includeContentLoaded', function () {
         });
-
+        $scope.splitPaneProperties = {};
+        $scope.propsPane = {};
         $scope.marginCallWorkspaceTabs = {
             name: 'margin-call-tabs',
             active: true,
@@ -28,7 +29,29 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                 active: true
             }]
         };
-
+        $scope.splitPaneProperties = {};
+		$scope.setFirstComponent = function (value) {
+			$scope.splitPaneProperties.firstComponentSize = value;
+		};
+		$scope.setLastComponent = function (value) {
+			$scope.splitPaneProperties.lastComponentSize = value;
+		};
+		$scope.$watch("splitPaneProperties.firstComponentSize",function(nv,ov){
+		    if(nv==ov){
+		        return false;
+		    }
+		    if($scope.pieChart !==undefined ){
+                $(Highcharts.charts,"#marginCall").each(function(i,chart){
+                    if(!!chart){
+                        var height = chart.renderTo.clientHeight; 
+                        var width = chart.renderTo.clientWidth; 
+                        chart.setSize(width, height); 		         
+                    }
+                });
+            }
+		});
+		
+		
         $scope.currentMarginCall = {};
         $scope.setCurrentMarginCall = function (MarginCallEntity) {
             $scope.currentMarginCall = MarginCallEntity;
@@ -383,13 +406,15 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             $scope.filterMargin();
         }
         
+     
+                
         $scope.drawPieChart = function (statusArray) {
             var newStatusArray = ArrayService.ArrayDuplicateCounter(statusArray);
 
             //console.log(newStatusArray);
             //PieChart Data
             if(newStatusArray.length > 0){
-                $('#gchart_pie_margincall').highcharts({
+                $scope.pieChart = $('#gchart_pie_margincall').highcharts({
                     chart: {
                         type: 'pie',
                         options3d: {
@@ -437,13 +462,33 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                                     $scope.filterValue = this.name;
                                     $scope.filterMargin();
                                     //console.log(this);
+                                },
+                                load: function (event) {
+                                    $scope.adjustGraph(this);
                                 }
                             }
                         }
                     }],
                     exporting: { enabled: false }
                 });
-            }
+            };
+            $scope.adjustGraph = function(chart) {
+                try {
+                    if (typeof (chart === 'undefined' || chart === null) && this instanceof jQuery) { // if no obj chart and the context is set
+                        this.find('.chart-container:visible').each(function () { // for only visible charts container in the curent context
+                            $container = $(this); // context container
+                            $container.find('div[id^="chart-"]').each(function () { // for only chart
+                                $chart = $(this).highcharts(); // cast from JQuery to highcharts obj
+                                $chart.setSize($container.width(), $chart.chartHeight, doAnimation = true); // adjust chart size with animation transition
+                            });
+                        });
+                    } else {
+                        chart.setSize($('.chart-container:visible').width(), chart.chartHeight, doAnimation = true); // if chart is set, adjust
+                    }
+                } catch (err) {
+                    // do nothing
+                }
+            };//adjustGraph fn
         }
     }
 
@@ -591,4 +636,15 @@ MarginCallCtrl
                 template: '<label>{{colFilter.term}}</label><button class="btn btn-default" ng-click="showStatusModal()">Filter</button>',
                 controller: 'modalStatusCtrl'
             };
-        });
+        }).directive( 'watchPieWidth', function() {
+    return {
+        restrict : 'A', 
+        link: function( scope, elem, attrs ) {
+
+            scope.$watch( '__width', function( newHeight, oldHeight ) {
+                alert("hola");
+            } );
+        }
+    }
+} )
+;
