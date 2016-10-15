@@ -1,4 +1,4 @@
-<div class="portlet light" ng-controller="MarginCallController as marginCallCtrl">
+<div class="portlet light" ng-controller="MarginCallController">
 	<div class="row portlet light bordered">
 		<div class="portlet-title">
 			<div class="caption" col-md-3>
@@ -45,32 +45,31 @@
 		</div>
 
 		<div class="portlet-body">
-
 			<div class="row" style="position: relative">
 				<button class="btn green dropdown-toggle" ng-click="refreshStatus()"
 						uib-popover="Refresh" popover-trigger="mouseenter"
 						style="position: absolute;top: 0px;left: 10px;z-index: 999;">
 					<i class="fa fa-refresh"></i>
 				</button>
-				<split-pane style="height: 600px;">
+				<div split-pane style="height: 600px;" data-split-pane-properties="splitPaneProperties">
 
-					<split-pane-component  class="col-sm-12">
+					<div split-pane-component>
 						<div class="portlet-body">
 							<div id="gchart_pie_margincall" style="text-align: center"></div>
 						</div> 
-					</split-pane-component>
+					</div>
 
-					<split-pane-divider data-width="5px"></split-pane-divider>
+					<div split-pane-divider data-width="5px"></div>
 
-					<split-pane-component data-width="500px" class="col-sm-12">
+					<div split-pane-component data-width="500px" class="col-sm-12">
 						<div class="row" style="margin-left: 5px;margin-right: 10px;">
 							<div class="portlet-body">
 								<div ui-grid="gridMarginCall"  ui-grid-exporter ui-grid-selection
 									 ui-grid-resize-columns ui-grid-auto-resize ui-grid-pagination class="grid" style="height: 575px;"></div>
 							</div>
 						</div>
-					</split-pane-component>
-				</split-pane>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
