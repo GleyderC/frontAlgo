@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="portlet light bordered" style="margin-bottom:0">
+            <div class="portlet-body form" style="font-size: 11px;">
+                <form class="form-horizontal" role="form" id="mc-calculation">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="form-group col-md-4" style="margin-right: 0px;">
+                                <ui-select ng-model="ProductFamily.selected" ng-change="filterIssuerRisk()" theme="select2" class="input-small">
+                                    <ui-select-match placeholder="Product Family">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                        <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                        <small>Description:
+                                            <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="form-group col-md-4" style="margin-right: 0px;">
+                                <ui-select ng-model="ProductGroup.selected" ng-change="filterIssuerRisk()" theme="select2" class="input-small">
+                                    <ui-select-match placeholder="Product Group">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="ProductGroup in ProductGroups | filter: {name: $select.search, description: $select.search}">
+                                        <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                                        <small>Description:
+                                            <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="form-group col-md-4" style="margin-right: 0px;">
+                                <ui-select ng-model="ProductType.selected" ng-change="filterIssuerRisk()" theme="select2" class="input-small">
+                                    <ui-select-match placeholder="Select an option...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="ProductType in ProductTypes | filter: {name: $select.search, description: $select.search}">
+                                        <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
+                                        <small>Description:
+                                            <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
+                                        </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="portlet light bordered" style="margin-bottom:0">
+            <div class="portlet-body form" style="font-size: 11px;">
+                <form class="form-horizontal" role="form" id="mc-parameters">
+                    <div class="form-body">
+                        <div class="row">
+                            <label class="control-label col-md-3">CounterParty</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" placeholder=""
+                                       ng-model="minimumTransferAmount">
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

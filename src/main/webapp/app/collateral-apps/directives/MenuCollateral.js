@@ -606,7 +606,7 @@ DashboardApp.service('MenuService', function () {
                             icon: 'icon-graph font-red-flamingo',
                             title: 'What-if simulation'
                         },
-                        view: '#',
+                        view: '/analytics/what_if_simulation/search_simulation.html',
                         unique: true
                     }
                 ]

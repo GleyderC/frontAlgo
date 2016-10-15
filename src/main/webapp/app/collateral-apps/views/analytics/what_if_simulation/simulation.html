@@ -1,0 +1,49 @@
+<div ng-controller="SimulationController" du-smooth-scroll du-scrollspy>
+    <!-- BEGIN CHART PORTLET-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-desktop font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze" ng-bind="legalEntity.name || 'New Simulation'"> </span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+                <a href="javascript:;" class="reload"> </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <table  class="table table-striped table-bordered table-hover table-checkable order-column" style="margin-bottom:0">
+                    <thead>
+                    <tr>
+                        <th> Trader </th>
+                        <th> Desk </th>
+                        <th> DateTime </th>
+                        <th> Notional </th>
+                        <th> Principal </th>
+                        <th> Counterparty </th>
+                        <th> Hedge </th>
+                        <th> Status </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="font-size: 12px;">{{Simulation.trader}}</td>
+                        <td style="font-size: 12px;">{{Simulation.desk}}</td>
+                        <td style="font-size: 12px;">{{Simulation.dateTime}}</td>
+                        <td style="font-size: 12px;" class="collateral-money">{{Simulation.notional | currency:''}}</td>
+                        <td style="font-size: 12px;">{{Simulation.principal}}</td>
+                        <td style="font-size: 12px;">{{Simulation.counterparty}}</td>
+                        <td style="font-size: 12px;">{{Simulation.hedge}}</td>
+                        <td style="font-size: 12px;"><span class="label label-sm label-success"> {{Simulation.status}}  </span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                <workspace-tabs id="SimulationTabs" data-workspace-info="SimulationTabs"></workspace-tabs>
+            </div>
+        </div>
+    </div>
+</div>
