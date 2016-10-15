@@ -41,10 +41,12 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
 		        return false;
 		    }
 		    if($scope.pieChart !==undefined ){
-                $(Highcharts.charts).each(function(i,chart){
-                    var height = chart.renderTo.clientHeight; 
-                    var width = chart.renderTo.clientWidth; 
-                    chart.setSize(width, height); 		         
+                $(Highcharts.charts,"#marginCall").each(function(i,chart){
+                    if(!!chart){
+                        var height = chart.renderTo.clientHeight; 
+                        var width = chart.renderTo.clientWidth; 
+                        chart.setSize(width, height); 		         
+                    }
                 });
             }
 		});

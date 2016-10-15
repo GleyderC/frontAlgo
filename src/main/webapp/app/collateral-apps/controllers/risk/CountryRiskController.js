@@ -18,6 +18,14 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
         $scope.corporate = false;
         let _that = this;
         this.IssuersRisk = [];
+                
+        $scope.splitPaneProperties = {};
+		$scope.setFirstComponent = function (value) {
+			$scope.splitPaneProperties.firstComponentSize = value;
+		};
+		$scope.setLastComponent = function (value) {
+			$scope.splitPaneProperties.lastComponentSize = value;
+		};
 
         //Grid Config
         $scope.gridCountryRiskOptions = {
@@ -99,7 +107,24 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
             return renderableRows;
         };
+        
 
+		$scope.$watch("splitPaneProperties.firstComponentSize",function(nv,ov){
+		    if(nv===ov){
+		        return false;
+		    }
+		    if(!!$scope.mapChart){
+                $(Highcharts.charts).each(function(i,chart){
+                    if(!!chart){
+                        var height = chart.renderTo.clientHeight; 
+                        var width = chart.renderTo.clientWidth; 
+                        chart.setSize(width, height); 		         
+                    }
+                });
+            }
+		});
+
+    
         $scope.drawHighMap = function (data) {
 
             // Add lower case codes to the data set for inclusion in the tooltip.pointFormat
@@ -110,10 +135,10 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
             });*/
 
 
-            var mapChart;
+            $scope.mapChart =  {};
 
             // Initiate the chart
-            mapChart = $('#country-risk-map').highcharts('Map', {
+            $scope.mapChart = $('#country-risk-map').highcharts('Map', {
 
                 title : {
                     text : 'Country Risk'
@@ -162,6 +187,9 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
                                 $scope.gridApi.grid.refresh();
 
                             },
+                               load: function (event) {
+                                    $scope.adjustGraph(this);
+                                },
                             unselect: function () {
                              //console.log('unselect');
                                 // console.log(this);
@@ -187,7 +215,23 @@ DashboardApp.controller('CountryRiskController', [ '$scope',
 
 
         }
-
+ $scope.adjustGraph = function(chart) {
+                try {
+                    if (typeof (chart === 'undefined' || chart === null) && this instanceof jQuery) { // if no obj chart and the context is set
+                        this.find('.chart-container:visible').each(function () { // for only visible charts container in the curent context
+                            $container = $(this); // context container
+                            $container.find('div[id^="chart-"]').each(function () { // for only chart
+                                $chart = $(this).highcharts(); // cast from JQuery to highcharts obj
+                                $chart.setSize($container.width(), $chart.chartHeight, doAnimation = true); // adjust chart size with animation transition
+                            });
+                        });
+                    } else {
+                        chart.setSize($('.chart-container:visible').width(), chart.chartHeight, doAnimation = true); // if chart is set, adjust
+                    }
+                } catch (err) {
+                    // do nothing
+                }
+            };//adjustGraph fn
         $scope.filterIssuerRisk = function () {
         	if($scope.legalEntityPO.selected !==undefined) {
             RiskService.getExposureByCountry($scope.legalEntityPO.selected.id,"LE",

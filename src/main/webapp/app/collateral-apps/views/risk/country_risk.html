@@ -1,4 +1,4 @@
-<div class="portlet light" ng-controller="CountryRiskController as CountryRiskCtrl">
+<div class="portlet light" ng-controller="CountryRiskController">
     <script type="text/ng-template" id="country_risk_expandable.html">
         <div ui-grid="row.entity.subGridOptions" style="height:100%;" ui-grid-exporter
              ui-grid-auto-resize ui-grid-resize-columns class="grid"></div>
@@ -76,26 +76,26 @@
             </fieldset>
 
         </div>
-        <split-pane class="country_risk">
+        <div split-pane class="country_risk" data-split-pane-properties="splitPaneProperties">
 
-            <split-pane-component  class="col-sm-12" style="padding-left: 7px;padding-right: 7px;">
+            <div split-pane-component  style="padding-left: 7px;padding-right: 7px;">
                 <div class="portlet-body">
-                    <div id="country-risk-map" class="col-md-6 country-risk-map" style="float: left; margin: 0;"></div>
+                    <div id="country-risk-map" class="country-risk-map col-md-12" style="float: left; margin: 0;"></div>
                 </div>
-            </split-pane-component>
+            </div>
 
-            <split-pane-divider width="5px"></split-pane-divider>
+            <div split-pane-divider width="5px"></div>
 
-            <split-pane-component data-width="500px" class="col-sm-12" style="padding-left: 2px;padding-right: 2px;">
+            <div split-pane-component data-width="500px" class="col-sm-12" style="padding-left: 2px;padding-right: 2px;">
                 <div class="row" style="margin-left: 10px;margin-right: 10px;">
                         <div class="col-md-12" style="padding: 0px">
-                    <div class="portlet-body">
-                            <div id="grid-country-risk" ui-grid="gridCountryRiskOptions" ui-grid-exporter
-                                 ui-grid-auto-resize ui-grid-resize-columns ui-grid-pagination ui-grid-expandable class="grid"></div>
+                            <div class="portlet-body">
+                                <div id="grid-country-risk" ui-grid="gridCountryRiskOptions" ui-grid-exporter
+                                     ui-grid-auto-resize ui-grid-resize-columns ui-grid-pagination ui-grid-expandable class="grid"></div>
+                            </div>
                         </div>
-                    </div>
                 </div>
-            </split-pane-component>
-        </split-pane>
+            </div>
+        </div>
     </div>
 </div>
