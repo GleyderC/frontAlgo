@@ -55,7 +55,26 @@ DashboardApp.controller('MarginCallInventoryController', ['$scope', 'uiGridConst
                 return false;
             }
             $scope.gridInventoryOptions.data  = newInventory; 
-//            $scope.gridInventoryOptions.api.core.refresh();
-//    		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
+            $scope.gridApi.core.refresh();
+    		$scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.EDIT);
         });
+        MarginCallService.getDetail($scope.currentMarginCall.marginCalls[0].id).then(function (result) {
+	            $scope.posted 	= result.data.dataResponse.postedCollateral;
+	            $scope.received = result.data.dataResponse.receivedCollateral;
+	            $scope.MarginCallDetail = result.data.dataResponse;
+	            $scope.Inventory  =  $scope.posted.concat($scope.received);
+	            $scope.pool  =  result.data.dataResponse.poolDisplays;
+	            //Collateral Liability 
+	            let collateralLiabType = Object.keys($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType);
+	            $scope.collateralLiabilityType = collateralLiabType[0];  
+	            if($scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType[ $scope.collateralLiabilityType].marginCallCalculations.exposurePlusNettedIa > 0 ){
+	            	$scope.threshold  = $scope.MarginCallDetail.contract.partyBThreshold;
+	            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyB; 
+	            	
+	            }else{
+	            	$scope.threshold  = $scope.MarginCallDetail.contract.partyAThreshold;
+	            	$scope.minimumTransferAmount = $scope.MarginCallDetail.contract.minimumTransferAmountPartyA; 
+	            }
+	
+	        });
 }]);

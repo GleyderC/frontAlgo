@@ -414,8 +414,20 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             //console.log(newStatusArray);
             //PieChart Data
             if(newStatusArray.length > 0){
-                $scope.pieChart = $('#gchart_pie_margincall').highcharts({
+                $scope.pieChart =  new Highcharts.Chart({
                     chart: {
+                        renderTo:"gchart_pie_margincall",
+                        events: {
+                            load: function(event)    {
+                                $(Highcharts.charts,"#marginCall").each(function(i,chart){
+                                    if(!!chart){
+                                        var height = chart.renderTo.clientHeight; 
+                                        var width = chart.renderTo.clientWidth; 
+                                        chart.setSize(width, height); 		         
+                                    }
+                                });    
+                            }
+                        },
                         type: 'pie',
                         options3d: {
                             enabled: true,
@@ -461,7 +473,6 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                                 click: function (event) {
                                     $scope.filterValue = this.name;
                                     $scope.filterMargin();
-                                    //console.log(this);
                                 },
                                 load: function (event) {
                                     $scope.adjustGraph(this);
@@ -470,6 +481,8 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
                         }
                     }],
                     exporting: { enabled: false }
+                },function(){
+                  //Callback
                 });
             };
             $scope.adjustGraph = function(chart) {
@@ -636,15 +649,5 @@ MarginCallCtrl
                 template: '<label>{{colFilter.term}}</label><button class="btn btn-default" ng-click="showStatusModal()">Filter</button>',
                 controller: 'modalStatusCtrl'
             };
-        }).directive( 'watchPieWidth', function() {
-    return {
-        restrict : 'A', 
-        link: function( scope, elem, attrs ) {
-
-            scope.$watch( '__width', function( newHeight, oldHeight ) {
-                alert("hola");
-            } );
-        }
-    }
-} )
+        });
 ;
