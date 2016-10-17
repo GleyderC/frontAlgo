@@ -36,27 +36,16 @@
                 <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
             </div>
             <div class="login-options">
-                <h4>Or login with</h4>
-                <ul class="social-icons">
-                    <li>
-                        <a class="social-icon-color facebook" data-original-title="facebook" href="javascript:;"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color twitter" data-original-title="Twitter" href="javascript:;"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color googleplus" data-original-title="Goole Plus"
-                           href="javascript:;"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color linkedin" data-original-title="Linkedin" href="javascript:;"></a>
-                    </li>
-                </ul>
+                <h4>Choose your language:</h4>
+                <select CLASS="form-control input-medium">
+                    <option>ENGLISH</option>
+                    <option>SPANISH</option>
+                </select>
             </div>
         </form>
         <!-- END LOGIN FORM -->
         <!-- BEGIN FORGOT PASSWORD FORM -->
-        <form class="forget-form"  action="index.jsp" method="post">
+        <form class="forget-form"  action="#" method="post">
             <h3 class="font-green">Forget Password ?</h3>
             <p> Enter your e-mail address below to reset your password. </p>
             <div class="form-group">
