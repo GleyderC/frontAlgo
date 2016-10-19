@@ -18,7 +18,8 @@ var CollateralApp = angular.module("CollateralApp", [
     "shagstrom.angular-split-pane",
     "ngFileUpload",
     "ui.ace",
-    "ngclipboard"
+    "ngclipboard",
+    "pascalprecht.translate"
 ]);
 
 var paths = {
@@ -220,9 +221,11 @@ CollateralApp.factory('$request', ['$rootScope', '$http', 'URL_CONFIG', '$log', 
 
 
     var request = {};
+
     request.getFile = function (urlRelative) {
         window.open(URL_CONFIG.API_URL + '' + urlRelative, "_blank");
     };
+
     request.get = function (urlRelative, dataRequest) {
         var config_request = {};
         if (!!dataRequest && typeof dataRequest === 'object') {
@@ -360,6 +363,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/modules/DashboardModule.js',
                             'collateral-apps/controllers/DashboardController.js',
 
+
                             /* Directives */
                             'collateral-apps/directives/MenuCollateral.js',
                             'collateral-apps/directives/AngularMultiselectDual.js',
@@ -461,6 +465,13 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                 }]
             }
         })
+
+}]);
+
+CollateralApp.config(['$translateProvider', 'URL_CONFIG', function ($translateProvider, $urlConfig) {
+
+    $translateProvider.useUrlLoader($urlConfig.API_URL + '/servlet/Locales/Select');
+    $translateProvider.preferredLanguage('eng');
 
 }]);
 

@@ -17,13 +17,13 @@
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
     <!-- bower:css -->
-    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/theme.css"/>
-    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
-    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="assets/vendor/angular-toastr/dist/angular-toastr.css"/>
-    <link rel="stylesheet" href="assets/vendor/split-pane/split-pane.css"/>
-    <link rel="stylesheet" href="assets/vendor/world-flags-sprite/stylesheets/flags32.css"/>
+    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/theme.css" />
+    <link rel="stylesheet" href="assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css" />
+    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="assets/vendor/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="assets/vendor/split-pane/split-pane.css" />
+    <link rel="stylesheet" href="assets/vendor/world-flags-sprite/stylesheets/flags32.css" />
     <!-- endbower -->
 
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
@@ -134,6 +134,7 @@
 <script src="assets/vendor/clipboard/dist/clipboard.js"></script>
 <script src="assets/vendor/ngclipboard/dist/ngclipboard.js"></script>
 <script src="assets/vendor/angular-translate/angular-translate.min.js"></script>
+<script src="assets/vendor/angular-translate-loader-url/angular-translate-loader-url.js"></script>
 <!-- endbower -->
 
 <!--
