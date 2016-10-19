@@ -448,7 +448,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 
                             /* Analytics Controller*/
                             'collateral-apps/controllers/analytics/what_if_simulation/SearchSimulationController.js',
-                            'collateral-apps/controllers/analytics/what_if_simulation/SimulationController.js'
+                            'collateral-apps/controllers/analytics/what_if_simulation/SimulationController.js',
+                            'collateral-apps/controllers/analytics/what_if_simulation/SimulationTradePropusalController.js'
 
                         ],
                         serie: true,

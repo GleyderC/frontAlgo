@@ -72,42 +72,6 @@ DashboardApp.controller('SearchSimulationController', ['SimulationService', '$sc
 
         $scope.gridSimulationOptions.data = $scope.Simulations;
 
-
-        /*SimulationService.getAll().then(function (result) {
-            $scope.Simulations = result.data.dataResponse;
-
-            $scope.Simulations.forEach(function (Simulation) {
-                if (Simulation != null) {
-
-                    angular.forEach(Simulation.roleList, function (rolLegal, key) {
-
-                        angular.forEach(localStorageService.get('RolType'), function (rol) {
-                            if (rolLegal.roleType != undefined && rolLegal.roleType.toUpperCase() == rol.name.toUpperCase()) {
-                                Simulation.roleList[key].name = rol.name;
-                                Simulation.roleList[key].key = rol.key;
-                            }
-                        });
-
-                    });
-
-                    //Insert mother Legal Entity
-                    var MotherLegal = $scope.Simulations.filter(function (legal) {
-                        if (legal.id == Simulation.motherSimulation)
-                            return legal.name;
-                        else return "";
-
-                    });
-
-                    if (MotherLegal[0]) {
-                        Simulation.namemotherSimulation = MotherLegal[0].name;
-                    }
-                }
-
-            });
-            $scope.gridSimulationOptions.data = $scope.Simulations;
-
-        });*/
-
         $scope.addSimulation = function () {
 
             $scope.$workspaceTabsMgm.addTabByID({

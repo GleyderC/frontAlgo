@@ -6,13 +6,6 @@ DashboardApp.controller('SimulationController', ['SimulationService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants', 'DashboardService', '$q',
     function (SimulationService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService, $q) {
 
-        $scope.ProductFamilies = localStorageService.get('ProductFamily');
-
-        $scope.ProductGroups = localStorageService.get('ProductGroup');
-
-        $scope.ProductTypes = localStorageService.get('ProductType');
-
-
         $scope.SimulationTabs = {
             tabList: [
                 {
