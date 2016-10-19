@@ -10,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta charset="utf-8">
-    <title>Collateral Management</title>
+    <title translate="GENERAL.APP.TITLE"></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta content="" name="description"/>
@@ -71,7 +71,7 @@
 </div>
 <!-- BEGIN HEADER -->
 
-/<div class="page-header navbar navbar-fixed-top">
+<div class="page-header navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
     <div class="page-header-inner ">
         <!-- BEGIN LOGO -->
