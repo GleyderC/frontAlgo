@@ -6,6 +6,66 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
     '$timeout', 'localStorageService', 'uiGridConstants', 'DashboardService', '$q',
     function (SimulationService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService, $q) {
 
+
+        $scope.ProductFamily = {};
+        $scope.ProductFamilies = localStorageService.get('ProductFamily');
+
+        $scope.ProductGroup = {};
+        $scope.ProductGroups = localStorageService.get('ProductGroup');
+
+        $scope.ProductType = {};
+        $scope.ProductTypes = localStorageService.get('ProductType');
+
+        $scope.PayBasisCalculationConvention = {};
+        $scope.ReceiveBasisCalculationConvention = {};
+        $scope.BasisCalculationConventions = localStorageService.get('BasisCalculationConvention');
+
+        $scope.filterLeg = function (leg) {
+
+            if(leg == "pay"){
+                if($scope.PayLegType=="FIXED"){
+                    $scope.PayBasisCalculationConvention.selected = $scope.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "_30_360"){
+                            return basis;
+                        }
+                    });
+                }
+                else if($scope.PayLegType=="FLOATING"){
+                    $scope.PayBasisCalculationConvention.selected = $scope.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "ACT_360"){
+                            return basis;
+                        }
+                    });
+                }
+            }
+            else if(leg == "receive"){
+                if($scope.ReceiveLegType=="FIXED"){
+                    $scope.ReceiveBasisCalculationConvention.selected = $scope.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "ACT_360"){
+                            return basis;
+                        }
+                    });
+                }
+                else if($scope.ReceiveLegType=="FLOATING"){
+                    $scope.ReceiveBasisCalculationConvention.selected = $scope.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "ACT_360"){
+                            return basis;
+                        }
+                    });
+                }
+            }
+        }
+
+        $scope.LegTypes = ["FIXED","FLOATING"];
+        $scope.PayLegType = $scope.LegTypes[0];
+        $scope.ReceiveLegType = $scope.LegTypes[0];
+        $scope.filterLeg("pay");
+        $scope.filterLeg("receive");
+
+
+        $scope.SupportedIndex = {};
+        $scope.SupportedIndexes = localStorageService.get('Supportedindexes');
+
         function findProductFromPrefix(arr, prefix) {
             //var values = [];
             for (var i = arr.length-1; i >=0;  i--) {
@@ -53,15 +113,4 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
                 }
             }
         }
-
-        $scope.ProductFamily = {};
-        $scope.ProductFamilies = localStorageService.get('ProductFamily');
-
-        $scope.ProductGroup = {};
-        $scope.ProductGroups = localStorageService.get('ProductGroup');
-
-        $scope.ProductType = {};
-        $scope.ProductTypes = localStorageService.get('ProductType');
-
-
     }]);
