@@ -116,12 +116,19 @@ CollateralApp.factory('settings', ['$rootScope', function ($rootScope, $urlSetti
 
 
 /* Setup App Main Controller */
-CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageService', function ($scope, $request, $localStorage) {
+CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageService', '$translate', 'LanguagesAvailable', function ($scope, $request, $localStorage, $translate, LanguagesAvailable) {
 
     $scope.$on('$viewContentLoaded', function () {
         App.initComponents(); // init core components
         Layout.init(); //  Init entire layout(header, footer, sidebar, etc) on page load if the partials included in server side instead of loading with ng-include directive
     });
+
+    $scope.langsList = LanguagesAvailable.langsList;
+    $scope.langsList.selected = {'key': LanguagesAvailable.defaultLang};
+
+    $scope.changeLanguage = function () {
+        $translate.use($scope.langsList.selected.key);
+    };
 
 }]);
 
@@ -469,12 +476,29 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 
 }]);
 
-CollateralApp.config(['$translateProvider', 'URL_CONFIG', function ($translateProvider, $urlConfig) {
+/*Internationalization config*/
+CollateralApp.constant('LanguagesAvailable', {
+    langsList: [
+        {
+            key: 'eng',
+            name: 'English'
+        },
+        {
+            key: 'esp',
+            name: 'Español'
+        }
+    ],
+    defaultLang: 'eng'
+});
+
+CollateralApp.config(['$translateProvider', 'URL_CONFIG', 'LanguagesAvailable', function ($translateProvider, $urlConfig, LanguagesAvailable) {
 
     $translateProvider.useUrlLoader($urlConfig.API_URL + '/servlet/Locales/Select');
-    $translateProvider.preferredLanguage('eng');
+    $translateProvider.preferredLanguage(LanguagesAvailable.defaultLang);
 
 }]);
+
+/*Internationalization config*
 
 /* Init global settings and run the app */
 CollateralApp.run(["$rootScope", "settings", "$state", function ($rootScope, settings, $state) {

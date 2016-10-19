@@ -37,10 +37,7 @@
             </div>
             <div class="login-options">
                 <h4>Choose your language:</h4>
-                <select CLASS="form-control input-medium">
-                    <option>ENGLISH</option>
-                    <option>SPANISH</option>
-                </select>
+                <select CLASS="form-control input-medium" ng-model="langsList.selected" ng-change="changeLanguage()" ng-options="language.name for language in langsList track by language.key"></select>
             </div>
         </form>
         <!-- END LOGIN FORM -->
@@ -71,4 +68,4 @@
     <!-- END PAGE LEVEL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
     <!-- END THEME LAYOUT SCRIPTS -->
-
+</div>
