@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!--[if IE 8]>
 <html lang="es" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]>
