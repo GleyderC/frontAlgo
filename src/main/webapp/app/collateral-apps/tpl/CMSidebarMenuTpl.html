@@ -30,7 +30,7 @@
                         <i class="icon-close"></i>
                     </a>
                     <div class="input-group">
-                        <input type="text" class="form-control cm-sidebar-search" placeholder="Search..." ng-model="menuSearch">
+                        <input type="text" class="form-control cm-sidebar-search" translate translate-attr-placeholder="MENU.SEARCH" ng-model="menuSearch">
                         <span class="input-group-addon remove-search" title="Clean Search">
                                      <i class="fa fa-remove" ng-click="menuSearch=''" ng-show="menuSearch.length>0"></i>
                                     </span>
@@ -42,7 +42,7 @@
                 ng-repeat="navItem in TreeMenu | highlightTextFilter: menuSearch">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="{{ navItem.head.icon }}"></i>
-                    <span class="title"> {{ navItem.head.title }} </span>
+                    <span class="title" translate="{{ navItem.head.title }}"></span>
                     <!--<span class="selected"></span>-->
                     <span class="arrow"></span>
                 </a>
@@ -69,12 +69,12 @@
                class="nav-link " ng-click="displayTabMenu($event)"
                data-view="{{ navSubItem.view }}" unique="navSubItem.unique">
                 <i class="{{ navSubItem.head.icon }}"></i>
-                <span class="title">{{ navSubItem.head.title }}</span>
+                <span class="title" translate="{{ navSubItem.head.title }}"></span>
             </a>
 
             <a href="javascript:;" class="nav-link nav-toggle" ng-if="navSubItem.subMenuItems.length">
                 <i class="{{ navSubItem.head.icon }}"></i>
-                <span class="title" ng-bind-html="navSubItem.head.title"></span>
+                <span class="title" translate="{{ navSubItem.head.title }}"></span>
                 <span class="arrow"></span>
             </a>
 

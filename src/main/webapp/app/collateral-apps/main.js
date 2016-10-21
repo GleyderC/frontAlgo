@@ -127,7 +127,10 @@ CollateralApp.controller('AppController', ['$scope', '$request', 'localStorageSe
     $scope.langsList.selected = {'key': LanguagesAvailable.defaultLang};
 
     $scope.changeLanguage = function () {
+
         $translate.use($scope.langsList.selected.key);
+        $localStorage.set("defaultLang",$scope.langsList.selected.key);
+
     };
 
 }]);

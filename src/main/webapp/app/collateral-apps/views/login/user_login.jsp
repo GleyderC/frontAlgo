@@ -13,37 +13,37 @@
     <div class="content">
         <!-- BEGIN LOGIN FORM -->
         <form name="loginForm" ng-submit="submit()" class="login-form" action="#home" method="post">
-            <h3 class="form-title font-green">Sign In</h3>
+            <h3 class="form-title font-green" translate="LOGIN.SIGNIN"></h3>
             <div class="alert alert-danger display-hide">
                 <button class="close" data-close="alert"></button>
-                <span> Enter any username and password. </span>
+                <span translate="LOGIN.ERROR.USER_PASS"></span>
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                <label class="control-label visible-ie8 visible-ie9" translate="LOGIN.USERNAME"></label>
                 <input id="username" class="form-control form-control-solid placeholder-no-fix" type="text"
-                       autocomplete="off" placeholder="Username" name="username" ng-model="username" required/></div>
+                       autocomplete="off" translate-attr-placeholder="LOGIN.USERNAME" name="username" ng-model="username" required/></div>
             <div class="form-group">
-                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                <label class="control-label visible-ie8 visible-ie9" translate="LOGIN.PASSWORD"></label>
                 <input id="password" class="form-control form-control-solid placeholder-no-fix" type="password"
-                       autocomplete="off" placeholder="Password" name="password" ng-model="password" required/></div>
+                       autocomplete="off" translate-attr-placeholder="LOGIN.PASSWORD" name="password" ng-model="password" required/></div>
             <div class="form-actions">
-                <button type="submit" class="btn green uppercase">Login</button>
+                <button type="submit" class="btn green uppercase" translate="LOGIN.LOGIN"></button>
                 <label class="rememberme check mt-checkbox mt-checkbox-outline">
-                    <input type="checkbox" name="remember" value="1"/>Remember
+                    <input type="checkbox" name="remember" value="1"/> {{ 'LOGIN.REMEMBER' | translate }}
                     <span></span>
                 </label>
-                <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+                <a href="javascript:;" id="forget-password" class="forget-password" translate="LOGIN.FORGOT.PASSWORD">?</a>
             </div>
             <div class="login-options">
-                <h4>Choose your language:</h4>
+                <h4  translate="LOGIN.CHOOSE.LANGUAGE">:</h4>
                 <select CLASS="form-control input-medium" ng-model="langsList.selected" ng-change="changeLanguage()" ng-options="language.name for language in langsList track by language.key"></select>
             </div>
         </form>
         <!-- END LOGIN FORM -->
         <!-- BEGIN FORGOT PASSWORD FORM -->
         <form class="forget-form"  action="#" method="post">
-            <h3 class="font-green">Forget Password ?</h3>
+            <h3 class="font-green" translate="LOGIN.FORGOT.PASSWORD">?</h3>
             <p> Enter your e-mail address below to reset your password. </p>
             <div class="form-group">
                 <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email"
