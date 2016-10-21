@@ -1,15 +1,17 @@
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <!--[if IE 8]>
-<html lang="en" class="ie8 no-js"> <![endif]-->
+<html lang="es" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]>
-<html lang="en" class="ie9 no-js"> <![endif]-->
+<html lang="es" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en" ng-app="CollateralApp">
+<html lang="es" ng-app="CollateralApp">
 <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
-    <meta charset="utf-8"/>
-    <title>Collateral Management</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta charset="utf-8">
+    <title translate="GENERAL.APP.TITLE"></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta content="" name="description"/>
@@ -69,6 +71,7 @@
     <div class="bounce3"></div>
 </div>
 <!-- BEGIN HEADER -->
+
 <div class="page-header navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
     <div class="page-header-inner ">

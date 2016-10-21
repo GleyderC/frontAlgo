@@ -10,7 +10,7 @@
         <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
         <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
         <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true"
+        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="false"
             data-slide-speed="400" style="padding-top: 20px">
             <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
             <li class="sidebar-toggler-wrapper hide">
@@ -30,7 +30,7 @@
                         <i class="icon-close"></i>
                     </a>
                     <div class="input-group">
-                        <input type="text" class="form-control cm-sidebar-search" placeholder="Search..." ng-model="menuSearch">
+                        <input type="text" class="form-control cm-sidebar-search" translate translate-attr-placeholder="MENU.SEARCH" ng-model="menuSearch">
                         <span class="input-group-addon remove-search" title="Clean Search">
                                      <i class="fa fa-remove" ng-click="menuSearch=''" ng-show="menuSearch.length>0"></i>
                                     </span>
@@ -42,7 +42,7 @@
                 ng-repeat="navItem in TreeMenu | highlightTextFilter: menuSearch">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="{{ navItem.head.icon }}"></i>
-                    <span class="title"> {{ navItem.head.title }} </span>
+                    <span class="title" translate="{{ navItem.head.title }}"></span>
                     <!--<span class="selected"></span>-->
                     <span class="arrow"></span>
                 </a>
@@ -69,12 +69,12 @@
                class="nav-link " ng-click="displayTabMenu($event)"
                data-view="{{ navSubItem.view }}" unique="navSubItem.unique">
                 <i class="{{ navSubItem.head.icon }}"></i>
-                <span class="title">{{ navSubItem.head.title }}</span>
+                <span class="title" translate="{{ navSubItem.head.title }}"></span>
             </a>
 
             <a href="javascript:;" class="nav-link nav-toggle" ng-if="navSubItem.subMenuItems.length">
                 <i class="{{ navSubItem.head.icon }}"></i>
-                <span class="title" ng-bind-html="navSubItem.head.title"></span>
+                <span class="title" translate="{{ navSubItem.head.title }}"></span>
                 <span class="arrow"></span>
             </a>
 

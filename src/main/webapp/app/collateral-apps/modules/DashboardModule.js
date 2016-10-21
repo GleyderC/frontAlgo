@@ -3,8 +3,8 @@
  ***/
 
 /* Collateral App */
-var DashboardApp = angular.module("DashboardApp", [
-    "CollateralApp",
+var DashboardApp = angular.module('DashboardApp', [
+    'CollateralApp',
     'ui.grid',
     'ui.grid.pagination',
     'ui.grid.selection',
@@ -19,13 +19,13 @@ var DashboardApp = angular.module("DashboardApp", [
 ]);
 
 /* Setup Rounting For All Pages */
-DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+DashboardApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     // Redirect any unmatched url
     $urlRouterProvider.otherwise("home");
 
     $stateProvider
 
-        .state('home.config',{
+        .state('home.config', {
             abstract: true,
             url: '/config'
         })
@@ -34,20 +34,16 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
             data: {pageTitle: 'Legal Entity'},
 
             views: {
-                'content@home':
-                {
+                'content@home': {
                     templateUrl: paths.views + "/static_data/LegalEntity/legal_entity.html",
                 }
             },
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'Collateral App',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-
-
-                        ]
+                        files: []
                     });
                 }]
             }
@@ -57,20 +53,16 @@ DashboardApp.config(['$stateProvider', '$urlRouterProvider', function($stateProv
             data: {pageTitle: 'Bilateral Contract'},
 
             views: {
-                'content@home':
-                {
+                'content@home': {
                     templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                 }
             },
             resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'Collateral App',
                         insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                            
-                            
-                        ]
+                        files: []
                     });
                 }]
             }
@@ -111,3 +103,7 @@ DashboardApp.filter('propsFilter', function () {
         return out;
     };
 });
+
+DashboardApp.run(['$translate', 'LanguagesAvailable', 'localStorageService', function ($translate, LanguagesAvailable, $localStorage) {
+    $translate.use($localStorage.get("defaultLang"));
+}])

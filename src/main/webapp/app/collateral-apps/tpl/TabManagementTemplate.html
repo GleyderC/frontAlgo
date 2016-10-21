@@ -3,7 +3,7 @@
              data-url="tab.templateUrl" ng-click="workspaceTabs.loadTabContent(tab)"
              disable="tab.disabled" tab-highlight>
         <uib-tab-heading>
-            <i class="{{ tab.head.icon }}"></i> {{ tab.head.text }}
+            <i class="{{ tab.head.icon }}"></i> {{ tab.head.text | translate }}
             <i ng-if="tab.closable" title="Close" class="close-tab-icon glyphicon glyphicon-remove-sign"
                ng-click="workspaceTabs.closeTab(this, $event)"></i>
         </uib-tab-heading>
