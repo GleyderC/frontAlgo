@@ -1,49 +1,57 @@
 <div class="row calculation" ng-controller="SimulationTradePropusalController">
-    <div class="col-md-9">
-        <div class="portlet light bordered" style="margin-bottom:0;">
-            <form class="form-horizontal" role="form" id="proposal-swap">
+    <div class="col-md-6">
+        <div class="portlet light bordered">
+            <form class="form-vertical" role="form" id="proposal-swap">
                     <div class="form-body">
                         <div class="row">
-                            <div class="form-group col-md-4" style="margin-right: 0px;">
-                                <ui-select ng-model="ProductFamily.selected" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                    <ui-select-match placeholder="Select Product Family">{{$select.selected.name}}</ui-select-match>
-                                    <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                        <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                        <small>Description:
-                                            <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                        </small>
-                                    </ui-select-choices>
-                                </ui-select>
+                            <div class="form-group col-md-4" >
+                                <div class="form-group">
+                                    <label class="control-label">Product Family</label>
+                                    <ui-select ng-model="ProductFamily.selected" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" >
+                                        <ui-select-match placeholder="Select Product Family">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                            <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                            <small>
+                                                <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4" style="margin-right: 0px;">
-                                <ui-select ng-model="ProductGroup.selected" ng-change="filterProduct('ProductGroup', ProductGroup.selected)" theme="select2" class="input-medium">
-                                    <ui-select-match placeholder="Select Product Group">{{$select.selected.name}}</ui-select-match>
-                                    <ui-select-choices repeat="ProductGroup in ProductGroups | filter: {name: $select.search, description: $select.search}">
-                                        <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
-                                        <small>Description:
-                                            <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
-                                        </small>
-                                    </ui-select-choices>
-                                </ui-select>
+                            <div class="form-group col-md-4" >
+                                <div class="form-group">
+                                    <label class="control-label">Product Group</label>
+                                    <ui-select ng-model="ProductGroup.selected" ng-change="filterProduct('ProductGroup', ProductGroup.selected)" theme="select2" >
+                                        <ui-select-match placeholder="Select Product Group">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="ProductGroup in ProductGroups | filter: {name: $select.search, description: $select.search}">
+                                            <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                                            <small>
+                                                <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4" style="margin-right: 0px;">
-                                <ui-select ng-model="ProductType.selected" ng-change="filterProduct('ProductType',ProductType.selected)" theme="select2" class="input-medium">
-                                    <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
-                                    <ui-select-choices repeat="ProductType in ProductTypes | filter: {name: $select.search, description: $select.search}">
-                                        <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
-                                        <small>Description:
-                                            <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
-                                        </small>
-                                    </ui-select-choices>
-                                </ui-select>
+                            <div class="form-group col-md-4" >
+                                <div class="form-group">
+                                    <label class="control-label">Product Type</label>
+                                    <ui-select ng-model="ProductType.selected" ng-change="filterProduct('ProductType',ProductType.selected)" theme="select2" >
+                                        <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="ProductType in ProductTypes | filter: {name: $select.search, description: $select.search}">
+                                            <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
+                                            <small>
+                                                <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-10" style="margin-right: 0px;">
-                                <form class="form-horizontal" role="form" id="swap-trade">
-                                    <div class="form-group col-md-2" style="margin-right: 0px;">
-                                        <ui-select ng-model="ProductType.selected" id="swap-trade-type" theme="select2" class="input-small" style="width: 100px!important;">
-                                            <ui-select-match placeholder="Trade Type">
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Trade Type</label>
+                                        <ui-select ng-model="ProductType.selected" id="swap-trade-type" class="input-medium" theme="select2">
+                                            <ui-select-match placeholder="Select Trade Type">
                                                 {{$select.selected.id}}
                                             </ui-select-match>
                                             <ui-select-choices
@@ -52,15 +60,15 @@
                                             </ui-select-choices>
                                         </ui-select>
                                     </div>
-                                    <div class="form-group col-md-3" style="padding-left: 0;">
-                                        <label class="control-label col-md-3">Notional</label>
-                                        <div class="col-md-9" >
-                                            <input type="text" class="form-control collateral-money" style="height: 28px; width: 95px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
-                                        </div>
+                                    <div class="form-group col-md-4" >
+                                        <label class="control-label">Notional</label>
+                                        <input type="text" class="form-control input-medium collateral-money" style="height: 28px;
+                                        font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
                                     </div>
-                                    <div class="form-group col-md-2" style="padding-left: 0;">
-                                        <ui-select ng-model="ProductType.selected" id="swap-trade-currency" theme="select2" class="input-small" style="width: 100px!important;">
-                                            <ui-select-match placeholder="Currency">
+                                    <div class="form-group col-md-4">
+                                        <label class="control-label">Currency</label>
+                                        <ui-select ng-model="ProductType.selected" id="swap-trade-currency" class="input-medium" theme="select2">
+                                            <ui-select-match placeholder="Select Currency">
                                                 {{$select.selected.id}}
                                             </ui-select-match>
                                             <ui-select-choices
@@ -69,49 +77,54 @@
                                             </ui-select-choices>
                                         </ui-select>
                                     </div>
-                                    <div class="form-group col-md-3" style="margin-right: 0px;">
-                                        <div class="input-group">
-                                            <input placeholder="Effective Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
-                                                   is-open="popup.opened" datepicker-options="dateOptions"
-                                                   ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
-                                            <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </button>
-                                        </span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Effective Date</label>
+                                            <div class="input-group">
+                                                <input placeholder="Effective Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
+                                                       is-open="popup.opened" datepicker-options="dateOptions"
+                                                       ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
+                                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                    </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">Termination Date</label>
+                                            <div class="input-group">
+                                                <input placeholder="Termination Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
+                                                       is-open="popup.opened" datepicker-options="dateOptions"
+                                                       ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
+                                                <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </button>
+                                            </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-3" style="margin-right: 0px;">
-                                        <div class="input-group">
-                                            <input placeholder="Termination Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
-                                                   is-open="popup.opened" datepicker-options="dateOptions"
-                                                   ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important;font-size: 11px;" />
+                                    <div class="col-md-3">
+                                        <div class="form-group">
                                             <span class="input-group-btn">
-                                            <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
-                                                <i class="glyphicon glyphicon-calendar"></i>
-                                            </button>
+                                                <button type="button" class="btn btn-default" ng-click="openDatePicker()"
+                                                        uib-popover="Refresh Calculation" popover-trigger="mouseenter"
+                                                        style="height: 30px!important;">
+                                                    <i class="glyphicon glyphicon-refresh"></i>
+                                                </button>
+                                            </span>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="openDatePicker()"
+                                                        uib-popover="Save Trade" popover-trigger="mouseenter" style="height: 30px!important;">
+                                                    <i class="glyphicon glyphicon-save"></i>
+                                                </button>
                                             </span>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="col-md-2">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openDatePicker()"
-                                            uib-popover="Refresh Calculation" popover-trigger="mouseenter" style="height: 30px!important;">
-                                        <i class="glyphicon glyphicon-refresh"></i>
-                                    </button>
-                                </span>
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openDatePicker()"
-                                            uib-popover="Save Trade" popover-trigger="mouseenter" style="height: 30px!important;">
-                                        <i class="glyphicon glyphicon-save"></i>
-                                    </button>
-                                </span>
-                            </div>
-
-                        </div>
-
+                                </div>
                         <div class="row">
                             <div class="portlet-title col-md-6">
                                 <div class="caption">
@@ -400,7 +413,7 @@
                 </form>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
         <div class="portlet light bordered" style="margin-bottom:0;">
             <form class="form-horizontal" role="form" id="mc-parameters">
                         <div class="row">

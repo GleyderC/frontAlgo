@@ -41,7 +41,7 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
             else if(leg == "receive"){
                 if($scope.ReceiveLegType=="FIXED"){
                     $scope.ReceiveBasisCalculationConvention.selected = $scope.BasisCalculationConventions.find(function (basis) {
-                        if(basis.key == "ACT_360"){
+                        if(basis.key == "_30_360"){
                             return basis;
                         }
                     });

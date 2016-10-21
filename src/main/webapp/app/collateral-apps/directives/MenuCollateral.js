@@ -602,12 +602,32 @@ DashboardApp.service('MenuService', function () {
                     },
                     {
                         id: 'analytics_simulation',
+                        tabContainer: 'analytics',
                         head: {
                             icon: 'icon-graph font-red-flamingo',
                             title: 'What-if simulation'
                         },
-                        view: '/analytics/what_if_simulation/search_simulation.html',
-                        unique: true
+                        view: '',
+                        unique: true,
+                        subMenuItems: [
+                            {
+                                id: 'analytics_simulation_search',
+                                head: {
+                                    icon: 'icon-graph font-red-flamingo',
+                                    title: 'Simulation'
+                                },
+                                view: '/analytics/what_if_simulation/search_simulation.html',
+                                unique: true
+                            },
+                            {
+                                id: 'analytics_simulation_test',
+                                head: {
+                                    icon: 'fa fa-caret-square-o-right font-red-flamingo',
+                                    title: 'Simulation Test'
+                                },
+                                view: '/analytics/what_if_simulation/test/test_simulation.html',
+                                unique: true
+                            }]
                     }
                 ]
             }, /* #6 Analytics */
