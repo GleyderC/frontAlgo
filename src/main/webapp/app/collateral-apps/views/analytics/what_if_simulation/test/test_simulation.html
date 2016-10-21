@@ -1,0 +1,26 @@
+<div class="portlet light" ng-controller="TestSimulationController">
+    <div class="row portlet light bordered" id="simulation-table">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-graph font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze"> Simulation Test </span>
+                <span class="caption-helper">Lists</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+            </div>
+        </div>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="row">
+                <div ui-grid="gridTestSimulationOptions" ui-grid-exporter ui-grid-auto-resize
+                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                     class="grid grid-collateral"></div>
+            </div>
+
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <!-- END ROW -->
+</div>
