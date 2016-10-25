@@ -47,7 +47,7 @@ var Layout = function () {
 
             if( $("div.menu-collateral-management").outerHeight() > 0)
             {
-                height+=($("div.menu-collateral-management").outerHeight()*0.6);
+                height+=($("div.menu-collateral-management").outerHeight()*0.7);
             }
             content.attr('style', 'min-height:' + height + 'px');
         }

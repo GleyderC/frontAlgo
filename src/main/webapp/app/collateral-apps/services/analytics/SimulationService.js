@@ -8,7 +8,7 @@ angular.module('DashboardApp')
 
         this.RunTest = function (testObject) {
 
-            $request.post('/servlet/WhatIfSimulationTest/StartSimulation', testObject)
+            $request.post('/servlet/WhatIfSimulation/StartSimulation', testObject)
                 .then(function (Response) {
                         toastr.success("Successfully Run Test ", "Success");
                     }

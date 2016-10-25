@@ -58,7 +58,7 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
 
         $scope.LegTypes = ["FIXED","FLOATING"];
         $scope.PayLegType = $scope.LegTypes[0];
-        $scope.ReceiveLegType = $scope.LegTypes[0];
+        $scope.ReceiveLegType = $scope.LegTypes[1];
         $scope.filterLeg("pay");
         $scope.filterLeg("receive");
 

@@ -1,416 +1,362 @@
 <div class="row calculation" ng-controller="SimulationTradePropusalController">
     <div class="col-md-6">
         <div class="portlet light bordered">
-            <form class="form-vertical" role="form" id="proposal-swap">
-                    <div class="form-body">
-                        <div class="row">
-                            <div class="form-group col-md-4" >
-                                <div class="form-group">
-                                    <label class="control-label">Product Family</label>
-                                    <ui-select ng-model="ProductFamily.selected" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" >
-                                        <ui-select-match placeholder="Select Product Family">{{$select.selected.name}}</ui-select-match>
-                                        <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                            <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                            <small>
-                                                <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                            </small>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4" >
-                                <div class="form-group">
-                                    <label class="control-label">Product Group</label>
-                                    <ui-select ng-model="ProductGroup.selected" ng-change="filterProduct('ProductGroup', ProductGroup.selected)" theme="select2" >
-                                        <ui-select-match placeholder="Select Product Group">{{$select.selected.name}}</ui-select-match>
-                                        <ui-select-choices repeat="ProductGroup in ProductGroups | filter: {name: $select.search, description: $select.search}">
-                                            <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
-                                            <small>
-                                                <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
-                                            </small>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4" >
-                                <div class="form-group">
-                                    <label class="control-label">Product Type</label>
-                                    <ui-select ng-model="ProductType.selected" ng-change="filterProduct('ProductType',ProductType.selected)" theme="select2" >
-                                        <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
-                                        <ui-select-choices repeat="ProductType in ProductTypes | filter: {name: $select.search, description: $select.search}">
-                                            <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
-                                            <small>
-                                                <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
-                                            </small>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                </div>
-                            </div>
-                        </div>
-                                <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label class="control-label">Trade Type</label>
-                                        <ui-select ng-model="ProductType.selected" id="swap-trade-type" class="input-medium" theme="select2">
-                                            <ui-select-match placeholder="Select Trade Type">
-                                                {{$select.selected.id}}
-                                            </ui-select-match>
-                                            <ui-select-choices
-                                                    repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
-                                                <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                    </div>
-                                    <div class="form-group col-md-4" >
-                                        <label class="control-label">Notional</label>
-                                        <input type="text" class="form-control input-medium collateral-money" style="height: 28px;
-                                        font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="control-label">Currency</label>
-                                        <ui-select ng-model="ProductType.selected" id="swap-trade-currency" class="input-medium" theme="select2">
-                                            <ui-select-match placeholder="Select Currency">
-                                                {{$select.selected.id}}
-                                            </ui-select-match>
-                                            <ui-select-choices
-                                                    repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
-                                                <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
-                                            </ui-select-choices>
-                                        </ui-select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label">Effective Date</label>
-                                            <div class="input-group">
-                                                <input placeholder="Effective Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
-                                                       is-open="popup.opened" datepicker-options="dateOptions"
-                                                       ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
-                                                <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </button>
-                                    </span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="control-label">Termination Date</label>
-                                            <div class="input-group">
-                                                <input placeholder="Termination Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
-                                                       is-open="popup.opened" datepicker-options="dateOptions"
-                                                       ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
-                                                <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
-                                                    <i class="glyphicon glyphicon-calendar"></i>
-                                                </button>
-                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="openDatePicker()"
-                                                        uib-popover="Refresh Calculation" popover-trigger="mouseenter"
-                                                        style="height: 30px!important;">
-                                                    <i class="glyphicon glyphicon-refresh"></i>
-                                                </button>
-                                            </span>
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-default" ng-click="openDatePicker()"
-                                                        uib-popover="Save Trade" popover-trigger="mouseenter" style="height: 30px!important;">
-                                                    <i class="glyphicon glyphicon-save"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                        <div class="row">
-                            <div class="portlet-title col-md-6">
-                                <div class="caption">
-                                    <img class="action-button-icon-sm" src="assets/pages/icons/swap/pay-leg.png">
-                                    <span class="caption-subject font-dark sbold uppercase" style="font-size: 12px;">Pay leg</span>
-                                </div>
-                                <form class="form-vertical" role="form" id="swap-pay-leg">
-                                    <div class="row" style="">
-                                        <label class="control-label col-md-3">Leg Type</label>
-                                        <div class="col-md-9" >
-                                            <select name="payLegType" id="payLegType" ng-model="PayLegType" ng-change="filterLeg('pay')" class="form-control input-medium">
-                                                <option ng-repeat="LegType in LegTypes" value="{{LegType}}">{{LegType}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="PayLegType == 'FLOATING'">
-                                        <label class="control-label col-md-3">Index</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="SupportedIndex" ng-change="filterIndex('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="SupportedIndex in SupportedIndexes | filter: {name: $select.search}">
-                                                    <div ng-bind-html="SupportedIndex.name | highlight: $select.search"></div>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="PayLegType == 'FLOATING'">
-                                        <label class="control-label col-md-3">Tenor</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="PayLegType == 'FLOATING'">
-                                        <label class="control-label col-md-3">Spread</label>
-                                        <div class="col-md-9" >
-                                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="PayLegType == 'FIXED'">
-                                        <label class="control-label col-md-3">Rate(%)</label>
-                                        <div class="col-md-9" >
-                                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Basis</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="PayBasisCalculationConvention.selected" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="PayBasisCalculationConvention in BasisCalculationConventions | filter: {name: $select.search}">
-                                                    <div ng-bind-html="PayBasisCalculationConvention.name | highlight: $select.search"></div>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Convention</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="PayLegType == 'FLOATING'">
-                                        <label class="control-label col-md-3">Compounding Method</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Stub</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Payment Frequency</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Roll Frequency</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Roll Convention</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="caption">
-                                    <img class="action-button-icon-sm" src="assets/pages/icons/swap/receive-leg.png">
-                                    <span class="caption-subject font-dark sbold uppercase" style="font-size: 12px;">Receive leg</span>
-                                </div>
-                                <form class="form-vertical" role="form" id="swap-receive-leg">
-                                    <div class="row" style="">
-                                        <label class="control-label col-md-3">Leg Type</label>
-                                        <div class="col-md-9" >
-                                            <select name="receiveyLegType" id="receiveyLegType" ng-model="ReceiveLegType" ng-change="filterLeg('receive')" class="form-control input-medium">
-                                                <option ng-repeat="LegType in LegTypes" value="{{LegType}}">{{LegType}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="ReceiveLegType == 'FLOATING'">
-                                        <label class="control-label col-md-3">Tenor</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="ReceiveLegType == 'FLOATING'">
-                                        <label class="control-label col-md-3">Spread</label>
-                                        <div class="col-md-9" >
-                                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="ReceiveLegType == 'FIXED'">
-                                        <label class="control-label col-md-3">Rate(%)</label>
-                                        <div class="col-md-9" >
-                                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Basis</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="ReceiveBasisCalculationConvention.selected" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ReceiveBasisCalculationConvention in BasisCalculationConventions | filter: {name: $select.search}">
-                                                    <div ng-bind-html="ReceiveBasisCalculationConvention.name | highlight: $select.search"></div>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Convention</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row" ng-if="ReceiveLegType == 'FLOATING'">
-                                        <label class="control-label col-md-3">Compounding Method</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Stub</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Payment Frequency</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Roll Frequency</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="control-label col-md-3">Roll Convention</label>
-                                        <div class="col-md-9" >
-                                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" class="input-medium">
-                                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
-                                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                                    <small>Description:
-                                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                                    </small>
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
+            <div class="row">
+                <div class="col-md-4" >
+                    <label class="control-label">Product Family</label>
+                    <ui-select ng-model="ProductFamily.selected" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;">
+                        <ui-select-match placeholder="Select Product Family">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                            <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                            <small>
+                                <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-4" >
+                    <label class="control-label">Product Group</label>
+                    <ui-select ng-model="ProductGroup.selected" ng-change="filterProduct('ProductGroup', ProductGroup.selected)" theme="select2" style="display: block;">
+                        <ui-select-match placeholder="Select Product Group">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="ProductGroup in ProductGroups | filter: {name: $select.search, description: $select.search}">
+                            <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                            <small>
+                                <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-4" >
+                    <label class="control-label">Product Type</label>
+                    <ui-select ng-model="ProductType.selected" ng-change="filterProduct('ProductType',ProductType.selected)" theme="select2" style="display: block;">
+                        <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="ProductType in ProductTypes | filter: {name: $select.search, description: $select.search}">
+                            <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
+                            <small>
+                                <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Trade Type</label>
+                    <ui-select ng-model="ProductType.selected" name="swap-trade-type" theme="select2" style="display: block;">
+                        <ui-select-match placeholder="Select Trade Type">
+                            {{$select.selected.id}}
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                            <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-4" >
+                    <label class="control-label">Notional</label>
+                    <input type="text" class="form-control collateral-money input-small" style="height: 28px;
+                    font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">Currency</label>
+                    <ui-select ng-model="ProductType.selected" id="swap-trade-currency" class="input-small" theme="select2" style="display: block;">
+                        <ui-select-match placeholder="Select Currency">
+                            {{$select.selected.id}}
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                            <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Effective Date</label>
+                    <div class="input-group">
+                        <input placeholder="Effective Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
+                               is-open="popup.opened" datepicker-options="dateOptions"
+                               ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
+                        <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+            </span>
                     </div>
-                </form>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label">Termination Date</label>
+                    <div class="input-group">
+                        <input placeholder="Termination Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
+                               is-open="popup.opened" datepicker-options="dateOptions"
+                               ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <label class="control-label"></label>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openDatePicker()"
+                                uib-popover="Refresh Calculation" popover-trigger="mouseenter"
+                                style="height: 30px!important;">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </button>
+                    </span>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openDatePicker()"
+                                uib-popover="Save Trade" popover-trigger="mouseenter" style="height: 30px!important;">
+                            <i class="glyphicon glyphicon-save"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px; margin-left: 5px;">
+                <div class="portlet-title col-md-6">
+                    <div class="caption">
+                        <img class="action-button-icon-sm" src="assets/pages/icons/swap/pay-leg.png">
+                        <span class="caption-subject font-dark sbold uppercase" style="font-size: 12px;">Pay leg</span>
+                    </div>
+                    <form class="form-vertical" role="form" id="swap-pay-leg">
+                        <div class="row" style="">
+                            <label class="control-label">Leg Type</label>
+                            <select name="payLegType" id="payLegType" ng-model="PayLegType" ng-change="filterLeg('pay')" class="form-control input-medium" style="height: 28px; font-size: 11px;">
+                                <option ng-repeat="LegType in LegTypes" value="{{LegType}}">{{LegType}}</option>
+                            </select>
+                        </div>
+                        <div class="row" ng-if="PayLegType == 'FLOATING'">
+                            <label class="control-label">Index</label>
+                            <ui-select ng-model="SupportedIndex" ng-change="filterIndex('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="SupportedIndex in SupportedIndexes | filter: {name: $select.search}">
+                                    <div ng-bind-html="SupportedIndex.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row" ng-if="PayLegType == 'FLOATING'">
+                            <label class="control-label">Tenor</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row" ng-if="PayLegType == 'FLOATING'">
+                            <label class="control-label">Spread</label>
+                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                        </div>
+                        <div class="row" ng-if="PayLegType == 'FIXED'">
+                            <label class="control-label">Rate(%)</label>
+                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Basis</label>
+                            <ui-select ng-model="PayBasisCalculationConvention.selected" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="PayBasisCalculationConvention in BasisCalculationConventions | filter: {name: $select.search}">
+                                    <div ng-bind-html="PayBasisCalculationConvention.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Convention</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row" ng-if="PayLegType == 'FLOATING'">
+                            <label class="control-label">Compounding Method</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Stub</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Payment Frequency</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Roll Frequency</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Roll Convention</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="caption">
+                        <img class="action-button-icon-sm" src="assets/pages/icons/swap/receive-leg.png">
+                        <span class="caption-subject font-dark sbold uppercase" style="font-size: 12px;">Receive leg</span>
+                    </div>
+                    <form class="form-vertical" role="form" id="swap-receive-leg">
+                        <div class="row" style="">
+                            <label class="control-label">Leg Type</label>
+                                <select name="receiveyLegType" id="receiveyLegType" ng-model="ReceiveLegType" ng-change="filterLeg('receive')" class="form-control input-medium" style="height: 28px; font-size: 11px;">
+                                    <option ng-repeat="LegType in LegTypes" value="{{LegType}}">{{LegType}}</option>
+                                </select>
+                        </div>
+                        <div class="row" ng-if="ReceiveLegType == 'FLOATING'">
+                            <label class="control-label">Tenor</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row" ng-if="ReceiveLegType == 'FLOATING'">
+                            <label class="control-label">Spread</label>
+                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                        </div>
+                        <div class="row" ng-if="ReceiveLegType == 'FIXED'">
+                            <label class="control-label">Rate(%)</label>
+                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Basis</label>
+                            <ui-select ng-model="ReceiveBasisCalculationConvention.selected" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ReceiveBasisCalculationConvention in BasisCalculationConventions | filter: {name: $select.search}">
+                                    <div ng-bind-html="ReceiveBasisCalculationConvention.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Convention</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row" ng-if="ReceiveLegType == 'FLOATING'">
+                            <label class="control-label">Compounding Method</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Stub</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Payment Frequency</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Roll Frequency</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="row">
+                            <label class="control-label">Roll Convention</label>
+                            <ui-select ng-model="calc" ng-change="filterProduct('ProductFamily', ProductFamily.selected)" theme="select2" style="display: block;" class="input-medium">
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ProductFamily in ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                                    <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                    <small>Description:
+                                        <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="col-md-6">
