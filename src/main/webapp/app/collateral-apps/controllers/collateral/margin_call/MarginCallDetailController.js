@@ -2,8 +2,9 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageService', 'uiGridConstants', 'MarginCallService','$timeout', 'toastr',
-    function ($scope, localStorage,uiGridConstants, MarginCallService, $timeout,$toastr) {
+DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageService', 'uiGridConstants', 
+        'MarginCallService','$timeout', 'toastr','CollateralAllocationService',
+    function ($scope, localStorage,uiGridConstants, MarginCallService, $timeout,$toastr,CollateralAllocationService) {
 
         $scope.sendFlag = false;
         $scope.collateralLiabilityType = "CSA";
@@ -197,7 +198,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
                         }
                     ];
              
-                    $scope.tabs2 = [
+        $scope.tabs2 = [
                         {
                             id: 'mc-trades',
                             title: 'Trades (underlyings)',
@@ -220,7 +221,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
 
                     ];
         
-        $scope.updateDispute     = function(dispute){
+        $scope.updateDispute    = function(dispute){
         	dispute.disputeCalculations.tolerance = $scope.tolerance;
         	dispute.disputeCalculations.myValue = $scope.callAmount; 
         	MarginCallService.updateDispute(dispute).success(function(resp){
@@ -234,33 +235,81 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
         		$toastr.success("Dispute updated successfully","Update dispute data",{closeButton: true});
         	});
         };
-       $scope.keyPressDispute  = function(event,dispute){
-    	 if(event.which==13 && !!!window.event.shiftKey){
-    		 $scope.updateDispute(dispute);
-    	 }  
-       };
+        $scope.keyPressDispute  = function(event,dispute){
+            if(event.which==13 && !!!window.event.shiftKey){
+        		 $scope.updateDispute(dispute);
+            }  
+        };
         
         this.sendMargin = function (action) {
             $scope.sendFlag = true;
 
-			MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA", action).then(function (result) {
-				if(result != ''){
-					$scope.sendFlag = false;
-
-					$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.status = result.data.dataResponse.marginCallElementsByLiabilityType.status;
-
-					$scope.loadData();
-				}
-				else{
-					console.log("Error. Debe especificarse la acción a ejecutar");
-				}
-
-			},
-				function (error) {
-					console.error(error);
-					$scope.sendFlag = false;
-				});
+			MarginCallService.sendIssueMarginCall($scope.MarginCallDetail.marginCall.id, "CSA", action).then(
+			    function (result) {
+    				if(result != ''){
+    					$scope.sendFlag = false;
+    
+    					$scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.status = result.data.dataResponse.marginCallElementsByLiabilityType.status;
+    
+    					$scope.loadData();
+    				}
+    				else{
+    					console.log("Error. Debe especificarse la acción a ejecutar");
+    				}
+	    		},
+	    	    function (error) {
+	    	    	console.error(error);
+	    	    	$scope.sendFlag = false;
+	    	    });
+	    	  if(action==="SendAllocationProposal"){
+	    	       $scope.sendAllocationProposal(false)
+	    	  }
         };
+        
+        $scope.saveAllocationProposal  = function(isPartialAllocation){
+            $scope.allocations  = $scope.post.concat($scope.receive);
+            if($scope.allocations.length==0){
+                $toastr.error("There is no collateral posted or received","Allocation data",{closeButton: true});
+                return false; 
+            }
+             //TODO revisar payerParty
+            $scope.allocations.forEach(function(v,k){
+                v["payerParty"] = "PARTY_A";
+            });
+             $scope.allocationData = {
+              collateralLiabilityType :  $scope.collateralLiabilityType,
+              marginCallId : $scope.MarginCallDetail.marginCall.id,
+              isPartialAllocation : isPartialAllocation,
+              allocations : $scope.allocations
+             };
+            CollateralAllocationService.saveAllocation($scope.allocationData).success(function(resp){
+              $toastr.success("Allocation saved Successfully","Allocation data",{closeButton: true});    
+            });
+            
+        }
+        $scope.sendAllocationProposal  = function(sendMessage){
+            
+            $scope.allocations  = $scope.post.concat($scope.receive);
+            if($scope.allocations.length==0){
+                $toastr.error("There is no collateral posted or received","Allocation data",{closeButton: true});
+                return false; 
+            }
+            
+            //TODO revisar payerParty
+            $scope.allocations.forEach(function(v,k){
+                v["payerParty"] = "PARTY_A";
+            });
+             $scope.allocationData = {
+              collateralLiabilityType :  $scope.collateralLiabilityType,
+              marginCallId : $scope.MarginCallDetail.marginCall.id,
+              sendMessage : sendMessage,
+              allocations : $scope.allocations
+             };
+            CollateralAllocationService.sendAllocationProposal($scope.allocationData).success(function(resp){
+              $toastr.success("Allocation sent Successfully","Allocation data",{closeButton: true});    
+            });
+            
+        }
     }]);
 
 

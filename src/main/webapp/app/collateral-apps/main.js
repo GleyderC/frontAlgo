@@ -409,6 +409,8 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/services/configuration/GroupsService.js',
 
                             'collateral-apps/services/analytics/SimulationService.js',
+                            
+                            'collateral-apps/services/collateral/CollateralAllocationService.js',
 
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/static_data/LegalEntityController.js',

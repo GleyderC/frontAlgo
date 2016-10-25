@@ -24,7 +24,7 @@
                         <a type="submit" class="btn btn_margin" uib-popover="Send Agree MarginCall" popover-trigger="mouseenter" ng-click="MarginDtCtrl.sendMargin('ActionSendAgreeMarginCall')" ng-disabled="sendFlag">
                             <img class="action-button-icon-md" src="assets/pages/icons/iconosMarginCallDetail/send_agree_margin_call_message.png">
                         </a>
-                        <a type="submit" class="btn btn_margin" uib-popover="Send Allocation Proposal" popover-trigger="mouseenter" ng-click="MarginDtCtrl.sendMargin('SendAllocationProposal')" ng-disabled="sendFlag">
+                        <a type="submit" class="btn btn_margin" uib-popover="Send Allocation Proposal" popover-trigger="mouseenter" ng-click="sendAllocationProposal(false)" ng-disabled="sendFlag">
                             <img class="action-button-icon-md" src="assets/pages/icons/iconosMarginCallDetail/send_collateral_allocation_proposal.png">
                         </a>
                         <a type="submit" class="btn btn_margin" uib-popover="Send Reject Allocation Proposal" popover-trigger="mouseenter" ng-click="MarginDtCtrl.sendMargin('SendRejectAllocationProposal')" ng-disabled="sendFlag">
