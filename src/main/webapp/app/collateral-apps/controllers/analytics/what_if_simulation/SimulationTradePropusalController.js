@@ -20,6 +20,9 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
         $scope.ReceiveBasisCalculationConvention = {};
         $scope.BasisCalculationConventions = localStorageService.get('BasisCalculationConvention');
 
+        $scope.currencyList = localStorageService.get("CurrencyEnum");
+        //$scope.currency ={ selected : $scope.currencyList[0]};
+
         $scope.filterLeg = function (leg) {
 
             if(leg == "pay"){
@@ -113,4 +116,20 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
                 }
             }
         }
+
+
+        $scope.effectiveDate = new Date();
+        $scope.terminationDate = new Date();
+
+        $scope.effectivePopup = { opened: false};
+        $scope.terminationPopup = { opened: false};
+
+        $scope.openDatePicker = function (datePicker) {
+            if(datePicker == "effective"){
+                $scope.effectivePopup.opened = true;
+            }
+            else if(datePicker == "termination"){
+                $scope.terminationPopup.opened = true;
+            }
+        };
     }]);

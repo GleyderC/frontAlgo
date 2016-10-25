@@ -487,11 +487,13 @@ var MarginCallCtrl = DashboardApp.controller('MarginCallController', ['$scope', 
             };
             $scope.adjustGraph = function(chart) {
                 try {
+                    let doAnimation = true;
+
                     if (typeof (chart === 'undefined' || chart === null) && this instanceof jQuery) { // if no obj chart and the context is set
                         this.find('.chart-container:visible').each(function () { // for only visible charts container in the curent context
-                            $container = $(this); // context container
+                            let $container = $(this); // context container
                             $container.find('div[id^="chart-"]').each(function () { // for only chart
-                                $chart = $(this).highcharts(); // cast from JQuery to highcharts obj
+                                let $chart = $(this).highcharts(); // cast from JQuery to highcharts obj
                                 $chart.setSize($container.width(), $chart.chartHeight, doAnimation = true); // adjust chart size with animation transition
                             });
                         });

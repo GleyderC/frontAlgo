@@ -59,13 +59,11 @@
                 </div>
                 <div class="col-md-4">
                     <label class="control-label">Currency</label>
-                    <ui-select ng-model="ProductType.selected" id="swap-trade-currency" class="input-small" theme="select2" style="display: block;">
-                        <ui-select-match placeholder="Select Currency">
-                            {{$select.selected.id}}
-                        </ui-select-match>
-                        <ui-select-choices
-                                repeat="currency in BilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
-                            <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                    <ui-select ng-model="currency.selected" id="swap-trade-currency" class="input-small" theme="select2" style="display: block;">
+                        <ui-select-match placeholder="Select Currency...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="currency in currencyList | filter: $select.search">
+                            <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                            <small ng-bind-html="currency.key | highlight: $select.search"></small>
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -74,11 +72,11 @@
                 <div class="col-md-4">
                     <label class="control-label">Effective Date</label>
                     <div class="input-group">
-                        <input placeholder="Effective Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
-                               is-open="popup.opened" datepicker-options="dateOptions"
+                        <input placeholder="Effective Date" type="text" class="form-control" uib-datepicker-popup ng-model="effectiveDate"
+                               is-open="effectivePopup.opened" datepicker-options="dateOptions"
                                ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
                         <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
+                <button type="button" class="btn btn-default" ng-click="openDatePicker('effective')" style="height: 30px!important;">
                     <i class="glyphicon glyphicon-calendar"></i>
                 </button>
             </span>
@@ -87,11 +85,11 @@
                 <div class="col-md-4">
                     <label class="control-label">Termination Date</label>
                     <div class="input-group">
-                        <input placeholder="Termination Date" type="text" class="form-control" uib-datepicker-popup ng-model="dt"
-                               is-open="popup.opened" datepicker-options="dateOptions"
+                        <input placeholder="Termination Date" type="text" class="form-control" uib-datepicker-popup ng-model="terminationDate"
+                               is-open="terminationPopup.opened" datepicker-options="dateOptions"
                                ng-required="true" close-text="Close" ng-change="dateChange(this)" style="height: 30px!important; font-size: 11px;" />
                         <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="openDatePicker()" style="height: 30px!important;">
+                        <button type="button" class="btn btn-default" ng-click="openDatePicker('termination')" style="height: 30px!important;">
                             <i class="glyphicon glyphicon-calendar"></i>
                         </button>
                     </span>
