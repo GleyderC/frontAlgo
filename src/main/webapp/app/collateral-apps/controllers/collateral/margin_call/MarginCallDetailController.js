@@ -277,10 +277,10 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
                 v["payerParty"] = "PARTY_A";
             });
              $scope.allocationData = {
-              collateralLiabilityType :  $scope.collateralLiabilityType,
-              marginCallId : $scope.MarginCallDetail.marginCall.id,
-              isPartialAllocation : isPartialAllocation,
-              allocations : $scope.allocations
+                collateralLiabilityType :  $scope.collateralLiabilityType,
+                marginCallId : $scope.MarginCallDetail.marginCall.id,
+                isPartialAllocation : isPartialAllocation,
+                allocations : $scope.allocations
              };
             CollateralAllocationService.saveAllocation($scope.allocationData).success(function(resp){
               $toastr.success("Allocation saved Successfully","Allocation data",{closeButton: true});    
@@ -307,6 +307,7 @@ DashboardApp.controller('MarginCallDetailController', ['$scope','localStorageSer
              };
             CollateralAllocationService.sendAllocationProposal($scope.allocationData).success(function(resp){
               $toastr.success("Allocation sent Successfully","Allocation data",{closeButton: true});    
+              $scope.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.status = "Allocation Sent";
             });
             
         }
