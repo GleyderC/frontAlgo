@@ -12,8 +12,8 @@ var sass = require('gulp-sass');
 
 var collateral = {
     //app: require('./bower.json').appPath || 'app',
-    app: 'src/main/webapp/app',
-    dist: 'src/main/webapp/app'
+    app: 'src/main/resources/static',
+    dist: 'src/main/resources/static'
 };
 
 var paths = {
@@ -31,7 +31,7 @@ var paths = {
     ],
     karma: 'karma.conf.js',
     views: {
-        main: collateral.app + '/index.jsp',
+        main: collateral.app + '/index.html',
         files: [collateral.app + '/views/**/*.html']
     }
 };
