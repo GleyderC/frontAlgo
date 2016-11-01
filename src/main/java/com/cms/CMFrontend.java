@@ -1,20 +1,10 @@
 package com.cms;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class CMFrontend extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-
-        return application.sources(CMFrontend.class);
-
-    }
+public class CMFrontend {
 
     public static void main(String[] args) {
 

@@ -9,8 +9,6 @@
     <url>http://maven.apache.org</url>
     <properties>
         <java.version>1.8</java.version>
-        <start-class>com.cms.CMFrontend</start-class>
-        <tomcat.version>8.0.1</tomcat.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -54,11 +52,11 @@
         </dependency>
 
         <!-- DEPENDENCY TO EXPORT WAR -->
-        <dependency>
+        <!--<dependency>
              <groupId>org.springframework.boot</groupId>
              <artifactId>spring-boot-starter-tomcat</artifactId>
              <scope>provided</scope>
-         </dependency>
+         </dependency>-->
 
     </dependencies>
 
