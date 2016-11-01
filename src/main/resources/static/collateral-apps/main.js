@@ -315,7 +315,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 
             views: {
                 'main-content@': {
-                    templateUrl: paths.views + '/login/user_login.jsp',
+                    templateUrl: paths.views + '/login/user_login.html',
                     controller: 'LoginController',
                     controllerAs: 'loginCtrl',
                 }
@@ -347,7 +347,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 
             views: {
                 'main-content@': {
-                    templateUrl: paths.views + "/dashboard/dashboard.jsp",
+                    templateUrl: paths.views + "/dashboard/dashboard.html",
                     controller: 'DashboardController',
                     controllerAs: 'dashboardCtrl',
                 }

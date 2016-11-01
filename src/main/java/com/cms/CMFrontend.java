@@ -8,18 +8,15 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 @SpringBootApplication
 public class CMFrontend extends SpringBootServletInitializer {
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(CMFrontend.class);
+    }
+
     public static void main(String[] args) {
 
         SpringApplication.run(CMFrontend.class, args);
 
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        // Customize the application or call application.sources(...) to add sources
-        // Since our example is itself a @Configuration class we actually don't
-        // need to override this method.
-        return application;
     }
 
 }
