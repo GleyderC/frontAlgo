@@ -1,6 +1,6 @@
 /**/
 .root{
- backgroun-color: rgb(79, 90, 103)
+ background-color: rgb(79, 90, 103) !important;
 }
 
 /* SIDEBAR STYLES */
