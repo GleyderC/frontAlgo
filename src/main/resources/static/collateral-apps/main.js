@@ -404,9 +404,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/services/integration_reporting/IntegrationService.js',
                             'collateral-apps/services/integration_reporting/ScheduledTaskService.js',
 
-
                             'collateral-apps/services/configuration/UsersService.js',
                             'collateral-apps/services/configuration/GroupsService.js',
+                            'collateral-apps/services/configuration/CCPsService.js',
 
                             'collateral-apps/services/analytics/SimulationService.js',
                             
@@ -457,6 +457,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/configuration/users_management/GroupsController.js',
                             'collateral-apps/controllers/configuration/users_management/GroupPermissionController.js',
                             'collateral-apps/controllers/configuration/users_management/UsersGroupController.js',
+                            'collateral-apps/controllers/configuration/ccps/SearchCCPsController.js',
+                            'collateral-apps/controllers/configuration/ccps/CCPsController.js',
+                            'collateral-apps/controllers/configuration/ccps/CCPsElegibleCurrenciesController.js',
+                            'collateral-apps/controllers/configuration/ccps/CCPsElegibleSecuritiesController.js',
 
                             /* Analytics Controller*/
                             'collateral-apps/controllers/analytics/what_if_simulation/SearchSimulationController.js',

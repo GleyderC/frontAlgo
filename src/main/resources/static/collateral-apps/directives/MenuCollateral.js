@@ -294,6 +294,15 @@ DashboardApp.service('MenuService', function () {
                         },
                         view: '#',
                         unique: true
+                    },
+                    {
+                        id : 'configuration_ccps',
+                        head: {
+                            icon: 'fa fa-dot-circle-o font-green-jungle',
+                            title: 'MENU.CONFIGURATION.CCPS'
+                        },
+                        view: '/configuration/ccps/main.html',
+                        unique: true
                     }
                 ]
             }, /* #5 Configuration */

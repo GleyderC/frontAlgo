@@ -1,0 +1,300 @@
+<div ng-controller="CCPsEligibleCurrenciesController as CCPsEligibCurrencyCtrl">
+    <!-- TEMPLATE TO ADD CURRENCY BEGIN-->
+    <script type="text/ng-template" id="modalAddCurrency.html">
+        <div class="modal-header">
+            <h4 class="modal-title">Adding Eligible Currency</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="row">
+
+                <div class="form-group col-md-6">
+                    <label class="control-label col-md-4">Base Currency</label>
+                    <div class="col-md-8">
+                        <select ng-model="baseCurrency" class="form-control input-medium"
+                                ng-options="currency.codigo for currency in currenciesList track by currency.id">
+                            <option value="">--Select Currency--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-offset-6"></div>
+            </div>
+
+            <div class="row">
+
+                <div class="form-group col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Compounding</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input bs-switch ng-model="compounding" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Include Interest to Position</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input bs-switch ng-model="includeInterestPosition" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Adjustment Currency</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input bs-switch ng-model="adjustmentCurrency" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Project Interest to Position</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input bs-switch ng-model="projectInterestPosition" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">HairCut (100%)</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control input-xsmall"
+                                       ng-model="hairCut"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="col-md-7">
+                                <label class="control-label">Inverse</label>
+                            </div>
+                            <div class="col-md-5">
+                                <input bs-switch ng-model="inverse" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Rate:</h3>
+                </div>
+                <div class="panel-body">
+
+                    <label class="radio-inline"><input type="radio" ng-model="EligCurRate" value="fixed"
+                                                       checked>Fixed Rate</label>
+                    <label class="radio-inline"><input type="radio" ng-model="EligCurRate" value="floating">Floating
+                        Rate</label>
+
+                    <div class="form-group" ng-show="EligCurRate == 'fixed'">
+                        <div class="col-md-12">
+                            <label class="control-label">Interest Date Rule Only</label>
+                            <input type="number" class="form-control input-small" placeholder="Fixed Rate"
+                                   ng-model="interestDateRuleOnlyFixedRate" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="EligCurRate == 'floating'">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label">Index</label>
+                                <select ng-model="index" class="form-control input-medium"
+                                        ng-options="index.name for index in supportedindexesList track by index.key">
+                                    <option value="">--Select Index--</option>
+                                </select>
+                                <!--<ui-select ng-model="index"
+                                           theme="select2"
+                                           class="input-medium">
+                                    <ui-select-match
+                                            placeholder="Select Index...">
+                                        {{$select.selected.key}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="index in supportedindexesList | filter: $select.search track by index.key">
+                                        <div ng-bind-html="index.name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                -->
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Tenor</label>
+                                <select class="form-control input-medium" ng-model="tenor">
+                                    <option value="">--Tenor--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Spread</label>
+                                <input type="number" class="form-control input-medium" placeholder="Spread"
+                                       ng-model="spread"
+                                       min="0"
+                                       max="100"
+                                       maxlength="3">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label">Factor</label>
+                                <input type="number" class="form-control input-medium" placeholder="Factor"
+                                       ng-model="factor"
+                                       min="0"
+                                       max="100"
+                                       maxlength="3">
+                            </div>
+                            <div class="col-md-8">
+                                <div>
+                                    <label class="control-label">Floor</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input bs-switch ng-model="floor" type="checkbox"
+                                           switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                           ng-true-value="true" ng-false-value="false">
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control input-small" ng-model="floorAmount"
+                                           placeholder="Floor" min="0"
+                                           max="100"
+                                           maxlength="3">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="save()">Save</button>
+        </div>
+    </script>
+    <!-- TEMPLATE TO ADD CURRENCY END -->
+
+    <!-- FORM SECTION TOP BEGIN -->
+    <div class="portlet light bordered col-md-12">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
+                <div class="form-body">
+                    <!-- FORM BODY BEGIN -->
+
+                    <div class="row">
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-3">Base Currency</label>
+                            <div class="col-md-9">
+                                <ui-select id="le-bilateral-a-eligible-currencies" ng-model="CCPsEligibCurrencyCtrl.baseCurrency"
+                                           theme="select2"
+                                           class="input-medium">
+                                    <ui-select-match
+                                            placeholder="Select or search a Currency...">
+                                        {{$select.selected.id}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="currency in CCPsBilateralAgreements.staticData.currencies | filter: $select.search track by currency.id">
+                                        <div ng-bind-html="currency.codigo | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-3">Collateral Policy</label>
+                            <div class="col-md-9">
+                                <select class="form-control input-medium"
+                                        ng-options="collateralPolicy.name for collateralPolicy in CCPsEligibCurrencyCtrl.collateralPolicyList track by collateralPolicy.key"
+                                        ng-model="CCPsEligibCurrencyCtrl.collateralPolicy">
+                                    <option value="">-- SELECT C. POLICY --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-3">Interest Date Rule</label>
+                            <div class="col-md-9">
+                                <select id="le-bilateral-ag-base-currency" name="base-currency-select[]"
+                                        class="form-control input-medium"
+                                        ng-options="interestDateRule.name for interestDateRule in CCPsEligibCurrencyCtrl.interestDateRulesList track by interestDateRule.key"
+                                        ng-model="CCPsEligibCurrencyCtrl.interestDateRule">
+                                    <option value="">-- SELECT RULE --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-3">Interest Date Rule Only</label>
+                            <div class="col-md-9">
+                                <input bs-switch ng-model="CCPsEligibCurrencyCtrl.interestDateRuleOnly" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-3">Roll Interest to Principal</label>
+                            <div class="col-md-9">
+                                <input bs-switch ng-model="CCPsEligibCurrencyCtrl.rollInterestPricipal" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label col-md-3">Settlement Cut-Off</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control input-medium"
+                                       id="le-bilateral-eligibleCurrencies-settlementCutoff"
+                                       ng-model="CCPsEligibCurrencyCtrl.settlementCutOff" ng-disabled="false">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TABLE PARTY A BEGIN -->
+                    <div class="row">
+
+                        <div class="col-md-12" style="margin-bottom: 10px;">
+                            <button class="btn btn-primary" ng-click="CCPsEligibCurrencyCtrl.modalAddCurrencty()">Add New
+                                Currency
+                            </button>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div ui-grid="CCPsEligibCurrencyCtrl.gridOptions" ui-grid-selection ui-grid-exporter
+                                 ui-grid-auto-resize
+                                 class="grid"></div>
+
+                        </div>
+                    </div>
+                    <!-- TABLE PARTY A END -->
+
+                    <!-- FORM BODY END -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- FORM SECTION TOP END -->
+
+</div>
