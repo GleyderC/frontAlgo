@@ -15,3 +15,5 @@ ConfigUrlService.js
 data.json
 .metadata/
 /.tern-project
+collateral-frontend.ipr
+collateral-frontend.iws

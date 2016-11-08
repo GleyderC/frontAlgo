@@ -1,0 +1,48 @@
+<div class="row" ng-controller="CCPsDefaultFundController">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <form class="form-horizontal" role="form">
+                <strong>Default fund for client clearing</strong>
+                <div class="form-group">
+                    <div class="mt-radio-inline">
+                        <div class="col-md-3">
+                            <label class="mt-radio col-md-8">As a % of client's IM increment</label>
+                            <div class="col-md-3">
+                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label col-md-1">% </label>
+                            <input type="text" ng-model="defaultFund.clientClearingPercentage" ng-disabled="!defaultFund.clientClearing" class="form-control collateral-money input-small" ui-percentage-mask="2" placeholder="" maxlength="8">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <form class="form-horizontal" role="form">
+                <strong>Default fund for house account</strong>
+                <div class="form-group">
+                    <div class="mt-radio-inline">
+                        <div class="col-md-3">
+                            <label class="mt-radio col-md-8">As a % of client's IM increment</label>
+                            <div class="col-md-3">
+                                <input bs-switch ng-model="defaultFund.houseAccount" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label col-md-1">% </label>
+                            <input type="text" ng-model="defaultFund.houseAccountPercentage" ng-disabled="!defaultFund.clientClearing" class="form-control collateral-money input-small" ui-percentage-mask="2" placeholder="" maxlength="8">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

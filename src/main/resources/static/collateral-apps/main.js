@@ -461,6 +461,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/configuration/ccps/CCPsController.js',
                             'collateral-apps/controllers/configuration/ccps/CCPsElegibleCurrenciesController.js',
                             'collateral-apps/controllers/configuration/ccps/CCPsElegibleSecuritiesController.js',
+                            'collateral-apps/controllers/configuration/ccps/CCPsDefaultFundController.js',
 
                             /* Analytics Controller*/
                             'collateral-apps/controllers/analytics/what_if_simulation/SearchSimulationController.js',
