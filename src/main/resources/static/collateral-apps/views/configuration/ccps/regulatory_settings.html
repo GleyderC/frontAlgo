@@ -1,8 +1,8 @@
-<div class="row calculation" ng-controller="CCPsDefaultFundController">
+<div class="row calculation" ng-controller="CCPsRegulatorySettingsController">
     <div class="col-md-4">
         <div class="portlet light bordered" style="height: 370px;">
             <form class="form-horizontal" role="form">
-                <strong>Leverage Ratio on House Account Collateral</strong>
+                <strong style="font-size: 14px!important;">Leverage Ratio on House Account Collateral</strong>
                 <div class="form-group">
                     <div class="mt-radio-inline">
                         <div class="col-md-12">
@@ -14,7 +14,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Cash IM</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.leverageRatioCashIM" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -22,7 +22,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Non Cash IM</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.leverageRatioNonCashIM" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -41,7 +41,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Cash Default Fund</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.leverageRatioDefaultFund" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -49,7 +49,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Non Cash Default Fund</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.leverageRatioNonDefaultFund" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -63,7 +63,7 @@
     <div class="col-md-4">
         <div class="portlet light bordered" style="height: 370px;">
             <form class="form-horizontal" role="form">
-                <strong>Clients Leverage Ratio Exposure</strong>
+                <strong style="font-size: 14px!important;">Clients Leverage Ratio Exposure</strong>
                 <div class="form-group">
                     <div class="mt-radio-inline">
                         <div class="col-md-12">
@@ -75,7 +75,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Cash IM</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.clientsLeverageCashIM" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -83,7 +83,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Non Cash IM</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.clientsLeverageNonCashIM" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -102,7 +102,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Cash Default Fund</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.clientsLeverageDefaultFund" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -110,7 +110,7 @@
                         <div class="col-md-12">
                             <label class="control-label col-md-5">Non Cash Default Fund</label>
                             <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                                <input bs-switch ng-model="regulatorySettings.clientsLeverageNonDefaultFund" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
@@ -124,59 +124,44 @@
     <div class="col-md-4">
         <div class="portlet light bordered" style="height: 370px;">
             <form class="form-horizontal" role="form">
-                <strong>Default Fund exposure capital charge</strong>
+                <strong style="font-size: 14px!important;">Default Fund exposure capital charge</strong>
                 <div class="form-group">
-                    <div class="mt-radio-inline">
-                        <div class="col-md-12">
-                            <strong>Posted IM in Leverage ratio exposure</strong>
-                        </div>
-                        <div class="col-md-12">
-                            <p>Is posted initial margin included in the denominator (exposure) in the leverage ratio capital charge calculation?</p>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="control-label col-md-5">Cash IM</label>
-                            <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
+                    <div class="col-md-12">
+                        <div class="mt-radio-inline">
+                            <label class="form-label col-md-7">Compute capital charge using BCBS 2012 (CCR IV)</label>
+                            <div class="col-md-5">
+                                <input bs-switch ng-model="regulatorySettings.computeCapitalBCBS2012" type="checkbox"
                                        switch-on-text="Yes" switch-off-text="No" switch-size="small"
                                        ng-true-value="true" ng-false-value="false">
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <label class="control-label col-md-5">Non Cash IM</label>
-                            <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
-                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
-                                       ng-true-value="true" ng-false-value="false">
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="mt-radio-inline">
-                        <div class="col-md-12">
-                            <strong>Posted Default Fund in Leverage ratio exposure</strong>
-                        </div>
-                        <div class="col-md-12">
-                            <p>Is posted default fund included in the denominator (exposure) in the leverage ratio capital charge calculation?</p>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="control-label col-md-5">Cash Default Fund</label>
-                            <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
-                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
-                                       ng-true-value="true" ng-false-value="false">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <label class="control-label col-md-5">Non Cash Default Fund</label>
-                            <div class="col-md-7">
-                                <input bs-switch ng-model="defaultFund.clientClearing" type="checkbox"
-                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
-                                       ng-true-value="true" ng-false-value="false">
-                            </div>
-                        </div>
+                    <div class="col-md-12">
+                        <label class="control-label col-md-7">CCP c-factor = (1 + beta * (N/(N-2))*(Kcm/DFcm))</label>
+                        <input type="text" ng-model="regulatorySettings.computeCapitalBCBS2012Percentage" ng-disabled="!regulatorySettings.computeCapitalBCBS2012"
+                               class="form-control collateral-money input-small" ui-percentage-mask="2" placeholder="" maxlength="8">
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="mt-radio-inline">
+                            <label class="form-label col-md-7">Compute capital charge using BCBS 2014</label>
+                            <div class="col-md-5">
+                                <input bs-switch ng-model="regulatorySettings.computeCapitalBCBS2014" type="checkbox"
+                                       switch-on-text="Yes" switch-off-text="No" switch-size="small"
+                                       ng-true-value="true" ng-false-value="false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-7">CCP c-factor = K-ccp/(DFccp + DFcm)</label>
+                        <input type="text" ng-model="regulatorySettings.computeCapitalBCBS2014Percentage" ng-disabled="!regulatorySettings.computeCapitalBCBS2014"
+                               class="form-control collateral-money input-small" ui-percentage-mask="2" placeholder="" maxlength="8">
                     </div>
                 </div>
             </form>
