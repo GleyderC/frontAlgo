@@ -1,0 +1,130 @@
+<div class="row calculation" ng-controller="CCPsFeesController">
+    <div class="col-md-6">
+        <div class="portlet light bordered" style="height: 370px;">
+            <form class="form-horizontal" role="form">
+                <strong style="font-size: 14px!important;">House Account Fees</strong>
+                <div class="form-group">
+                    <div class="mt-radio-inline">
+                        <div class="col-md-12">
+                            <strong>Booking Fee</strong>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Fixed component</label>
+                            <input ng-model="ccpsFees.houseBookingFixedComponent" type="text" class="form-control collateral-money input-small col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2">
+                            <div class="col-md-4">
+                                <ui-select ng-model="CCPsFees.houseBookingCurrency.selected" theme="select2" style="display: block;">
+                                    <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="currency in CCPsFees.houseBookingCurrencyList | filter: $select.search">
+                                        <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                                        <small ng-bind-html="currency.key | highlight: $select.search"></small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Relative to trade's notional</label>
+                            <input ng-model="ccpsFees.houseBookingRelativeNotionalTrade" type="text" class="form-control collateral-money input-xsmall col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2"> bps (in trade's currency)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="mt-radio-inline">
+                        <div class="col-md-12">
+                            <strong>Annual Maintenance Fees</strong>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Fixed component</label>
+                            <input  ng-model="ccpsFees.houseAnnualFixComponent" type="text" class="form-control collateral-money input-small col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2">
+                            <div class="col-md-4">
+                                <ui-select ng-model="CCPsFees.houseAnnualCurrency.selected" theme="select2" style="display: block;">
+                                    <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="currency in CCPsFees.houseAnnualCurrencyList | filter: $select.search">
+                                        <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                                        <small ng-bind-html="currency.key | highlight: $select.search"></small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Relative to trade's notional</label>
+                            <input ng-model="ccpsFees.houseAnnualRelativeNotionalTrade" type="text" class="form-control collateral-money input-xsmall col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2"> bps (in trade's currency)
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Relative to initial margin</label>
+                            <input ng-model="ccpsFees.houseAnnualRelativeInitialMargin" type="text" class="form-control collateral-money input-xsmall col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder="" ui-number-mask="2"> bps
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="portlet light bordered" style="height: 370px;">
+            <form class="form-horizontal" role="form">
+                <strong style="font-size: 14px!important;">House Account Fees</strong>
+                <div class="form-group">
+                    <div class="mt-radio-inline">
+                        <div class="col-md-12">
+                            <strong>Booking Fee</strong>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Fixed component</label>
+                            <input ng-model="ccpsFees.clientBookingFixedComponent" type="text" class="form-control collateral-money input-small col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2">
+                            <div class="col-md-4">
+                                <ui-select ng-model="CCPsFees.clientBookingCurrency.selected" theme="select2" style="display: block;">
+                                    <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="currency in CCPsFees.clientBookingCurrencyList | filter: $select.search">
+                                        <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                                        <small ng-bind-html="currency.key | highlight: $select.search"></small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Relative to trade's notional</label>
+                            <input ng-model="ccpsFees.clientBookingRelativeNotionalTrade" type="text" class="form-control collateral-money input-xsmall col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2"> bps (in trade's currency)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="mt-radio-inline">
+                        <div class="col-md-12">
+                            <strong>Annual Maintenance Fees</strong>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Fixed component</label>
+                            <input  ng-model="ccpsFees.clientAnnualFixedComponent" type="text" class="form-control collateral-money input-small col-md-3"
+                                    style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2">
+                            <div class="col-md-4">
+                                <ui-select ng-model="CCPsFees.clientAnnualCurrency.selected" theme="select2" style="display: block;">
+                                    <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="currency in CCPsFees.clientAnnualCurrencyList | filter: $select.search">
+                                        <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                                        <small ng-bind-html="currency.key | highlight: $select.search"></small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Relative to trade's notional</label>
+                            <input ng-model="ccpsFees.clientAnnualRelativeNotionalTrade" type="text" class="form-control collateral-money input-xsmall col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder=""  ui-number-mask="2"> bps (in trade's currency)
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label col-md-4">Relative to initial margin</label>
+                            <input ng-model="ccpsFees.clientAnnualRelativeInitialMargin" type="text" class="form-control collateral-money input-xsmall col-md-3"
+                                   style="height: 28px;font-size: 11px;" placeholder="" ui-number-mask="2"> bps
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

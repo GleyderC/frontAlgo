@@ -17,7 +17,7 @@
     "angular-sanitize": "^1.5.5",
     "angular-local-storage": "^0.2.7",
     "oclazyload": "^1.0.9",
-    "angular-ui-select": "^0.17.0",
+    "angular-ui-select": "^0.19.6",
     "select2": "~3.4.5",
     "selectize": "^0.12.1",
     "multiselect": "jquery-multi-select#^0.9.12",

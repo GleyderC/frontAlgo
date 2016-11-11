@@ -1,0 +1,25 @@
+<div ng-controller="CCPsIMDFCurrenciesController" class="CCPsIMDFCurrencies">
+    <!-- FORM SECTION TOP BEGIN -->
+    <div class="portlet light bordered">
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form" id="le-bilateral-ag-left-side">
+                <div class="form-body row">
+                    <!-- FORM BODY BEGIN -->
+
+                    <!-- PARTY A LEFT BEGIN -->
+                    <div class="col-md-12">
+                        <strong>
+                            Preferred Currency for covering liabilities on this CCP
+                        </strong>
+                        <div ui-grid="CCPsIMDFCurrencies.gridOptions" ui-grid-selection ui-grid-exporter
+                             ui-grid-auto-resize class="grid"></div>
+                    </div>
+                    <!-- PARTY A LEFT END -->
+
+                    <!-- FORM BODY END -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- FORM SECTION TOP END -->
+</div>
