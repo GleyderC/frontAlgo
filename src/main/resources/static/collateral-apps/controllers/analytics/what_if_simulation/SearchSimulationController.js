@@ -45,10 +45,10 @@ DashboardApp.controller('SearchSimulationController', ['SimulationService', '$sc
                     }
                 },
                 {field: 'desk'},
-                {field: 'DateTime' },
+                {field: 'dateTime' },
                 {field: 'notional' },
                 {field: 'principal' },
-                {field: 'counterparty'},
+                {field: 'counterParty'},
                 {field: 'hedge'},
                 {field: 'status'},
                 {

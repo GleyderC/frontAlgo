@@ -6,7 +6,7 @@
                     <label class="control-label">Product Family</label>
                     <ui-select ng-model="SimulationTradePropusal.ProductFamily.selected" ng-change="SimulationTradePropusal.filterProduct('ProductFamily', SimulationTradePropusal.ProductFamily.selected)" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Product Family">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="ProductFamily in SimulationTradePropusal.ProductFamilies | filter: {name: $select.search, description: $select.search}">
+                        <ui-select-choices repeat="ProductFamily in SimulationTradePropusal.ProductFamilies | filter: {name: $select.search}">
                             <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
                             <small>
                                 <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
@@ -18,7 +18,7 @@
                     <label class="control-label">Product Group</label>
                     <ui-select ng-model="SimulationTradePropusal.ProductGroup.selected" ng-change="SimulationTradePropusal.filterProduct('ProductGroup', SimulationTradePropusal.ProductGroup.selected)" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Product Group">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="ProductGroup in SimulationTradePropusal.ProductGroups | filter: {name: $select.search, description: $select.search}">
+                        <ui-select-choices repeat="ProductGroup in SimulationTradePropusal.ProductGroups | filter: {name: $select.search}">
                             <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
                             <small>
                                 <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
@@ -30,7 +30,7 @@
                     <label class="control-label">Product Type</label>
                     <ui-select ng-model="SimulationTradePropusal.ProductType.selected" ng-change="SimulationTradePropusal.filterProduct('ProductType',SimulationTradePropusal.ProductType.selected)" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="ProductType in SimulationTradePropusal.ProductTypes | filter: {name: $select.search, description: $select.search}">
+                        <ui-select-choices repeat="ProductType in SimulationTradePropusal.ProductTypes | filter: {name: $select.search}">
                             <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
                             <small>
                                 <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
@@ -52,10 +52,10 @@
                 </div>
                 <div class="col-md-3">
                     <label class="control-label">Trade Subtype</label>
-                    <ui-select ng-model="SimulationTradePropusal.TradeSubtype.selected" name="swap-trade-type" theme="select2" style="display: block;">
+                    <ui-select ng-model="SimulationTradePropusal.TradeSubType.selected" name="swap-trade-type" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Trade SubType">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices
-                                repeat="TradeSubtype in SimulationTradePropusal.TradeSubtypes | filter: $select.search">
+                                repeat="TradeSubType in SimulationTradePropusal.TradeSubTypes | filter: $select.search">
                             <div ng-bind-html="TradeSubtype.name | highlight: $select.search"></div>
                         </ui-select-choices>
                     </ui-select>
@@ -171,7 +171,7 @@
                         </div>
                         <div class="row">
                             <label class="control-label">Convention</label>
-                            <ui-select ng-model="SimulationTradePropusal.Convention.selected" theme="select2" style="display: block;" class="input-medium">
+                            <ui-select ng-model="SimulationTradePropusal.PayConvention.selected" theme="select2" style="display: block;" class="input-medium">
                                 <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
                                 <ui-select-choices repeat="PayConvention in SimulationTradePropusal.PayConventions | filter: {name: $select.search}">
                                     <div ng-bind-html="PayConvention.name | highlight: $select.search"></div>
@@ -202,27 +202,27 @@
                         <div class="row">
                             <label class="control-label">Payment Frequency</label>
                             <ui-select ng-model="SimulationTradePropusal.PayPaymentFrequency.selected" theme="select2" style="display: block;" class="input-medium">
-                                <ui-select-match placeholder="">{{$select.selected.key}}</ui-select-match>
-                                <ui-select-choices repeat="PayPaymentFrequency in SimulationTradePropusal.PayPaymentFrequencies | filter: {key: $select.search}">
-                                    <div ng-bind-html="PayPaymentFrequency.key | highlight: $select.search"></div>
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="PayPaymentFrequency in SimulationTradePropusal.PayPaymentFrequencies | filter: {name: $select.search}">
+                                    <div ng-bind-html="PayPaymentFrequency.name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
                         <div class="row">
                             <label class="control-label">Roll Frequency</label>
                             <ui-select ng-model="SimulationTradePropusal.PayRollFrequency.selected"  theme="select2" style="display: block;" class="input-medium">
-                                <ui-select-match placeholder="">{{$select.selected.key}}</ui-select-match>
-                                <ui-select-choices repeat="PayRollFrequency in SimulationTradePropusal.PayRollFrequencies | filter: {key: $select.search}">
-                                    <div ng-bind-html="PayRollFrequency.key | highlight: $select.search"></div>
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="PayRollFrequency in SimulationTradePropusal.PayRollFrequencies | filter: {name: $select.search}">
+                                    <div ng-bind-html="PayRollFrequency.name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
                         <div class="row">
                             <label class="control-label">Roll Convention</label>
                             <ui-select ng-model="SimulationTradePropusal.PayRollConvention.selected"  theme="select2" style="display: block;" class="input-medium">
-                                <ui-select-match placeholder="">{{$select.selected.key}}</ui-select-match>
-                                <ui-select-choices repeat="PayRollConvention in SimulationTradePropusal.PayRollConventions | filter: {key: $select.search}">
-                                    <div ng-bind-html="PayRollConvention.key | highlight: $select.search"></div>
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="PayRollConvention in SimulationTradePropusal.PayRollConventions | filter: {name: $select.search}">
+                                    <div ng-bind-html="PayRollConvention.name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
@@ -251,11 +251,11 @@
                         </div>
                         <div class="row" ng-if="SimulationTradePropusal.ReceiveLegType == 'FLOATING'">
                             <label class="control-label">Spread</label>
-                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="SimulationTradePropusal.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="SimulationTradePropusal.ReceiveSpread" ui-number-mask="2">
                         </div>
                         <div class="row" ng-if="SimulationTradePropusal.ReceiveLegType == 'FIXED'">
                             <label class="control-label">Rate(%)</label>
-                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="SimulationTradePropusal.MarginCallDetail.marginCall.marginCallElementsByLiabilityType.CSA.marginCallCalculations.ownCalculatedExposure" ui-number-mask="2">
+                            <input type="text" class="form-control collateral-money input-medium" style="height: 28px; font-size: 11px;" placeholder="" ng-model="SimulationTradePropusal.ReceiveRate" ui-number-mask="2">
                         </div>
                         <div class="row">
                             <label class="control-label">Basis</label>
@@ -299,18 +299,18 @@
                         <div class="row">
                             <label class="control-label">Payment Frequency</label>
                             <ui-select ng-model="SimulationTradePropusal.ReceivePaymentFrequency.selected"  theme="select2" style="display: block;" class="input-medium">
-                                <ui-select-match placeholder="">{{$select.selected.key}}</ui-select-match>
-                                <ui-select-choices repeat="ReceivePaymentFrequency in SimulationTradePropusal.ReceivePaymentFrequencies | filter: {key: $select.search}">
-                                    <div ng-bind-html="ReceivePaymentFrequency.key | highlight: $select.search"></div>
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ReceivePaymentFrequency in SimulationTradePropusal.ReceivePaymentFrequencies | filter: {name: $select.search}">
+                                    <div ng-bind-html="ReceivePaymentFrequency.name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
                         <div class="row">
                             <label class="control-label">Roll Frequency</label>
                             <ui-select ng-model="SimulationTradePropusal.ReceiveRollFrequency"  theme="select2" style="display: block;" class="input-medium">
-                                <ui-select-match placeholder="">{{$select.selected.key}}</ui-select-match>
-                                <ui-select-choices repeat="ReceiveRollFrequency in SimulationTradePropusal.ReceiveRollFrequencies | filter: {key: $select.search}">
-                                    <div ng-bind-html="ReceiveRollFrequency.key | highlight: $select.search"></div>
+                                <ui-select-match placeholder="">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="ReceiveRollFrequency in SimulationTradePropusal.ReceiveRollFrequencies | filter: {name: $select.search}">
+                                    <div ng-bind-html="ReceiveRollFrequency.name | highlight: $select.search"></div>
                                 </ui-select-choices>
                             </ui-select>
                         </div>
