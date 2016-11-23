@@ -303,6 +303,15 @@ DashboardApp.service('MenuService', function () {
                         },
                         view: '/configuration/ccps/main.html',
                         unique: true
+                    },
+                    {
+                        id : 'configuration_settlement_account',
+                        head: {
+                            icon: 'fa fa-dollar font-green-jungle',
+                            title: 'MENU.CONFIGURATION.SETTACCOUNT'
+                        },
+                        view: '/configuration/settlement_account/main.html',
+                        unique: true
                     }
                 ]
             }, /* #5 Configuration */
