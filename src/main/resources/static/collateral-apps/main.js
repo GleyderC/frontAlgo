@@ -19,7 +19,7 @@ var CollateralApp = angular.module("CollateralApp", [
     "ngFileUpload",
     "ui.ace",
     "ngclipboard",
-    "pascalprecht.translate"
+    "pascalprecht.translate",
 ]);
 
 var paths = {
@@ -278,7 +278,7 @@ CollateralApp.factory('$request', ['$rootScope', '$http', 'URL_CONFIG', '$log', 
 
 }]);
 
-/*Web socket connection */
+/*Web socket connection 
 CollateralApp.factory('$socket', ['$websocket', '$rootScope', '$http', 'URL_CONFIG', '$log', 'localStorageService',
     function ($websocket, $rootScope, $http, URL_CONFIG, $log, localStorage) {
         var ws = $websocket(URL_CONFIG.WS_URL);
@@ -290,6 +290,7 @@ CollateralApp.factory('$socket', ['$websocket', '$rootScope', '$http', 'URL_CONF
 
         return ws;
     }]);
+    */
 /*Default Setup $http Service*/
 CollateralApp.config(['$httpProvider', function ($httpProvider) {
 
@@ -387,6 +388,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/services/ArrayService.js',
                             'collateral-apps/services/RowEditorModalService.js',
                             'collateral-apps/services/ModalService.js',
+                            'collateral-apps/services/StompService.js',
 
                             'collateral-apps/services/collateral/MarginCallService.js',
                             'collateral-apps/services/collateral/AgreementsService.js',
