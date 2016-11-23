@@ -48,8 +48,8 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                 name: 'Action',
                 cellTemplate: '<div class="text-center"> ' +
                 '<a class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.viewMessage(row.entity)" ><i class="fa fa-eye"></i></a> ' +
-                '<a ng-click="grid.appScope.getPDF(row.entity.pdfInfo.md5)"  class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
-                '<a ng-click="grid.appScope.getExcel(row.entity.excelInfo.md5)" class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></a>' +
+                '<a ng-click="grid.appScope.getPDF(row.entity.attachmentsInfo.PDF.md5)"  class="btn btn-sm btn-danger uigrid-btn" download ><i class="fa fa-file-pdf-o"></i></a>' +
+                '<a ng-click="grid.appScope.getExcel(row.entity.attachmentsInfo.EXCEL.md5)" class="btn btn-sm green-jungle uigrid-btn" download" ><i class="fa fa-file-excel-o"></i></a>' +
                 '<a title="Process MarginCall Message" ng-click="grid.appScope.processMCMessage(row.entity)" class="btn btn-sm uigrid-btn" ng-class="{ \'btn-success\': row.entity.processMCMessage.success, \'btn-danger\': !row.entity.processMCMessage.success}" >' +
                 '   <i class="fa fa-file-excel-o"></i>' +
                 '</a>' +
