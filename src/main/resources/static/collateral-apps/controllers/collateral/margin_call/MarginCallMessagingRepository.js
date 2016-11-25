@@ -3,8 +3,8 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope', '$socket', 'uiGridConstants', 'MarginCallService', 'ModalService',
-    function ($rootScope, $scope, $socket, uiGridConstants, MarginCallService, ModalService) {
+DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope', 'uiGridConstants', 'MarginCallService', 'ModalService',
+    function ($rootScope, $scope, uiGridConstants, MarginCallService, ModalService) {
 
 
         $scope.gridMessagesOptions = {
