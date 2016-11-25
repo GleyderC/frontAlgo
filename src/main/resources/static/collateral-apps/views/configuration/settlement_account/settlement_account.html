@@ -1,0 +1,33 @@
+<div class="portlet light" ng-controller="CCPsController as CCPsCtrl">
+
+    <div class="row" du-smooth-scroll du-scrollspy>
+        <!-- BEGIN CHART PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-call-in font-dark font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> CCPs </span>
+                    <span class="caption-helper">{{dt | date:'dd/MM/yyyy HH:mm'}}</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                    <a href="" class="fullscreen"> </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <uib-tabset >
+                        <uib-tab ng-repeat="tab in tabs">
+                            <uib-tab-heading>
+                                <i class="{{tab.icon}}"></i>{{tab.title}}
+                            </uib-tab-heading>
+                            <div ng-include=tab.templateUrl></div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </div>
+        <!-- END CHART PORTLET-->
+    </div>
+    <!-- END ROW -->
+</div>

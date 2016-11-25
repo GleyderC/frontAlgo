@@ -1,0 +1,33 @@
+<div class="portlet light" ng-controller="SearchSettlementAccountsController">
+    <div class="row portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-dollar font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze"> Settlement Account</span>
+                <span class="caption-helper">Lists</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+            </div>
+            <div class="col-md-3">
+                <div class="btn-group">
+                    <button class="btn sbold green" ng-click="addSettlementAccount()"> Add New
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="row">
+                <div ui-grid="gridSettlementAccountsOptions" ui-grid-exporter ui-grid-auto-resize
+                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                     class="grid grid-collateral"></div>
+            </div>
+
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <!-- END ROW -->
+</div>
