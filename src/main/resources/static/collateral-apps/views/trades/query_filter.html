@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-3">
             <div class="btn-group">
-                <button class="btn sbold green" ng-click="addSimulation()"> Add New
+                <button class="btn sbold green" ng-click="addQueryFilter()"> Add New
                     <i class="fa fa-plus"></i>
                 </button>
             </div>
@@ -33,12 +33,12 @@
                     </div>
                     <div class="col-md-2" >
                         <label class="control-label">Clearing House</label>
-                        <ui-select ng-model="QueryFilter.ProductGroup.selected" ng-change="QueryFilter.filterProduct('ProductGroup', QueryFilter.ProductGroup.selected)" theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.ClearingHouse.selected" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select Clearing House">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductGroup in QueryFilter.ProductGroups | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                            <ui-select-choices repeat="ClearingHouse in QueryFilter.ClearingHouses | filter: {name: $select.search}">
+                                <div ng-bind-html="ClearingHouse.name | highlight: $select.search"></div>
                                 <small>
-                                    <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                                    <span ng-bind-html="''+ClearingHouse.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="col-md-2" >
                         <label class="control-label">Family</label>
-                        <ui-select ng-model="QueryFilter.ProductFamily.selected"  theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.ProductFamily.selected"   ng-change="QueryFilter.filterProduct('ProductFamily', QueryFilter.ProductFamily.selected)" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select Family">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="ProductFamily in QueryFilter.ProductFamilies | filter: {name: $select.search}">
                                 <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
@@ -98,32 +98,8 @@
                 <div class="row">
                     <div class="col-md-2" >
                         <label class="control-label">Group</label>
-                        <ui-select ng-model="QueryFilter.ProductFamily.selected" ng-change="QueryFilter.filterProduct('ProductFamily', QueryFilter.ProductFamily.selected)" theme="select2" style="display: block;">
-                            <ui-select-match placeholder="Select Group">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductFamily in QueryFilter.ProductFamilies | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                <small>
-                                    <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                </small>
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
-                    <div class="col-md-2" >
-                        <label class="control-label">Type</label>
-                        <ui-select ng-model="QueryFilter.ProductFamily.selected" ng-change="QueryFilter.filterProduct('ProductFamily', QueryFilter.ProductFamily.selected)" theme="select2" style="display: block;">
-                            <ui-select-match placeholder="Select type">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductFamily in QueryFilter.ProductFamilies | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
-                                <small>
-                                    <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
-                                </small>
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
-                    <div class="col-md-2" >
-                        <label class="control-label">Counterparty</label>
                         <ui-select ng-model="QueryFilter.ProductGroup.selected" ng-change="QueryFilter.filterProduct('ProductGroup', QueryFilter.ProductGroup.selected)" theme="select2" style="display: block;">
-                            <ui-select-match placeholder="Select Counterparty">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-match placeholder="Select Product Group">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="ProductGroup in QueryFilter.ProductGroups | filter: {name: $select.search}">
                                 <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
                                 <small>
@@ -133,13 +109,37 @@
                         </ui-select>
                     </div>
                     <div class="col-md-2" >
-                        <label class="control-label">Trader</label>
+                        <label class="control-label">Type</label>
                         <ui-select ng-model="QueryFilter.ProductType.selected" ng-change="QueryFilter.filterProduct('ProductType',QueryFilter.ProductType.selected)" theme="select2" style="display: block;">
-                            <ui-select-match placeholder="Select Trader">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="ProductType in QueryFilter.ProductTypes | filter: {name: $select.search}">
                                 <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
                                 <small>
                                     <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Counterparty</label>
+                        <ui-select ng-model="QueryFilter.Counterparty.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Counterparty">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="Counterparty in QueryFilter.Counterparties | filter: {name: $select.search}">
+                                <div ng-bind-html="Counterparty.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+Counterparty.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Trader</label>
+                        <ui-select ng-model="QueryFilter.Trader.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Trader">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="Trader in QueryFilter.Traders | filter: {name: $select.search}">
+                                <div ng-bind-html="Trader.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+Trader.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>
@@ -156,12 +156,12 @@
                     </div>
                     <div class="col-md-2" >
                         <label class="control-label">ISIN</label>
-                        <ui-select ng-model="QueryFilter.ProductType.selected" ng-change="QueryFilter.filterProduct('ProductType',QueryFilter.ProductType.selected)" theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.ISIN.selected" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select ISIN">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductType in QueryFilter.ProductTypes | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
+                            <ui-select-choices repeat="ISIN in QueryFilter.ProductTypes | filter: {name: $select.search}">
+                                <div ng-bind-html="ISIN.name | highlight: $select.search"></div>
                                 <small>
-                                    <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
+                                    <span ng-bind-html="''+ISIN.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>
@@ -170,60 +170,60 @@
                 <div class="row">
                     <div class="col-md-2" >
                         <label class="control-label">Sense</label>
-                        <ui-select ng-model="QueryFilter.ProductType.selected" ng-change="QueryFilter.filterProduct('ProductType',QueryFilter.ProductType.selected)" theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.Sense.selected" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select Sense">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductType in QueryFilter.ProductTypes | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
+                            <ui-select-choices repeat="Sense in QueryFilter.Senses | filter: {name: $select.search}">
+                                <div ng-bind-html="Sense.name | highlight: $select.search"></div>
                                 <small>
-                                    <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
+                                    <span ng-bind-html="''+Sense.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-2" >
                         <label class="control-label">Portfolio</label>
-                        <ui-select ng-model="QueryFilter.ProductFamily.selected" ng-change="QueryFilter.filterProduct('ProductFamily', QueryFilter.ProductFamily.selected)" theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.Portfolio.selected" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select Portfolio">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductFamily in QueryFilter.ProductFamilies | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                            <ui-select-choices repeat="Portfolio in QueryFilter.Portfolios | filter: {name: $select.search}">
+                                <div ng-bind-html="Portfolio.name | highlight: $select.search"></div>
                                 <small>
-                                    <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                    <span ng-bind-html="''+Portfolio.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-2" >
                         <label class="control-label">Instrument</label>
-                        <ui-select ng-model="QueryFilter.ProductGroup.selected" ng-change="QueryFilter.filterProduct('ProductGroup', QueryFilter.ProductGroup.selected)" theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.Instrument.selected" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select Instrument">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductGroup in QueryFilter.ProductGroups | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                            <ui-select-choices repeat="Instrument in QueryFilter.Instruments | filter: {name: $select.search}">
+                                <div ng-bind-html="Instrument.name | highlight: $select.search"></div>
                                 <small>
-                                    <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                                    <span ng-bind-html="''+Instrument.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-2" >
                         <label class="control-label">Col Type</label>
-                        <ui-select ng-model="QueryFilter.ProductGroup.selected" ng-change="QueryFilter.filterProduct('ProductGroup', QueryFilter.ProductGroup.selected)" theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.ColType.selected" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select Col Type">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductGroup in QueryFilter.ProductGroups | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                            <ui-select-choices repeat="ColType in QueryFilter.ColTypes | filter: {name: $select.search}">
+                                <div ng-bind-html="ColType.name | highlight: $select.search"></div>
                                 <small>
-                                    <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                                    <span ng-bind-html="''+ColType.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                     <div class="col-md-2" >
                         <label class="control-label">Contract</label>
-                        <ui-select ng-model="QueryFilter.ProductGroup.selected" ng-change="QueryFilter.filterProduct('ProductGroup', QueryFilter.ProductGroup.selected)" theme="select2" style="display: block;">
+                        <ui-select ng-model="QueryFilter.Contract.selected" theme="select2" style="display: block;">
                             <ui-select-match placeholder="Select Contract">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="ProductGroup in QueryFilter.ProductGroups | filter: {name: $select.search}">
-                                <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                            <ui-select-choices repeat="Contract in QueryFilter.Contracts | filter: {name: $select.search}">
+                                <div ng-bind-html="Contract.name | highlight: $select.search"></div>
                                 <small>
-                                    <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                                    <span ng-bind-html="''+Contract.description | highlight: $select.search"></span>
                                 </small>
                             </ui-select-choices>
                         </ui-select>

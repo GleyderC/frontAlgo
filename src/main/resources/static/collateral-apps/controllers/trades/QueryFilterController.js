@@ -109,7 +109,13 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
 
         $scope.QueryFilter.ProductFamily = {};
         $scope.QueryFilter.ProductFamilies = localStorageService.get('ProductFamily');
+        
+        $scope.QueryFilter.ProductGroup = {};
+        $scope.QueryFilter.ProductGroups = localStorageService.get('ProductGroup');
 
+        $scope.QueryFilter.ProductType = {};
+        $scope.QueryFilter.ProductTypes = localStorageService.get('ProductType');
+        
         $scope.QueryFilter.currencyList = localStorageService.get("CurrencyEnum");
         $scope.QueryFilter.currency ={};
 
@@ -132,6 +138,63 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
                 $scope.QueryFilter.startPopup.opened = true;
             }
         };
+
+        function findProductFromPrefix(arr, prefix) {
+            //var values = [];
+            for (var i = arr.length-1; i >=0;  i--) {
+                if (arr[i].key.indexOf(prefix) !== 0) {
+                    arr.splice(i, 1);
+                    //values.push(arr[i].split(splitChar)[1]);
+                }
+            }
+        }
+
+        $scope.QueryFilter.filterProduct = function (product, prefix) {
+            //console.log(product);
+            //console.log(prefix.key);
+            if(product == "ProductFamily"){
+
+                $scope.QueryFilter.ProductGroups = localStorageService.get('ProductGroup');
+                findProductFromPrefix($scope.QueryFilter.ProductGroups, prefix.name);
+                $scope.QueryFilter.ProductGroup = {selected: {}};
+                $scope.QueryFilter.ProductGroup.selected = $scope.QueryFilter.ProductGroups[0];
+                $scope.QueryFilter.filterProduct('ProductGroup',$scope.QueryFilter.ProductGroup.selected);
+            }
+
+            else if(product == "ProductGroup"){
+                $scope.QueryFilter.ProductGroup.selected = prefix;
+                $scope.QueryFilter.ProductTypes = localStorageService.get('ProductType');
+                findProductFromPrefix($scope.QueryFilter.ProductTypes,prefix.name);
+                $scope.QueryFilter.ProductType = {selected: {}};
+                $scope.QueryFilter.ProductType = {selected: $scope.QueryFilter.ProductTypes[0]};
+
+                $scope.QueryFilter.ProductFamily = {selected: {}};
+                $scope.QueryFilter.ProductFamily.selected = $scope.QueryFilter.ProductFamilies.find(function (productFamily) {
+                    if(productFamily.name == prefix.key){
+                        return productFamily;
+                    }
+                });
+            }
+            else if(product == "ProductType"){
+
+                if(!$scope.QueryFilter.ProductGroup.selected){
+                    $scope.QueryFilter.ProductGroup.selected = $scope.QueryFilter.ProductGroups.find(function (productGroup) {
+                        if(productGroup.name == prefix.key){
+                            return productGroup;
+                        }
+                    });
+                    if($scope.QueryFilter.ProductGroup.selected){
+                        $scope.QueryFilter.ProductFamily.selected = $scope.QueryFilter.ProductFamilies.find(function (productFamily) {
+                            if(productFamily.name == $scope.QueryFilter.ProductGroup.selected.key){
+                                return productFamily;
+                            }
+                        })
+                    }
+
+                }
+            }
+        }
+
 
         $scope.filterIssuerRisk = function () {
         	if($scope.legalEntityPO.selected !==undefined) {
