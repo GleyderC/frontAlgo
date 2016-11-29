@@ -439,6 +439,25 @@ DashboardApp.service('MenuService', function () {
                     }
                 ]
             }, /* #8 User Messages */
+            {
+                id: 'trades',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-area-chart font-yellow-soft',
+                    title: 'MENU.TRADES'
+                },
+                subMenuItems: [
+                    {
+                        id: 'trades_query_filter',
+                        head: {
+                            icon: 'fa fa-area-chart font-yellow-soft',
+                            title: 'MENU.TRADES.QUERY_FILTER'
+                        },
+                        view: '/trades/query_filter.html',
+                        unique: true
+                    }
+                ]
+            }, /* #9 Trade Query */
         ];
 
 

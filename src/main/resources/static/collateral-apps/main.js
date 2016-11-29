@@ -470,6 +470,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/configuration/ccps/CCPsFeesController.js',
                             'collateral-apps/controllers/configuration/settlement_account/SearchSettlementAccountsController.js',
 
+                            /* Trades Controller */
+                            'collateral-apps/controllers/trades/QueryFilterController.js',
+
                             /* Analytics Controller*/
                             'collateral-apps/controllers/analytics/what_if_simulation/SearchSimulationController.js',
                             'collateral-apps/controllers/analytics/what_if_simulation/SimulationController.js',
