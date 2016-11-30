@@ -29,21 +29,18 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
 
         //Grid Config
         $scope.gridQueryFilterOptions = {
-            expandableRowTemplate: 'country_risk_expandable.html',
-            //expandableRowHeight: 600,
-            showTreeExpandNoChildren: true,
             showGridFooter: true,
-            paginationPageSizes: [15, 50, 100, 200, 500],
-            paginationPageSize: 50,
+            paginationPageSizes: [12, 50, 100, 200, 500],
+            paginationPageSize: 12,
             enableColumnResizing: true,
             enableFiltering: true,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
-            exporterCsvFilename: 'margin-call-QueryFilter.csv',
+            exporterCsvFilename: 'trade_query_filter.csv',
             exporterPdfDefaultStyle: {fontSize: 9},
             exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
             exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: {text: "Margin Call - QueryFilter", style: 'headerStyle'},
+            exporterPdfHeader: {text: "Legal Entity", style: 'headerStyle'},
             exporterPdfFooter: function (currentPage, pageCount) {
                 return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
             },
@@ -58,16 +55,11 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
-                $scope.gridApi.grid.registerRowsProcessor( $scope.countryGridFilter, 200 );
-                gridApi.expandable.on.rowExpandedStateChanged($scope,function(row){
-                    $scope.gridQueryFilterOptions.expandableRowHeight = row.entity.subGridOptions.length * 30;
-                });
             }
         };
 
         $scope.gridQueryFilterOptions.columnDefs = [
-            {field: 'id', width:40, enableSorting: false, enableFiltering:false, cellTemplate: '<span class="f32">' +
-            '<span id="flag" class="flag {{COL_FIELD | lowercase}}"></span></span>'},
+            {field: 'id', enableCellEdit: false},
             {field: 'country',
                 sort: {
                     direction: uiGridConstants.ASC,
@@ -119,6 +111,12 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
         $scope.QueryFilter.currencyList = localStorageService.get("CurrencyEnum");
         $scope.QueryFilter.currency ={};
 
+        $scope.QueryFilter.TradeQuerySense = {};
+        $scope.QueryFilter.TradeQuerySenses = localStorageService.get("TradeQuerySense");
+
+        $scope.QueryFilter.ColType = {};
+        $scope.QueryFilter.ColTypes = localStorageService.get("CollateralLiabilityType");
+
         $scope.QueryFilter.tradeDate = new Date();
         $scope.QueryFilter.maturityDate = new Date();
         $scope.QueryFilter.startDate = new Date();
@@ -126,6 +124,7 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
         $scope.QueryFilter.tradePopup = { opened: false};
         $scope.QueryFilter.maturityPopup = { opened: false};
         $scope.QueryFilter.startPopup = { opened: false};
+
 
         $scope.QueryFilter.openDatePicker = function (datePicker) {
             if(datePicker == "trade"){
