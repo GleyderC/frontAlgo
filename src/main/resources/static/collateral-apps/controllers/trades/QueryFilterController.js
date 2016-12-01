@@ -4,8 +4,8 @@ var DashboardApp = angular.module('DashboardApp');
 
 
 DashboardApp.controller('QueryFilterController', [ '$scope',
-    'localStorageService', 'LegalEntityService', 'RiskService', 'ArrayService','uiGridConstants',
-    function ( $scope, localStorageService, LegalEntityService, RiskService, ArrayService, uiGridConstants) {
+    'localStorageService', 'TradeQueryService', 'LegalEntityService','uiGridConstants',
+    function ( $scope, localStorageService, TradeQueryService, LegalEntityService,uiGridConstants) {
 
         $scope.currencies = localStorageService.get("CurrencyEnum");
         $scope.countries = localStorageService.get("CountryEnum");
@@ -85,7 +85,7 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
             {field: 'NominalCurr2'},
             {field: 'Nominal2'},
             {field: 'MarketValue'},
-            {field: 'Colateral'},
+            {field: 'Collateral'},
             {field: 'ColType'},
             {field: 'Index'},
             {field: 'IndexLabel'},
@@ -195,64 +195,11 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
         }
 
 
-        $scope.filterIssuerRisk = function () {
-        	if($scope.legalEntityPO.selected !==undefined) {
-            RiskService.getExposureByCountry($scope.legalEntityPO.selected.id,"LE",
-                $scope.legalEntityCounterParty.selected.id,$scope.currency.selected.name,
-                $scope.sovereign,$scope.public,$scope.corporate).then(function (result) {
 
-                let postedArray = [];
-                let receiveArray = [];
-                let availableArray = [];
-                _that.IssuersRisk = [];
-                let IssuersRiskCountry = [];
+        TradeQueryService.getAll().then(function (result) {
+            $scope.gridQueryFilterOptions.data= result.data.dataResponse;
+        });
 
-                //console.log(result.data.dataResponse);
-                result.data.dataResponse.forEach(function (Risk) {
-                    if(Risk.postedAmount != 0 || Risk.receivedAmount != 0 || Risk.availableAmount != 0) {
-                        if(Risk.name == 'UK')
-                            Risk.name = 'GB';
-
-                        let country = $scope.countries.filter(function (country) {
-                            if(country.key == Risk.name){
-                                Risk.country = country.name;
-                            }
-                        });
-                        
-                        _that.IssuersRisk.push(Risk);
-                        IssuersRiskCountry.push(Risk);
-                        
-                    }
-                    if(Risk.postedAmount > 0)
-                        postedArray.push({name:Risk.name, y: Risk.postedAmount});
-
-                    if(Risk.receivedAmount > 0)
-                        receiveArray.push({name:Risk.name, y: Risk.receivedAmount});
-
-                    if(Risk.availableAmount > 0)
-                        availableArray.push({name:Risk.name, y: Risk.availableAmount});
-
-                });
-                //console.log(_that.IssuersRisk);
-
-                $scope.gridQueryFilterOptions.data = _that.IssuersRisk;
-
-                $scope.gridQueryFilterOptions.data.forEach(function (data) {
-
-                    data.subGridOptions = {
-                        columnDefs: [
-                            {field: 'issuer'},
-                            {field: 'issuerType'},
-                            {field: 'posted',  cellFilter: 'number:0', cellClass:'collateral-money'  },
-                            {field: 'received', cellFilter: 'number:0', cellClass:'collateral-money'  },
-                            {field: 'available', cellFilter: 'number:0', cellClass:'collateral-money'  }
-                        ],
-                        data: data.detailByIssuerList
-                    }
-                })
-            });
-        }
-        }
 
         LegalEntityService.getAll().then(function (result) {
             $scope.legalEntitiesPO = [];
@@ -279,8 +226,6 @@ DashboardApp.controller('QueryFilterController', [ '$scope',
             $scope.currency.selected = $scope.currencies[1];
             $scope.legalEntityPO.selected = $scope.legalEntitiesPO[0];
             $scope.legalEntityCounterParty.selected = $scope.legalEntitiesCounterParty[0];
-
-            $scope.filterIssuerRisk();
 
         });
 
