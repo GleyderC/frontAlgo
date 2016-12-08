@@ -95,7 +95,7 @@ angular.module('DashboardApp')
         };
         
         this.updateDispute  = function(dispute){
-        	  return $request.post('/servlet/MarginCallAndContract/UpdateDispute/',dispute); 
+        	  return $request.post('/servlet/MarginCallAndContract/UpdateDispute/',dispute);
         };
 
         /*MarginCallService.getMCMessages().then(function (Response){
