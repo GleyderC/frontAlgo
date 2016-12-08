@@ -128,8 +128,12 @@ angular.module('DashboardApp')
         	  return $request.post('/servlet/Mapping/ProcessMCMessage',params);
         };
 
+        this.SaveMappingDefinitionByUser  = function(params){
+        	  return $request.post('/servlet/Mapping/SaveMappingDefinitionByUser',params);
+        };
+
         this.SaveMappingDefinition  = function(params){
-        	  return $request.post('/servlet/Mapping/SaveMappingDefinitionByContract',params);
+            return $request.post('/servlet/Mapping/SaveMappingDefinitionByContract',params);
         };
 
         this.getInputFilesDefinition  = function(){

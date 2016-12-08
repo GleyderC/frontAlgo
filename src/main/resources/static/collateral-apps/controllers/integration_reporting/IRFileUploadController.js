@@ -345,10 +345,11 @@ DashboardApp.controller('IRFileUploadController',
                                             let objRequest = {};
 
                                             objRequest = {
-                                                contractId: _that.MCMessageInformation.contractId,
+                                                contractId: _that.MCMessageInformation.oldMappingDefinition.contractId,
                                                 mappingDefinition: {
-                                                    fileType: _that.fileDefinitions.selected.fileType,
-                                                    fileNameIncludes: "", //TODO
+                                                    fileType: _that.MCMessageInformation.oldMappingDefinition.fileType,
+                                                    documentType:  _that.MCMessageInformation.oldMappingDefinition.documentType,
+                                                    fileNameIncludes: _that.MCMessageInformation.oldMappingDefinition.fileNameIncludes,
                                                     fields: []
                                                 }
                                             };
@@ -358,7 +359,7 @@ DashboardApp.controller('IRFileUploadController',
                                                 if (angular.isUndefined(col.colDefinitionInfo))
                                                     return;
 
-                                                objRequest.fields.push({
+                                                objRequest.mappingDefinition.fields.push({
                                                     inputPosition: col.indexCol,
                                                     fieldMap: col.colDefinitionInfo.columnField,
                                                     format: col.colDefinitionInfo.dataFormat
@@ -366,7 +367,7 @@ DashboardApp.controller('IRFileUploadController',
 
                                             });
 
-                                            MarginCallService.SaveMappingDefinition(objRequest);
+                                            MarginCallService.SaveMappingDefinitionByUser(objRequest);
 
                                             $uibModalInstance.close();
                                             toastr.success("Mapping Definition was saved", "Success:");
