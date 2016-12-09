@@ -414,8 +414,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/services/analytics/SimulationService.js',
                             
                             'collateral-apps/services/collateral/CollateralAllocationService.js',
-                            'collateral-apps/services/trade_query/TradeQueryService.js',
 
+                            'collateral-apps/services/trades/TradeQueryService.js',
+                            'collateral-apps/services/trades/TradeDealEntryService.js',
+                            'collateral-apps/services/trades/TradeProposalService.js',
 
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/static_data/LegalEntityController.js',
@@ -474,11 +476,17 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 
                             /* Trades Controller */
                             'collateral-apps/controllers/trades/QueryFilterController.js',
+                            'collateral-apps/controllers/trades/DealEntryListController.js',
+                            'collateral-apps/controllers/trades/SearchProposalController.js',
+                            'collateral-apps/controllers/trades/DealEntryController.js',
+                            'collateral-apps/controllers/trades/ProposalController.js',
+                            'collateral-apps/controllers/trades/TradeProposalInfoController.js',
+
 
                             /* Analytics Controller*/
                             'collateral-apps/controllers/analytics/what_if_simulation/SearchSimulationController.js',
                             'collateral-apps/controllers/analytics/what_if_simulation/SimulationController.js',
-                            'collateral-apps/controllers/analytics/what_if_simulation/SimulationTradePropusalController.js',
+                            'collateral-apps/controllers/analytics/what_if_simulation/SimulationTradeProposalController.js',
                             'collateral-apps/controllers/analytics/what_if_simulation/test/TestSimulationController.js',
 
                         ],

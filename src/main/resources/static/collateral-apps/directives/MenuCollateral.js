@@ -448,6 +448,24 @@ DashboardApp.service('MenuService', function () {
                 },
                 subMenuItems: [
                     {
+                        id: 'deal_entry',
+                        head: {
+                            icon: 'fa fa-area-chart font-yellow-soft',
+                            title: 'MENU.TRADES.DEAL_ENTRY'
+                        },
+                        view: '/trades/deal_entry_list.html',
+                        unique: true
+                    },
+                    {
+                        id: 'proposal',
+                        head: {
+                            icon: 'fa fa-area-chart font-yellow-soft',
+                            title: 'MENU.TRADES.PROPOSAL'
+                        },
+                        view: '/trades/search_proposal.html',
+                        unique: true
+                    },
+                    {
                         id: 'trades_query_filter',
                         head: {
                             icon: 'fa fa-area-chart font-yellow-soft',

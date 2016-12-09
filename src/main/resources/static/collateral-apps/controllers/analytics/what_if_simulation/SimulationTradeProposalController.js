@@ -2,102 +2,102 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-DashboardApp.controller('SimulationTradePropusalController', ['SimulationService', '$scope',
+DashboardApp.controller('SimulationTradeProposalController', ['SimulationService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants', 'DashboardService', '$q',
     function (SimulationService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService, $q) {
 
-        $scope.SimulationTradePropusal = {};
+        $scope.SimulationTradeProposal = {};
 
-        $scope.SimulationTradePropusal.ProductFamily = {};
-        $scope.SimulationTradePropusal.ProductFamilies = localStorageService.get('ProductFamily');
+        $scope.SimulationTradeProposal.ProductFamily = {};
+        $scope.SimulationTradeProposal.ProductFamilies = localStorageService.get('ProductFamily');
 
-        $scope.SimulationTradePropusal.ProductGroup = {};
-        $scope.SimulationTradePropusal.ProductGroups = localStorageService.get('ProductGroup');
+        $scope.SimulationTradeProposal.ProductGroup = {};
+        $scope.SimulationTradeProposal.ProductGroups = localStorageService.get('ProductGroup');
 
-        $scope.SimulationTradePropusal.ProductType = {};
-        $scope.SimulationTradePropusal.ProductTypes = localStorageService.get('ProductType');
+        $scope.SimulationTradeProposal.ProductType = {};
+        $scope.SimulationTradeProposal.ProductTypes = localStorageService.get('ProductType');
 
-        $scope.SimulationTradePropusal.PayBasisCalculationConvention = {};
-        $scope.SimulationTradePropusal.ReceiveBasisCalculationConvention = {};
-        $scope.SimulationTradePropusal.BasisCalculationConventions = localStorageService.get('BasisCalculationConvention');
+        $scope.SimulationTradeProposal.PayBasisCalculationConvention = {};
+        $scope.SimulationTradeProposal.ReceiveBasisCalculationConvention = {};
+        $scope.SimulationTradeProposal.BasisCalculationConventions = localStorageService.get('BasisCalculationConvention');
 
-        $scope.SimulationTradePropusal.currencyList = localStorageService.get("CurrencyEnum");
-        $scope.SimulationTradePropusal.currency ={};
+        $scope.SimulationTradeProposal.currencyList = localStorageService.get("CurrencyEnum");
+        $scope.SimulationTradeProposal.currency ={};
 
-        $scope.SimulationTradePropusal.TradeType = {};
-        $scope.SimulationTradePropusal.TradeTypes = localStorageService.get('IRSType');
+        $scope.SimulationTradeProposal.TradeType = {};
+        $scope.SimulationTradeProposal.TradeTypes = localStorageService.get('IRSType');
 
-        $scope.SimulationTradePropusal.TradeSubType = {};
-        $scope.SimulationTradePropusal.TradeSubTypes = localStorageService.get('IRSSubtype');
+        $scope.SimulationTradeProposal.TradeSubType = {};
+        $scope.SimulationTradeProposal.TradeSubTypes = localStorageService.get('IRSSubtype');
 
 
-        $scope.SimulationTradePropusal.PayConvention = {};
-        $scope.SimulationTradePropusal.PayConventions = localStorageService.get('Convention');
+        $scope.SimulationTradeProposal.PayConvention = {};
+        $scope.SimulationTradeProposal.PayConventions = localStorageService.get('Convention');
 
-        $scope.SimulationTradePropusal.ReceiveConvention = {};
-        $scope.SimulationTradePropusal.ReceiveConventions = localStorageService.get('Convention');
+        $scope.SimulationTradeProposal.ReceiveConvention = {};
+        $scope.SimulationTradeProposal.ReceiveConventions = localStorageService.get('Convention');
 
-        $scope.SimulationTradePropusal.PayStubType = {};
-        $scope.SimulationTradePropusal.PayStubTypes = localStorageService.get('StubType');
+        $scope.SimulationTradeProposal.PayStubType = {};
+        $scope.SimulationTradeProposal.PayStubTypes = localStorageService.get('StubType');
 
-        $scope.SimulationTradePropusal.ReceiveStubType = {};
-        $scope.SimulationTradePropusal.ReceiveStubTypes = localStorageService.get('StubType');
+        $scope.SimulationTradeProposal.ReceiveStubType = {};
+        $scope.SimulationTradeProposal.ReceiveStubTypes = localStorageService.get('StubType');
 
-        $scope.SimulationTradePropusal.PayPaymentFrequency = {};
-        $scope.SimulationTradePropusal.
+        $scope.SimulationTradeProposal.PayPaymentFrequency = {};
+        $scope.SimulationTradeProposal.
             PayPaymentFrequencies = [{key: '1D', number: 1, letter: 'D'},{key: '1M', number: 1, letter: 'M'},
             {key: '3M', number: 3, letter: 'M'}, {key: '6M', number: 6, letter: 'M'}, {key: '12M', number: 12, letter: 'M'}];
 
-        $scope.SimulationTradePropusal.ReceivePaymentFrequency = {};
-        $scope.SimulationTradePropusal.ReceivePaymentFrequencies = [{key: '1D', number: 1, letter: 'D'},{key: '1M', number: 1, letter: 'M'},
+        $scope.SimulationTradeProposal.ReceivePaymentFrequency = {};
+        $scope.SimulationTradeProposal.ReceivePaymentFrequencies = [{key: '1D', number: 1, letter: 'D'},{key: '1M', number: 1, letter: 'M'},
             {key: '3M', number: 3, letter: 'M'}, {key: '6M', number: 6, letter: 'M'}, {key: '12M', number: 12, letter: 'M'}];
 
-        $scope.SimulationTradePropusal.PayRollFrequency = {};
-        $scope.SimulationTradePropusal.
+        $scope.SimulationTradeProposal.PayRollFrequency = {};
+        $scope.SimulationTradeProposal.
             PayRollFrequencies = [{key: '1D', number: 1, letter: 'D'},{key: '1M', number: 1, letter: 'M'},
             {key: '3M', number: 3, letter: 'M'}, {key: '6M', number: 6, letter: 'M'}, {key: '12M', number: 12, letter: 'M'}];
 
-        $scope.SimulationTradePropusal.ReceiveRollFrequency = {};
-        $scope.SimulationTradePropusal.ReceiveRollFrequencies = [{key: '1D', number: 1, letter: 'D'},{key: '1M', number: 1, letter: 'M'},
+        $scope.SimulationTradeProposal.ReceiveRollFrequency = {};
+        $scope.SimulationTradeProposal.ReceiveRollFrequencies = [{key: '1D', number: 1, letter: 'D'},{key: '1M', number: 1, letter: 'M'},
             {key: '3M', number: 3, letter: 'M'}, {key: '6M', number: 6, letter: 'M'}, {key: '12M', number: 12, letter: 'M'}];
 
-        $scope.SimulationTradePropusal.PayRollConvention = {};
-        $scope.SimulationTradePropusal.
+        $scope.SimulationTradeProposal.PayRollConvention = {};
+        $scope.SimulationTradeProposal.
             PayRollConventions = [];
 
-        $scope.SimulationTradePropusal.ReceiveRollConvention = {};
-        $scope.SimulationTradePropusal.
+        $scope.SimulationTradeProposal.ReceiveRollConvention = {};
+        $scope.SimulationTradeProposal.
             ReceiveRollConventions = [];
 
-        $scope.SimulationTradePropusal.ReceiveRollConvention = {};
-        $scope.SimulationTradePropusal.
+        $scope.SimulationTradeProposal.ReceiveRollConvention = {};
+        $scope.SimulationTradeProposal.
             ReceiveRollConventions = [];
 
-        $scope.SimulationTradePropusal.PayCompoundingMethod = {};
-        $scope.SimulationTradePropusal.PayCompoundingMethods = [];
+        $scope.SimulationTradeProposal.PayCompoundingMethod = {};
+        $scope.SimulationTradeProposal.PayCompoundingMethods = [];
 
-        $scope.SimulationTradePropusal.ReceiveCompoundingMethod = {};
-        $scope.SimulationTradePropusal.ReceiveCompoundingMethods = [];
+        $scope.SimulationTradeProposal.ReceiveCompoundingMethod = {};
+        $scope.SimulationTradeProposal.ReceiveCompoundingMethods = [];
 
-        $scope.SimulationTradePropusal.PayTenor ={}
-        $scope.SimulationTradePropusal.PayTenors = [];
+        $scope.SimulationTradeProposal.PayTenor ={}
+        $scope.SimulationTradeProposal.PayTenors = [];
 
-        $scope.SimulationTradePropusal.ReceiveTenor ={}
-        $scope.SimulationTradePropusal.ReceiveTenors = [];
+        $scope.SimulationTradeProposal.ReceiveTenor ={}
+        $scope.SimulationTradeProposal.ReceiveTenors = [];
 
 
-        $scope.SimulationTradePropusal.filterLeg = function (leg) {
+        $scope.SimulationTradeProposal.filterLeg = function (leg) {
 
             if(leg == "pay"){
-                if($scope.SimulationTradePropusal.PayLegType=="FIXED"){
-                    $scope.SimulationTradePropusal.PayBasisCalculationConvention.selected = $scope.SimulationTradePropusal.BasisCalculationConventions.find(function (basis) {
+                if($scope.SimulationTradeProposal.PayLegType=="FIXED"){
+                    $scope.SimulationTradeProposal.PayBasisCalculationConvention.selected = $scope.SimulationTradeProposal.BasisCalculationConventions.find(function (basis) {
                         if(basis.key == "_30_360"){
                             return basis;
                         }
                     });
                 }
-                else if($scope.SimulationTradePropusal.PayLegType=="FLOATING"){
-                    $scope.SimulationTradePropusal.PayBasisCalculationConvention.selected = $scope.SimulationTradePropusal.BasisCalculationConventions.find(function (basis) {
+                else if($scope.SimulationTradeProposal.PayLegType=="FLOATING"){
+                    $scope.SimulationTradeProposal.PayBasisCalculationConvention.selected = $scope.SimulationTradeProposal.BasisCalculationConventions.find(function (basis) {
                         if(basis.key == "ACT_360"){
                             return basis;
                         }
@@ -105,15 +105,15 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
                 }
             }
             else if(leg == "receive"){
-                if($scope.SimulationTradePropusal.ReceiveLegType=="FIXED"){
-                    $scope.SimulationTradePropusal.ReceiveBasisCalculationConvention.selected = $scope.SimulationTradePropusal.BasisCalculationConventions.find(function (basis) {
+                if($scope.SimulationTradeProposal.ReceiveLegType=="FIXED"){
+                    $scope.SimulationTradeProposal.ReceiveBasisCalculationConvention.selected = $scope.SimulationTradeProposal.BasisCalculationConventions.find(function (basis) {
                         if(basis.key == "_30_360"){
                             return basis;
                         }
                     });
                 }
-                else if($scope.SimulationTradePropusal.ReceiveLegType=="FLOATING"){
-                    $scope.SimulationTradePropusal.ReceiveBasisCalculationConvention.selected = $scope.SimulationTradePropusal.BasisCalculationConventions.find(function (basis) {
+                else if($scope.SimulationTradeProposal.ReceiveLegType=="FLOATING"){
+                    $scope.SimulationTradeProposal.ReceiveBasisCalculationConvention.selected = $scope.SimulationTradeProposal.BasisCalculationConventions.find(function (basis) {
                         if(basis.key == "ACT_360"){
                             return basis;
                         }
@@ -122,15 +122,15 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
             }
         }
 
-        $scope.SimulationTradePropusal.LegTypes = ["FIXED","FLOATING"];
-        $scope.SimulationTradePropusal.PayLegType = $scope.SimulationTradePropusal.LegTypes[0];
-        $scope.SimulationTradePropusal.ReceiveLegType = $scope.SimulationTradePropusal.LegTypes[1];
-        $scope.SimulationTradePropusal.filterLeg("pay");
-        $scope.SimulationTradePropusal.filterLeg("receive");
+        $scope.SimulationTradeProposal.LegTypes = ["FIXED","FLOATING"];
+        $scope.SimulationTradeProposal.PayLegType = $scope.SimulationTradeProposal.LegTypes[0];
+        $scope.SimulationTradeProposal.ReceiveLegType = $scope.SimulationTradeProposal.LegTypes[1];
+        $scope.SimulationTradeProposal.filterLeg("pay");
+        $scope.SimulationTradeProposal.filterLeg("receive");
 
 
-        $scope.SimulationTradePropusal.SupportedIndex = {};
-        $scope.SimulationTradePropusal.SupportedIndexes = localStorageService.get('Supportedindexes');
+        $scope.SimulationTradeProposal.SupportedIndex = {};
+        $scope.SimulationTradeProposal.SupportedIndexes = localStorageService.get('Supportedindexes');
 
         function findProductFromPrefix(arr, prefix) {
             //var values = [];
@@ -142,27 +142,27 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
             }
         }
 
-        $scope.SimulationTradePropusal.filterProduct = function (product, prefix) {
+        $scope.SimulationTradeProposal.filterProduct = function (product, prefix) {
             //console.log(product);
             //console.log(prefix.key);
             if(product == "ProductFamily"){
 
-                $scope.SimulationTradePropusal.ProductGroups = localStorageService.get('ProductGroup');
-                findProductFromPrefix($scope.SimulationTradePropusal.ProductGroups, prefix.name);
-                $scope.SimulationTradePropusal.ProductGroup = {selected: {}};
-                $scope.SimulationTradePropusal.ProductGroup.selected = $scope.SimulationTradePropusal.ProductGroups[0];
-                $scope.SimulationTradePropusal.filterProduct('ProductGroup',$scope.SimulationTradePropusal.ProductGroup.selected);
+                $scope.SimulationTradeProposal.ProductGroups = localStorageService.get('ProductGroup');
+                findProductFromPrefix($scope.SimulationTradeProposal.ProductGroups, prefix.name);
+                $scope.SimulationTradeProposal.ProductGroup = {selected: {}};
+                $scope.SimulationTradeProposal.ProductGroup.selected = $scope.SimulationTradeProposal.ProductGroups[0];
+                $scope.SimulationTradeProposal.filterProduct('ProductGroup',$scope.SimulationTradeProposal.ProductGroup.selected);
             }
 
             else if(product == "ProductGroup"){
-                $scope.SimulationTradePropusal.ProductGroup.selected = prefix;
-                $scope.SimulationTradePropusal.ProductTypes = localStorageService.get('ProductType');
-                findProductFromPrefix($scope.SimulationTradePropusal.ProductTypes,prefix.name);
-                $scope.SimulationTradePropusal.ProductType = {selected: {}};
-                $scope.SimulationTradePropusal.ProductType = {selected: $scope.SimulationTradePropusal.ProductTypes[0]};
+                $scope.SimulationTradeProposal.ProductGroup.selected = prefix;
+                $scope.SimulationTradeProposal.ProductTypes = localStorageService.get('ProductType');
+                findProductFromPrefix($scope.SimulationTradeProposal.ProductTypes,prefix.name);
+                $scope.SimulationTradeProposal.ProductType = {selected: {}};
+                $scope.SimulationTradeProposal.ProductType = {selected: $scope.SimulationTradeProposal.ProductTypes[0]};
 
-                $scope.SimulationTradePropusal.ProductFamily = {selected: {}};
-                $scope.SimulationTradePropusal.ProductFamily.selected = $scope.SimulationTradePropusal.ProductFamilies.find(function (productFamily) {
+                $scope.SimulationTradeProposal.ProductFamily = {selected: {}};
+                $scope.SimulationTradeProposal.ProductFamily.selected = $scope.SimulationTradeProposal.ProductFamilies.find(function (productFamily) {
                     if(productFamily.name == prefix.key){
                         return productFamily;
                     }
@@ -170,15 +170,15 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
             }
             else if(product == "ProductType"){
 
-                if(!$scope.SimulationTradePropusal.ProductGroup.selected){
-                    $scope.SimulationTradePropusal.ProductGroup.selected = $scope.SimulationTradePropusal.ProductGroups.find(function (productGroup) {
+                if(!$scope.SimulationTradeProposal.ProductGroup.selected){
+                    $scope.SimulationTradeProposal.ProductGroup.selected = $scope.SimulationTradeProposal.ProductGroups.find(function (productGroup) {
                         if(productGroup.name == prefix.key){
                             return productGroup;
                         }
                     });
-                    if($scope.SimulationTradePropusal.ProductGroup.selected){
-                        $scope.SimulationTradePropusal.ProductFamily.selected = $scope.SimulationTradePropusal.ProductFamilies.find(function (productFamily) {
-                            if(productFamily.name == $scope.SimulationTradePropusal.ProductGroup.selected.key){
+                    if($scope.SimulationTradeProposal.ProductGroup.selected){
+                        $scope.SimulationTradeProposal.ProductFamily.selected = $scope.SimulationTradeProposal.ProductFamilies.find(function (productFamily) {
+                            if(productFamily.name == $scope.SimulationTradeProposal.ProductGroup.selected.key){
                                 return productFamily;
                             }
                         })
@@ -189,18 +189,18 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
         }
 
 
-        $scope.SimulationTradePropusal.effectiveDate = new Date();
-        $scope.SimulationTradePropusal.terminationDate = new Date();
+        $scope.SimulationTradeProposal.effectiveDate = new Date();
+        $scope.SimulationTradeProposal.terminationDate = new Date();
 
-        $scope.SimulationTradePropusal.effectivePopup = { opened: false};
-        $scope.SimulationTradePropusal.terminationPopup = { opened: false};
+        $scope.SimulationTradeProposal.effectivePopup = { opened: false};
+        $scope.SimulationTradeProposal.terminationPopup = { opened: false};
 
-        $scope.SimulationTradePropusal.openDatePicker = function (datePicker) {
+        $scope.SimulationTradeProposal.openDatePicker = function (datePicker) {
             if(datePicker == "effective"){
-                $scope.SimulationTradePropusal.effectivePopup.opened = true;
+                $scope.SimulationTradeProposal.effectivePopup.opened = true;
             }
             else if(datePicker == "termination"){
-                $scope.SimulationTradePropusal.terminationPopup.opened = true;
+                $scope.SimulationTradeProposal.terminationPopup.opened = true;
             }
         };
 
@@ -400,33 +400,33 @@ DashboardApp.controller('SimulationTradePropusalController', ['SimulationService
                     }
                 }
             };
-            $scope.SimulationTradePropusal.ProductType.selected = {"key": jsonTrade.productType,"name": jsonTrade.productType };
-            $scope.SimulationTradePropusal.filterProduct("ProductType", $scope.SimulationTradePropusal.ProductType.selected);
+            $scope.SimulationTradeProposal.ProductType.selected = {"key": jsonTrade.productType,"name": jsonTrade.productType };
+            $scope.SimulationTradeProposal.filterProduct("ProductType", $scope.SimulationTradeProposal.ProductType.selected);
 
-            $scope.SimulationTradePropusal.TradeType.selected = {"key": jsonTrade.tradeType, "name": jsonTrade.tradeType};
-            $scope.SimulationTradePropusal.TradeSubType.selected = {"key": jsonTrade.tradeSubType, "name": jsonTrade.tradeSubType};
+            $scope.SimulationTradeProposal.TradeType.selected = {"key": jsonTrade.tradeType, "name": jsonTrade.tradeType};
+            $scope.SimulationTradeProposal.TradeSubType.selected = {"key": jsonTrade.tradeSubType, "name": jsonTrade.tradeSubType};
 
-            $scope.SimulationTradePropusal.Notional = jsonTrade.notional;
-            $scope.SimulationTradePropusal.currency.selected = {"key" : jsonTrade.currency, "name": jsonTrade.currency};
-            $scope.SimulationTradePropusal.effectiveDate = "2016-09-01";
-            $scope.SimulationTradePropusal.terminationDate = "2016-09-20";
+            $scope.SimulationTradeProposal.Notional = jsonTrade.notional;
+            $scope.SimulationTradeProposal.currency.selected = {"key" : jsonTrade.currency, "name": jsonTrade.currency};
+            $scope.SimulationTradeProposal.effectiveDate = "2016-09-01";
+            $scope.SimulationTradeProposal.terminationDate = "2016-09-20";
 
-            $scope.SimulationTradePropusal.PayLegType = jsonTrade.irs.swaplegA.legType;
-            $scope.SimulationTradePropusal.PayConvention.selected = {"name": jsonTrade.irs.swaplegA.effectiveDateConvention, "key": jsonTrade.irs.swaplegA.effectiveDateConvention};
+            $scope.SimulationTradeProposal.PayLegType = jsonTrade.irs.swaplegA.legType;
+            $scope.SimulationTradeProposal.PayConvention.selected = {"name": jsonTrade.irs.swaplegA.effectiveDateConvention, "key": jsonTrade.irs.swaplegA.effectiveDateConvention};
 
-            $scope.SimulationTradePropusal.PayStubType.selected = {"name": "FRONT_SHORT"};
-            $scope.SimulationTradePropusal.PayPaymentFrequency.selected = {"name": "6M"};
-            $scope.SimulationTradePropusal.PayRollFrequency.selected = {"name": "6M"};
-            $scope.SimulationTradePropusal.PayRollConvention.selected = {"name": jsonTrade.irs.swaplegA.calcPeriodRollConvention};
+            $scope.SimulationTradeProposal.PayStubType.selected = {"name": "FRONT_SHORT"};
+            $scope.SimulationTradeProposal.PayPaymentFrequency.selected = {"name": "6M"};
+            $scope.SimulationTradeProposal.PayRollFrequency.selected = {"name": "6M"};
+            $scope.SimulationTradeProposal.PayRollConvention.selected = {"name": jsonTrade.irs.swaplegA.calcPeriodRollConvention};
 
-            $scope.SimulationTradePropusal.ReceiveTenor.selected = {"name": jsonTrade.irs.swaplegB.index.tenor};
+            $scope.SimulationTradeProposal.ReceiveTenor.selected = {"name": jsonTrade.irs.swaplegB.index.tenor};
 
-            $scope.SimulationTradePropusal.ReceiveSpread = jsonTrade.irs.swaplegB.spread;
+            $scope.SimulationTradeProposal.ReceiveSpread = jsonTrade.irs.swaplegB.spread;
 
-            $scope.SimulationTradePropusal.ReceiveStubType.selected = {"name": "BACK_SHORT"};
-            $scope.SimulationTradePropusal.ReceivePaymentFrequency.selected = {"name": "3M"};
-            $scope.SimulationTradePropusal.ReceiveRollFrequency.selected = {"name": "6M"};
-            $scope.SimulationTradePropusal.ReceiveRollConvention.selected = {"name": jsonTrade.irs.swaplegB.calcPeriodRollConvention};
+            $scope.SimulationTradeProposal.ReceiveStubType.selected = {"name": "BACK_SHORT"};
+            $scope.SimulationTradeProposal.ReceivePaymentFrequency.selected = {"name": "3M"};
+            $scope.SimulationTradeProposal.ReceiveRollFrequency.selected = {"name": "6M"};
+            $scope.SimulationTradeProposal.ReceiveRollConvention.selected = {"name": jsonTrade.irs.swaplegB.calcPeriodRollConvention};
 
 
         }
