@@ -115,7 +115,7 @@ gulp.task('watch', function () {
 
 gulp.task('serve', function (cb) {
     runSequence('clean:tmp',
-        ['lint:scripts'],
+        //['lint:scripts'],
         ['start:client'],
         'watch', cb);
 });

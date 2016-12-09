@@ -95,7 +95,7 @@ angular.module('DashboardApp')
         };
         
         this.updateDispute  = function(dispute){
-        	  return $request.post('/servlet/MarginCallAndContract/UpdateDispute/',dispute); 
+        	  return $request.post('/servlet/MarginCallAndContract/UpdateDispute/',dispute);
         };
 
         /*MarginCallService.getMCMessages().then(function (Response){
@@ -128,8 +128,12 @@ angular.module('DashboardApp')
         	  return $request.post('/servlet/Mapping/ProcessMCMessage',params);
         };
 
+        this.SaveMappingDefinitionByUser  = function(params){
+        	  return $request.post('/servlet/Mapping/SaveMappingDefinitionByUser',params);
+        };
+
         this.SaveMappingDefinition  = function(params){
-        	  return $request.post('/servlet/Mapping/SaveMappingDefinitionByContract',params);
+            return $request.post('/servlet/Mapping/SaveMappingDefinitionByContract',params);
         };
 
         this.getInputFilesDefinition  = function(){

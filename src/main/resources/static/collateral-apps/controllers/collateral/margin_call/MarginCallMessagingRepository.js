@@ -3,8 +3,8 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope', 'uiGridConstants', 'MarginCallService', 'ModalService',
-    function ($rootScope, $scope, uiGridConstants, MarginCallService, ModalService) {
+DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope', 'uiGridConstants', 'MarginCallService', 'ModalService', '$filter',
+    function ($rootScope, $scope, uiGridConstants, MarginCallService, ModalService, $filter) {
 
 
         $scope.gridMessagesOptions = {
@@ -76,17 +76,17 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
         $scope.getNewMessages = function (MarginCallId) {
 
             $scope.gridMessagesOptions.data = [];
-            
+
             MarginCallService.getDetail($scope.MarginCallDetail.marginCall.id).then(function (result) {
 
-                if (typeof result.data.dataResponse != 'object' && typeof result.data.dataResponse.marginCall != 'object'){
+                if (typeof result.data.dataResponse != 'object' && typeof result.data.dataResponse.marginCall != 'object') {
 
                     return false;
 
                 }
 
                 $scope.Messages = result.data.dataResponse.marginCall.messages;
-                
+
                 $scope.Messages.forEach(function (message) {
 
                     message.date.dateMessage = new Date(message.date.iMillis);
@@ -172,9 +172,9 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
                         /*for (let i = 0; i < fields.length; i++) {
 
-                            if (fields[i].mandatory == true)
-                                fields[i].checked = false;
-                        }*/
+                         if (fields[i].mandatory == true)
+                         fields[i].checked = false;
+                         }*/
 
                         angular.forEach(fields, function (field) {
                             field.checked = false;
@@ -182,14 +182,14 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
                         /*angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
 
-                            if ( angular.isUndefined( col.colDefinitionInfo ) == true )
-                            {
+                         if ( angular.isUndefined( col.colDefinitionInfo ) == true )
+                         {
 
-                                col.colDefinitionInfo = {};
+                         col.colDefinitionInfo = {};
 
-                            }
+                         }
 
-                        });*/
+                         });*/
 
                         angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col, index) {
 
@@ -197,18 +197,18 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                             //   return;
 
                             if (angular.isUndefined(col.colDefinitionInfo))
-                               return;
+                                return;
 
                             for (let i = 0; i < fields.length; i++) {
 
                                 //if (fields[i].mandatory == true) {
 
-                                    if (col.colDefinitionInfo.columnField === fields[i].columnField) {
+                                if (col.colDefinitionInfo.columnField === fields[i].columnField) {
 
-                                        fields[i].checked = true;
-                                        break;
+                                    fields[i].checked = true;
+                                    break;
 
-                                    }
+                                }
 
                                 //}
 
@@ -275,10 +275,33 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
 
                             angular.forEach(_that.MCMessageInformation.rawTable.rawData, function (col, indexCol) { //ROWS
 
+                                let dataType = _that.MCMessageInformation.rawTable.dataType[indexCol];
                                 let colValue = $sanitize(col[indexRow].toString());
                                 if (!colValue) {
                                     colValue = "";
                                 }
+
+                                //Cast by data type
+
+                                if (dataType == "EXCEL_STRING") {
+                                    colValue = "" + colValue;
+                                }
+                                else if (dataType == "EXCEL_NUMBER") {
+                                    if (angular.isNumber(colValue)) {
+                                        colValue = parseInt(colValue, "10");
+                                    }
+                                    else {
+                                        colValue = "" + colValue;
+                                    }
+                                }
+                                else if (dataType == "EXCEL_DATE") {
+
+                                    console.log("Hi there!" + colValue.iLocalMillis)
+                                    colValue = $filter('date')(colValue.iLocalMillis, 'dd-MM-yyyy');
+
+                                }
+
+                                //Cast by data type
 
                                 row['col-' + indexCol] = colValue;
 
@@ -321,7 +344,7 @@ DashboardApp.controller('MarginCallMessagingController', ['$rootScope', '$scope'
                         });
 
                         MarginCallService.SaveMappingDefinition(objRequest);
-                        
+
                         $uibModalInstance.close();
                         toastr.success("Mapping Definition was saved", "Success:");
 
