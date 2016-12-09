@@ -17,6 +17,62 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
         $scope.TradeProposalInfo.ProductType = {};
         $scope.TradeProposalInfo.ProductTypes = localStorageService.get('ProductType');
 
+        //FX Forward
+
+        $scope.TradeProposalInfo.Strategy = {};
+        $scope.TradeProposalInfo.PayCurrency = {}
+        $scope.TradeProposalInfo.PayCurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.TradeProposalInfo.PayCurrencyList.splice(2,1);
+        $scope.TradeProposalInfo.ReceiveCurrency = {};
+        $scope.TradeProposalInfo.ReceivecurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.TradeProposalInfo.ReceivecurrencyList.splice(2,1);
+
+        $scope.exchangeCurrency = function () {
+
+            let tmpPayCurrency = $scope.TradeProposalInfo.PayCurrency.selected;
+            let tmpReceiveCurrency = $scope.TradeProposalInfo.ReceiveCurrency.selected;
+
+            if((tmpPayCurrency && tmpReceiveCurrency) && (tmpPayCurrency != tmpReceiveCurrency) ){
+                $scope.TradeProposalInfo.PayCurrency.selected = tmpReceiveCurrency;
+                $scope.TradeProposalInfo.ReceiveCurrency.selected = tmpPayCurrency;
+            }
+
+        }
+
+        $scope.TradeProposalInfo.Strategies = [ {"key" : 'own_account', "name": 'Own Account'},
+            { "key": 'covered_customers', "name": 'Covered customers'}];
+        LegalEntityService.getAll().then(function (result) {
+            $scope.TradeProposalInfo.legalEntitiesPO = [];
+            $scope.TradeProposalInfo.legalEntitiesCounterParty = [];
+            $scope.TradeProposalInfo.legalEntitiesClient = [];
+            //$scope.TradeProposalInfo.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: 0, otherName:""});
+
+            let legalEntities = result.data.dataResponse;
+            legalEntities.forEach(function(legalEntity){
+                if(legalEntity != null){
+                    angular.forEach(legalEntity.roleList, function( rol ) {
+                        if(rol.roleType == "PO"){
+                            $scope.TradeProposalInfo.legalEntitiesPO.push(legalEntity);
+                        }
+                        else if(rol.roleType == "COUNTERPARTY"){
+                            $scope.TradeProposalInfo.legalEntitiesCounterParty.push(legalEntity);
+                        }
+                        else if(rol.roleType == "CLIENT"){
+                            $scope.TradeProposalInfo.legalEntitiesClient.push(legalEntity);
+                        }
+                    });
+                }
+            });
+
+            //inicializando combos
+            $scope.TradeProposalInfo.legalEntityPO = {};
+            $scope.TradeProposalInfo.legalEntityPO.selected = $scope.TradeProposalInfo.legalEntitiesPO[0];
+            //$scope.TradeProposalInfo.legalEntityCounterParty.selected = $scope.TradeProposalInfo.legalEntitiesCounterParty[0];
+            //$scope.TradeProposalInfo.legalEntityClient.selected = $scope.TradeProposalInfo.legalEntitiesClient[0];
+
+        });
+
+
         $scope.TradeProposalInfo.PayBasisCalculationConvention = {};
         $scope.TradeProposalInfo.ReceiveBasisCalculationConvention = {};
         $scope.TradeProposalInfo.BasisCalculationConventions = localStorageService.get('BasisCalculationConvention');
@@ -212,8 +268,6 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
 
         if($scope.parameters.Simulation){
-
-            console.log($scope.parameters);
             var jsonTrade = {
                 "productType": "IRD_IRS",
                 "productSubType": "IRD_IRS_IBOR_PLAIN_VANILLA",
@@ -410,6 +464,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
             $scope.TradeProposalInfo.ProductType.selected = {"key": jsonTrade.productType,"name": jsonTrade.productType };
             $scope.TradeProposalInfo.filterProduct("ProductType", $scope.TradeProposalInfo.ProductType.selected);
 
+            /* IRD_IRS*/
             $scope.TradeProposalInfo.TradeType.selected = {"key": jsonTrade.tradeType, "name": jsonTrade.tradeType};
             $scope.TradeProposalInfo.TradeSubType.selected = {"key": jsonTrade.tradeSubType, "name": jsonTrade.tradeSubType};
 
@@ -437,34 +492,5 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
 
         }
-        LegalEntityService.getAll().then(function (result) {
-            console.log(result);
-            $scope.TradeProposalInfo.legalEntitiesPO = [];
-            $scope.TradeProposalInfo.legalEntitiesCounterParty = [];
-            $scope.TradeProposalInfo.legalEntitiesClient = [];
-            //$scope.TradeProposalInfo.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: 0, otherName:""});
 
-            let legalEntities = result.data.dataResponse;
-            legalEntities.forEach(function(legalEntity){
-                if(legalEntity != null){
-                    angular.forEach(legalEntity.roleList, function( rol ) {
-                        if(rol.roleType == "PO"){
-                            $scope.TradeProposalInfo.legalEntitiesPO.push(legalEntity);
-                        }
-                        else if(rol.roleType == "COUNTERPARTY"){
-                            $scope.TradeProposalInfo.legalEntitiesCounterParty.push(legalEntity);
-                        }
-                        else if(rol.roleType == "CLIENT"){
-                            $scope.TradeProposalInfo.legalEntitiesClient.push(legalEntity);
-                        }
-                    });
-                }
-            });
-
-            //inicializando combos
-            $scope.TradeProposalInfo.legalEntityPO.selected = $scope.legalEntitiesPO[0];
-            $scope.TradeProposalInfo.legalEntityCounterParty.selected = $scope.legalEntitiesCounterParty[0];
-            $scope.TradeProposalInfo.legalEntityClient.selected = $scope.legalEntitiesClient[0];
-
-        });
     }]);
