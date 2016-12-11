@@ -68,7 +68,7 @@ DashboardApp.controller('SearchSimulationController', ['SimulationService', '$sc
         $scope.Simulations = [{trader:"Juan Lopez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
             principal: "Santander Brasil", counterParty:"Telefónica", hedge:"SwaClear", status:"Booked"},
             {trader:"Joaquin Gomez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
-                principal: "Santander Spain", counterParty:"Banki", hedge:"SwaClear", status:"Propusal"}];
+                principal: "Santander Spain", counterParty:"Banki", hedge:"SwaClear", status:"Proposal"}];
 
         $scope.gridSimulationOptions.data = $scope.Simulations;
 

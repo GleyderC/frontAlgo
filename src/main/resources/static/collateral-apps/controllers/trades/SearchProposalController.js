@@ -3,13 +3,13 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('SearchCCPsController', ['CCPsService', '$scope',
+DashboardApp.controller('SearchProposalController', ['TradeProposalService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants',
-    function (CCPsService, $scope, $timeout, localStorageService, uiGridConstants) {
+    function (TradeProposalService, $scope, $timeout, localStorageService, uiGridConstants) {
 
-        /* Cargando datos en CCPs ui-grid*/
-        $scope.CCPss = [];
-        $scope.gridCCPsOptions = {
+        /* Cargando datos en Proposal ui-grid*/
+        $scope.Proposals = [];
+        $scope.gridProposalOptions = {
             showGridFooter: true,
             paginationPageSizes: [12, 50, 100, 200, 500],
             paginationPageSize: 12,
@@ -17,11 +17,11 @@ DashboardApp.controller('SearchCCPsController', ['CCPsService', '$scope',
             enableFiltering: true,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
-            exporterCsvFilename: 'CCPs.csv',
+            exporterCsvFilename: 'Proposal.csv',
             exporterPdfDefaultStyle: {fontSize: 9},
             exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
             exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: {text: "CCPs", style: 'headerStyle'},
+            exporterPdfHeader: {text: "Proposal", style: 'headerStyle'},
             exporterPdfFooter: function (currentPage, pageCount) {
                 return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
             },
@@ -38,17 +38,19 @@ DashboardApp.controller('SearchCCPsController', ['CCPsService', '$scope',
                 $scope.gridApi = gridApi;
             },
             columnDefs: [
-                {field: 'ccps',
+                {field: 'trader',
                     sort: {
                         direction: uiGridConstants.ASC,
                         priority: 0
                     }
                 },
-                {field: 'xxx'},
-                {field: 'xxx2' },
-                {field: 'xxx3' },
-                {field: 'xxx4' },
-                {field: 'xxx5'},
+                {field: 'desk'},
+                {field: 'dateTime' },
+                {field: 'notional' },
+                {field: 'principal' },
+                {field: 'counterParty'},
+                {field: 'hedge'},
+                {field: 'status'},
                 {
                     name: 'Actions',
                     cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
@@ -58,62 +60,60 @@ DashboardApp.controller('SearchCCPsController', ['CCPsService', '$scope',
                 }
             ]
         };
-        $scope.gridCCPsOptions.data = [];
-        $scope.gridCCPsOptions.addNewRow = function (row) {
-            $scope.gridCCPsOptions.data.push(row);
+        $scope.gridProposalOptions.data = [];
+        $scope.gridProposalOptions.addNewRow = function (row) {
+            $scope.gridProposalOptions.data.push(row);
             return row;
         }
-        $scope.CCPss = [{ccps:"SWAP Clear", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
+        $scope.Proposals = [{trader:"Juan Lopez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
             principal: "Santander Brasil", counterParty:"Telefónica", hedge:"SwaClear", status:"Booked"},
-            {ccps:"EUREX", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
-                principal: "Santander Spain", counterParty:"Banki", hedge:"SwaClear", status:"Proposal"},
-            {ccps:"BME", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
+            {trader:"Joaquin Gomez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
                 principal: "Santander Spain", counterParty:"Banki", hedge:"SwaClear", status:"Proposal"}];
 
-        $scope.gridCCPsOptions.data = $scope.CCPss;
+        $scope.gridProposalOptions.data = $scope.Proposals;
 
-        $scope.addCCPs = function () {
+        $scope.addProposal = function () {
 
             $scope.$workspaceTabsMgm.addTabByID({
                 head: {
-                    icon: 'fa fa-dot-circle-o',
-                    text: 'New CCPs',
+                    icon: 'fa fa-desktop',
+                    text: 'New Proposal',
                 },
-                templateUrl: paths.views + "/configuration/ccps/ccps.html",
+                templateUrl: paths.views + "/trades/proposal.html",
                 parameters: {
-                    AddCCPssGrid: $scope.gridCCPsOptions.addNewRow
+                    AddProposalsGrid: $scope.gridProposalOptions.addNewRow
                 },
                 closable: true,
                 autoload: true
-            }, 'configuration');
+            }, 'trades');
 
             //buildLegalData();
 
         }
 
-        // Edit CCPs
+        // Edit Proposal
         $scope.editRow = function (grid, row) {
 
             $scope.$workspaceTabsMgm.addTabByID({
                 head: {
                     icon: 'icon-graph',
-                    text: 'Editing CCPs',
+                    text: 'Editing Proposal',
                 },
-                templateUrl: paths.views + "/analytics/what_if_CCPs/CCPs.html",
+                templateUrl: paths.views + "/trades/proposal.html",
                 parameters: {
-                    CCPs: row.entity
+                    Proposal: row.entity
                 },
                 closable: true,
                 autoload: true
-            }, 'analytics');
+            }, 'trades');
 
         };
-        // Delete CCPs
+        // Delete Proposal
         $scope.deleteRow = function (grid, row) {
 
-            var index = $scope.gridCCPsOptions.data.indexOf(row.entity);
-            $scope.gridCCPsOptions.data.splice(index, 1);
-            CCPsService.delete(row.entity.id);
+            var index = $scope.gridProposalOptions.data.indexOf(row.entity);
+            $scope.gridProposalOptions.data.splice(index, 1);
+            ProposalService.delete(row.entity.id);
 
         }
 

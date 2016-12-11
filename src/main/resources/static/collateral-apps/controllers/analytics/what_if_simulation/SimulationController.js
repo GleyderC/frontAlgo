@@ -11,9 +11,9 @@ DashboardApp.controller('SimulationController', ['SimulationService', '$scope',
                 {
                     head: {
                         icon: 'icon-bag',
-                        text: 'Trade Propusal Info'
+                        text: 'Trade Proposal Info'
                     },
-                    templateUrl: paths.views + "/analytics/what_if_simulation/simulation_trade_propusal.html",
+                    templateUrl: paths.views + "/analytics/what_if_simulation/simulation_trade_proposal.html",
                     autoload: true
                 },
                 {
