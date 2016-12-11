@@ -17,7 +17,15 @@ angular.module('CollateralApp')
         $scope.attemptLogin = function () {
 
             $scope.lockForm = true;
+            toastr.success('Welcome <b>'+ $scope.username + "</b>", {
+                allowHtml: true,
+                timeOut: 3000,
+                onHidden: function(){
+                    $state.go("home")
+                }
+            });
 
+            /*
             $http({
                 method: "POST",
                 url: URL_CONFIG.SERVICE_LOGIN_URL + "/login",
@@ -56,6 +64,8 @@ angular.module('CollateralApp')
                     console.error(response)
                     $scope.lockForm = false;
                 });
+                */
         };
+
 
     }]);
