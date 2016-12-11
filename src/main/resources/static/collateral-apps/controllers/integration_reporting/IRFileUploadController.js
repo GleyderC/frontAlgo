@@ -38,6 +38,11 @@ DashboardApp.controller('IRFileUploadController',
                             if (file) {
 
                                 if (!file.$error) {
+
+                                    //reset status
+                                    $scope.processingMappingFile = false;
+                                    $scope.editableMappingDefinition = false;
+
                                     Upload.upload({
                                         url: URL_CONFIG.API_URL + '/servlet/Mapping/UploadFile',
                                         data: {
@@ -61,22 +66,35 @@ DashboardApp.controller('IRFileUploadController',
 
                                         }
                                         else if (!angular.isUndefined(resp.data.dataResponse.rawTable) && resp.data.dataResponse.processed == false) {
+
                                             $scope.processingMappingFile = true
 
-                                            let msg = resp.data.messages[0];
+                                            let msg = resp.data.dataResponse.error;
+                                            $scope.mappingInformation = resp.data.dataResponse.rawTable;
 
-                                            toastr.error(msg.message, msg.title);
+                                            if( !angular.isUndefined(resp.data.dataResponse.foundMappingDefinition) )
+                                            {
 
-                                            return false;
+                                                $scope.mappingInformation.oldMappingDefinition = resp.data.dataResponse.foundMappingDefinition;
+
+                                            }
+
+                                            $scope.mappingStatus = {};
+                                            $scope.mappingStatus.processed = false;
+                                            $scope.mappingStatus.msg = resp.data.dataResponse.error;
+
+                                            toastr.info(msg);
 
                                         }
-
-                                        if (!angular.isUndefined(resp.data.dataResponse.processed) && resp.data.dataResponse.processed == true) {
+                                        else if (!angular.isUndefined(resp.data.dataResponse.processed) && resp.data.dataResponse.processed == true) {
 
                                             $scope.editableMappingDefinition = true;
 
                                             $scope.mappingInformation = resp.data.dataResponse.rawTable;
                                             $scope.mappingInformation.oldMappingDefinition = resp.data.dataResponse.foundMappingDefinition;
+                                            $scope.mappingStatus = {};
+                                            $scope.mappingStatus.processed = true;
+                                            $scope.mappingStatus.msg = "Mapping Definition found";
 
                                             toastr.success("File Uploaded", "Success:");
 
@@ -117,12 +135,20 @@ DashboardApp.controller('IRFileUploadController',
                                         App.initComponents();
                                     },
                                     controllerAs: 'MCProcessMessage',
-                                    controller: function (toastr, $scope, $uibModalInstance, $sanitize, MarginCallService, mappingInformation) {
+                                    controller: function (toastr, $scope, $uibModalInstance, $sanitize, MarginCallService, mappingInformation, mappingStatus) {
 
                                         let _that = this;
                                         this.fileDefinitions = [];
                                         this.columnFieldsList = [];
                                         this.columnDataFormat = [];
+                                        let tableData = [];
+                                        let rowsCount = 0;
+                                        this.columnFieldsList = [];
+
+                                        this.MCMessageInformation = mappingInformation;
+                                        this.mappingStatus = mappingStatus;
+
+                                        this.columnDataFormat = MarginCallService.getColumnDataFormat();
 
                                         this.gridProcessMCMessages = {
                                             paginationPageSizes: [100, 200, 500],
@@ -213,64 +239,55 @@ DashboardApp.controller('IRFileUploadController',
                                         }
 
 
-                                        let tableData = [];
-                                        let rowsCount = 0;
-                                        _that.MCMessageInformation = mappingInformation;
-
-                                        _that.columnFieldsList = [];
-
-                                        this.columnDataFormat = MarginCallService.getColumnDataFormat();
-
+                                        //MARGIN CALL FILL INPUT FILES DEFINITIONS
                                         MarginCallService.getInputFilesDefinition().then(function (result) {
+
                                             _that.fileDefinitions = result.data.dataResponse.fileDefinitions;
-
-
-                                            if (angular.isUndefined(_that.MCMessageInformation.oldMappingDefinition) && angular.isUndefined(_that.MCMessageInformation.oldMappingDefinition.documentType)) {
-
-                                                return false;
-
-                                            }
-
                                             _that.fileDefinitions.selected = {};
 
-                                            for (let i = 0; i < _that.fileDefinitions.length; i++) {
+                                            if (!angular.isUndefined(_that.MCMessageInformation.oldMappingDefinition) && !angular.isUndefined(_that.MCMessageInformation.oldMappingDefinition.documentType)) {
 
-                                                if (_that.fileDefinitions[i].documentType == _that.MCMessageInformation.oldMappingDefinition.documentType) {
+                                                for (let i = 0; i < _that.fileDefinitions.length; i++) {
 
-                                                    _that.fileDefinitions.selected = _that.fileDefinitions[i];
-                                                    break;
+                                                    if (_that.fileDefinitions[i].documentType == _that.MCMessageInformation.oldMappingDefinition.documentType) {
 
-                                                }
-
-                                            }
-
-                                            angular.forEach(_that.gridProcessMCMessages.columnDefs, function (el) {
-
-                                                for (let i = 0; i < _that.MCMessageInformation.oldMappingDefinition.fields.length; i++) {
-
-                                                    let oldMapedField = _that.MCMessageInformation.oldMappingDefinition.fields[i];
-
-                                                    if (el.indexCol == oldMapedField.inputPosition) {
-                                                        //console.log(el)
-                                                        //console.log(oldMapedField)
-                                                        for (let j = 0; j < _that.fileDefinitions.selected.fieldMaps.length; j++) {
-                                                            if (_that.fileDefinitions.selected.fieldMaps[j].columnField == oldMapedField.fieldMap) {
-                                                                el.colDefinitionInfo = {};
-                                                                el.colDefinitionInfo = _that.fileDefinitions.selected.fieldMaps[j];
-                                                                break;
-                                                            }
-                                                        }
+                                                        _that.fileDefinitions.selected = _that.fileDefinitions[i];
+                                                        break;
 
                                                     }
 
                                                 }
 
-                                            });
+                                                angular.forEach(_that.gridProcessMCMessages.columnDefs, function (el) {
 
-                                            _that.checkMandatoryFields();
+                                                    for (let i = 0; i < _that.MCMessageInformation.oldMappingDefinition.fields.length; i++) {
 
-                                        });
+                                                        let oldMapedField = _that.MCMessageInformation.oldMappingDefinition.fields[i];
 
+                                                        if (el.indexCol == oldMapedField.inputPosition) {
+                                                            //console.log(el)
+                                                            //console.log(oldMapedField)
+                                                            for (let j = 0; j < _that.fileDefinitions.selected.fieldMaps.length; j++) {
+                                                                if (_that.fileDefinitions.selected.fieldMaps[j].columnField == oldMapedField.fieldMap) {
+                                                                    el.colDefinitionInfo = {};
+                                                                    el.colDefinitionInfo = _that.fileDefinitions.selected.fieldMaps[j];
+                                                                    break;
+                                                                }
+                                                            }
+
+                                                        }
+
+                                                    }
+
+                                                });
+
+                                                _that.checkMandatoryFields();
+
+                                            }
+
+                                        });//END MARGIN CALL GET INPUT FILES
+
+                                        //Creting Cols Headers
                                         angular.forEach(_that.MCMessageInformation.head, function (head, indexCol) {
 
                                             _that.columnFieldsList.push({
@@ -339,20 +356,52 @@ DashboardApp.controller('IRFileUploadController',
                                             _that.gridProcessMCMessages.data = tableData;
 
                                         });
+                                        //End Create Cols Headers
 
+                                        //Save mapping definitions
                                         $scope.save = function () {
 
                                             let objRequest = {};
 
-                                            objRequest = {
-                                                contractId: _that.MCMessageInformation.oldMappingDefinition.contractId,
-                                                mappingDefinition: {
-                                                    fileType: _that.MCMessageInformation.oldMappingDefinition.fileType,
-                                                    documentType:  _that.MCMessageInformation.oldMappingDefinition.documentType,
-                                                    fileNameIncludes: _that.MCMessageInformation.oldMappingDefinition.fileNameIncludes,
-                                                    fields: []
-                                                }
-                                            };
+                                            if (angular.isUndefined(_that.fileDefinitions.selected.fileName)) {
+                                                toastr.error("Please, select File Content");
+                                                return false;
+                                            }
+
+                                            if (angular.isUndefined(_that.fileDefinitions.selected.allFieldsMapped) || !_that.fileDefinitions.selected.allFieldsMapped) {
+                                                toastr.error("Please, All fields must be mapped");
+                                                return false;
+                                            }
+
+                                            if (mappingStatus.processed == true) {
+
+                                                objRequest = {
+                                                    contractId: _that.MCMessageInformation.oldMappingDefinition.contractId,
+                                                    mappingDefinition: {
+                                                        fileType: _that.MCMessageInformation.oldMappingDefinition.fileType,
+                                                        documentType: _that.MCMessageInformation.oldMappingDefinition.documentType,
+                                                        fileNameIncludes: _that.MCMessageInformation.oldMappingDefinition.fileNameIncludes,
+                                                        fields: []
+                                                    }
+                                                };
+
+                                            }
+                                            else if (mappingStatus.processed == false) {
+                                                //MCProcessMessage.fileDefinitions.selected.fileType
+                                                let fileName = _that.fileDefinitions.selected.fileName.toString();
+                                                fileName = fileName.substring(0, fileName.indexOf("."));
+
+                                                objRequest = {
+                                                    contractId: 0,
+                                                    mappingDefinition: {
+                                                        fileType: _that.fileDefinitions.selected.fileType,
+                                                        documentType: _that.fileDefinitions.selected.documentType,
+                                                        fileNameIncludes: fileName,
+                                                        fields: []
+                                                    }
+                                                };
+
+                                            }
 
                                             angular.forEach(_that.gridProcessMCMessages.columnDefs, function (col) {
 
@@ -398,12 +447,13 @@ DashboardApp.controller('IRFileUploadController',
 
                                     },
                                     resolve: {
-                                        mappingInformation: $scope.mappingInformation
+                                        mappingInformation: $scope.mappingInformation,
+                                        mappingStatus: $scope.mappingStatus
                                     }
                                 });
 
 
-                            }, 1000);
+                            }, 500);
 
                         }
 

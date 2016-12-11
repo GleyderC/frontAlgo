@@ -12,37 +12,42 @@
     <!-- BEGIN LOGIN -->
     <div class="content">
         <!-- BEGIN LOGIN FORM -->
-        <form name="loginForm" ng-submit="submit()" class="login-form" action="#home" method="post">
+        <form name="loginForm" class="login-form" method="post" onsubmit="return false;" action="">
             <h3 class="form-title font-green" translate="LOGIN.SIGNIN"></h3>
             <div class="alert alert-danger display-hide">
-                <button class="close" data-close="alert"></button>
+                <button class="close" data-close="alert" type="button"></button>
                 <span translate="LOGIN.ERROR.USER_PASS"></span>
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9" translate="LOGIN.USERNAME"></label>
                 <input id="username" class="form-control form-control-solid placeholder-no-fix" type="text"
-                       autocomplete="off" translate-attr-placeholder="LOGIN.USERNAME" name="username" ng-model="username" required/></div>
+                       autocomplete="off" translate-attr-placeholder="LOGIN.USERNAME" name="username"
+                       ng-model="username" ng-disabled="lockForm" required/></div>
             <div class="form-group">
                 <label class="control-label visible-ie8 visible-ie9" translate="LOGIN.PASSWORD"></label>
                 <input id="password" class="form-control form-control-solid placeholder-no-fix" type="password"
-                       autocomplete="off" translate-attr-placeholder="LOGIN.PASSWORD" name="password" ng-model="password" required/></div>
+                       autocomplete="off" translate-attr-placeholder="LOGIN.PASSWORD" name="password"
+                       ng-model="password" ng-disabled="lockForm" required/></div>
             <div class="form-actions">
-                <button type="submit" class="btn green uppercase" translate="LOGIN.LOGIN"></button>
+                <button id="btnAttemptLogin" type="button" ng-click="attemptLogin()" class="btn green uppercase" translate="LOGIN.LOGIN"
+                        ng-disabled="loginForm.$invalid || lockForm"></button>
                 <label class="rememberme check mt-checkbox mt-checkbox-outline">
                     <input type="checkbox" name="remember" value="1"/> {{ 'LOGIN.REMEMBER' | translate }}
                     <span></span>
                 </label>
-                <a href="javascript:;" id="forget-password" class="forget-password" translate="LOGIN.FORGOT.PASSWORD">?</a>
+                <a href="javascript:;" id="forget-password" class="forget-password"
+                   translate="LOGIN.FORGOT.PASSWORD">?</a>
             </div>
             <div class="login-options">
-                <h4  translate="LOGIN.CHOOSE.LANGUAGE">:</h4>
-                <select CLASS="form-control input-medium" ng-model="langsList.selected" ng-change="changeLanguage()" ng-options="language.name for language in langsList track by language.key"></select>
+                <h4 translate="LOGIN.CHOOSE.LANGUAGE">:</h4>
+                <select CLASS="form-control input-medium" ng-model="langsList.selected" ng-change="changeLanguage()"
+                        ng-options="language.name for language in langsList track by language.key"></select>
             </div>
         </form>
         <!-- END LOGIN FORM -->
         <!-- BEGIN FORGOT PASSWORD FORM -->
-        <form class="forget-form"  action="#" method="post">
+        <!--<form class="forget-form"  action="#" method="post">
             <h3 class="font-green" translate="LOGIN.FORGOT.PASSWORD">?</h3>
             <p> Enter your e-mail address below to reset your password. </p>
             <div class="form-group">
@@ -50,21 +55,27 @@
                        name="email"/></div>
             <div class="form-actions">
                 <button type="button" id="back-btn" class="btn green btn-outline">Back</button>
-                <button type="submit" class="btn btn-success uppercase pull-right">Save</button>
+                <button type="button" class="btn btn-success uppercase pull-right">Save</button>
             </div>
-        </form>
+        </form>-->
         <!-- END FORGOT PASSWORD FORM -->
 
-
-        <script>
-            $(document).ready(function () {
-                $("#username").focus();
-            });
-        </script>
     </div>
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="assets/pages/scripts/login.min.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $("#username").focus();
+            $("input#password").keydown(function (event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                    $("#btnAttemptLogin").click();
+                    return false;
+                }
+            });
+        })
+    </script>
     <!-- END PAGE LEVEL SCRIPTS -->
     <!-- BEGIN THEME LAYOUT SCRIPTS -->
     <!-- END THEME LAYOUT SCRIPTS -->
