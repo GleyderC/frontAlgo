@@ -195,11 +195,10 @@ CollateralApp.factory('httpGlobalInterceptor', ['$q', '$injector', 'localStorage
             config.headers = config.headers || {};
             if ( !angular.isUndefined($localStorage.get("CMS-AuthorizationToken")) ) {
 
-                config.headers["CMS-AuthorizationToken"] = $localStorage.get("CMS-AuthorizationToken");
+                //config.headers["CMS-AuthorizationToken"] = $localStorage.get("CMS-AuthorizationToken");
 
             }
 
-            console.log(config)
             return config;
         },
         'requestError': function (rejection) {
