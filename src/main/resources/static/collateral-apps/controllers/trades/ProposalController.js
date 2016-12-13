@@ -21,7 +21,7 @@ DashboardApp.controller('ProposalController', ['TradeProposalService', '$scope',
                         icon: 'icon-dollar',
                         text: 'Cash Flows'
                     },
-                    templateUrl: paths.views + "/trades/proposal_cash_flows",
+                    templateUrl: paths.views + "/trades/proposal_cash_flows.html",
                     autoload: true
                 }
             ]

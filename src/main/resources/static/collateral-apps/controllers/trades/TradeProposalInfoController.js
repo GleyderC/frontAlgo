@@ -41,10 +41,23 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         $scope.TradeProposalInfo.Strategies = [ {"key" : 'own_account', "name": 'Own Account'},
             { "key": 'covered_customers', "name": 'Covered customers'}];
+
+        $scope.removeLegalEntityClient = function (index) {
+            if($scope.TradeProposalInfo.clients.length > 1){
+                $scope.TradeProposalInfo.clients.splice(index,1);
+            }
+        }
+
+        $scope.addLegaLEntityClient = function () {
+            $scope.TradeProposalInfo.clients.push({"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
+
+        }
+
         LegalEntityService.getAll().then(function (result) {
             $scope.TradeProposalInfo.legalEntitiesPO = [];
             $scope.TradeProposalInfo.legalEntitiesCounterParty = [];
-            $scope.TradeProposalInfo.legalEntitiesClient = [];
+            $scope.TradeProposalInfo.clients = [];
+            $scope.TradeProposalInfo.clients.push({"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
             //$scope.TradeProposalInfo.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: 0, otherName:""});
 
             let legalEntities = result.data.dataResponse;
@@ -58,7 +71,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                             $scope.TradeProposalInfo.legalEntitiesCounterParty.push(legalEntity);
                         }
                         else if(rol.roleType == "CLIENT"){
-                            $scope.TradeProposalInfo.legalEntitiesClient.push(legalEntity);
+                            $scope.TradeProposalInfo.clients.legalEntitiesClient.push(legalEntity);
                         }
                     });
                 }

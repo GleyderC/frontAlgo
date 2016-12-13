@@ -140,33 +140,52 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <table class="table table-hover">
+                                <table class="table table-hover" style="margin-bottom: 0px;">
                                     <thead>
                                     <tr>
                                         <th style="font-size: 11px !important;"> Client </th>
                                         <th style="font-size: 11px !important;"> Client Sell (USD)</th>
                                         <th style="font-size: 11px !important;"> Client Buy (EUR)</th>
+                                        <th style="font-size: 11px !important;"></th>
                                     </tr>
                                     </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary" ng-click="addLegaLEntityClient()">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                     <tbody>
-                                    <tr>
+                                    <tr ng-repeat="client in TradeProposalInfo.clients">
                                         <td>
-                                            <ui-select ng-model="TradeProposalInfo.legalEntityClient.selected"
+                                            <ui-select ng-model="client.legalEntityClient.selected"
                                                        style="font-size: 11px;"
                                                        theme="select2" style="display: block;">
                                                 <ui-select-match placeholder="Select Client">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="legalEntityClient in TradeProposalInfo.legalEntitiesClient | filter: {name: $select.search}">
+                                                <ui-select-choices repeat="legalEntityClient in client.legalEntitiesClient | filter: {name: $select.search}">
                                                     <div ng-bind-html="legalEntityClient.name | highlight: $select.search"></div>
                                                 </ui-select-choices>
                                             </ui-select>
                                         </td>
                                         <td>
                                             <input type="text" class="form-control collateral-money input-small" style="height: 28px;
-                                                    font-size: 11px;" placeholder="" ng-model="TradeProposalInfo.ClientSell" ui-number-mask="2">
+                                                    font-size: 11px;" placeholder="" ng-model="client.ClientSell" ui-number-mask="2">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control collateral-money input-small" style="height: 28px;
-                                                    font-size: 11px;" placeholder="" ng-model="TradeProposalInfo.ClientBuy" ui-number-mask="2">
+                                                    font-size: 11px;" placeholder="" ng-model="client.ClientBuy" ui-number-mask="2">
+                                        </td>
+                                        <td>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-danger" ng-click="removeLegalEntityClient($index)">
+                                                    <i class="glyphicon glyphicon-minus"></i>
+                                                </button>
+                                            </span>
                                         </td>
                                     </tr>
                                     </tbody>
