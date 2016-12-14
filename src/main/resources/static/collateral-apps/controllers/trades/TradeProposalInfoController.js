@@ -39,8 +39,10 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         }
 
-        $scope.TradeProposalInfo.Strategies = [ {"key" : 'own_account', "name": 'Own Account'},
-            { "key": 'covered_customers', "name": 'Covered customers'}];
+        $scope.TradeProposalInfo.Strategies = [ {"key" : 'market_trade', "name": 'Market Trade'},
+            { "key": 'client_market_trade', "name": 'Client + Market Trade'}];
+
+        $scope.TradeProposalInfo.StrategyID = 'FX_'+Math.floor((Math.random() * 999999999) + 1);
 
         $scope.removeLegalEntityClient = function (index) {
             if($scope.TradeProposalInfo.clients.length > 1){
@@ -49,16 +51,17 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
         }
 
         $scope.addLegaLEntityClient = function () {
-            $scope.TradeProposalInfo.clients.push({"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
+            $scope.TradeProposalInfo.clients.push({"ClientID": 'FX_'+Math.floor((Math.random() * 999999999) + 1)+'_CL',"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
 
         }
 
         LegalEntityService.getAll().then(function (result) {
             $scope.TradeProposalInfo.legalEntitiesPO = [];
-            $scope.TradeProposalInfo.legalEntitiesCounterParty = [];
+
+            $scope.TradeProposalInfo.CounterParty = {"MarketTradeID": 'FX_'+ Math.floor((Math.random() * 999999999) + 1)+ '_CP',"legalEntityCounterParty":{}, "legalEntitiesCounterParty":[],
+                "WeSell": 0 ,"WeBuy": 0};
             $scope.TradeProposalInfo.clients = [];
-            $scope.TradeProposalInfo.clients.push({"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
-            //$scope.TradeProposalInfo.legalEntitiesCounterParty.push({name: 'ALL COUNTERPARTY', id: 0, otherName:""});
+            $scope.TradeProposalInfo.clients.push({"ClientID": 'FX_'+ Math.floor((Math.random() * 999999999) + 1)+ '_CL',"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
 
             let legalEntities = result.data.dataResponse;
             legalEntities.forEach(function(legalEntity){
@@ -68,10 +71,12 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                             $scope.TradeProposalInfo.legalEntitiesPO.push(legalEntity);
                         }
                         else if(rol.roleType == "COUNTERPARTY"){
-                            $scope.TradeProposalInfo.legalEntitiesCounterParty.push(legalEntity);
+                            $scope.TradeProposalInfo.CounterParty.legalEntitiesCounterParty.push(legalEntity);
                         }
                         else if(rol.roleType == "CLIENT"){
-                            $scope.TradeProposalInfo.clients.legalEntitiesClient.push(legalEntity);
+                            for(var i= 0; i> $scope.TradeProposalInfo.clients.length; i++){
+                                $scope.TradeProposalInfo.clients[i].legalEntitiesClient.push(legalEntity);
+                            }
                         }
                     });
                 }
@@ -80,6 +85,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
             //inicializando combos
             $scope.TradeProposalInfo.legalEntityPO = {};
             $scope.TradeProposalInfo.legalEntityPO.selected = $scope.TradeProposalInfo.legalEntitiesPO[0];
+            $scope.TradeProposalInfo.Strategy.selected = $scope.TradeProposalInfo.Strategies[0];
             //$scope.TradeProposalInfo.legalEntityCounterParty.selected = $scope.TradeProposalInfo.legalEntitiesCounterParty[0];
             //$scope.TradeProposalInfo.legalEntityClient.selected = $scope.TradeProposalInfo.legalEntitiesClient[0];
 

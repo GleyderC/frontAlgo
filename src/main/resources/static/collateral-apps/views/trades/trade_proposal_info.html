@@ -1,5 +1,5 @@
-<div class="row calculation" ng-controller="TradeProposalInfoController">
-    <div class="col-md-8">
+<div class="row" ng-controller="TradeProposalInfoController">
+    <div class="calculation col-md-8">
         <div class="portlet light bordered">
             <div class="row">
                 <div class="col-md-12" >
@@ -47,9 +47,9 @@
             </div>
             <div class="row" ng-if="TradeProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'">
                 <div class="col-md-4" >
-                    <label class="control-label">Front ID</label>
+                    <label class="control-label">Strategy ID</label>
                     <input type="text" class="form-control input-medium" style="height: 28px;
-                    font-size: 11px;" placeholder="" ng-model="TradeProposalInfo.FrontID">
+                    font-size: 11px;" placeholder="" ng-model="TradeProposalInfo.StrategyID">
                 </div>
                 <div class="col-md-4" >
                     <label class="control-label">Strategy</label>
@@ -112,18 +112,16 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="TradeProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'">
+            <br>
+            <div class="row" ng-if="TradeProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'
+            && TradeProposalInfo.Strategy.selected.key == 'client_market_trade'">
                 <div class="col-md-12">
                     <div class="portlet box blue-soft">
                         <div class="portlet-title">
                             <div class="caption" style="font-size: 13px !important;">
                                 <i class="fa fa-comments"></i>Client Trade</div>
-                            <div class="tools">
-                                <a  class="collapse"> </a>
-                                <a href="" class="fullscreen"> </a>
-                            </div>
                         </div>
-                        <div class="portlet-body" style="display: block;">
+                        <div class="portlet-body" style="padding-bottom: 0px;">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
@@ -131,8 +129,8 @@
                                                         <button class="btn blue-soft" type="button" style="height: 28px;">FX Rate</button>
                                                     </span>
                                         <input type="text" class="form-control input-xsmall collateral-money"
-                                               ng-model="TradeProposalInfo.ClientTradeFxRate" ui-number-mask="2"
-                                               style="height: 28px;font-size: 11px;">
+                                               ng-model="TradeProposalInfo.ClientTradeFxRate" ui-number-mask="5"
+                                               style="height: 28px;">
                                         <strong class="help-inline"  ng-bind="TradeProposalInfo.PayCurrency.selected.name + ' = 1'"></strong>
                                         <strong class="help-inline" ng-bind="TradeProposalInfo.ReceiveCurrency.selected.name"></strong>
 
@@ -143,6 +141,7 @@
                                 <table class="table table-hover" style="margin-bottom: 0px;">
                                     <thead>
                                     <tr>
+                                        <th style="font-size: 11px !important;"> Client ID </th>
                                         <th style="font-size: 11px !important;"> Client </th>
                                         <th style="font-size: 11px !important;"> Client Sell (USD)</th>
                                         <th style="font-size: 11px !important;"> Client Buy (EUR)</th>
@@ -153,7 +152,7 @@
                                         <tr>
                                             <td>
                                                 <span class="input-group-btn">
-                                                    <button type="button" class="btn btn-primary" ng-click="addLegaLEntityClient()">
+                                                    <button type="button" class="btn btn-xs btn-primary" ng-click="addLegaLEntityClient()">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </span>
@@ -162,10 +161,11 @@
                                     </tfoot>
                                     <tbody>
                                     <tr ng-repeat="client in TradeProposalInfo.clients">
+                                        <td style="font-size: 11px;" ng-bind="client.ClientID"></td>
                                         <td>
                                             <ui-select ng-model="client.legalEntityClient.selected"
-                                                       style="font-size: 11px;"
-                                                       theme="select2" style="display: block;">
+                                                       style="font-size: 11px;width: 100%;"
+                                                       theme="select2">
                                                 <ui-select-match placeholder="Select Client">{{$select.selected.name}}</ui-select-match>
                                                 <ui-select-choices repeat="legalEntityClient in client.legalEntitiesClient | filter: {name: $select.search}">
                                                     <div ng-bind-html="legalEntityClient.name | highlight: $select.search"></div>
@@ -173,16 +173,14 @@
                                             </ui-select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control collateral-money input-small" style="height: 28px;
-                                                    font-size: 11px;" placeholder="" ng-model="client.ClientSell" ui-number-mask="2">
+                                            <input type="text" class="form-control collateral-money input-md" style="height: 28px;" placeholder="" ng-model="client.ClientSell" ui-number-mask="2">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control collateral-money input-small" style="height: 28px;
-                                                    font-size: 11px;" placeholder="" ng-model="client.ClientBuy" ui-number-mask="2">
+                                            <input type="text" class="form-control collateral-money input-md" style="height: 28px;" placeholder="" ng-model="client.ClientBuy" ui-number-mask="2">
                                         </td>
                                         <td>
                                             <span class="input-group-btn">
-                                                <button type="button" class="btn btn-danger" ng-click="removeLegalEntityClient($index)">
+                                                <button type="button" class="btn btn-xs btn-danger" ng-click="removeLegalEntityClient($index)">
                                                     <i class="glyphicon glyphicon-minus"></i>
                                                 </button>
                                             </span>
@@ -195,19 +193,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="TradeProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'
-                && TradeProposalInfo.Strategy.selected.key == 'covered_customers'">
+            <div class="row" ng-if="TradeProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'">
                 <div class="col-md-12">
                     <div class="portlet box yellow-soft">
                         <div class="portlet-title">
                             <div class="caption" style="font-size: 13px !important;">
-                                <i class="fa fa-comments"></i>Back to Back Hedge</div>
-                            <div class="tools">
-                                <a  class="collapse"> </a>
-                                <a href="" class="fullscreen"> </a>
-                            </div>
+                                <i class="fa fa-comments"></i>Market Trade</div>
                         </div>
-                        <div class="portlet-body" style="display: block;">
+                        <div class="portlet-body" style="display: block; padding-bottom: 0px;">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
@@ -215,8 +208,8 @@
                                                         <button class="btn yellow-soft" type="button" style="height: 28px;">FX Rate</button>
                                                     </span>
                                                     <input type="text" class="form-control input-xsmall collateral-money"
-                                                           ng-model="TradeProposalInfo.BTBHedgeFxRate" ui-number-mask="2"
-                                                           style="height: 28px;font-size: 11px;">
+                                                           ng-model="TradeProposalInfo.BTBHedgeFxRate" ui-number-mask="5"
+                                                           style="height: 28px;">
                                                     <strong class="help-inline"  ng-bind="TradeProposalInfo.PayCurrency.selected.name + ' = 1'"></strong>
                                                     <strong class="help-inline" ng-bind="TradeProposalInfo.ReceiveCurrency.selected.name"></strong>
                                     </div>
@@ -226,6 +219,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>
+                                        <th style="font-size: 11px !important;"> Trade ID </th>
                                         <th style="font-size: 11px !important;"> CounterParty </th>
                                         <th style="font-size: 11px !important;"> We Sell (USD)</th>
                                         <th style="font-size: 11px !important;"> We Buy (EUR)</th>
@@ -233,23 +227,22 @@
                                     </thead>
                                     <tbody>
                                     <tr>
+                                        <td style="font-size: 11px;" ng-bind="TradeProposalInfo.CounterParty.MarketTradeID"></td>
                                         <td>
-                                            <ui-select ng-model="TradeProposalInfo.legalEntityCounterParty.selected"
-                                                       style="font-size: 11px;"
+                                            <ui-select ng-model="TradeProposalInfo.CounterParty.legalEntityCounterParty.selected"
+                                                       style="font-size: 11px;width: 100%;"
                                                        theme="select2" style="display: block;">
                                                 <ui-select-match placeholder="Select CounterParty">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="legalEntityCounterParty in TradeProposalInfo.legalEntitiesCounterParty | filter: {name: $select.search}">
+                                                <ui-select-choices repeat="legalEntityCounterParty in TradeProposalInfo.CounterParty.legalEntitiesCounterParty | filter: {name: $select.search}">
                                                     <div ng-bind-html="legalEntityCounterParty.name | highlight: $select.search"></div>
                                                 </ui-select-choices>
                                             </ui-select>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control collateral-money input-small" style="height: 28px;
-                                                    font-size: 11px;" placeholder="" ng-model="TradeProposalInfo.ClientSell" ui-number-mask="2">
+                                            <input type="text" class="form-control collateral-money input-md" style="height: 28px;" placeholder="" ng-model="TradeProposalInfo.CounterParty.WeSell" ui-number-mask="2">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control collateral-money input-small" style="height: 28px;
-                                                    font-size: 11px;" placeholder="" ng-model="TradeProposalInfo.ClientBuy" ui-number-mask="2">
+                                            <input type="text" class="form-control collateral-money input-md" style="height: 28px;" placeholder="" ng-model="TradeProposalInfo.CounterParty.WeBuy" ui-number-mask="2">
                                         </td>
                                     </tr>
                                     </tbody>
