@@ -478,12 +478,13 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/configuration/settlement_account/SearchSettlementAccountsController.js',
 
                             /* Trades Controller */
-                            'collateral-apps/controllers/trades/QueryFilterController.js',
-                            'collateral-apps/controllers/trades/DealEntryListController.js',
-                            'collateral-apps/controllers/trades/SearchProposalController.js',
-                            'collateral-apps/controllers/trades/DealEntryController.js',
-                            'collateral-apps/controllers/trades/ProposalController.js',
-                            'collateral-apps/controllers/trades/TradeProposalInfoController.js',
+                            'collateral-apps/controllers/trades/query_filter/QueryFilterController.js',
+                            'collateral-apps/controllers/trades/deal_entry/DealEntryListController.js',
+                            'collateral-apps/controllers/trades/proposal/SearchProposalController.js',
+                            'collateral-apps/controllers/trades/deal_entry/DealEntryController.js',
+                            'collateral-apps/controllers/trades/proposal/ProposalController.js',
+                            'collateral-apps/controllers/trades/proposal/TradeProposalInfoController.js',
+                            'collateral-apps/controllers/trades/deal_entry/DealEntryProposalInfoController.js',
 
 
                             /* Analytics Controller*/

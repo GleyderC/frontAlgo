@@ -1,0 +1,74 @@
+<div ng-controller="ProposalController as ProposalCtrl" du-smooth-scroll du-scrollspy>
+    <!-- BEGIN CHART PORTLET-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-desktop font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze"
+                      ng-bind="legalEntity.name || 'New Proposal'"> </span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+                <a href="javascript:;" class="reload"> </a>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-2">
+                    <button type="button" class="btn default btn-outline btn-xs" uib-popover="Save Proposal" popover-trigger="mouseenter">
+                        <img style="width: 38px" class="action-button-icon-md" src="assets/pages/icons/trades/edit.jpg">
+                    </button>
+                    <button type="button" class="btn default btn-outline btn-xs" uib-popover="Send To Traders" popover-trigger="mouseenter">
+                        <img style="width: 38px" class="action-button-icon-md" src="assets/pages/icons/trades/send.jpg">
+                    </button>
+                    <!--button type="button" class="btn default btn-outline btn-xs" uib-popover="Save Trade" popover-trigger="mouseenter">
+                        <img style="width: 38px" class="action-button-icon-md" src="assets/pages/icons/trades/save.jpg">
+                    </button>
+                    <button type="button" class="btn default btn-outline btn-xs" uib-popover="Book Trade" popover-trigger="mouseenter">
+                        <img style="width: 38px" class="action-button-icon-md" src="assets/pages/icons/trades/book.png">
+                    </button>
+                    <button type="button" class="btn default btn-outline btn-xs" uib-popover="Amend Trade" popover-trigger="mouseenter">
+                        <img style="width: 38px" class="action-button-icon-md" src="assets/pages/icons/trades/amend.png">
+                    </button-->
+                </div>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-bordered table-hover table-checkable order-column"
+                           style="margin-bottom:0">
+                        <thead>
+                        <tr>
+                            <th> Trader</th>
+                            <th> Desk</th>
+                            <th> DateTime</th>
+                            <th> Notional</th>
+                            <th> Principal</th>
+                            <th> Counterparty</th>
+                            <th> Hedge</th>
+                            <th> Status</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="font-size: 12px;">{{Proposal.trader}}</td>
+                            <td style="font-size: 12px;">{{Proposal.desk}}</td>
+                            <td style="font-size: 12px;">{{Proposal.dateTime}}</td>
+                            <td style="font-size: 12px;" class="collateral-money">{{Proposal.notional | currency:''}}
+                            </td>
+                            <td style="font-size: 12px;">{{Proposal.principal}}</td>
+                            <td style="font-size: 12px;">{{Proposal.counterparty}}</td>
+                            <td style="font-size: 12px;">{{Proposal.hedge}}</td>
+                            <td style="font-size: 12px;"><span
+                                    class="label label-sm label-success"> {{Proposal.status}}  </span></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <workspace-tabs id="ProposalTabs" data-workspace-info="ProposalTabs"></workspace-tabs>
+            </div>
+        </div>
+    </div>
+</div>

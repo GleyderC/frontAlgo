@@ -3,13 +3,13 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('DealEntryListController', ['TradeDealEntryService', '$scope',
+DashboardApp.controller('SearchProposalController', ['TradeProposalService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants',
-    function (TradeDealEntryService, $scope, $timeout, localStorageService, uiGridConstants) {
+    function (TradeProposalService, $scope, $timeout, localStorageService, uiGridConstants) {
 
-        /* Cargando datos en DealEntry ui-grid*/
-        $scope.DealEntry = [];
-        $scope.gridDealEntryOptions = {
+        /* Cargando datos en Proposal ui-grid*/
+        $scope.Proposals = [];
+        $scope.gridProposalOptions = {
             showGridFooter: true,
             paginationPageSizes: [12, 50, 100, 200, 500],
             paginationPageSize: 12,
@@ -17,11 +17,11 @@ DashboardApp.controller('DealEntryListController', ['TradeDealEntryService', '$s
             enableFiltering: true,
             rowHeight: 35, // set height to each row
             enableGridMenu: true,
-            exporterCsvFilename: 'DealEntry.csv',
+            exporterCsvFilename: 'Proposal.csv',
             exporterPdfDefaultStyle: {fontSize: 9},
             exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
             exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-            exporterPdfHeader: {text: "DealEntry", style: 'headerStyle'},
+            exporterPdfHeader: {text: "Proposal", style: 'headerStyle'},
             exporterPdfFooter: function (currentPage, pageCount) {
                 return {text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle'};
             },
@@ -60,28 +60,28 @@ DashboardApp.controller('DealEntryListController', ['TradeDealEntryService', '$s
                 }
             ]
         };
-        $scope.gridDealEntryOptions.data = [];
-        $scope.gridDealEntryOptions.addNewRow = function (row) {
-            $scope.gridDealEntryOptions.data.push(row);
+        $scope.gridProposalOptions.data = [];
+        $scope.gridProposalOptions.addNewRow = function (row) {
+            $scope.gridProposalOptions.data.push(row);
             return row;
         }
-        $scope.DealEntry = [{trader:"Juan Lopez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
+        $scope.Proposals = [{trader:"Juan Lopez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
             principal: "Santander Brasil", counterParty:"Telefónica", hedge:"SwaClear", status:"Booked"},
             {trader:"Joaquin Gomez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
                 principal: "Santander Spain", counterParty:"Banki", hedge:"SwaClear", status:"Proposal"}];
 
-        $scope.gridDealEntryOptions.data = $scope.DealEntry;
+        $scope.gridProposalOptions.data = $scope.Proposals;
 
-        $scope.addDealEntry = function () {
+        $scope.addProposal = function () {
 
             $scope.$workspaceTabsMgm.addTabByID({
                 head: {
                     icon: 'fa fa-desktop',
-                    text: 'New Deal Entry',
+                    text: 'New Proposal',
                 },
-                templateUrl: paths.views + "/trades/deal_entry.html",
+                templateUrl: paths.views + "/trades/proposal/proposal.html",
                 parameters: {
-                    AddDealEntryGrid: $scope.gridDealEntryOptions.addNewRow
+                    AddProposalsGrid: $scope.gridProposalOptions.addNewRow
                 },
                 closable: true,
                 autoload: true
@@ -91,29 +91,29 @@ DashboardApp.controller('DealEntryListController', ['TradeDealEntryService', '$s
 
         }
 
-        // Edit DealEntry
+        // Edit Proposal
         $scope.editRow = function (grid, row) {
 
             $scope.$workspaceTabsMgm.addTabByID({
                 head: {
                     icon: 'icon-graph',
-                    text: 'Editing Deal Entry',
+                    text: 'Editing Proposal',
                 },
-                templateUrl: paths.views + "/trades/deal_entry.html",
+                templateUrl: paths.views + "/trades/proposal/proposal.html",
                 parameters: {
-                    DealEntry: row.entity
+                    Proposal: row.entity
                 },
                 closable: true,
                 autoload: true
             }, 'trades');
 
         };
-        // Delete DealEntry
+        // Delete Proposal
         $scope.deleteRow = function (grid, row) {
 
-            var index = $scope.gridDealEntryOptions.data.indexOf(row.entity);
-            $scope.gridDealEntryOptions.data.splice(index, 1);
-            TradeDealEntryService.delete(row.entity.id);
+            var index = $scope.gridProposalOptions.data.indexOf(row.entity);
+            $scope.gridProposalOptions.data.splice(index, 1);
+            ProposalService.delete(row.entity.id);
 
         }
 

@@ -13,7 +13,7 @@ DashboardApp.controller('ProposalController', ['TradeProposalService', '$scope',
                         icon: 'icon-bag',
                         text: 'Trade Proposal Info'
                     },
-                    templateUrl: paths.views + "/trades/trade_proposal_info.html",
+                    templateUrl: paths.views + "/trades/proposal/trade_proposal_info.html",
                     autoload: true
                 },
                 {
@@ -21,7 +21,7 @@ DashboardApp.controller('ProposalController', ['TradeProposalService', '$scope',
                         icon: 'icon-dollar',
                         text: 'Cash Flows'
                     },
-                    templateUrl: paths.views + "/trades/proposal_cash_flows.html",
+                    templateUrl: paths.views + "/trades/proposal/proposal_cash_flows.html",
                     autoload: true
                 }
             ]
