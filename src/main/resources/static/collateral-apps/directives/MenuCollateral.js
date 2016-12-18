@@ -453,7 +453,7 @@ DashboardApp.service('MenuService', function () {
                             icon: 'fa fa-area-chart font-yellow-soft',
                             title: 'MENU.TRADES.DEAL_ENTRY'
                         },
-                        view: '/trades/deal_entry_list.html',
+                        view: '/trades/deal_entry/deal_entry_list.html',
                         unique: true
                     },
                     {
@@ -462,7 +462,7 @@ DashboardApp.service('MenuService', function () {
                             icon: 'fa fa-area-chart font-yellow-soft',
                             title: 'MENU.TRADES.PROPOSAL'
                         },
-                        view: '/trades/search_proposal.html',
+                        view: '/trades/proposal/search_proposal.html',
                         unique: true
                     },
                     {
@@ -471,7 +471,7 @@ DashboardApp.service('MenuService', function () {
                             icon: 'fa fa-area-chart font-yellow-soft',
                             title: 'MENU.TRADES.QUERY_FILTER'
                         },
-                        view: '/trades/query_filter.html',
+                        view: '/trades/query_filter/query_filter.html',
                         unique: true
                     }
                 ]

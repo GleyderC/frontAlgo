@@ -13,7 +13,7 @@ DashboardApp.controller('DealEntryController', ['TradeDealEntryService', '$scope
                         icon: 'icon-bag',
                         text: 'Trade Proposal Info'
                     },
-                    templateUrl: paths.views + "/trades/deal_entry.html",
+                    templateUrl: paths.views + "/trades/deal_entry/trade_proposal_info.html",
                     autoload: true
                 }
             ]
