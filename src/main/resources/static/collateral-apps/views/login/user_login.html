@@ -22,12 +22,12 @@
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
                 <label class="control-label visible-ie8 visible-ie9" translate="LOGIN.USERNAME"></label>
                 <input id="username" class="form-control form-control-solid placeholder-no-fix" type="text"
-                       autocomplete="off" translate-attr-placeholder="LOGIN.USERNAME" name="username"
+                       autocomplete="off" placeholder="{{'LOGIN.USERNAME' | translate}}" name="username"
                        ng-model="username" ng-disabled="lockForm" required/></div>
             <div class="form-group">
                 <label class="control-label visible-ie8 visible-ie9" translate="LOGIN.PASSWORD"></label>
                 <input id="password" class="form-control form-control-solid placeholder-no-fix" type="password"
-                       autocomplete="off" translate-attr-placeholder="LOGIN.PASSWORD" name="password"
+                       autocomplete="off" placeholder="{{'LOGIN.PASSWORD' | translate}}" name="password"
                        ng-model="password" ng-disabled="lockForm" required/></div>
             <div class="form-actions">
                 <button id="btnAttemptLogin" type="button" ng-click="attemptLogin()" class="btn green uppercase" translate="LOGIN.LOGIN"
