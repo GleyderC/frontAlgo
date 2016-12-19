@@ -1,4 +1,4 @@
-<div ng-controller="BACSAMarginsController as BACSA" class="portlet light bordered">
+<div ng-controller="BACSAMarginsController" class="portlet light bordered">
 
     <script type="text/ng-template" id="modalConfigIndependentAmount.html">
         <div class="modal-header">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-3">
                             <ui-select id="le-bilateral-ag-base-csa-partyA-threshold-baseCurrency"
-                                       ng-model="BACSA.partyA.thresholdBaseCrrency"
+                                       ng-model="BACSA.partyA.thresholdBaseCurrency"
                                        theme="select2"
                                        class="input-small">
                                 <ui-select-match

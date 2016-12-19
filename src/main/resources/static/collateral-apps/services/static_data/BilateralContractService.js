@@ -17,7 +17,10 @@ angular.module('DashboardApp')
             var param = {id: idBilateralContract};
             return $request.post('/servlet/BilateralContract/Select', param);
         }
-
+        this.save = function(bilateralContract){
+            var param = bilateralContract;
+            return $request.post('/servlet/BilateralContract/Insert', param);
+        }
         this.set = function (bilateralContract, isUpdate) {
             if (isUpdate) {
                 $request.put('/servlet/BilateralContract/Update', bilateralContract)

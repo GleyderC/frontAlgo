@@ -13,6 +13,7 @@ DashboardApp.controller(
         'localStorageService',
         '$filter',
         'toastr',
+        'BillAgreementData',//Factory
         function (LegalEntityService,
                   BilateralContractService,
                   $scope,
@@ -21,7 +22,8 @@ DashboardApp.controller(
                   $request,
                   $localStorage,
                   $filter,
-                  toastr) {
+                  toastr,
+                  BillAgreementData) {
 
             var currenciesList = [];
 
@@ -96,7 +98,36 @@ DashboardApp.controller(
             };
 
             this.saveBilateralAgr = function () {
+
+                var BA = BillAgreementData.getBillateralAgreement();
+                $scope.billateralContract = {};
+
+                $scope.billateralContract.contractCode = BA.contractCode;
+                $scope.billateralContract.IMthreshold = 0;
+                $scope.billateralContract.currentExposure =  0;
+                $scope.billateralContract.IM =  false;
+                $scope.billateralContract.counterpartyA     = BA.counterpartyA;
+                $scope.billateralContract.counterpartyB = BA.counterpartyB;
+                $scope.billateralContract.counterpartyAId = BA.counterpartyA.id;
+                $scope.billateralContract.counterpartyBId =  BA.counterpartyB.id;
+                $scope.billateralContract.partyAPaysVM;
+                $scope.billateralContract.partyBPaysVM;
+                $scope.billateralContract.billateralContractType = BA.contractType.key ;
+                $scope.billateralContract.partyAVmFundingCost ; 
+                $scope.billateralContract.partyAImFundingCost ; 
+                $scope.billateralContract.partyBVmFundingCost ; 
+                $scope.billateralContract.partyBImFundingCost ; 
+
+                $scope.billateralContract.partyAVmProfit ; 
+                $scope.billateralContract.partyAVImProfit ; 
+
+                $scope.billateralContract.partyBVmProfit ; 
+                $scope.billateralContract.partyBImProfit ; 
+
+
                 toastr.success("Info Saved", "Good");
+                console.log($scope.billateralContract);
+                BilateralContractService.save($scope.billateralContract);
             }
 
         }]);
@@ -224,17 +255,18 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
 
 
 //BILATERAL AGREEMENT MAIN TAB CONTROLLER
-DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', function ($scope, $request, $interval) {
+DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval','BillAgreementData' ,function ($scope, $request, $interval,BillAgreementData) {
 
     //SETTING DEFAULT INFO
-    this.callIssuanceAuto = false;
-    this.bilateralAcasiaSoft = false;
-    this.status = true;
+    $scope.BA = {};
+    $scope.BA.callIssuanceAuto = false;
+    $scope.BA.bilateralAcasiaSoft = false;
+    $scope.BA.status = true;
 
     //Notification TimePicker
-    this.notification = new Date();
-    this.hstep = 1;
-    this.mstep = 1;
+    $scope.BA.notification = new Date();
+    $scope.BA.hstep = 1;
+    $scope.BA.mstep = 1;
 
     this.options = {
         hstep: [1, 2, 3],
@@ -254,41 +286,47 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval', 
 
         let BilContract = $scope.parameters.BilateralContract;
 
-        this.contractCode = BilContract.contractCode;
-        this.legalEntityPrimary = {id: BilContract.counterpartyA.id, name: BilContract.counterpartyA.name};
-        this.legalEntityCounterparty = {id: BilContract.counterpartyB.id, name: BilContract.counterpartyB.name};
-        this.baseCurrency = {id: BilContract.baseCurrency}
-        this.contractType = {key: BilContract.bilateralContractType};
-        this.autoSendTime = {};
-        this.autoSendTime.iLocalMillis = BilContract.autoSendTimes[0].autoSendTime.iLocalMillis
-        this.autoSendTime.iChronology = BilContract.autoSendTimes[0].autoSendTime.iChronology.iBase.iMinDaysInFirstWeek;
+        $scope.BA.contractCode = BilContract.contractCode;
+        $scope.BA.counterpartyA = {id: BilContract.counterpartyA.id, name: BilContract.counterpartyA.name};
+        $scope.BA.counterpartyB = {id: BilContract.counterpartyB.id, name: BilContract.counterpartyB.name};
+        $scope.BA.baseCurrency = {id: BilContract.baseCurrency}
+        $scope.BA.contractType = {key: BilContract.bilateralContractType};
+        $scope.BA.autoSendTime = {};
+        $scope.BA.autoSendTime.iLocalMillis = BilContract.autoSendTimes[0].autoSendTime.iLocalMillis
+        $scope.BA.autoSendTime.iChronology = BilContract.autoSendTimes[0].autoSendTime.iChronology.iBase.iMinDaysInFirstWeek;
+        
+        $scope.BA.callFrequency = {key: BilContract.marginFrequency};
+        $scope.BA.callOffset = BilContract.callOffset;
 
-        this.callFrequency = {key: BilContract.marginFrequency};
-        this.callOffset = BilContract.callOffset;
-
+        $scope.holidays.msSelected = BilContract.counterpartyA.financialCalendarList
         //Multiselect
-        this.holidays = $scope.holidays;
-        this.holidays.msSelected = BilContract.counterpartyA.financialCalendarList
+        $scope.BA.holidays = $scope.holidays;
     }
-
+    
+    BillAgreementData.setBillateralAgreement($scope.BA);
+    $scope.$watchCollection('BA', function (newValue, oldValue) {
+        if (newValue !== oldValue) BillAgreementData.setBillateralAgreement(newValue);
+    });
 }]);
 
-DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$request', '$interval', '$filter', 'toastr', function (ModalService, $scope, $request, $interval, $filter, toastr) {
+DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$request', '$interval', '$filter', 'toastr', 'BillAgreementData',
+                                    function (ModalService, $scope, $request, $interval, $filter, toastr,BillAgreementData) {
 
-    this.partyA = {};
-    this.partyA.LegEnforceableAgreement = false;
-    this.partyA.independentAmount = false;
-    this.partyA.ratings = false;
-    this.partyA.rehipotecation = false;
+    $scope.BACSA =  {};
+    $scope.BACSA.partyA = {};
+    $scope.BACSA.partyA.LegEnforceableAgreement = false;
+    $scope.BACSA.partyA.independentAmount = false;
+    $scope.BACSA.partyA.ratings = false;
+    $scope.BACSA.partyA.rehipotecation = false;
 
-    this.partyB = {};
-    this.partyB.LegEnforceableAgreement = false;
-    this.partyB.independentAmount = false;
-    this.partyB.ratings = false;
-    this.partyB.rehipotecation = false;
+    $scope.BACSA.partyB = {};
+    $scope.BACSA.partyB.LegEnforceableAgreement = false;
+    $scope.BACSA.partyB.independentAmount = false;
+    $scope.BACSA.partyB.ratings = false;
+    $scope.BACSA.partyB.rehipotecation = false;
 
     //MODALS
-    this.modalConfigIndAmount = function () {
+    $scope.modalConfigIndAmount = function () {
         ModalService.open({
             templateUrl: "modalConfigIndependentAmount.html",
             size: 'lg',
@@ -311,7 +349,7 @@ DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$r
         });
     }
 
-    this.modalConfigBasedOnRatings = function () {
+    $scope.modalConfigBasedOnRatings = function () {
         ModalService.open({
             templateUrl: "modalConfigBasedOnRatings.html",
             size: 'lg',
@@ -333,6 +371,43 @@ DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$r
             resolve: {}
         });
     };
+
+    $scope.partyA = {};
+    $scope.partyB = {};
+    
+    $scope.$watchCollection('BACSA.partyA', function (newValue, oldValue) {
+        if (newValue !== oldValue){
+            var BA = BillAgreementData.getBillateralAgreement();
+            $scope.partyA.thresholdCurrencyPartyA     =newValue.thresholdBaseCurrency  ;
+            $scope.partyA.partyAThreshold             =newValue.threshold  ;
+            $scope.partyA.minimumTransferAmountCurrencyPartyA = newValue.transfAmountBaseCurrency   ;
+            $scope.partyA.minimumTransferAmountPartyA =newValue.minTransfAmount ;
+            $scope.partyA.roundingType  = newValue.roundingType;
+    
+
+            Object.keys($scope.partyA).forEach(function(v,k){
+                    BA[v]  =  $scope.partyA[v];
+            });
+            BillAgreementData.setBillateralAgreement(BA);
+            
+        }
+    });
+    $scope.$watchCollection('BACSA.partyB', function (newValue, oldValue) {
+        if (newValue !== oldValue){
+            var BA = BillAgreementData.getBillateralAgreement();
+            $scope.thresholdCurrencyPartyB =  newValue.thresholdBaseCurrency;
+            $scope.partyBThreshold  = newValue.threshold;
+            $scope.minimumTransferAmountCurrencyPartyB = newValue.transfAmountBaseCurrency ;
+            $scope.minimumTransferAmountPartyB  = newValue.minTransfAmount ;
+    
+
+            Object.keys($scope.partyB).forEach(function(v,k){
+                    BA[v]  =  $scope.partyB[v];
+            });
+            BillAgreementData.setBillateralAgreement(BA);
+            
+        }
+    });
 
 }]);
 
@@ -661,4 +736,18 @@ DashboardApp.controller('LEBilateralAgrEligibleSecuritiesController', ['$scope',
     ];
 
 }]);
+//Factory to Share BillateralContract Data betw
+DashboardApp.factory('BillAgreementData',function(){
+var data = {
+    BillateralAgreement: {}
+};
+    return {
+            getBillateralAgreement: function () {
+                return data.BillateralAgreement;
+            },
+            setBillateralAgreement: function (billAgreement) {
+                data.BillateralAgreement = billAgreement;
+            }
+        };
 
+});
