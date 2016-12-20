@@ -18,5 +18,22 @@ DashboardApp.controller('DealEntryController', ['TradeDealEntryService', '$scope
                 }
             ]
         };
-
+        $scope.notitfy = function(){
+            //$timeout(function() {
+                //PNotify.prototype.options.styling = "bootstrap2";
+                PNotify.desktop.permission();
+                (new PNotify({
+                    title: 'Trade Notification',
+                    text: 'New Trade!',
+                    desktop: {
+                        desktop: true,
+                        icon: 'favicon.ico'
+                    }
+                }))/*.get().click(function(e){
+                    if ($('.ui-pnotify-closer, .ui-pnotify-sticker, .ui-pnotify-closer *, .ui-pnotify-sticker *').is(e.target))
+                        return;
+                    alert('Hey! You clicked the desktop notification!');
+                });*/
+            //},1000);
+        };
     }]);

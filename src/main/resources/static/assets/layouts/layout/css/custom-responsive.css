@@ -50,6 +50,9 @@
     .grid-collateral{
         height: 570px;
     }
+    .grid-collateral-min{
+        height: 250px;
+    }
     .collateral-editor{
         height: 200px;
     }
@@ -75,6 +78,9 @@
     }
     .grid-collateral{
         height: 670px;
+    }
+    .grid-collateral-min{
+        height: 320px;
     }
     .collateral-editor{
         height: 300px;
