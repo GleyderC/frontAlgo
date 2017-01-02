@@ -1,0 +1,219 @@
+<div class="portlet light calculation   " ng-controller="QueryFilterController">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-graph font-dark font-green-haze"></i>
+            <span class="caption-subject bold uppercase font-green-haze"> Trade Query</span>
+            <span class="caption-helper">Lists</span>
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="" class="fullscreen"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="portlet light bordered">
+                <div class="row">
+                    <div class="col-md-2" >
+                        <label class="control-label">Clearing House</label>
+                        <ui-select ng-model="QueryFilter.ClearingHouse.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Clearing House">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="ClearingHouse in QueryFilter.ClearingHouses | filter: {name: $select.search}">
+                                <div ng-bind-html="ClearingHouse.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+ClearingHouse.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Trade Date</label>
+                        <div class="input-group">
+                            <input placeholder="Trade Date" type="text" class="form-control" uib-datepicker-popup ng-model="QueryFilter.tradeDate"
+                                   is-open="QueryFilter.tradePopup.opened" datepicker-options="dateOptions"
+                                   ng-required="true" close-text="Close" ng-change="QueryFilter.dateChange(this)" style="height: 30px!important; font-size: 11px;" />
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="QueryFilter.openDatePicker('trade')" style="height: 30px!important;">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Currency</label>
+                        <ui-select ng-model="QueryFilter.currency.selected" id="swap-trade-currency" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="currency in QueryFilter.currencyList | filter: $select.search">
+                                <div ng-bind-html="currency.name | highlight: $select.search"></div>
+                                <small ng-bind-html="currency.key | highlight: $select.search"></small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Family</label>
+                        <ui-select ng-model="QueryFilter.ProductFamily.selected"   ng-change="QueryFilter.filterProduct('ProductFamily', QueryFilter.ProductFamily.selected)" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Family">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="ProductFamily in QueryFilter.ProductFamilies | filter: {name: $select.search}">
+                                <div ng-bind-html="ProductFamily.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+ProductFamily.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Portfolio</label>
+                        <ui-select ng-model="QueryFilter.Portfolio.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Portfolio">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="Portfolio in QueryFilter.Portfolios | filter: {name: $select.search}">
+                                <div ng-bind-html="Portfolio.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+Portfolio.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Contract</label>
+                        <ui-select ng-model="QueryFilter.Contract.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Contract">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="Contract in QueryFilter.Contracts | filter: {name: $select.search}">
+                                <div ng-bind-html="Contract.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+Contract.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" ng-if="QueryFilter.ProductFamily.selected != 'Collateral'">
+                        <label class="control-label">Counterparty</label>
+                        <ui-select ng-model="QueryFilter.Counterparty.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Counterparty">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="Counterparty in QueryFilter.Counterparties | filter: {name: $select.search}">
+                                <div ng-bind-html="Counterparty.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+Counterparty.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Maturity Date</label>
+                        <div class="input-group">
+                            <input placeholder="Maturity Date" type="text" class="form-control" uib-datepicker-popup ng-model="QueryFilter.maturityDate"
+                                   is-open="QueryFilter.maturityPopup.opened" datepicker-options="dateOptions"
+                                   ng-required="true" close-text="Close" ng-change="QueryFilter.dateChange(this)" style="height: 30px!important; font-size: 11px;" />
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="QueryFilter.openDatePicker('maturity')" style="height: 30px!important;">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">ISIN</label>
+                        <input type="text" class="form-control input-small" name="isin">
+                    </div>
+                    <div class="col-md-2" ng-if="QueryFilter.ProductFamily.selected != 'Collateral'">
+                        <label class="control-label">Group</label>
+                        <ui-select ng-model="QueryFilter.ProductGroup.selected" ng-change="QueryFilter.filterProduct('ProductGroup', QueryFilter.ProductGroup.selected)" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Product Group">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="ProductGroup in QueryFilter.ProductGroups | filter: {name: $select.search}">
+                                <div ng-bind-html="ProductGroup.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+ProductGroup.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Instrument</label>
+                        <ui-select ng-model="QueryFilter.Instrument.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Instrument">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="Instrument in QueryFilter.Instruments | filter: {name: $select.search}">
+                                <div ng-bind-html="Instrument.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+Instrument.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" >
+                        <label class="control-label">Trader</label>
+                        <ui-select ng-model="QueryFilter.Trader.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Trader">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="Trader in QueryFilter.Traders | filter: {name: $select.search}">
+                                <div ng-bind-html="Trader.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+Trader.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Start Date</label>
+                        <div class="input-group">
+                            <input placeholder="Start Date" type="text" class="form-control" uib-datepicker-popup ng-model="QueryFilter.startDate"
+                                   is-open="QueryFilter.startPopup.opened" datepicker-options="dateOptions"
+                                   ng-required="true" close-text="Close" ng-change="QueryFilter.dateChange(this)" style="height: 30px!important; font-size: 11px;" />
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="QueryFilter.openDatePicker('start')" style="height: 30px!important;">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Sense</label>
+                        <ui-select ng-model="QueryFilter.TradeQuerySense.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Sense">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="TradeQuerySense in QueryFilter.TradeQuerySenses | filter: {name: $select.search}">
+                                <div ng-bind-html="TradeQuerySense.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" >
+                        <label class="control-label">Type</label>
+                        <ui-select ng-model="QueryFilter.ProductType.selected" ng-change="QueryFilter.filterProduct('ProductType',QueryFilter.ProductType.selected)" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Product Type">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="ProductType in QueryFilter.ProductTypes | filter: {name: $select.search}">
+                                <div ng-bind-html="ProductType.name | highlight: $select.search"></div>
+                                <small>
+                                    <span ng-bind-html="''+ProductType.description | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2" ng-if="QueryFilter.ProductFamily.selected == 'Collateral'">
+                        <label class="control-label">Col Type</label>
+                        <ui-select ng-model="QueryFilter.ColType.selected" theme="select2" style="display: block;">
+                            <ui-select-match placeholder="Select Col Type">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="ColType in QueryFilter.ColTypes | filter: {name: $select.search}">
+                                <div ng-bind-html="ColType.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-5 col-md-7">
+                        <div class="btn-group">
+                            <button type="submit" class="btn green">
+                                <i class="fa fa-search"></i>Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div ui-grid="gridQueryFilterOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
+                 ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                 class="grid grid-collateral"></div>
+        </div>
+
+    </div>
+</div>

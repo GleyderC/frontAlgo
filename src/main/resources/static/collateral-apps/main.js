@@ -193,9 +193,12 @@ CollateralApp.factory('httpGlobalInterceptor', ['$q', '$injector', 'localStorage
     return {
         'request': function (config) {
             config.headers = config.headers || {};
-            if ($localStorage.token) {
-                config.headers.Authorization = 'Bearer ' + $localStorage.token;
+            if ( !angular.isUndefined($localStorage.get("CMS-AuthorizationToken")) ) {
+
+                config.headers["CMS-AuthorizationToken"] = $localStorage.get("CMS-AuthorizationToken");
+
             }
+
             return config;
         },
         'requestError': function (rejection) {
@@ -216,10 +219,10 @@ CollateralApp.factory('httpGlobalInterceptor', ['$q', '$injector', 'localStorage
         'responseError': function (response) {
 
             $injector.get('toastr').error("Acess to the requested resource has been denied", "Unauthorized Error", {closeButton: true});
-            $log.warn("There is an error. Reason:");
-            $log.debug("http_code: " + response.status + ", Response: " + response.statusText);
+            $log.error("http_code: " + response.status + ", Response: " + response.statusText);
 
-            if (response.status === 401 || response.status === 403) {
+            if ( response.status === 401 || response.status === 403 || response.status === -1 ) {
+
                 $injector.get('$state').go('login');
             }
             return $q.reject(response);
@@ -330,7 +333,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'assets/pages/css/login.css',
                             'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
                             'assets/global/plugins/jquery-validation/js/additional-methods.min.js',
-                            'assets/pages/scripts/login.js',
+                            //'assets/pages/scripts/login.js',
                             'collateral-apps/controllers/LoginController.js'
                         ],
                         serie: true
@@ -475,12 +478,13 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/configuration/settlement_account/SearchSettlementAccountsController.js',
 
                             /* Trades Controller */
-                            'collateral-apps/controllers/trades/QueryFilterController.js',
-                            'collateral-apps/controllers/trades/DealEntryListController.js',
-                            'collateral-apps/controllers/trades/SearchProposalController.js',
-                            'collateral-apps/controllers/trades/DealEntryController.js',
-                            'collateral-apps/controllers/trades/ProposalController.js',
-                            'collateral-apps/controllers/trades/TradeProposalInfoController.js',
+                            'collateral-apps/controllers/trades/query_filter/QueryFilterController.js',
+                            'collateral-apps/controllers/trades/deal_entry/DealEntryListController.js',
+                            'collateral-apps/controllers/trades/proposal/SearchProposalController.js',
+                            'collateral-apps/controllers/trades/deal_entry/DealEntryController.js',
+                            'collateral-apps/controllers/trades/proposal/ProposalController.js',
+                            'collateral-apps/controllers/trades/proposal/TradeProposalInfoController.js',
+                            'collateral-apps/controllers/trades/deal_entry/DealEntryProposalInfoController.js',
 
 
                             /* Analytics Controller*/

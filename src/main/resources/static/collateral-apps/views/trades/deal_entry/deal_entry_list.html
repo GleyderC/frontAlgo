@@ -1,0 +1,46 @@
+<div class="portlet light" ng-controller="DealEntryListController">
+    <div class="row portlet light bordered" id="pending-proposoa,-table">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-desktop font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze"> Pending Proposal </span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"></a>
+                <a href="" class="fullscreen"> </a>
+            </div>
+        </div>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="row">
+                <div ui-grid="gridPendingProposalOptions" ui-grid-exporter ui-grid-auto-resize
+                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                     class="grid grid-collateral-min"></div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <!-- END ROW -->
+    <div class="row portlet light bordered" id="trade-blotter-table">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-desktop font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze"> Trade Blotter </span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"></a>
+                <a href="" class="fullscreen"> </a>
+            </div>
+        </div>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="row">
+                <div ui-grid="gridTradeBlotterOptions" ui-grid-exporter ui-grid-auto-resize
+                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                     class="grid grid-collateral-min"></div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <!-- END ROW -->
+</div>

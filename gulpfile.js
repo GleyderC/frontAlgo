@@ -31,7 +31,9 @@ var paths = {
     ],
     karma: 'karma.conf.js',
     views: {
-        main: collateral.app + '/index.html',
+        //main: collateral.app + '/index.html',
+        main: 'src/main/resources/templates/index.html',
+
         files: [collateral.app + '/views/**/*.html']
     }
 };
@@ -143,7 +145,7 @@ gulp.task('bower', function () {
     return gulp.src(paths.views.main)
         .pipe(wiredep({      exclude: ['angular-ui-select','select2',
             'multiselect','angular-ui-grid','pdfmake','selectize']}))
-        .pipe(gulp.dest(collateral.app));
+        .pipe(gulp.dest('src/main/resources/templates'));
 });
 
 ///////////
