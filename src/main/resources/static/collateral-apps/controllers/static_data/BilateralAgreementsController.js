@@ -634,7 +634,7 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
     this.gridOptions.data = [];
 
     if (!!$scope.parameters && !!$scope.parameters.BilateralContract) {
-        this.gridOptions.data = $scope.parameters.BilateralContract.eligibleCurrencyConfig.eligibleCurrenciesPartyAList;
+        this.gridOptions.data = $scope.parameters.BilateralContract.eligibleCurrencyConfigPartyA.eligibleCurrenciesList;
     }
 
 }]);
