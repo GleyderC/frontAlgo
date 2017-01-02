@@ -189,10 +189,9 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
 
         $scope.gridOptions = {
             columnDefs: [
-                {
-                    //field: 'contract_name',
-                    cellTemplate: '<div>Demo Contract Name</div>',
-                    name: 'Contract name'
+             {
+                    field: 'contractCode',
+                    name: 'Contract code'
                 },
                 {
                     field: 'counterpartyA.name',
