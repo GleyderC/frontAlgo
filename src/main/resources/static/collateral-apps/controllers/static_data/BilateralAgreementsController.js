@@ -163,7 +163,12 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                 autoload: true
             }, 'static_data');
         };
-
+        $scope.refreshBilateralContracts = function(){
+          BilateralContractService.getAll().then(function (result) {
+                    $scope.BilateralAgreements.contracts = result.data.dataResponse;
+                    $scope.gridOptions.data = result.data.dataResponse;
+          });
+        };
         $scope.editRow = function (grid, row) {
 
             $scope.$workspaceTabsMgm.addTabByID({
@@ -202,7 +207,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                     name: 'Counter Party B'
                 },
                 {
-                    field: 'bilateralContractType',
+                    field: 'contractType',
                     name: 'Contract type',
                     groupable: true
                 },
@@ -293,7 +298,7 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval','
         $scope.BA.autoSendTime = {};
         $scope.BA.autoSendTime.iLocalMillis = BilContract.autoSendTimes[0].autoSendTime.iLocalMillis
         $scope.BA.autoSendTime.iChronology = BilContract.autoSendTimes[0].autoSendTime.iChronology.iBase.iMinDaysInFirstWeek;
-        
+
         $scope.BA.callFrequency = {key: BilContract.marginFrequency};
         $scope.BA.callOffset = BilContract.callOffset;
 
