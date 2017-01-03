@@ -27,6 +27,40 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
         $scope.TradeProposalInfo.ReceivecurrencyList = localStorageService.get("CurrencyEnum");
         $scope.TradeProposalInfo.ReceivecurrencyList.splice(2,1);
 
+        $scope.TradeProposalInfo.calculateWeSellBuy = function (input) {
+
+            if(input == 'fx' && ($scope.TradeProposalInfo.BTBHedgeFxRate!='0.00000' || $scope.TradeProposalInfo.CounterParty.WeSell!='0.00' || $scope.TradeProposalInfo.CounterParty.WeBuy !='0.00')){
+                $scope.TradeProposalInfo.CounterParty.WeBuy = ($scope.TradeProposalInfo.CounterParty.WeSell * $scope.TradeProposalInfo.BTBHedgeFxRate);
+            }
+            else if(input=='sell') {
+                $scope.TradeProposalInfo.CounterParty.WeBuy = ($scope.TradeProposalInfo.CounterParty.WeSell * $scope.TradeProposalInfo.BTBHedgeFxRate);
+            }
+            else {
+                $scope.TradeProposalInfo.CounterParty.WeSell = ($scope.TradeProposalInfo.CounterParty.WeBuy / $scope.TradeProposalInfo.BTBHedgeFxRate)
+            }
+
+        }
+
+        $scope.TradeProposalInfo.calculateClientSellBuy = function (input, indexClient) {
+
+            if(input == 'fx' && ($scope.TradeProposalInfo.ClientTradeFxRate!='0.00000')){
+                $scope.TradeProposalInfo.clients.forEach( function (client) {
+                    if(client.ClientSell != '0.00'){
+                        client.ClientBuy = (client.ClientSell * $scope.TradeProposalInfo.ClientTradeFxRate);
+                    }
+                });
+
+            }
+            else if(input=='sell') {
+                $scope.TradeProposalInfo.clients[indexClient].ClientBuy = ($scope.TradeProposalInfo.clients[indexClient].ClientSell * $scope.TradeProposalInfo.ClientTradeFxRate);
+            }
+            else {
+                $scope.TradeProposalInfo.clients[indexClient].ClientSell = ($scope.TradeProposalInfo.clients[indexClient].ClientBuy / $scope.TradeProposalInfo.ClientTradeFxRate)
+            }
+        }
+
+
+
         $scope.exchangeCurrency = function () {
 
             let tmpPayCurrency = $scope.TradeProposalInfo.PayCurrency.selected;
@@ -55,6 +89,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         }
 
+        
         LegalEntityService.getAll().then(function (result) {
             $scope.TradeProposalInfo.legalEntitiesPO = [];
 
@@ -262,7 +297,6 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                 }
             }
         }
-
 
         $scope.TradeProposalInfo.effectiveDate = new Date();
         $scope.TradeProposalInfo.terminationDate = new Date();
