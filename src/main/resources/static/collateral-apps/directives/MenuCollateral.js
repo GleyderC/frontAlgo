@@ -228,6 +228,15 @@ DashboardApp.service('MenuService', function () {
                         },
                         view: '/integration_reporting/ScheduledTask/scheduled_task.html',
                         unique: true
+                    },
+                    {
+                        id: 'ir_registr',
+                        head: {
+                            icon: 'fa fa-play-circle-o font-purple-seance',
+                            title: 'RegisTR'
+                        },
+                        view: '/integration_reporting/RegisTR/regisTR.html',
+                        unique: true
                     }
                 ]
             }, /* #4 Integration & Reporting */
