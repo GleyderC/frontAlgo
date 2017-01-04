@@ -57,6 +57,12 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
             else {
                 $scope.TradeProposalInfo.clients[indexClient].ClientSell = ($scope.TradeProposalInfo.clients[indexClient].ClientBuy / $scope.TradeProposalInfo.ClientTradeFxRate)
             }
+            if($scope.TradeProposalInfo.clients.length == 1){
+                $scope.TradeProposalInfo.BTBHedgeFxRate = $scope.TradeProposalInfo.ClientTradeFxRate;
+                $scope.TradeProposalInfo.CounterParty.WeBuy = $scope.TradeProposalInfo.clients[0].ClientBuy;
+                $scope.TradeProposalInfo.CounterParty.WeSell = $scope.TradeProposalInfo.clients[0].ClientSell;
+            }
+
         }
 
 
@@ -109,7 +115,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                             $scope.TradeProposalInfo.CounterParty.legalEntitiesCounterParty.push(legalEntity);
                         }
                         else if(rol.roleType == "CLIENT"){
-                            for(var i= 0; i> $scope.TradeProposalInfo.clients.length; i++){
+                            for(var i= 0; i< $scope.TradeProposalInfo.clients.length; i++){
                                 $scope.TradeProposalInfo.clients[i].legalEntitiesClient.push(legalEntity);
                             }
                         }
@@ -305,7 +311,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
         $scope.TradeProposalInfo.terminationPopup = { opened: false};
 
         $scope.TradeProposalInfo.settlementDate = new Date();
-        $scope.TradeProposalInfo.settlementDate = new Date();
+        $scope.TradeProposalInfo.settlementPopup = { opened: false};
 
         $scope.TradeProposalInfo.openDatePicker = function (datePicker) {
             if(datePicker == "effective"){

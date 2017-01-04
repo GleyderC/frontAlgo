@@ -126,7 +126,7 @@ DashboardApp.controller(
 
 
                 toastr.success("Info Saved", "Good");
-                console.log($scope.billateralContract);
+
                 BilateralContractService.save($scope.billateralContract);
             }
 
@@ -417,10 +417,14 @@ DashboardApp.controller('BACSAMarginsController', ['ModalService', '$scope', '$r
 
 DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$scope', '$request', '$interval', '$filter', function (ModalService, $scope, $request, $interval, $filter) {
 
+ 
     var _that = this;
     var currenciesList = $filter('orderBy')($scope.BilateralAgreements.staticData.currencies, 'codigo');
     var supportedindexes = $scope.BilateralAgreements.staticData.supportedindexes;
 
+    angular.forEach(supportedindexes,function(value,k){
+              value["code"] = value.name.slice(0,value.name.indexOf("-"));
+    });
     //clean index array
     angular.forEach(supportedindexes, function (index, key) {
         if (!index.key) {
@@ -517,7 +521,23 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
                     $scope.floorAmount = params.floorAmount;
                 }
                 //EDIT END
-
+                $scope.supportedindexesListCopy = $scope.supportedindexesList;
+                $scope.changeCurrency = function(){
+                    let keepLooking =  true; 
+                    $scope.supportedindexesList .forEach(function(v,k){
+                        if(keepLooking){
+                            if(v.code==$scope.baseCurrency.codigo){
+                                keepLooking = false; 
+                                $scope.supportedindexesList= $scope.supportedindexesListCopy.filter(function(v){ return $scope.baseCurrency.codigo==v.code})
+                            }
+                            else{
+                                  $scope.supportedindexesList = $scope.supportedindexesListCopy;
+                            }
+                        }
+                        
+                    });
+                };
+                $scope.changeCurrency();
                 $scope.save = function () {
                     //console.log("Press Ok")
 
