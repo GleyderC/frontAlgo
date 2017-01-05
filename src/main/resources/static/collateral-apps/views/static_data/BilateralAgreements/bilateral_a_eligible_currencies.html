@@ -12,7 +12,7 @@
                     <label class="control-label col-md-4">Base Currency</label>
                     <div class="col-md-8">
                         <select ng-model="baseCurrency" class="form-control input-medium"
-                                ng-options="currency.codigo for currency in currenciesList track by currency.id">
+                                ng-options="currency.codigo for currency in currenciesList track by currency.id" ng-change="changeCurrency()">
                             <option value="">--Select Currency--</option>
                         </select>
                         <!--<ui-select id="adding-eligible-currency" ng-model="baseCurrency"
@@ -150,12 +150,6 @@
                                     </ui-select-choices>
                                 </ui-select>
                                 -->
-                            </div>
-                            <div class="col-md-4">
-                                <label class="control-label">Tenor</label>
-                                <select class="form-control input-medium" ng-model="tenor">
-                                    <option value="">--Tenor--</option>
-                                </select>
                             </div>
                             <div class="col-md-4">
                                 <label class="control-label">Spread</label>

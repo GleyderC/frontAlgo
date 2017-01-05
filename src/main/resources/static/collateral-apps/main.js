@@ -454,6 +454,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
 
                             /*Integration&Reporting Controller*/
                             'collateral-apps/controllers/integration_reporting/TradesController.js',
+                            'collateral-apps/controllers/integration_reporting/RegisTRController.js',
+                            'collateral-apps/controllers/integration_reporting/registTR/MessageRepositoryController.js',
+                            'collateral-apps/controllers/integration_reporting/registTR/TradeReportingStatusController.js',
+                            'collateral-apps/controllers/integration_reporting/registTR/ContractReportingStatusController.js',
                             'collateral-apps/controllers/integration_reporting/IntegrationController.js',
                             'collateral-apps/controllers/integration_reporting/ScheduledTaskController.js',
 
