@@ -8,25 +8,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         $scope.TradeProposalInfo = {};
 
-        $scope.TradeProposalInfo.ProductFamily = {};
-        $scope.TradeProposalInfo.ProductFamilies = localStorageService.get('ProductFamily');
-
-        $scope.TradeProposalInfo.ProductGroup = {};
-        $scope.TradeProposalInfo.ProductGroups = localStorageService.get('ProductGroup');
-
-        $scope.TradeProposalInfo.ProductType = {};
-        $scope.TradeProposalInfo.ProductTypes = localStorageService.get('ProductType');
-
-        //FX Forward
-
-        $scope.TradeProposalInfo.Strategy = {};
-        $scope.TradeProposalInfo.PayCurrency = {}
-        $scope.TradeProposalInfo.PayCurrencyList = localStorageService.get("CurrencyEnum");
-        $scope.TradeProposalInfo.PayCurrencyList.splice(2,1);
-        $scope.TradeProposalInfo.ReceiveCurrency = {};
-        $scope.TradeProposalInfo.ReceivecurrencyList = localStorageService.get("CurrencyEnum");
-        $scope.TradeProposalInfo.ReceivecurrencyList.splice(2,1);
-
+        /* Functions */
         $scope.TradeProposalInfo.calculateWeSellBuy = function (input) {
 
             if(input == 'fx' && ($scope.TradeProposalInfo.BTBHedgeFxRate!='0.00000' || $scope.TradeProposalInfo.CounterParty.WeSell!='0.00' || $scope.TradeProposalInfo.CounterParty.WeBuy !='0.00')){
@@ -65,8 +47,6 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         }
 
-
-
         $scope.exchangeCurrency = function () {
 
             let tmpPayCurrency = $scope.TradeProposalInfo.PayCurrency.selected;
@@ -79,23 +59,98 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         }
 
-        $scope.TradeProposalInfo.Strategies = [ {"key" : 'market_trade', "name": 'Market Trade'},
-            { "key": 'client_market_trade', "name": 'Client + Market Trade'}];
+        $scope.TradeProposalInfo.filterLeg = function (leg) {
 
-        $scope.TradeProposalInfo.StrategyID = 'FX_'+Math.floor((Math.random() * 999999999) + 1);
-
-        $scope.removeLegalEntityClient = function (index) {
-            if($scope.TradeProposalInfo.clients.length > 1){
-                $scope.TradeProposalInfo.clients.splice(index,1);
+            if(leg == "pay"){
+                if($scope.TradeProposalInfo.PayLegType=="FIXED"){
+                    $scope.TradeProposalInfo.PayBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "_30_360"){
+                            return basis;
+                        }
+                    });
+                }
+                else if($scope.TradeProposalInfo.PayLegType=="FLOATING"){
+                    $scope.TradeProposalInfo.PayBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "ACT_360"){
+                            return basis;
+                        }
+                    });
+                }
+            }
+            else if(leg == "receive"){
+                if($scope.TradeProposalInfo.ReceiveLegType=="FIXED"){
+                    $scope.TradeProposalInfo.ReceiveBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "_30_360"){
+                            return basis;
+                        }
+                    });
+                }
+                else if($scope.TradeProposalInfo.ReceiveLegType=="FLOATING"){
+                    $scope.TradeProposalInfo.ReceiveBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
+                        if(basis.key == "ACT_360"){
+                            return basis;
+                        }
+                    });
+                }
             }
         }
 
-        $scope.addLegaLEntityClient = function () {
-            $scope.TradeProposalInfo.clients.push({"ClientID": 'FX_'+Math.floor((Math.random() * 999999999) + 1)+'_CL',"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
-
+        function findProductFromPrefix(arr, prefix) {
+            //var values = [];
+            for (var i = arr.length-1; i >=0;  i--) {
+                if (arr[i].key.indexOf(prefix) !== 0) {
+                    arr.splice(i, 1);
+                    //values.push(arr[i].split(splitChar)[1]);
+                }
+            }
         }
 
-        
+        $scope.TradeProposalInfo.filterProduct = function (product, prefix) {
+            //console.log(product);
+            //console.log(prefix.key);
+            if(product == "ProductFamily"){
+
+                $scope.TradeProposalInfo.ProductGroups = localStorageService.get('ProductGroup');
+                findProductFromPrefix($scope.TradeProposalInfo.ProductGroups, prefix.name);
+                $scope.TradeProposalInfo.ProductGroup = {selected: {}};
+                $scope.TradeProposalInfo.ProductGroup.selected = $scope.TradeProposalInfo.ProductGroups[0];
+                $scope.TradeProposalInfo.filterProduct('ProductGroup',$scope.TradeProposalInfo.ProductGroup.selected);
+            }
+
+            else if(product == "ProductGroup"){
+                $scope.TradeProposalInfo.ProductGroup.selected = prefix;
+                $scope.TradeProposalInfo.ProductTypes = localStorageService.get('ProductType');
+                findProductFromPrefix($scope.TradeProposalInfo.ProductTypes,prefix.name);
+                $scope.TradeProposalInfo.ProductType = {selected: {}};
+                $scope.TradeProposalInfo.ProductType = {selected: $scope.TradeProposalInfo.ProductTypes[0]};
+
+                $scope.TradeProposalInfo.ProductFamily = {selected: {}};
+                $scope.TradeProposalInfo.ProductFamily.selected = $scope.TradeProposalInfo.ProductFamilies.find(function (productFamily) {
+                    if(productFamily.name == prefix.key){
+                        return productFamily;
+                    }
+                });
+            }
+            else if(product == "ProductType"){
+
+                if(!$scope.TradeProposalInfo.ProductGroup.selected){
+                    $scope.TradeProposalInfo.ProductGroup.selected = $scope.TradeProposalInfo.ProductGroups.find(function (productGroup) {
+                        if(productGroup.name == prefix.key){
+                            return productGroup;
+                        }
+                    });
+                    if($scope.TradeProposalInfo.ProductGroup.selected){
+                        $scope.TradeProposalInfo.ProductFamily.selected = $scope.TradeProposalInfo.ProductFamilies.find(function (productFamily) {
+                            if(productFamily.name == $scope.TradeProposalInfo.ProductGroup.selected.key){
+                                return productFamily;
+                            }
+                        })
+                    }
+
+                }
+            }
+        }
+
         LegalEntityService.getAll().then(function (result) {
             $scope.TradeProposalInfo.legalEntitiesPO = [];
 
@@ -132,6 +187,41 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         });
 
+        $scope.addLegaLEntityClient = function () {
+            $scope.TradeProposalInfo.clients.push({"ClientID": 'FX_'+Math.floor((Math.random() * 999999999) + 1)+'_CL',"legalEntitiesClient": [], ClientSell: 0, ClientBuy:0});
+
+        }
+
+        $scope.removeLegalEntityClient = function (index) {
+            if($scope.TradeProposalInfo.clients.length > 1){
+                $scope.TradeProposalInfo.clients.splice(index,1);
+            }
+        }
+        /* End Functions*/
+
+        $scope.TradeProposalInfo.Strategies = [ {"key" : 'market_trade', "name": 'Market Trade'},
+            { "key": 'client_market_trade', "name": 'Client + Market Trade'}];
+
+        $scope.TradeProposalInfo.StrategyID = 'FX_'+Math.floor((Math.random() * 999999999) + 1);
+
+        // Initializing Components
+        $scope.TradeProposalInfo.ProductFamily = {};
+        $scope.TradeProposalInfo.ProductFamilies = localStorageService.get('ProductFamily');
+
+        $scope.TradeProposalInfo.ProductGroup = {};
+        $scope.TradeProposalInfo.ProductGroups = localStorageService.get('ProductGroup');
+
+        $scope.TradeProposalInfo.ProductType = {};
+        $scope.TradeProposalInfo.ProductTypes = localStorageService.get('ProductType');
+
+        //FX Forward
+        $scope.TradeProposalInfo.Strategy = {};
+        $scope.TradeProposalInfo.PayCurrency = {}
+        $scope.TradeProposalInfo.PayCurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.TradeProposalInfo.PayCurrencyList.splice(2,1);
+        $scope.TradeProposalInfo.ReceiveCurrency = {};
+        $scope.TradeProposalInfo.ReceivecurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.TradeProposalInfo.ReceivecurrencyList.splice(2,1);
 
         $scope.TradeProposalInfo.PayBasisCalculationConvention = {};
         $scope.TradeProposalInfo.ReceiveBasisCalculationConvention = {};
@@ -201,43 +291,6 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
         $scope.TradeProposalInfo.ReceiveTenor ={}
         $scope.TradeProposalInfo.ReceiveTenors = [];
 
-
-        $scope.TradeProposalInfo.filterLeg = function (leg) {
-
-            if(leg == "pay"){
-                if($scope.TradeProposalInfo.PayLegType=="FIXED"){
-                    $scope.TradeProposalInfo.PayBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
-                        if(basis.key == "_30_360"){
-                            return basis;
-                        }
-                    });
-                }
-                else if($scope.TradeProposalInfo.PayLegType=="FLOATING"){
-                    $scope.TradeProposalInfo.PayBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
-                        if(basis.key == "ACT_360"){
-                            return basis;
-                        }
-                    });
-                }
-            }
-            else if(leg == "receive"){
-                if($scope.TradeProposalInfo.ReceiveLegType=="FIXED"){
-                    $scope.TradeProposalInfo.ReceiveBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
-                        if(basis.key == "_30_360"){
-                            return basis;
-                        }
-                    });
-                }
-                else if($scope.TradeProposalInfo.ReceiveLegType=="FLOATING"){
-                    $scope.TradeProposalInfo.ReceiveBasisCalculationConvention.selected = $scope.TradeProposalInfo.BasisCalculationConventions.find(function (basis) {
-                        if(basis.key == "ACT_360"){
-                            return basis;
-                        }
-                    });
-                }
-            }
-        }
-
         $scope.TradeProposalInfo.LegTypes = ["FIXED","FLOATING"];
         $scope.TradeProposalInfo.PayLegType = $scope.TradeProposalInfo.LegTypes[0];
         $scope.TradeProposalInfo.ReceiveLegType = $scope.TradeProposalInfo.LegTypes[1];
@@ -247,62 +300,6 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         $scope.TradeProposalInfo.SupportedIndex = {};
         $scope.TradeProposalInfo.SupportedIndexes = localStorageService.get('Supportedindexes');
-
-        function findProductFromPrefix(arr, prefix) {
-            //var values = [];
-            for (var i = arr.length-1; i >=0;  i--) {
-                if (arr[i].key.indexOf(prefix) !== 0) {
-                    arr.splice(i, 1);
-                    //values.push(arr[i].split(splitChar)[1]);
-                }
-            }
-        }
-
-        $scope.TradeProposalInfo.filterProduct = function (product, prefix) {
-            //console.log(product);
-            //console.log(prefix.key);
-            if(product == "ProductFamily"){
-
-                $scope.TradeProposalInfo.ProductGroups = localStorageService.get('ProductGroup');
-                findProductFromPrefix($scope.TradeProposalInfo.ProductGroups, prefix.name);
-                $scope.TradeProposalInfo.ProductGroup = {selected: {}};
-                $scope.TradeProposalInfo.ProductGroup.selected = $scope.TradeProposalInfo.ProductGroups[0];
-                $scope.TradeProposalInfo.filterProduct('ProductGroup',$scope.TradeProposalInfo.ProductGroup.selected);
-            }
-
-            else if(product == "ProductGroup"){
-                $scope.TradeProposalInfo.ProductGroup.selected = prefix;
-                $scope.TradeProposalInfo.ProductTypes = localStorageService.get('ProductType');
-                findProductFromPrefix($scope.TradeProposalInfo.ProductTypes,prefix.name);
-                $scope.TradeProposalInfo.ProductType = {selected: {}};
-                $scope.TradeProposalInfo.ProductType = {selected: $scope.TradeProposalInfo.ProductTypes[0]};
-
-                $scope.TradeProposalInfo.ProductFamily = {selected: {}};
-                $scope.TradeProposalInfo.ProductFamily.selected = $scope.TradeProposalInfo.ProductFamilies.find(function (productFamily) {
-                    if(productFamily.name == prefix.key){
-                        return productFamily;
-                    }
-                });
-            }
-            else if(product == "ProductType"){
-
-                if(!$scope.TradeProposalInfo.ProductGroup.selected){
-                    $scope.TradeProposalInfo.ProductGroup.selected = $scope.TradeProposalInfo.ProductGroups.find(function (productGroup) {
-                        if(productGroup.name == prefix.key){
-                            return productGroup;
-                        }
-                    });
-                    if($scope.TradeProposalInfo.ProductGroup.selected){
-                        $scope.TradeProposalInfo.ProductFamily.selected = $scope.TradeProposalInfo.ProductFamilies.find(function (productFamily) {
-                            if(productFamily.name == $scope.TradeProposalInfo.ProductGroup.selected.key){
-                                return productFamily;
-                            }
-                        })
-                    }
-
-                }
-            }
-        }
 
         $scope.TradeProposalInfo.effectiveDate = new Date();
         $scope.TradeProposalInfo.terminationDate = new Date();
