@@ -72,12 +72,12 @@
             </div>
             <div class="row" ng-if="TradeProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'">
                 <div class="col-md-3">
-                    <label class="control-label">Pay Currency</label>
-                    <ui-select ng-model="TradeProposalInfo.PayCurrency.selected" theme="select2" style="display: block;">
+                    <label class="control-label">Sell Currency</label>
+                    <ui-select ng-model="TradeProposalInfo.SellCurrency.selected" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="PayCurrency in TradeProposalInfo.PayCurrencyList | filter: $select.search">
-                            <div ng-bind-html="PayCurrency.name | highlight: $select.search"></div>
-                            <small ng-bind-html="PayCurrency.key | highlight: $select.search"></small>
+                        <ui-select-choices repeat="SellCurrency in TradeProposalInfo.SellCurrencyList | filter: $select.search">
+                            <div ng-bind-html="SellCurrency.name | highlight: $select.search"></div>
+                            <small ng-bind-html="SellCurrency.key | highlight: $select.search"></small>
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -89,12 +89,12 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <label class="control-label">Receive Currency</label>
-                    <ui-select ng-model="TradeProposalInfo.ReceiveCurrency.selected" theme="select2" style="display: block;">
+                    <label class="control-label">Buy Currency</label>
+                    <ui-select ng-model="TradeProposalInfo.BuyCurrency.selected" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="ReceiveCurrency in TradeProposalInfo.ReceivecurrencyList | filter: $select.search">
-                            <div ng-bind-html="ReceiveCurrency.name | highlight: $select.search"></div>
-                            <small ng-bind-html="ReceiveCurrency.key | highlight: $select.search"></small>
+                        <ui-select-choices repeat="BuyCurrency in TradeProposalInfo.BuyCurrencyList | filter: $select.search">
+                            <div ng-bind-html="BuyCurrency.name | highlight: $select.search"></div>
+                            <small ng-bind-html="BuyCurrency.key | highlight: $select.search"></small>
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -131,8 +131,8 @@
                                         <input type="text" class="form-control input-xsmall collateral-money" ng-change="TradeProposalInfo.calculateClientSellBuy('fx')"
                                                ng-model="TradeProposalInfo.ClientTradeFxRate"
                                                style="height: 28px;">
-                                        <strong class="help-inline"  ng-bind="TradeProposalInfo.PayCurrency.selected.name + ' = 1'"></strong>
-                                        <strong class="help-inline" ng-bind="TradeProposalInfo.ReceiveCurrency.selected.name"></strong>
+                                        <strong class="help-inline"  ng-bind="TradeProposalInfo.SellCurrency.selected.name + ' = 1'"></strong>
+                                        <strong class="help-inline" ng-bind="TradeProposalInfo.BuyCurrency.selected.name"></strong>
 
                                     </div>
                                 </div>
@@ -143,8 +143,8 @@
                                     <tr>
                                         <th style="font-size: 11px !important;"> Client ID </th>
                                         <th style="font-size: 11px !important;"> Client </th>
-                                        <th style="font-size: 11px !important;"> Client Sell ({{TradeProposalInfo.PayCurrency.selected.name}})</th>
-                                        <th style="font-size: 11px !important;"> Client Buy ({{TradeProposalInfo.ReceiveCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> Client Sell ({{TradeProposalInfo.SellCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> Client Buy ({{TradeProposalInfo.BuyCurrency.selected.name}})</th>
                                         <th style="font-size: 11px !important;"></th>
                                     </tr>
                                     </thead>
@@ -212,8 +212,8 @@
                                                     <input type="text" class="form-control input-xsmall collateral-money" ng-change="TradeProposalInfo.calculateWeSellBuy('fx')"
                                                            ng-model="TradeProposalInfo.BTBHedgeFxRate"
                                                            style="height: 28px;">
-                                                    <strong class="help-inline"  ng-bind="TradeProposalInfo.PayCurrency.selected.name + ' = 1'"></strong>
-                                                    <strong class="help-inline" ng-bind="TradeProposalInfo.ReceiveCurrency.selected.name"></strong>
+                                                    <strong class="help-inline"  ng-bind="TradeProposalInfo.SellCurrency.selected.name + ' = 1'"></strong>
+                                                    <strong class="help-inline" ng-bind="TradeProposalInfo.BuyCurrency.selected.name"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -223,8 +223,8 @@
                                     <tr>
                                         <th style="font-size: 11px !important;"> Trade ID </th>
                                         <th style="font-size: 11px !important;"> CounterParty </th>
-                                        <th style="font-size: 11px !important;"> We Sell ({{TradeProposalInfo.PayCurrency.selected.name}})</th>
-                                        <th style="font-size: 11px !important;"> We Buy ({{TradeProposalInfo.ReceiveCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> We Sell ({{TradeProposalInfo.SellCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> We Buy ({{TradeProposalInfo.BuyCurrency.selected.name}})</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -242,11 +242,11 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control collateral-money input-md" style="height: 28px;" ng-change="TradeProposalInfo.calculateWeSellBuy('sell')"
-                                                   placeholder="" ng-model="TradeProposalInfo.CounterParty.WeSell" ui-number-mask="2">
+                                                   placeholder="" ng-model="TradeProposalInfo.CounterParty.WeSell" ui-number-mask="2" >
                                         </td>
                                         <td>
                                             <input type="text" class="form-control collateral-money input-md" style="height: 28px;" ng-change="TradeProposalInfo.calculateWeSellBuy('buy')"
-                                                   placeholder="" ng-model="TradeProposalInfo.CounterParty.WeBuy" ui-number-mask="2">
+                                                   placeholder="" ng-model="TradeProposalInfo.CounterParty.WeBuy" ui-number-mask="2" >
                                         </td>
                                     </tr>
                                     </tbody>

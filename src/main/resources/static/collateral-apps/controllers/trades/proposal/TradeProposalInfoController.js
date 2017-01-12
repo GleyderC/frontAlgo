@@ -7,54 +7,91 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
     function (TradeProposalService,LegalEntityService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService, $q) {
 
         $scope.TradeProposalInfo = {};
+        $scope.TradeProposalInfo.BTBHedgeFxRate ='';
+        $scope.TradeProposalInfo.ClientTradeFxRate='';
 
         /* Functions */
-        $scope.TradeProposalInfo.calculateWeSellBuy = function (input) {
 
-            if(input == 'fx' && ($scope.TradeProposalInfo.BTBHedgeFxRate!='0.00000' || $scope.TradeProposalInfo.CounterParty.WeSell!='0.00' || $scope.TradeProposalInfo.CounterParty.WeBuy !='0.00')){
-                $scope.TradeProposalInfo.CounterParty.WeBuy = ($scope.TradeProposalInfo.CounterParty.WeSell / $scope.TradeProposalInfo.BTBHedgeFxRate);
+        $scope.TradeProposalInfo.calculateClientSellBuy = function (input, indexClient) {
+            if($scope.TradeProposalInfo.Strategy.selected.key == 'client_market_trade' &&  $scope.TradeProposalInfo.clients.length == 1){
+
+                if($scope.TradeProposalInfo.SellCurrency.selected.name == 'EUR'){
+                    if(input=='sell'){
+                       $scope.TradeProposalInfo.CounterParty.WeBuy =  $scope.TradeProposalInfo.clients[0].ClientBuy;
+                    }
+                }
+                else if($scope.TradeProposalInfo.BuyCurrency.selected.name == 'EUR'){
+                    if(input=='buy'){
+                        $scope.TradeProposalInfo.CounterParty.WeSell = $scope.TradeProposalInfo.clients[0].ClientSell;
+                    }
+                }
             }
-            else if(input=='sell') {
-                $scope.TradeProposalInfo.CounterParty.WeBuy = ($scope.TradeProposalInfo.CounterParty.WeSell / $scope.TradeProposalInfo.BTBHedgeFxRate);
-            }
-            else {
-                $scope.TradeProposalInfo.CounterParty.WeSell = ($scope.TradeProposalInfo.CounterParty.WeBuy * $scope.TradeProposalInfo.BTBHedgeFxRate)
+            else{
+                if(input == 'fx' && ($scope.TradeProposalInfo.ClientTradeFxRate!=0 && $scope.TradeProposalInfo.ClientTradeFxRate!='')){
+                    $scope.TradeProposalInfo.clients.forEach( function (client) {
+                        if(client.ClientSell != '0.00'){
+                            client.ClientBuy = (client.ClientSell / $scope.TradeProposalInfo.ClientTradeFxRate);
+                        }
+                        else if(client.ClientBuy != '0.00'){
+                            client.ClientSell = (client.ClientBuy * $scope.TradeProposalInfo.ClientTradeFxRate);
+                        }
+                    });
+
+                }
+                else if(input=='sell' && ($scope.TradeProposalInfo.ClientTradeFxRate!=0 && $scope.TradeProposalInfo.ClientTradeFxRate!='')) {
+                    $scope.TradeProposalInfo.clients[indexClient].ClientBuy = ($scope.TradeProposalInfo.clients[indexClient].ClientSell / $scope.TradeProposalInfo.ClientTradeFxRate);
+                }
+                else if(input=='buy' && ($scope.TradeProposalInfo.ClientTradeFxRate!=0 && $scope.TradeProposalInfo.ClientTradeFxRate!='')){
+                    $scope.TradeProposalInfo.clients[indexClient].ClientSell = ($scope.TradeProposalInfo.clients[indexClient].ClientBuy * $scope.TradeProposalInfo.ClientTradeFxRate)
+                }
             }
 
         }
 
-        $scope.TradeProposalInfo.calculateClientSellBuy = function (input, indexClient) {
+        $scope.TradeProposalInfo.calculateWeSellBuy = function (input) {
 
-            if(input == 'fx' && ($scope.TradeProposalInfo.ClientTradeFxRate!='0.00000')){
-                $scope.TradeProposalInfo.clients.forEach( function (client) {
-                    if(client.ClientSell != '0.00'){
-                        client.ClientBuy = (client.ClientSell / $scope.TradeProposalInfo.ClientTradeFxRate);
+            if($scope.TradeProposalInfo.Strategy.selected.key == 'client_market_trade' &&  $scope.TradeProposalInfo.clients.length == 1){
+
+                if($scope.TradeProposalInfo.SellCurrency.selected.name == 'EUR'){
+                    if(input=='sell'){
+                        $scope.TradeProposalInfo.clients[0].ClientBuy = $scope.TradeProposalInfo.CounterParty.WeBuy;
                     }
-                });
+                }
+                else if($scope.TradeProposalInfo.BuyCurrency.selected.name == 'EUR'){
+                    if(input=='buy'){
+                        $scope.TradeProposalInfo.clients[0].ClientSell = $scope.TradeProposalInfo.CounterParty.WeSell;
+                    }
+                }
+            }
+            else{
 
-            }
-            else if(input=='sell') {
-                $scope.TradeProposalInfo.clients[indexClient].ClientBuy = ($scope.TradeProposalInfo.clients[indexClient].ClientSell / $scope.TradeProposalInfo.ClientTradeFxRate);
-            }
-            else {
-                $scope.TradeProposalInfo.clients[indexClient].ClientSell = ($scope.TradeProposalInfo.clients[indexClient].ClientBuy * $scope.TradeProposalInfo.ClientTradeFxRate)
-            }
-            if($scope.TradeProposalInfo.clients.length == 1){
-                $scope.TradeProposalInfo.BTBHedgeFxRate = $scope.TradeProposalInfo.ClientTradeFxRate;
-                $scope.TradeProposalInfo.CounterParty.WeBuy = $scope.TradeProposalInfo.clients[0].ClientBuy;
-                $scope.TradeProposalInfo.CounterParty.WeSell = $scope.TradeProposalInfo.clients[0].ClientSell;
+                if(input == 'fx' && ($scope.TradeProposalInfo.BTBHedgeFxRate!=0 && $scope.TradeProposalInfo.BTBHedgeFxRate!='')){
+                    if($scope.TradeProposalInfo.CounterParty.WeSell!='0.00'){
+                        $scope.TradeProposalInfo.CounterParty.WeBuy = ($scope.TradeProposalInfo.CounterParty.WeSell / $scope.TradeProposalInfo.BTBHedgeFxRate);
+                    }
+                    else if($scope.TradeProposalInfo.CounterParty.WeBuy !='0.00'){
+                        $scope.TradeProposalInfo.CounterParty.WeSell = ($scope.TradeProposalInfo.CounterParty.WeBuy * $scope.TradeProposalInfo.BTBHedgeFxRate)
+                    }
+
+                }
+                else if(input=='sell' && ($scope.TradeProposalInfo.BTBHedgeFxRate!=0 && $scope.TradeProposalInfo.BTBHedgeFxRate!='')) {
+                    $scope.TradeProposalInfo.CounterParty.WeBuy = ($scope.TradeProposalInfo.CounterParty.WeSell / $scope.TradeProposalInfo.BTBHedgeFxRate);
+                }
+                else if(input=='buy' && ($scope.TradeProposalInfo.BTBHedgeFxRate!=0 && $scope.TradeProposalInfo.BTBHedgeFxRate!='')){
+                    $scope.TradeProposalInfo.CounterParty.WeSell = ($scope.TradeProposalInfo.CounterParty.WeBuy * $scope.TradeProposalInfo.BTBHedgeFxRate)
+                }
             }
 
         }
 
         $scope.exchangeCurrency = function () {
 
-            let tmpPayCurrency = $scope.TradeProposalInfo.PayCurrency.selected;
-            let tmpReceiveCurrency = $scope.TradeProposalInfo.ReceiveCurrency.selected;
+            let tmpSellCurrency = $scope.TradeProposalInfo.SellCurrency.selected;
+            let tmpBuyCurrency = $scope.TradeProposalInfo.BuyCurrency.selected;
 
-            if((tmpPayCurrency && tmpReceiveCurrency) && (tmpPayCurrency != tmpReceiveCurrency) ){
-                $scope.TradeProposalInfo.PayCurrency.selected = tmpReceiveCurrency;
-                $scope.TradeProposalInfo.ReceiveCurrency.selected = tmpPayCurrency;
+            if((tmpSellCurrency && tmpBuyCurrency) && (tmpSellCurrency != tmpBuyCurrency) ){
+                $scope.TradeProposalInfo.SellCurrency.selected = tmpBuyCurrency;
+                $scope.TradeProposalInfo.BuyCurrency.selected = tmpSellCurrency;
             }
 
         }
@@ -216,12 +253,12 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         //FX Forward
         $scope.TradeProposalInfo.Strategy = {};
-        $scope.TradeProposalInfo.PayCurrency = {}
-        $scope.TradeProposalInfo.PayCurrencyList = localStorageService.get("CurrencyEnum");
-        $scope.TradeProposalInfo.PayCurrencyList.splice(2,1);
-        $scope.TradeProposalInfo.ReceiveCurrency = {};
-        $scope.TradeProposalInfo.ReceivecurrencyList = localStorageService.get("CurrencyEnum");
-        $scope.TradeProposalInfo.ReceivecurrencyList.splice(2,1);
+        $scope.TradeProposalInfo.SellCurrency = {}
+        $scope.TradeProposalInfo.SellCurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.TradeProposalInfo.SellCurrencyList.splice(2,1);
+        $scope.TradeProposalInfo.BuyCurrency = {};
+        $scope.TradeProposalInfo.BuyCurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.TradeProposalInfo.BuyCurrencyList.splice(2,1);
 
         $scope.TradeProposalInfo.PayBasisCalculationConvention = {};
         $scope.TradeProposalInfo.ReceiveBasisCalculationConvention = {};
