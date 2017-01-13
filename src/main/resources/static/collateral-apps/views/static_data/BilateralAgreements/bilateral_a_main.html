@@ -99,6 +99,14 @@
                                    ng-true-value="true" ng-false-value="false">
                         </div>
                     </div>
+                      <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">Is Intergroup ?</label>
+                        <div class="col-md-9">
+                            <input bs-switch ng-model="BA.isIntergroup" type="checkbox"
+                                   switch-on-text="Yes" switch-off-text="No" switch-size="normal"
+                                   ng-true-value="true" ng-false-value="false">
+                        </div>
+                    </div>
 
 
                     <h3>Messaging:</h3>
@@ -112,13 +120,14 @@
                     </div>
 
                     <div class="form-group col-md-12">
-                        <label class="control-label col-md-3">Auto Send Time</label>
+                        <label class="control-label col-md-3">AutosendTime</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control input-medium" id="le-bilateral-ag-auto-send-time"
-                                   ng-model="BA.autoSendTime.iLocalMillis">
+                            <uib-timepicker id="le-bilateral-ag-auto-send-time" ng-model="BA.autoSendTime.iLocalMillis"
+                                            hour-step="BA.hstep" minute-step="BA.mstep"
+                                            show-meridian="BA.ismeridian"></uib-timepicker>
+                          
                         </div>
                     </div>
-
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">Auto Send Tol</label>
                         <div class="col-md-9">
