@@ -73,7 +73,7 @@
     
                                 </div>
                         </div>
-                            <div class="form-group">
+                        <div class="form-group">
                                 <label class="control-label col-md-3">U.S Person</label>
                                 <div class="col-md-9">
                                             <input bs-switch ng-model="legalEntity.doddFrankUSPerson" type="checkbox"
@@ -82,27 +82,26 @@
     
                                 </div>
                         </div>
-                            <div class="form-group">
+                         <div class="form-group">
                                 <label class="control-label col-md-3">Financial Entity</label>
                                 <div class="col-md-9">
                                             <input bs-switch ng-model="legalEntity.doddFrankFinancialEntity" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
-    
                                 </div>
                         </div>
                         </div>
                         <div class="form-body col-md-6">
-                        <legend>CCPs membership for OTC derivatives</legend>
+                            <legend>CCPs membership for OTC derivatives</legend>
                             <div class="form-group">
                                 <label class="control-label col-md-3">Swap clear</label>
                                 <div class="col-md-9">
                                             <input bs-switch ng-model="legalEntity.swapClear" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                ng-true-value="true" ng-false-value="false">
-    
+                
                                 </div>
-                        </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3">Eurex</label>
                                 <div class="col-md-9">
@@ -111,7 +110,7 @@
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                        </div>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label col-md-3">CME OTC</label>
                                 <div class="col-md-9">
@@ -120,7 +119,7 @@
                                                ng-true-value="true" ng-false-value="false">
     
                                 </div>
-                        </div>
+                            </div>
                             <div class="form-group">
                                     <label class="control-label col-md-3">BME Clearing</label>
                                     <div class="col-md-9">
@@ -128,6 +127,101 @@
                                                    switch-on-text="Yes" switch-off-text="No" switch-size="normal"
                                                    ng-true-value="true" ng-false-value="false">
         
+                                    </div>
+                            </div>
+                        </div>
+                         <div class="form-body col-md-6">
+                            <legend>RegisTR Reporting</legend>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Emir Mandatory Reporting</label>
+                                <div class="col-md-9">
+                                            <input bs-switch class="registr-checkbox" ng-model="legalEntity.registr.requireAccess.emirMandatoryReporting" type="checkbox"
+                                               switch-on-text="Yes" switch-off-text="No" switch-size="normal"  ng-true-value="true" ng-false-value="false" />
+    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 ">Reports Own Position</label>
+                                <div class="col-md-9">
+                                            <input  bs-switch class="registr-checkbox" ng-model="legalEntity.registr.requireAccess.reportsOwnPosition" type="checkbox"
+                                               switch-on-text="Yes" switch-off-text="No" switch-size="normal" ng-true-value="true" ng-false-value="false" />
+    
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Reports Third Party Position</label>
+                                <div class="col-md-9">
+                                            <input  bs-switch class="registr-checkbox" ng-model="legalEntity.registr.requireAccess.reportsThirdPosition" type="checkbox"
+                                               switch-on-text="Yes" switch-off-text="No" switch-size="normal" ng-true-value="true" ng-false-value="false">
+    
+                                </div>
+                            </div>
+                              <div class="form-group">
+                                    <label class="control-label col-md-3">Regis-TR Identification
+                                    </label>
+                                    <div class="col-md-9">
+                                        <div class="col-md-3 row">
+                                            <select id="legal-entity-registr-identificationType" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="identificationList">
+                                                <option value="lei">LEI</option>
+                                                <option value="iei">IEI</option>
+                                                <option value="cod">COD</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-5">
+                                                <input  ng-model="identification" type="text" placeholder="LEI / IEI / COD " class="form-control    "/>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="regis-tr-access" ng-show="showRegistrData">
+                                <div class="form-group">
+                                        <label class="control-label col-md-3">Account Code</label>
+                                        <div class="col-md-9">
+                                                    <input ng-model="legalEntity.registr.access.accountCode" type="text" class="form-control input-medium" />
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="control-label col-md-3">Account Type</label>
+                                        <div class="col-md-9">
+                                                    <select ng-model="legalEntity.registr.access.accountType"   class="form-control input-medium" >
+                                                        <option value="H">H</option>
+                                                    </select>
+            
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="control-label col-md-3">Identification IEI</label>
+                                        <div class="col-md-9">
+                                                    <input ng-model="legalEntity.registr.access.identificationIEI" type="text" class="form-control input-medium"/>
+            
+                                        </div>
+                                </div>
+                                  <div class="form-group">
+                                    <label class="control-label col-md-3">Username</label>
+                                    <div class="col-md-9">
+                                                <input  ng-model="legalEntity.registr.access.username" type="text"  class="form-control input-medium"/>
+        
+                                    </div>
+                            </div>
+                              <div class="form-group">
+                                    <label class="control-label col-md-3">Password</label>
+                                    <div class="col-md-9">
+                                                <input  ng-model="legalEntity.registr.access.password" type="password" class="form-control input-medium" />
+        
+                                    </div>
+                            </div>
+                            </div>    
+                            <div class="form-group">
+                                    <label class="control-label col-md-3">Delegate Reporting in Third Party</label>
+                                    <div class="col-md-9">
+                                      <input bs-switch ng-model="legalEntity.registr.delegateReporting" type="checkbox"  />
+                                                                                    </div>
+                            </div>
+                              <div class="form-group" ng-show="legalEntity.registr.delegateReporting">
+                                    <label class="control-label col-md-3">Third Party Reporting Entity
+                                    </label>
+                                    <div class="col-md-9">
+                                              <input  ng-model="legalEntity.registr.thirdPartyReporting" type="text" class="form-control input-medium" />
+    
                                     </div>
                             </div>
                         </div>

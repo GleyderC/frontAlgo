@@ -290,13 +290,23 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
                 cvaComputes: false,
                 riskProfile: {SPRating: "", riskWeight: 0, cdsSpreadArrayList: []},
                 countryId: "-1",
-                financialCalendarList: []
+                financialCalendarList: [],
+                registr : {
+                        requireAccess:{
+                             emirMandatoryReporting : false ,
+                             reportsOwnPosition : false  ,
+                             reportsThirdPosition : false  ,
+                            
+                        },
+                        delegateReporting : false
+                } 
+
 
             };
             $scope.isEditLegal = false;
 
             //console.log($scope.legalEntities);
-
+      
         }
 
         $scope.booleanValue = function (row) {
@@ -371,11 +381,49 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
             buildLegalData();
         }
 
+
+        $scope.showRegistrData = false;
+        $scope.$watchCollection("legalEntity.registr.requireAccess",function(newV,oldV){
+                    $scope.showRegistrData = false;
+                    let keepGoing = true;
+                    angular.forEach($scope.legalEntity.registr.requireAccess,function(currentItem,index){
+                            if(keepGoing){
+                                if(currentItem){
+                                    $scope.showRegistrData = true;
+                                    keepGoing = false;
+                                }else{
+                                    $scope.showRegistrData = false;
+                                }
+                            }
+                            
+                    } );
+        });
+
+
         //#### Editing a Legal Entity ####
         if (!$scope.parameters.legalEntity)
             return false;
 
         $scope.legalEntity = $scope.parameters.legalEntity;
+        if($scope.legalEntity.hasOwnProperty("registr")){
+            
+                 $scope.legalEntity.registr.requireAccess = {
+                        emirMandatoryReporting : $scope.legalEntity.registr.emirMandatoryReporting ,
+                        reportsOwnPosition : $scope.legalEntity.registr.reportsOwnPosition ,
+                        reportsThirdPosition : $scope.legalEntity.registr.reportsThirdPosition ,
+                } 
+        }else{
+            $scope.legalEntity.registr = {
+                requireAccess : {
+                        emirMandatoryReporting : false,
+                        reportsOwnPosition :     false,
+                        reportsThirdPosition :   false,
+               },
+               delegateReporting : false,
+            }
+        }
+
+        
 
         $scope.holidays.selectedItems = $scope.legalEntity.financialCalendarList;
 
@@ -403,6 +451,7 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.country.selected = country[0];
 
         $scope.isEditLegal = true;
+
 
     }]);
 
