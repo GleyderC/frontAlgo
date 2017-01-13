@@ -421,7 +421,6 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
     var _that = this;
     var currenciesList = $filter('orderBy')($scope.BilateralAgreements.staticData.currencies, 'codigo');
     var supportedindexes = $scope.BilateralAgreements.staticData.supportedindexes;
-
     angular.forEach(supportedindexes,function(value,k){
               value["code"] = value.name.slice(0,value.name.indexOf("-"));
     });
@@ -431,6 +430,20 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
             supportedindexes.splice(key, 1);
         }
     });
+
+    
+    
+    //Notification TimePicker
+    $scope.BA.autoSendTime.iLocalMillis = new Date();
+    $scope.BA.hstep = 1;
+    $scope.BA.mstep = 1;
+
+    this.options = {
+        hstep: [1, 2, 3],
+        mstep: [1, 5, 10, 15, 25, 30]
+    };
+    this.ismeridian = true;
+    //TimePicker
 
     var interestDateRules = [
         {
@@ -528,10 +541,10 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
                         if(keepLooking){
                             if(v.code==$scope.baseCurrency.codigo){
                                 keepLooking = false; 
-                                $scope.supportedindexesList= $scope.supportedindexesListCopy.filter(function(v){ return $scope.baseCurrency.codigo==v.code})
+                                $scope.supportedindexesList = $scope.supportedindexesListCopy.filter(function(v){ return $scope.baseCurrency.codigo==v.code})
                             }
                             else{
-                                  $scope.supportedindexesList = $scope.supportedindexesListCopy;
+                                $scope.supportedindexesList = $scope.supportedindexesListCopy;
                             }
                         }
                         
