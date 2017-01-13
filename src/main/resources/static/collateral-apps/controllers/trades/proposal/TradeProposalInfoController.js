@@ -36,9 +36,15 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                 if($scope.TradeProposalInfo.SellCurrency.selected.name == 'EUR'){
                     $scope.TradeProposalInfo.CounterParty.WeBuy =  $scope.TradeProposalInfo.clients[0].ClientBuy;
                     //angular.element(".we-buy").scope().$apply();
+                    if($scope.TradeProposalInfo.BTBHedgeFxRate!=0 && $scope.TradeProposalInfo.BTBHedgeFxRate!=''){
+                        $scope.TradeProposalInfo.CounterParty.WeSell = ($scope.TradeProposalInfo.CounterParty.WeBuy * $scope.TradeProposalInfo.BTBHedgeFxRate);
+                    }
                 }
-                else if($scope.TradeProposalInfo.BuyCurrency.selected.name == 'EUR'){
+                else if($scope.TradeProposalInfo.BuyCurrency.selected.name == 'EUR') {
                     $scope.TradeProposalInfo.CounterParty.WeSell = $scope.TradeProposalInfo.clients[0].ClientSell;
+                    if ($scope.TradeProposalInfo.BTBHedgeFxRate != 0 && $scope.TradeProposalInfo.BTBHedgeFxRate != '') {
+                        $scope.TradeProposalInfo.CounterParty.WeBuy = ($scope.TradeProposalInfo.CounterParty.WeSell / $scope.TradeProposalInfo.BTBHedgeFxRate);
+                    }
                 }
             }
         }
@@ -66,10 +72,15 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                 if($scope.TradeProposalInfo.SellCurrency.selected.name == 'EUR'){
 
                     $scope.TradeProposalInfo.clients[0].ClientBuy = $scope.TradeProposalInfo.CounterParty.WeBuy;
+                    if($scope.TradeProposalInfo.ClientTradeFxRate!=0 && $scope.TradeProposalInfo.ClientTradeFxRate!=''){
+                        $scope.TradeProposalInfo.clients[0].ClientSell = ($scope.TradeProposalInfo.clients[0].ClientBuy * $scope.TradeProposalInfo.ClientTradeFxRate);
+                    }
                 }
                 else if($scope.TradeProposalInfo.BuyCurrency.selected.name == 'EUR'){
-
                     $scope.TradeProposalInfo.clients[0].ClientSell = $scope.TradeProposalInfo.CounterParty.WeSell;
+                    if($scope.TradeProposalInfo.ClientTradeFxRate!=0 && $scope.TradeProposalInfo.ClientTradeFxRate!=''){
+                        $scope.TradeProposalInfo.clients[0].ClientBuy = ($scope.TradeProposalInfo.clients[0].ClientSell / $scope.TradeProposalInfo.ClientTradeFxRate);
+                    }
                 }
             }
 
