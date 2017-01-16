@@ -263,6 +263,7 @@ DashboardApp.controller('BAMainController', ['$scope', '$request', '$interval','
 
     //SETTING DEFAULT INFO
     $scope.BA = {};
+    $scope.BA.autoSendTime = {}
     $scope.BA.callIssuanceAuto = false;
     $scope.BA.bilateralAcasiaSoft = false;
     $scope.BA.status = true;
@@ -433,18 +434,6 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
 
     
     
-    //Notification TimePicker
-    $scope.BA.autoSendTime.iLocalMillis = new Date();
-    $scope.BA.hstep = 1;
-    $scope.BA.mstep = 1;
-
-    this.options = {
-        hstep: [1, 2, 3],
-        mstep: [1, 5, 10, 15, 25, 30]
-    };
-    this.ismeridian = true;
-    //TimePicker
-
     var interestDateRules = [
         {
             key: 'FBD',
