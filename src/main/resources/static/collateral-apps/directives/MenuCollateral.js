@@ -226,7 +226,27 @@ DashboardApp.service('MenuService', function () {
                             icon: 'fa fa-play-circle-o font-purple-seance',
                             title: 'MENU.INTEGRATION_REPORTING.SCHEDULED_TASKS'
                         },
-                        view: '/integration_reporting/ScheduledTask/scheduled_task.html',
+                        view: '',
+                        subMenuItems: [
+                            {
+                                id: 'ir_scheduled_task_list',
+                                head: {
+                                    icon: 'fa fa-list font-purple-seance',
+                                    title: 'List'
+                                },
+                                view: '/integration_reporting/ScheduledTask/scheduled_task.html',
+                                unique: true
+                            },
+                            {
+                                id: 'ir_scheduled_task_set',
+                                head: {
+                                    icon: 'fa fa-wrench font-purple-seance',
+                                    title: 'Config'
+                                },
+                                view: '/integration_reporting/ScheduledTask/set_scheduled_task.html',
+                                unique: true
+                            }
+                        ],
                         unique: true
                     },
                     {
@@ -522,5 +542,4 @@ DashboardApp.service('MenuService', function () {
 DashboardApp.run(['MenuService', function ($menuService) {
 
     $menuService.linkParents();
-
 }]);

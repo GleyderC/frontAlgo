@@ -333,6 +333,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'assets/pages/css/login.css',
                             'assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
                             'assets/global/plugins/jquery-validation/js/additional-methods.min.js',
+
                             //'assets/pages/scripts/login.js',
                             'collateral-apps/controllers/LoginController.js'
                         ],
@@ -361,6 +362,12 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                 deps: ['$ocLazyLoad', function ($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         files: [
+
+
+                            //** angular cron jobs *//
+                            'assets/global/plugins/angular-cron-jobs/dist/angular-cron-jobs.js',
+                            'assets/global/plugins/angular-cron-jobs/dist/angular-cron-jobs.min.js',
+                            'assets/global/plugins/angular-cron-jobs/dist/angular-cron-jobs.min.css',
 
                             /* select css*/
                             'assets/vendor/select2/select2.css',
@@ -460,6 +467,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/integration_reporting/registTR/ContractReportingStatusController.js',
                             'collateral-apps/controllers/integration_reporting/IntegrationController.js',
                             'collateral-apps/controllers/integration_reporting/ScheduledTaskController.js',
+                            'collateral-apps/controllers/integration_reporting/ScheduledTask/set_ScheduledTaskController.js',
 
                             /* Files Upload Controller */
                             'collateral-apps/controllers/integration_reporting/IRFileUploadController.js',
