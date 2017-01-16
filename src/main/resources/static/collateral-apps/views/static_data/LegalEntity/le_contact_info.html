@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" ng-controller="ModalContactInfoController">
                 <div class="row">
                     <div class="col-md-4 portlet light bordered">
                         <div class="form-group">
@@ -101,13 +101,16 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label">Country</label>
-                            <select class="form-control input-medium">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
-                            </select>
+                            
+                                        <ui-select ng-model="entity.country" theme="select2" class="input-medium">
+                                            <ui-select-match placeholder="Select Country...">{{$select.selected.name}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="country in countries | filter: $select.search">
+                                                <div ng-bind-html="country.name | highlight: $select.search"></div>
+                                                <small ng-bind-html="country.key | highlight: $select.search"></small>
+                                            </ui-select-choices>
+                                        </ui-select>
+
                         </div>
                     </div>
                     <div class="col-md-4">
