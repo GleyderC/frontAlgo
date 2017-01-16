@@ -408,17 +408,18 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         if($scope.legalEntity.hasOwnProperty("registr")){
             
                  $scope.legalEntity.registr.requireAccess = {
-                        emirMandatoryReporting : $scope.legalEntity.registr.emirMandatoryReporting ,
+                        
                         reportsOwnPosition : $scope.legalEntity.registr.reportsOwnPosition ,
                         reportsThirdPosition : $scope.legalEntity.registr.reportsThirdPosition ,
                 } 
         }else{
+
             $scope.legalEntity.registr = {
                 requireAccess : {
-                        emirMandatoryReporting : false,
                         reportsOwnPosition :     false,
                         reportsThirdPosition :   false,
                },
+               emirMandatoryReporting  : false,
                delegateReporting : false,
             }
         }
@@ -527,11 +528,17 @@ DashboardApp.controller('TabsLegalEntityController', ['$scope', function ($scope
 
 }]);
 
-DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'RowEditorModalService', 'uiGridConstants',
-    function ($scope, $log, toastr, RowEditorModalService, uiGridConstants) {
+DashboardApp.controller('ModalContactInfoController', ['$scope', '$log', 'toastr', 'localStorageService',
+    function ($scope, $log, toastr,localStorageService) {
+        $scope.country = {};
+        $scope.countries = localStorageService.get('CountryEnum');
+
+}]);
+DashboardApp.controller('ContactInfoController', ['$scope', '$log', 'toastr', 'localStorageService','RowEditorModalService', 'uiGridConstants',
+    function ($scope, $log, toastr,localStorageService, RowEditorModalService, uiGridConstants) {
 
         //console.log($scope.legalEntity.contactPersonList);
-
+      
         $scope.$watchCollection('$parent.legalEntity.contactPersonList', function (newContactPerson, oldContactPerson) {
 
             $scope.gridContactPersonOptions.data = newContactPerson;
