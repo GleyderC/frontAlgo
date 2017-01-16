@@ -19,9 +19,9 @@ DashboardApp.controller('RegisTRContractReportingStatusController', ['$scope','l
                 {
                     name: "Action",
                     cellTemplate : '' +
-                    '<div class="text-center"> <a ng-click="" title="View" href="#!" aria-label="View"> <button class="btn btn-sm btn-primary uigrid-btn"> <i class="fa fa-file-text" aria-hidden="true"></i></button> </a>' +
-                    '<a ng-click="" href="#!" title="Report" aria-label="Report"> <button class="btn btn-sm btn-success uigrid-btn"> <i class="fa fa-play" aria-hidden="true"></i></button> </a>' +
-                    '<a ng-click="" href="#!" title="Trade" aria-label="Trade"> <button class="btn btn-sm btn-warning uigrid-btn"> <i class="fa fa-suitcase " aria-hidden="true"></i></button> </a></div>'
+                    '<div class="text-center"> <a ng-click="" title="View" href="#!" aria-label="View"> <button ng-click="grid.appScope.mensajeView()" class="btn btn-sm btn-primary uigrid-btn"> <i class="fa fa-file-text" aria-hidden="true"></i></button> </a>' +
+                    '<a ng-click="" href="#!" title="Report" aria-label="Report"> <button  ng-click="grid.appScope.mensajeReport()" class="btn btn-sm btn-success uigrid-btn"> <i class="fa fa-play" aria-hidden="true"></i></button> </a>' +
+                    '<a ng-click="" href="#!" title="Trade" aria-label="Trade"> <button  ng-click="grid.appScope.mensajeTrade()" class="btn btn-sm btn-warning uigrid-btn"> <i class="fa fa-suitcase " aria-hidden="true"></i></button> </a></div>'
 
                 }
             ],
@@ -34,6 +34,17 @@ DashboardApp.controller('RegisTRContractReportingStatusController', ['$scope','l
             }
         };
         $scope.gridContractOptions.data=TestData.getTestdata();
+
+        $scope.mensajeView = function() {
+            $toastr.info("View Report","Information",{closeButton: true});
+        };
+        $scope.mensajeReport = function() {
+            $toastr.success("Report","Information",{closeButton: true});
+        };
+        $scope.mensajeTrade = function() {
+            $toastr.warning("Trade","Information",{closeButton: true});
+        };
+
 
     }]);
 

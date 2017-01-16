@@ -34,8 +34,7 @@ DashboardApp.controller('RegisTRMessageRepositoryController', ['$scope','localSt
                 },
                 {
                     name: "Action",
-                    cellTemplate : '<div class="text-center"> <a ng-click="" href="#!" aria-label="View"> <button class="btn btn-sm btn-primary uigrid-btn"> <i class="fa fa-file-text" aria-hidden="true"></i></button> </a>'
-
+                    cellTemplate : '<div class="text-center"> <a aria-label="View"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.mensajeView()"> <i class="fa fa-file-text" aria-hidden="true"></i></button> </a>'
                 }
             ],
             data: [],
@@ -47,6 +46,11 @@ DashboardApp.controller('RegisTRMessageRepositoryController', ['$scope','localSt
             }
         };
         $scope.gridMessagesOptions.data=TestData.getTestdata();
+
+
+        $scope.mensajeView = function() {
+            $toastr.info("View Report","Information",{closeButton: true});
+        };
 
     }]);
 
