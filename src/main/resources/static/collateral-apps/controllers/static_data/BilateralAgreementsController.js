@@ -615,7 +615,7 @@ DashboardApp.controller('BAEligibleCurrenciesController', ['ModalService', '$sco
                 name: 'Fixed Rate'
             },
             {
-                field: 'index',
+                field: 'index.isdaName',
                 name: 'Index'
             },
             {

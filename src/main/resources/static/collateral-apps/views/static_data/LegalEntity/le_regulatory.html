@@ -157,7 +157,6 @@
                                 <div class="col-md-9">
                                             <input  bs-switch class="registr-checkbox" ng-model="legalEntity.registr.requireAccess.reportsThirdPosition" type="checkbox"
                                                switch-on-text="Yes" switch-off-text="No" switch-size="normal" ng-true-value="true" ng-false-value="false">
-    
                                 </div>
                             </div>
                               <div class="form-group">
@@ -165,14 +164,15 @@
                                     </label>
                                     <div class="col-md-9">
                                         <div class="col-md-3 row">
-                                            <select id="legal-entity-registr-identificationType" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="identificationList">
+                                            <select ng-change="selectIdentificationType(identificationTypeSelect)" id="legal-entity-registr-identificationType" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="identificationTypeSelect">
                                                 <option value="lei">LEI</option>
+                                                <option value="bic">BIC</option>
                                                 <option value="iei">IEI</option>
                                                 <option value="cod">COD</option>
                                             </select>
                                         </div>
                                         <div class="col-md-5">
-                                                <input  ng-model="identification" type="text" placeholder="LEI / IEI / COD " class="form-control    "/>
+                                                <input ng-disabled="disableIdentificationTypeField" ng-model="identificationType" type="text" placeholder="LEI / IEI / COD " class="form-control"/>
                                         </div>
                                     </div>
                             </div>

@@ -452,7 +452,23 @@ DashboardApp.controller('LegalEntityController', ['LegalEntityService', '$scope'
         $scope.country.selected = country[0];
 
         $scope.isEditLegal = true;
+        $scope.disableIdentificationTypeField = true;
+        $scope.identificationType = "";
+        $scope.selectIdentificationType = function(identificationTypeSelect){
+            $scope.disableIdentificationTypeField = true;
+            if(identificationTypeSelect==="lei") {
+                $scope.identificationType  = $scope.legalEntity.LEI;
 
+            }else if(identificationTypeSelect ==="bic" ){
+                $scope.identificationType = $scope.legalEntity.BIC;
+            }
+            else{
+                $scope.disableIdentificationTypeField = false;
+            }
+
+
+            
+        }
 
     }]);
 
