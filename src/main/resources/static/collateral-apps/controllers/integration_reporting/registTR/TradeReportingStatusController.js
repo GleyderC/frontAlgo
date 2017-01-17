@@ -19,8 +19,8 @@ DashboardApp.controller('RegisTRTradeReportingStatusController', ['$scope','loca
                 {
                     name: "Action",
                     cellTemplate : '' +
-                    '<div class="text-center"> <a ng-click="" href="#!" title="View" aria-label="View"> <button class="btn btn-sm btn-primary uigrid-btn"> <i class="fa fa-file-text" aria-hidden="true"></i></button> </a>' +
-                    '<a ng-click="" href="#!" title="Report" aria-label="Report"> <button class="btn btn-sm btn-success uigrid-btn"> <i class="fa fa-play" aria-hidden="true"></i></button> </a> </div>'
+                    '<div class="text-center"> <a ng-click="" href="#!" title="View" aria-label="View"> <button  ng-click="grid.appScope.mensajeView()" class="btn btn-sm btn-primary uigrid-btn"> <i class="fa fa-file-text" aria-hidden="true"></i></button> </a>' +
+                    '<a ng-click="" href="#!" title="Report" aria-label="Report"> <button  ng-click="grid.appScope.mensajeReport()" class="btn btn-sm btn-success uigrid-btn"> <i class="fa fa-play" aria-hidden="true"></i></button> </a> </div>'
 
                 }
             ],
@@ -33,6 +33,11 @@ DashboardApp.controller('RegisTRTradeReportingStatusController', ['$scope','loca
             }
         };
         $scope.gridTradeOptions.data=TestData.getTestdata();
-
+        $scope.mensajeView = function() {
+            $toastr.info("View Report","Information",{closeButton: true});
+        };
+        $scope.mensajeReport = function() {
+            $toastr.success("Report","Information",{closeButton: true});
+        };
     }]);
 

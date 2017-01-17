@@ -1,0 +1,203 @@
+<div class="portlet light" ng-controller="setScheduledTaskController">
+
+    <div class="row portlet light bordered" id="set-scheduled-task-table">
+        <div class="portlet-title">
+            <div class="caption col-md-12">
+                <i class="fa fa-wrench font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze">Config Scheduled Task</span>
+                <span class="caption-helper">Select Scheduled Tasks List for Edit</span>
+                <div class="col-md 12">
+                    <div class="col-md-6">
+                        <ui-select style="" tagging="tagTransform" ng-model="taskselect.selected" theme="selectize"  style="width: 800px;" title="Choose a Secheduled Task">
+                            <ui-select-match placeholder="Select a Task...">{{$select.selected.name}} &lt;{{$select.selected.date}}&lt;{{$select.selected.type}}&gt;</ui-select-match>
+                            <ui-select-choices repeat="taskselect in tasklistcreated | propsFilter: {name: $select.search, date: $select.search}">
+                                <div ng-if="taskselect.isTag" ng-bind-html="taskselect.name +' <small>(new)</small>'| highlight: $select.search"></div>
+                                <div ng-if="!taskselect.isTag" ng-bind-html="taskselect.name + reportselect.isTag| highlight: $select.search"></div>
+                                <small>
+                                    Type: {{taskselect.type}}
+                                    date: <span ng-bind-html="''+taskselect.date | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn blue" tittle="New Task" ng-click="">
+                            <i class="fa fa-plus"></i>Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="col-md-12">
+                <div class="form-group col-md-4" >
+                    <label for="scheduled-task-name" class="font-green-haze col-md-12 control-label">Name</label>
+                    <div class="col-md-12">
+                        <input type="text" class="form-control input-medium" placeholder="Enter name for Task" name="scheduled-task-name" id="scheduled-task-name" required>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4" >
+                    <label class="col-md-12 font-green-haze control-label">Type</label>
+
+                    <div class="col-md-12">
+
+                        <ui-select ng-model="type.selected" theme="selectize"  title="Choose a type" append-to-body="true">
+                            <ui-select-match placeholder="Select or search a Type in the list...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="type in types | filter: $select.search">
+                                <span ng-bind-html="type.name | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                </div>
+
+                <div class="form-group col-md-4" style="text-align: -webkit-center;" >
+
+
+                    <button type="button" ng-show="(type.selected.val=='PR'||type.selected.val=='CT')" class="btn green" title="Save" ng-click="">
+                        <i class="fa fa-save"></i>Save
+                    </button>
+                    <button type="button" ng-show="(type.selected.val=='PR'||type.selected.val=='CT')" class="btn red" title="Cancel" ng-click="">
+                        <i class="fa fa-ban"></i>Cancel
+                    </button>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div ng-show="type.selected.val=='PR'" class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-list-alt font-dark font-green-haze"></i>
+                            <span class="caption-subject bold uppercase font-green-haze">Predefined Reports</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body" style="height: auto;">
+                        <div class="panel-body">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="scheduled-task-name" style="text-align: -webkit-center;" class="font-green-haze control-label">Choose Report from the list..</label>
+                                    <ui-select style="" tagging="tagTransform" ng-model="reportselect.selected" theme="selectize" ng-disabled="disabled" style="width: 800px;" title="Choose a Report">
+                                        <ui-select-match placeholder="Select a Report...">{{$select.selected.name}} &lt;{{$select.selected.email}}&gt;</ui-select-match>
+                                        <ui-select-choices repeat="reportselect in reportslistcreated | propsFilter: {name: $select.search, date: $select.search}">
+                                            <div ng-if="reportselect.isTag" ng-bind-html="reportselect.name +' <small>(new)</small>'| highlight: $select.search"></div>
+                                            <div ng-if="!reportselect.isTag" ng-bind-html="reportselect.name + reportselect.isTag| highlight: $select.search"></div>
+                                            <small>
+                                                email: {{reportselect.email}}
+                                                date: <span ng-bind-html="''+reportselect.date | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="col-md-6">
+
+
+                                    <label for="scheduled-task-name" style="text-align: -webkit-center;" class="font-green-haze control-label">Set up how to send the report</label>
+                                    <div class="col-md-12">
+                                        <ui-select ng-model="howsend.selected" theme="selectize" ng-disabled="ctrl.disabled" title="Choose" append-to-body="true">
+                                            <ui-select-match placeholder="Set up how to send the report ...">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="howsend in howsends | filter: $select.search">
+                                                <span ng-bind-html="howsend.name | highlight: $select.search"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="howsend.selected.val=='email'" class="portlet light bordered">
+                        <div class="portlet-body" style="height: auto;">
+                            <h3>Send by Email</h3>
+                            <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-envelope"></i>
+                                                        </span>
+                                <input type="text" class="form-control" placeholder="Email Address"> </div>
+                        </div>
+                    </div>
+                    <div ng-show="howsend.selected.val=='tcp'" class="portlet light bordered">
+                        <div class="portlet-body" style="height: auto;">
+                            <h3>Send by TCP/Ip</h3>
+                            <div class="panel-body">
+
+                                <div class="col-md-6 form-group">
+                                    <label>User</label>
+                                    <div class="input-icon right">
+                                        <i class="fa fa-user"></i>
+                                        <input type="text" class="form-control" placeholder="User"> </div>
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label>Password</label>
+                                    <div class="input-icon right">
+                                        <i class="fa fa-key"></i>
+                                        <input type="text" class="form-control" placeholder="Password"> </div>
+                                </div>
+
+                                <div class="col-md-2 form-group">
+                                    <label>Protocol</label>
+                                    <select class="form-control">
+                                        <option>SFTP</option>
+                                        <option>FTP</option>
+                                        <option>SCP</option>
+                                        <option>HTTP</option>
+                                        <option>HTTPS</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-8 form-group">
+                                    <label>URL</label>
+                                    <div class="input-icon right">
+                                        <i class="fa fa-location-arrow"></i>
+                                        <input type="text" class="form-control" placeholder="Url"> </div>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label>Port</label>
+                                    <div class="input-icon right">
+                                        <i class="fa fa-random"></i>
+                                        <input type="text" class="form-control" placeholder="Port"> </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="type.selected.val=='CT'" class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-list-alt font-dark font-green-haze"></i>
+                            <span class="caption-subject bold uppercase font-green-haze">Custom Task</span>
+                        </div>
+                        <div class="actions">
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
+                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body" style="height: auto;">
+                        <div class="panel-body">
+                            <h1>Custom Task</h1>
+                            <cron-selection ng-model="myOutput" config="myConfig"></cron-selection>
+                            <span class="help-block">Press Control for Select Multiples Values. </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
