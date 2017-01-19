@@ -31,8 +31,8 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
             else if(input=='buy' && ($scope.TradeProposalInfo.ClientTradeFxRate!=0 && $scope.TradeProposalInfo.ClientTradeFxRate!='')){
                 $scope.TradeProposalInfo.clients[indexClient].ClientSell = ($scope.TradeProposalInfo.clients[indexClient].ClientBuy * $scope.TradeProposalInfo.ClientTradeFxRate)
             }
-            if($scope.TradeProposalInfo.Strategy.selected.key == 'client_market_trade' &&  $scope.TradeProposalInfo.clients.length == 1){
 
+            if($scope.TradeProposalInfo.forceHedge == true){
                 if($scope.TradeProposalInfo.SellCurrency.selected.name == 'EUR'){
                     $scope.TradeProposalInfo.CounterParty.WeBuy =  $scope.TradeProposalInfo.clients[0].ClientBuy;
                     //angular.element(".we-buy").scope().$apply();
@@ -47,6 +47,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                     }
                 }
             }
+
         }
 
         $scope.TradeProposalInfo.calculateWeSellBuy = function (input) {
@@ -67,7 +68,7 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                 $scope.TradeProposalInfo.CounterParty.WeSell = ($scope.TradeProposalInfo.CounterParty.WeBuy * $scope.TradeProposalInfo.BTBHedgeFxRate)
             }
 
-            if($scope.TradeProposalInfo.Strategy.selected.key == 'client_market_trade' &&  $scope.TradeProposalInfo.clients.length == 1){
+            if($scope.TradeProposalInfo.forceHedge == true){
 
                 if($scope.TradeProposalInfo.SellCurrency.selected.name == 'EUR'){
 
@@ -96,6 +97,20 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
                 $scope.TradeProposalInfo.BuyCurrency.selected = tmpSellCurrency;
             }
 
+            if($scope.TradeProposalInfo.forceHedge === true){
+                if($scope.TradeProposalInfo.SellCurrency.selected.name == 'EUR'){
+                    $scope.TradeProposalInfo.calculateClientSellBuy('sell',0);
+                }
+                else if($scope.TradeProposalInfo.BuyCurrency.selected.name == 'EUR'){
+                    $scope.TradeProposalInfo.calculateClientSellBuy('buy','0');
+                }
+            }
+        }
+
+        $scope.TradeProposalInfo.checkForceHedge = function(){
+            if($scope.TradeProposalInfo.forceHedge === true){
+                $scope.TradeProposalInfo.calculateClientSellBuy('sell',0);
+            }
         }
 
         $scope.TradeProposalInfo.filterLeg = function (leg) {
@@ -238,7 +253,8 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
         }
         /* End Functions*/
 
-        $scope.TradeProposalInfo.Strategies = [ {"key" : 'market_trade', "name": 'Market Trade'},
+        $scope.TradeProposalInfo.Strategies = [ { "key": 'client', "name": 'Client'},
+            {"key" : 'market_trade', "name": 'Market Trade'},
             { "key": 'client_market_trade', "name": 'Client + Market Trade'}];
 
         $scope.TradeProposalInfo.StrategyID = 'FX_'+Math.floor((Math.random() * 999999999) + 1);
@@ -255,10 +271,11 @@ DashboardApp.controller('TradeProposalInfoController', ['TradeProposalService', 
 
         //FX Forward
         $scope.TradeProposalInfo.Strategy = {};
-        $scope.TradeProposalInfo.SellCurrency = {selected: {}}
+        $scope.TradeProposalInfo.forceHedge = false;
+        $scope.TradeProposalInfo.SellCurrency = {selected:{}}
         $scope.TradeProposalInfo.SellCurrencyList = localStorageService.get("CurrencyEnum");
         $scope.TradeProposalInfo.SellCurrencyList.splice(2,1);
-        $scope.TradeProposalInfo.BuyCurrency = {selected: {}};
+        $scope.TradeProposalInfo.BuyCurrency = {selected:{}};
         $scope.TradeProposalInfo.BuyCurrencyList = localStorageService.get("CurrencyEnum");
         $scope.TradeProposalInfo.BuyCurrencyList.splice(2,1);
 
