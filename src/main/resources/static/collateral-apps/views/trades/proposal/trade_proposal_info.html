@@ -570,7 +570,7 @@
                             </td>
                             <td> EUR </td>
                         </tr>
-                        <tr ng-if="TradeProposalInfo.forceHedge == true
+                        <tr ng-if=" TradeProposalInfo.Strategy.selected.key == 'client_market_trade' && TradeProposalInfo.forceHedge == true
                         && (TradeProposalInfo.SellCurrency.selected.name == 'EUR' || TradeProposalInfo.BuyCurrency.selected.name == 'EUR')">
                             <td class="highlight">
                                 <div class="warning"> </div>
