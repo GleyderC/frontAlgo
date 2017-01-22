@@ -87,6 +87,7 @@ DashboardApp.controller('DealEntryListController', ['TradeService', '$scope',
         $scope.addDealEntry = function () {
 
             $scope.$workspaceTabsMgm.addTabByID({
+                id: 'new_trade',
                 head: {
                     icon: 'fa fa-plus-square-o font-green',
                     text: 'New Trade',
@@ -96,7 +97,8 @@ DashboardApp.controller('DealEntryListController', ['TradeService', '$scope',
                     AddDealEntryGrid: $scope.gridPendingProposalOptions.addNewRow
                 },
                 closable: true,
-                autoload: true
+                autoload: true,
+                unique: true
             }, 'front_office');
 
             //buildLegalData();
@@ -108,7 +110,7 @@ DashboardApp.controller('DealEntryListController', ['TradeService', '$scope',
 
             $scope.$workspaceTabsMgm.addTabByID({
                 head: {
-                    icon: 'icon-graph',
+                    icon: 'fa fa-file-text-o font-green',
                     text: 'Editing Deal Entry',
                 },
                 templateUrl: paths.views + "/trades/deal_entry/proposal.html",
