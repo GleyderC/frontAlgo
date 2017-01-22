@@ -88,8 +88,8 @@ DashboardApp.controller('DealEntryListController', ['TradeService', '$scope',
 
             $scope.$workspaceTabsMgm.addTabByID({
                 head: {
-                    icon: 'fa fa-desktop',
-                    text: 'New Deal Entry',
+                    icon: 'fa fa-plus-square-o font-green',
+                    text: 'New Trade',
                 },
                 templateUrl: paths.views + "/trades/deal_entry/proposal.html",
                 parameters: {
@@ -192,5 +192,6 @@ DashboardApp.controller('DealEntryListController', ['TradeService', '$scope',
         }
 
         $scope.gridTradeBlotterOptions.data = TradeService.getTestdata();
+
 
     }]);
