@@ -3,9 +3,9 @@
 var DashboardApp = angular.module('DashboardApp');
 
 
-DashboardApp.controller('SearchProposalController', ['TradeProposalService', '$scope',
+DashboardApp.controller('SearchProposalController', ['TradeService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants',
-    function (TradeProposalService, $scope, $timeout, localStorageService, uiGridConstants) {
+    function (TradeService, $scope, $timeout, localStorageService, uiGridConstants) {
 
         /* Cargando datos en Proposal ui-grid*/
         $scope.Proposals = [];
@@ -38,19 +38,24 @@ DashboardApp.controller('SearchProposalController', ['TradeProposalService', '$s
                 $scope.gridApi = gridApi;
             },
             columnDefs: [
-                {field: 'trader',
+                {field: 'Trader',
                     sort: {
                         direction: uiGridConstants.ASC,
                         priority: 0
                     }
                 },
-                {field: 'desk'},
-                {field: 'dateTime' },
-                {field: 'notional' },
-                {field: 'principal' },
-                {field: 'counterParty'},
-                {field: 'hedge'},
-                {field: 'status'},
+                {field: 'Desk'},
+                {field: 'DateTime'},
+                {field: 'Notional'},
+                {field: 'Principal'},
+                {field: 'Client'},
+                {field: 'Counterparty'},
+                {field: 'Mercado'},
+                {field: 'Producto'},
+                {field: 'Vencimiento'},
+                {field: 'Precio'},
+                {field: 'Sentido'},
+                {field: 'Status'},
                 {
                     name: 'Actions',
                     cellTemplate: paths.tpls + '/ActionsButtonsTpl.html',
@@ -65,12 +70,12 @@ DashboardApp.controller('SearchProposalController', ['TradeProposalService', '$s
             $scope.gridProposalOptions.data.push(row);
             return row;
         }
-        $scope.Proposals = [{trader:"Juan Lopez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
+        /*$scope.Proposals = [{trader:"Juan Lopez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
             principal: "Santander Brasil", counterParty:"Telefónica", hedge:"SwaClear", status:"Booked"},
             {trader:"Joaquin Gomez", desk:"IRS-ABC", dateTime:"Today 12:34", notional: "100,000.00 EUR",
-                principal: "Santander Spain", counterParty:"Banki", hedge:"SwaClear", status:"Proposal"}];
+                principal: "Santander Spain", counterParty:"Banki", hedge:"SwaClear", status:"Proposal"}];*/
 
-        $scope.gridProposalOptions.data = $scope.Proposals;
+        $scope.gridProposalOptions.data = TradeService.getTestdata();
 
         $scope.addProposal = function () {
 
@@ -85,7 +90,7 @@ DashboardApp.controller('SearchProposalController', ['TradeProposalService', '$s
                 },
                 closable: true,
                 autoload: true
-            }, 'trades');
+            }, 'back_office');
 
             //buildLegalData();
 
@@ -105,7 +110,7 @@ DashboardApp.controller('SearchProposalController', ['TradeProposalService', '$s
                 },
                 closable: true,
                 autoload: true
-            }, 'trades');
+            }, 'back_office');
 
         };
         // Delete Proposal

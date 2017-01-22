@@ -72,12 +72,12 @@
             </div>
             <div class="row" ng-if="DealEntryProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'">
                 <div class="col-md-3">
-                    <label class="control-label">Pay Currency</label>
-                    <ui-select ng-model="DealEntryProposalInfo.PayCurrency.selected" theme="select2" style="display: block;">
+                    <label class="control-label">Buy Currency</label>
+                    <ui-select ng-model="DealEntryProposalInfo.SellCurrency.selected" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="PayCurrency in DealEntryProposalInfo.PayCurrencyList | filter: $select.search">
-                            <div ng-bind-html="PayCurrency.name | highlight: $select.search"></div>
-                            <small ng-bind-html="PayCurrency.key | highlight: $select.search"></small>
+                        <ui-select-choices repeat="SellCurrency in DealEntryProposalInfo.SellCurrencyList | filter: $select.search">
+                            <div ng-bind-html="SellCurrency.name | highlight: $select.search"></div>
+                            <small ng-bind-html="SellCurrency.key | highlight: $select.search"></small>
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -89,12 +89,12 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <label class="control-label">Receive Currency</label>
-                    <ui-select ng-model="DealEntryProposalInfo.ReceiveCurrency.selected" theme="select2" style="display: block;">
+                    <label class="control-label">Buy Currency</label>
+                    <ui-select ng-model="DealEntryProposalInfo.BuyCurrency.selected" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="ReceiveCurrency in DealEntryProposalInfo.ReceivecurrencyList | filter: $select.search">
-                            <div ng-bind-html="ReceiveCurrency.name | highlight: $select.search"></div>
-                            <small ng-bind-html="ReceiveCurrency.key | highlight: $select.search"></small>
+                        <ui-select-choices repeat="BuyCurrency in DealEntryProposalInfo.BuyCurrencyList | filter: $select.search">
+                            <div ng-bind-html="BuyCurrency.name | highlight: $select.search"></div>
+                            <small ng-bind-html="BuyCurrency.key | highlight: $select.search"></small>
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -114,7 +114,7 @@
             </div>
             <br>
             <div class="row" ng-if="DealEntryProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'
-            && DealEntryProposalInfo.Strategy.selected.key == 'client_market_trade'">
+            && (DealEntryProposalInfo.Strategy.selected.key == 'client' || DealEntryProposalInfo.Strategy.selected.key == 'client_market_trade')">
                 <div class="col-md-12">
                     <div class="portlet box blue-soft">
                         <div class="portlet-title">
@@ -125,16 +125,23 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn blue-soft" type="button" style="height: 28px;">FX Rate</button>
-                                                    </span>
+                                        <span class="input-group-btn">
+                                            <button class="btn blue-soft" type="button" style="height: 28px;">FX Rate</button>
+                                        </span>
                                         <input type="text" class="form-control input-xsmall collateral-money" ng-change="DealEntryProposalInfo.calculateClientSellBuy('fx')"
                                                ng-model="DealEntryProposalInfo.ClientTradeFxRate"
                                                style="height: 28px;">
-                                        <strong class="help-inline"  ng-bind="DealEntryProposalInfo.PayCurrency.selected.name + ' = 1'"></strong>
-                                        <strong class="help-inline" ng-bind="DealEntryProposalInfo.ReceiveCurrency.selected.name"></strong>
+                                        <strong class="help-inline"  ng-bind="DealEntryProposalInfo.SellCurrency.selected.name + ' = 1'"></strong>
+                                        <strong class="help-inline" ng-bind="DealEntryProposalInfo.BuyCurrency.selected.name"></strong>
 
                                     </div>
+                                </div>
+                                <div class="col-md-3" ng-if="DealEntryProposalInfo.Strategy.selected.key == 'client_market_trade' && DealEntryProposalInfo.clients.length == 1">
+                                    <label class="mt-checkbox mt-checkbox-outline">
+                                        <input type="checkbox" ng-model="DealEntryProposalInfo.forceHedge" ng-change="DealEntryProposalInfo.checkForceHedge()"> Force Hedge
+                                        <span></span>
+                                    </label>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -143,8 +150,8 @@
                                     <tr>
                                         <th style="font-size: 11px !important;"> Client ID </th>
                                         <th style="font-size: 11px !important;"> Client </th>
-                                        <th style="font-size: 11px !important;"> Client Sell ({{DealEntryProposalInfo.PayCurrency.selected.name}})</th>
-                                        <th style="font-size: 11px !important;"> Client Buy ({{DealEntryProposalInfo.ReceiveCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> Client Sell ({{DealEntryProposalInfo.SellCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> Client Buy ({{DealEntryProposalInfo.BuyCurrency.selected.name}})</th>
                                         <th style="font-size: 11px !important;"></th>
                                     </tr>
                                     </thead>
@@ -195,7 +202,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-if="DealEntryProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'">
+            <div class="row" ng-if="DealEntryProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'
+            && (DealEntryProposalInfo.Strategy.selected.key == 'market_trade' || DealEntryProposalInfo.Strategy.selected.key == 'client_market_trade')">
                 <div class="col-md-12">
                     <div class="portlet box yellow-soft">
                         <div class="portlet-title">
@@ -212,8 +220,8 @@
                                         <input type="text" class="form-control input-xsmall collateral-money" ng-change="DealEntryProposalInfo.calculateWeSellBuy('fx')"
                                                ng-model="DealEntryProposalInfo.BTBHedgeFxRate"
                                                style="height: 28px;">
-                                        <strong class="help-inline"  ng-bind="DealEntryProposalInfo.PayCurrency.selected.name + ' = 1'"></strong>
-                                        <strong class="help-inline" ng-bind="DealEntryProposalInfo.ReceiveCurrency.selected.name"></strong>
+                                        <strong class="help-inline"  ng-bind="DealEntryProposalInfo.SellCurrency.selected.name + ' = 1'"></strong>
+                                        <strong class="help-inline" ng-bind="DealEntryProposalInfo.BuyCurrency.selected.name"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -223,8 +231,8 @@
                                     <tr>
                                         <th style="font-size: 11px !important;"> Trade ID </th>
                                         <th style="font-size: 11px !important;"> CounterParty </th>
-                                        <th style="font-size: 11px !important;"> We Sell ({{DealEntryProposalInfo.PayCurrency.selected.name}})</th>
-                                        <th style="font-size: 11px !important;"> We Buy ({{DealEntryProposalInfo.ReceiveCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> We Sell ({{DealEntryProposalInfo.SellCurrency.selected.name}})</th>
+                                        <th style="font-size: 11px !important;"> We Buy ({{DealEntryProposalInfo.BuyCurrency.selected.name}})</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -242,11 +250,11 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control collateral-money input-md" style="height: 28px;" ng-change="DealEntryProposalInfo.calculateWeSellBuy('sell')"
-                                                   placeholder="" ng-model="DealEntryProposalInfo.CounterParty.WeSell" ui-number-mask="2">
+                                                   placeholder="" ng-model="DealEntryProposalInfo.CounterParty.WeSell" ui-number-mask="2" >
                                         </td>
                                         <td>
                                             <input type="text" class="form-control collateral-money input-md" style="height: 28px;" ng-change="DealEntryProposalInfo.calculateWeSellBuy('buy')"
-                                                   placeholder="" ng-model="DealEntryProposalInfo.CounterParty.WeBuy" ui-number-mask="2">
+                                                   placeholder="" ng-model="DealEntryProposalInfo.CounterParty.WeBuy" ui-number-mask="2" >
                                         </td>
                                     </tr>
                                     </tbody>
@@ -562,40 +570,18 @@
                             </td>
                             <td> EUR </td>
                         </tr>
-                        <tr>
-                            <td class="highlight">
-                                <div class="info"> </div>
-                                <a > Spot Rate </a>
-                            </td>
-                            <td> 1.1021 </td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">
-                                <div class="success"> </div>
-                                <a > Risk Free FW Rate</a>
-                            </td>
-                            <td> 1.145 </td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">
-                                <div class="success"> </div>
-                                <a > Main Trade NPV </a>
-                            </td>
-                            <td> -1,564.32 </td>
-                        </tr>
-                        <tr>
-                            <td class="highlight">
-                                <div class="info"> </div>
-                                <a> Hedge NPV </a>
-                            </td>
-                            <td> 15,234.450 </td>
-                        </tr>
-                        <tr>
+                        <tr ng-if=" DealEntryProposalInfo.Strategy.selected.key == 'client_market_trade' && DealEntryProposalInfo.forceHedge == true
+                        && (DealEntryProposalInfo.SellCurrency.selected.name == 'EUR' || DealEntryProposalInfo.BuyCurrency.selected.name == 'EUR')">
                             <td class="highlight">
                                 <div class="warning"> </div>
-                                <a> Gross P&L</a>
+                                <a>P&L (Profit And Losses)</a>
                             </td>
-                            <td> +14,000</td>
+                            <td ng-if="DealEntryProposalInfo.SellCurrency.selected.name == 'EUR'" class="collateral-money">
+                                {{((DealEntryProposalInfo.clients[0].ClientSell - DealEntryProposalInfo.CounterParty.WeSell) >0) ?(DealEntryProposalInfo.clients[0].ClientSell - DealEntryProposalInfo.CounterParty.WeSell) : ((DealEntryProposalInfo.clients[0].ClientSell - DealEntryProposalInfo.CounterParty.WeSell)*-1) | currency:''}}
+                            </td>
+                            <td ng-if="DealEntryProposalInfo.BuyCurrency.selected.name == 'EUR'" class="collateral-money">
+                                {{((DealEntryProposalInfo.clients[0].ClientBuy - DealEntryProposalInfo.CounterParty.WeBuy) >0) ?(DealEntryProposalInfo.clients[0].ClientBuy - DealEntryProposalInfo.CounterParty.WeBuy) : ((DealEntryProposalInfo.clients[0].ClientBuy - DealEntryProposalInfo.CounterParty.WeBuy)*-1) | currency:''}}
+                            </td>
                         </tr>
                         </tbody>
                     </table>

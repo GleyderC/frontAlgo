@@ -3,8 +3,8 @@
 var DashboardApp = angular.module('DashboardApp');
 
 DashboardApp.controller('BoViewController', ['$scope','localStorageService', 'uiGridConstants',
-    'toastr','TestData',
-    function ($scope, localStorage,uiGridConstants,$toastr,TestData) {
+    'toastr','TradeService',
+    function ($scope, localStorage,uiGridConstants,$toastr,TradeService) {
 
         $scope.gridTradeStatusOptions = {
             showGridFooter: true,
@@ -35,66 +35,26 @@ DashboardApp.controller('BoViewController', ['$scope','localStorageService', 'ui
                 $scope.gridApi = gridApi;
             },
             columnDefs: [
-                {
-                    field: 'Trader',
-                    name: 'Trader'
-                },
-                {
-                    field: 'Desk',
-                    name: 'Desk'
-                },
-                {
-                    field: 'Date Time',
-                    name: 'Date Time'
-                },
-                {
-                    field: 'Notional',
-                    name: 'Notional'
-                },
-                {
-                    field: 'Principal',
-                    name: 'Principal'
-                },
-                {
-                    field: 'Client',
-                    name: 'Client'
-                },
-                {
-                    field: 'Counterparty',
-                    name: 'Counterparty'
-                },
-                {
-                    field: 'Mercado',
-                    name: 'Mercado'
-                },
-                {
-                    field: 'Producto',
-                    name: 'Producto'
-                },
-                {
-                    field: 'Vencimiento',
-                    name: 'Vencimiento'
-                },
-                {
-                    field: 'Precio',
-                    name: 'Precio'
-                },
-                {
-                    field: 'Sentido',
-                    name: 'Sentido'
-                },
-                {
-                    field: 'Status',
-                    name: 'Status'
-                },
-                {
-                    name: "Action",
+                {field: 'Trader'},
+                {field: 'Desk'},
+                {field: 'DateTime'},
+                {field: 'Notional'},
+                {field: 'Principal'},
+                {field: 'Client'},
+                {field: 'Counterparty'},
+                {field: 'Mercado'},
+                {field: 'Producto'},
+                {field: 'Vencimiento'},
+                {field: 'Precio'},
+                {field: 'Sentido'},
+                {field: 'Status'},
+                {name: "Action",
                     cellTemplate : '<div class="text-center"> <a aria-label="Edit"> <button class="btn btn-sm btn-primary uigrid-btn" ng-click="grid.appScope.editRow(row)"> <i class="fa fa-file-text" aria-hidden="true"></i></button> </a>'
                 }
             ]
         };
         $scope.gridTradeStatusOptions.data = [];
-        $scope.gridTradeStatusOptions.data=TestData.getTestdata();
+        $scope.gridTradeStatusOptions.data=TradeService.getTestdata();
 
         $scope.mensajeView = function() {
             $toastr.info("Edit Trade","Information",{closeButton: true});
@@ -108,13 +68,13 @@ DashboardApp.controller('BoViewController', ['$scope','localStorageService', 'ui
                     icon: 'icon-graph',
                     text: 'Editing Trade Status',
                 },
-                templateUrl: paths.views + "/BackOffice/TradeStatusEdit.html",
+                templateUrl: paths.views + "/trades/bo_view/trade_status_edit.html",
                 parameters: {
                     BoViewController: row.entity
                 },
                 closable: true,
                 autoload: true
-            }, 'trades');
+            }, 'back_office');
 
         };
 
@@ -211,28 +171,10 @@ DashboardApp.controller('BoViewController', ['$scope','localStorageService', 'ui
             ]
         };
         $scope.gridCashFlowViewOptions.data = [];
-        $scope.gridCashFlowViewOptions.data=TestData.getTestdata();
+        $scope.gridCashFlowViewOptions.data=TradeService.getTestdata();
 
         $scope.mensajeViewCashFlow = function() {
             $toastr.info("Edit CashFlow","Information",{closeButton: true});
         };
 
     }]);
-
-DashboardApp.factory('TestData',function(){
-    var data = {
-        TestData: [{"Trader":"Ramón","Desk":"FX","Date Time":"12/04/2017 12:34","Notional":10000000,"Principal":"Inversis","Client":"HedgeFund XXX","Counterparty":"BBVA","Mercado":"OTC","Producto":"FX_FWD EUR/USD 12/04/2018","Vencimiento":"12/04/2018","Precio":"1.23","Sentido":"COMPRA","Status":"B.O. POR VALIDAR"},
-            {"Trader":"Ramón","Desk":"FX","Date Time":"12/04/2017 11:12","Notional":50000000,"Principal":"Inversis","Client":"","Counterparty":"BBVA","Mercado":"OTC","Producto":"FX_SPOT EUR/JPY","Vencimiento":"13/04/2017","Precio":"134.34","Sentido":"VENTA","Status":"B.O. CONFIRMADA"},
-            {"Trader":"Juan","Desk":"FI_FX","Date Time":"12/04/2017 10:01","Notional":100000000,"Principal":"","Client":"HedgeFund XXX","Counterparty":"","Mercado":"EuroClear","Producto":"US TREASURY BOND 12/04/2034 1,2%","Vencimiento":"12/04/2034","Precio":"98.4","Sentido":"COMPRA","Status":"B.O. CONFIRMADA"},
-            {"Trader":"Ramón","Desk":"DEPO_FX","Date Time":"12/04/2017 09:01","Notional":250000000,"Principal":"Inversis","Client":"","Counterparty":"SANTANDER","Mercado":"OTC","Producto":"DEPO USD 3M","Vencimiento":"12/07/2017","Precio":"0,01%","Sentido":"COMPRA","Status":"B.O. CONFIRMADA"}]
-    };
-    return {
-        getTestdata: function () {
-            return data.TestData;
-        },
-        setTestdata: function (values) {
-            data.TestData = values;
-        }
-    };
-
-});

@@ -161,7 +161,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                 templateUrl: paths.views + "/static_data/BilateralAgreements/index.html",
                 closable: true,
                 autoload: true
-            }, 'static_data');
+            }, 'configuration');
         };
         $scope.refreshBilateralContracts = function(){
           BilateralContractService.getAll().then(function (result) {
@@ -182,7 +182,7 @@ DashboardApp.controller('LEBilateralAgrSearchController', ['$scope',
                 },
                 closable: true,
                 autoload: true
-            }, 'static_data');
+            }, 'configuration');
 
         }
 

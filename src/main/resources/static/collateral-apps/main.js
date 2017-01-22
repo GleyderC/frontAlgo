@@ -425,6 +425,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             
                             'collateral-apps/services/collateral/CollateralAllocationService.js',
 
+                            'collateral-apps/services/trades/TradeService.js',
                             'collateral-apps/services/trades/TradeQueryService.js',
                             'collateral-apps/services/trades/TradeDealEntryService.js',
                             'collateral-apps/services/trades/TradeProposalService.js',

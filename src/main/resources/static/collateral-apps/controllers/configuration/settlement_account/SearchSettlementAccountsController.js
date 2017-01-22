@@ -80,7 +80,7 @@ DashboardApp.controller('SearchSettlementAccountsController', ['SettlementAccoun
                     icon: 'fa fa-dot-circle-o',
                     text: 'New SettlementAccounts',
                 },
-                templateUrl: paths.views + "/configuration/SettlementAccounts/SettlementAccounts.html",
+                templateUrl: paths.views + "/configuration/settlement_account/settlement_account.html",
                 parameters: {
                     AddSettlementAccountssGrid: $scope.gridSettlementAccountsOptions.addNewRow
                 },
@@ -100,13 +100,13 @@ DashboardApp.controller('SearchSettlementAccountsController', ['SettlementAccoun
                     icon: 'icon-graph',
                     text: 'Editing SettlementAccounts',
                 },
-                templateUrl: paths.views + "/analytics/what_if_SettlementAccounts/SettlementAccounts.html",
+                templateUrl: paths.views + "/configuration/settlement_account/settlement_account.html",
                 parameters: {
                     SettlementAccounts: row.entity
                 },
                 closable: true,
                 autoload: true
-            }, 'analytics');
+            }, 'configuration');
 
         };
         // Delete SettlementAccounts

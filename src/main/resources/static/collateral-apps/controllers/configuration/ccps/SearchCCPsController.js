@@ -99,13 +99,13 @@ DashboardApp.controller('SearchCCPsController', ['CCPsService', '$scope',
                     icon: 'icon-graph',
                     text: 'Editing CCPs',
                 },
-                templateUrl: paths.views + "/analytics/what_if_CCPs/CCPs.html",
+                templateUrl: paths.views + "/configuration/ccps/ccps.html",
                 parameters: {
                     CCPs: row.entity
                 },
                 closable: true,
                 autoload: true
-            }, 'analytics');
+            }, 'configuration');
 
         };
         // Delete CCPs

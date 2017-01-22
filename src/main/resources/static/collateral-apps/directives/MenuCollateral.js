@@ -34,18 +34,97 @@ DashboardApp.service('MenuService', function () {
     //HTML TREE SIDEBAR
     this.htmlTreeMenu =
         [
+            /* FRONT OFFICE */
+            {
+                id: 'front_office',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-arrow-circle-o-right font-green',
+                    title: 'MENU.FRONT_OFFICE'
+                },
+                subMenuItems: [
+                    {
+                        id: 'new_trade',
+                        head: {
+                            icon: 'fa fa-plus-square-o font-green',
+                            title: 'MENU.FRONT_OFFICE.NEW_TRADE'
+                        },
+                        view: '/trades/deal_entry/proposal.html',
+                        unique: true
+                    },
+                    {
+                        id: 'trade_bloter',
+                        head: {
+                            icon: 'fa fa-file-text-o font-green',
+                            title: 'MENU.FRONT_OFFICE.TRADE_BLOTTER'
+                        },
+                        view: '/trades/deal_entry/deal_entry_list.html',
+                        unique: true
+                    }
+
+                ]
+            },
+            /* BACK OFFICE  */
+            {
+                id: 'back_office',
+                tabContainer: 'root',
+                head: {
+                    icon: 'fa fa-arrow-circle-o-left font-blue-steel',
+                    title: 'MENU.BACK_OFFICE'
+                },
+                subMenuItems: [
+                    {
+                        id: 'trade_query_filter',
+                        head: {
+                            icon: 'fa fa-area-chart font-blue-steel',
+                            title: 'MENU.BACK_OFFICE.QUERY_FILTER'
+                        },
+                        view: '/trades/query_filter/query_filter.html',
+                        unique: true
+                    },
+                    {
+                        id: 'bo_view',
+                        head: {
+                            icon: 'fa fa-eye font-blue-steel',
+                            title: 'MENU.BACK_OFFICE.BO_VIEW'
+                        },
+                        view: '/trades/bo_view/bo_view.html',
+                        unique: true
+                    },
+                    {
+                        id: 'liquidity_management',
+                        head: {
+                            icon: 'fa fa-eur font-blue-steel',
+                            title: 'MENU.BACK_OFFICE.LIQUIDITY_MANAGEMENT'
+                        },
+                        view: '/back_office/liquidity_management/liquidity_management.html',
+                        unique: true
+                    },
+                    {
+                        id: 'proposal',
+                        head: {
+                            icon: 'fa fa-file-text-o font-blue-steel',
+                            title: 'MENU.BACK_OFFICE.PROPOSAL'
+                        },
+                        view: '/trades/proposal/search_proposal.html',
+                        unique: true
+                    }
+
+                ]
+            },
+            /* Collateral Management */
             {
                 id: 'collateral_management',
                 tabContainer: 'root',
                 head: {
-                    icon: 'icon-home font-green',
+                    icon: 'fa fa-money font-yellow',
                     title: 'MENU.COLLATERAL_MANAGEMENT'
                 },
                 subMenuItems: [
                     {
                         id: 'cm_agreements',
                         head: {
-                            icon: 'fa fa-thumbs-o-up font-green',
+                            icon: 'fa fa-thumbs-o-up font-yellow',
                             title: 'MENU.COLLATERAL_MANAGEMENT.AGREEMENTS'
                         },
                         view: '/collateral/agreements/index.html',
@@ -54,7 +133,7 @@ DashboardApp.service('MenuService', function () {
                     {
                         id: 'cm_margin_call',
                         head: {
-                            icon: 'fa fa-phone font-green',
+                            icon: 'fa fa-phone font-yellow',
                             title: 'MENU.COLLATERAL_MANAGEMENT.MARGIN_CALL'
                         },
                         view: '/collateral/margin_call/main.html',
@@ -63,119 +142,62 @@ DashboardApp.service('MenuService', function () {
                     {
                         id: 'cm_interest',
                         head: {
-                            icon: 'fa fa-calculator font-green',
+                            icon: 'fa fa-calculator font-yellow',
                             title: 'MENU.COLLATERAL_MANAGEMENT.INTEREST'
                         },
                         view: '/collateral/interest/main.html',
                         unique: true
-                    }
-
-                ]
-            }, /* #1 Collateral Management */
-            {
-                id: 'collateral_exposures',
-                tabContainer: 'root',
-                head: {
-                    icon: 'fa fa-warning font-yellow-gold',
-                    title: 'MENU.COLLATERAL_EXPOSURES'
-                },
-                subMenuItems: [
-                    {
-                        id: 'ce_ussuer_risk',
-                        head: {
-                            icon: ' ',
-                            title: 'MENU.COLLATERAL_EXPOSURES.ISSUER_RISK'
-                        },
-                        view: '/risk/issuer_risk.html',
-                        unique: true
                     },
                     {
-                        id: 'ce_country_risk',
+                        id: 'exposure',
                         head: {
-                            icon: ' ',
-                            title: 'MENU.COLLATERAL_EXPOSURES.COUNTRY_RISK'
-                        },
-                        view: '/risk/country_risk.html',
-                        unique: true
-                    },
-                    {
-                        id: 'ce_counterparty_risk',
-                        head: {
-                            icon: ' ',
-                            title: 'MENU.COLLATERAL_EXPOSURES.COUNTERPARTY_RISK'
-                        },
-                        view: '/risk/counterparty_risk.html',
-                        unique: true
-                    },
-                    {
-                        id: 'ce_fx_risk',
-                        head: {
-                            icon: ' ',
-                            title: 'MENU.COLLATERAL_EXPOSURES.FX_RISK'
-                        },
-                        view: '/risk/issuer_risk.html',
-                        unique: true
-                    }
-                ]
-            }, /* #2 Collateral Exposures */
-            {
-                id: 'static_data',
-                tabContainer: 'root',
-                head: {
-                    icon: 'fa fa-database font-blue-steel',
-                    title: 'MENU.STATIC_DATA'
-                },
-                subMenuItems: [
-                    {
-                        id: 'sd_legal_entity',
-                        head: {
-                            icon: 'fa fa-bank font-blue-steel',
-                            title: 'MENU.STATIC_DATA.LEGAL_ENTITIES'
-                        },
-                        view: '/static_data/LegalEntity/legal_entity.html',
-                        unique: true
-                    },
-                    {
-                        id: 'sd_bilateral_agreements',
-                        head: {
-                            icon: 'fa fa-briefcase font-blue-steel',
-                            title: 'MENU.STATIC_DATA.BILATERAL_AGREEMENTS'
-                        },
-                        view: '/static_data/BilateralAgreements/bilateral_a_add_search.html',
-                        unique: true
-                    },
-                    {
-                        id: 'sd_instruments',
-                        tabContainer: 'static_data',
-                        head: {
-                            icon: 'icon-graph font-blue-steel',
-                            title: 'MENU.STATIC_DATA.INSTRUMENTS'
+                            icon: 'fa fa-warning font-yellow',
+                            title: 'MENU.COLLATERAL_EXPOSURES'
                         },
                         subMenuItems: [
                             {
-                                id: 'sd_inst_bond_definition',
+                                id: 'ce_ussuer_risk',
                                 head: {
-                                    icon: 'fa fa-lock font-blue-steel',
-                                    title: 'MENU.STATIC_DATA.INSTRUMENTS.BOND_DEFINITION'
+                                    icon: ' ',
+                                    title: 'MENU.COLLATERAL_EXPOSURES.ISSUER_RISK'
                                 },
-                                view: '/static_data/Security/main.html',
+                                view: '/risk/issuer_risk.html',
                                 unique: true
                             },
                             {
-                                id: 'sd_inst_equity_definition',
+                                id: 'ce_country_risk',
                                 head: {
-                                    icon: 'fa fa-lock font-blue-steel',
-                                    title: 'MENU.STATIC_DATA.INSTRUMENTS.EQUITY_DEFINITION'
+                                    icon: ' ',
+                                    title: 'MENU.COLLATERAL_EXPOSURES.COUNTRY_RISK'
                                 },
-                                view: '#',
+                                view: '/risk/country_risk.html',
+                                unique: true
+                            },
+                            {
+                                id: 'ce_counterparty_risk',
+                                head: {
+                                    icon: ' ',
+                                    title: 'MENU.COLLATERAL_EXPOSURES.COUNTERPARTY_RISK'
+                                },
+                                view: '/risk/counterparty_risk.html',
+                                unique: true
+                            },
+                            {
+                                id: 'ce_fx_risk',
+                                head: {
+                                    icon: ' ',
+                                    title: 'MENU.COLLATERAL_EXPOSURES.FX_RISK'
+                                },
+                                view: '/risk/issuer_risk.html',
                                 unique: true
                             }
                         ],
-                        view: '',
                         unique: true
                     }
+
                 ]
-            }, /* #3 Collateral Exposures */
+            },
+            /* Integration and Reporting */
             {
                 id: 'integration_reporting',
                 tabContainer: 'root',
@@ -253,13 +275,14 @@ DashboardApp.service('MenuService', function () {
                         id: 'ir_registr',
                         head: {
                             icon: 'fa fa-play-circle-o font-purple-seance',
-                            title: 'RegisTR'
+                            title: 'MENU.CONFIGURATION.REGISTR'
                         },
                         view: '/integration_reporting/RegisTR/regisTR.html',
                         unique: true
                     }
                 ]
-            }, /* #4 Integration & Reporting */
+            },
+            /* Administration */
             {
                 id: 'configuration',
                 tabContainer: 'root',
@@ -269,12 +292,69 @@ DashboardApp.service('MenuService', function () {
                 },
                 subMenuItems: [
                     {
+                        id: 'static_data',
+                        head: {
+                            icon: 'fa fa-database font-green-jungle',
+                            title: 'MENU.STATIC_DATA'
+                        },
+                        subMenuItems:[
+                            {
+                                id: 'sd_legal_entity',
+                                head: {
+                                    icon: 'fa fa-bank font-green-jungle',
+                                    title: 'MENU.STATIC_DATA.LEGAL_ENTITIES'
+                                },
+                                view: '/static_data/LegalEntity/legal_entity.html',
+                                unique: true
+                            },
+                            {
+                                id: 'sd_bilateral_agreements',
+                                head: {
+                                    icon: 'fa fa-briefcase font-green-jungle',
+                                    title: 'MENU.STATIC_DATA.BILATERAL_AGREEMENTS'
+                                },
+                                view: '/static_data/BilateralAgreements/bilateral_a_add_search.html',
+                                unique: true
+                            },
+                            {
+                                id: 'sd_instruments',
+                                tabContainer: 'static_data',
+                                head: {
+                                    icon: 'icon-pencil font-green-jungle',
+                                    title: 'MENU.STATIC_DATA.INSTRUMENTS'
+                                },
+                                subMenuItems: [
+                                    {
+                                        id: 'sd_inst_bond_definition',
+                                        head: {
+                                            icon: 'fa fa-lock font-green-jungle',
+                                            title: 'MENU.STATIC_DATA.INSTRUMENTS.BOND_DEFINITION'
+                                        },
+                                        view: '/static_data/Security/main.html',
+                                        unique: true
+                                    },
+                                    {
+                                        id: 'sd_inst_equity_definition',
+                                        head: {
+                                            icon: 'fa fa-lock font-green-jungle',
+                                            title: 'MENU.STATIC_DATA.INSTRUMENTS.EQUITY_DEFINITION'
+                                        },
+                                        view: '#',
+                                        unique: true
+                                    }
+                                ],
+                                view: '',
+                                unique: true
+                            }
+                        ],
+                        unique: true
+                    },
+                    {
                         id: 'configuration_user_management',
                         head: {
-                            icon: 'fa fa-users font-green-jungle',
-                            title: 'MENU.CONFIGURATION.USERS_MANAGEMENT'
+                        icon: 'fa fa-users font-green-jungle',
+                        title: 'MENU.CONFIGURATION.USERS_MANAGEMENT',
                         },
-                        view: '',
                         subMenuItems: [
                             {
                                 id: 'conf_users_management',
@@ -314,6 +394,7 @@ DashboardApp.service('MenuService', function () {
                             }
                         ],
                         unique: true
+
                     },
                     {
                         id: 'configuration_stp_workflows',
@@ -341,9 +422,58 @@ DashboardApp.service('MenuService', function () {
                         },
                         view: '/configuration/settlement_account/main.html',
                         unique: true
+                    },
+                    {
+                        id: 'market_data',
+                        head: {
+                            icon: 'fa fa-line-chart font-green-jungle',
+                            title: 'MENU.MARKET_DATA'
+                        },
+                        unique: true,
+                        subMenuItems: [
+                            {
+                                id: 'md_closing_prices',
+                                head: {
+                                    icon: 'icon-bar-chart font-purple-soft',
+                                    title: 'MENU.MARKET_DATA.CLOSING_PRICES'
+                                },
+                                view: '',
+                                subMenuItems: [
+                                    {
+                                        id: 'md_cp_fx',
+                                        head: {
+                                            icon: ' ',
+                                            title: 'MENU.MARKET_DATA.CLOSING_PRICES.FX'
+                                        },
+                                        view: '',
+                                        unique: true
+                                    },
+                                    {
+                                        id: 'md_cp_bonds',
+                                        head: {
+                                            icon: ' ',
+                                            title: 'MENU.MARKET_DATA.CLOSING_PRICES.BONDS'
+                                        },
+                                        view: '',
+                                        unique: true
+                                    },
+                                    {
+                                        id: 'md_cp_fx',
+                                        head: {
+                                            icon: ' ',
+                                            title: 'MENU.MARKET_DATA.CLOSING_PRICES.EQUITIES'
+                                        },
+                                        view: '',
+                                        unique: true
+                                    }
+                                ],
+                                unique: true
+                            }
+                        ]
                     }
                 ]
-            }, /* #5 Configuration */
+            },
+            /* Analytics */
             {
                 id: 'analytics',
                 tabContainer: 'root',
@@ -400,55 +530,8 @@ DashboardApp.service('MenuService', function () {
                             }]
                     }
                 ]
-            }, /* #6 Analytics */
-            {
-                id: 'market_data',
-                tabContainer: 'root',
-                head: {
-                    icon: 'fa fa-line-chart font-purple-soft',
-                    title: 'MENU.MARKET_DATA'
-                },
-                subMenuItems: [
-                    {
-                        id: 'md_closing_prices',
-                        head: {
-                            icon: 'icon-bar-chart font-purple-soft',
-                            title: 'MENU.MARKET_DATA.CLOSING_PRICES'
-                        },
-                        view: '',
-                        subMenuItems: [
-                            {
-                                id: 'md_cp_fx',
-                                head: {
-                                    icon: ' ',
-                                    title: 'MENU.MARKET_DATA.CLOSING_PRICES.FX'
-                                },
-                                view: '',
-                                unique: true
-                            },
-                            {
-                                id: 'md_cp_bonds',
-                                head: {
-                                    icon: ' ',
-                                    title: 'MENU.MARKET_DATA.CLOSING_PRICES.BONDS'
-                                },
-                                view: '',
-                                unique: true
-                            },
-                            {
-                                id: 'md_cp_fx',
-                                head: {
-                                    icon: ' ',
-                                    title: 'MENU.MARKET_DATA.CLOSING_PRICES.EQUITIES'
-                                },
-                                view: '',
-                                unique: true
-                            }
-                        ],
-                        unique: true
-                    }
-                ]
-            }, /* #7 Market Data */
+            },
+            /* User Messages */
             {
                 id: 'cm_user_messages',
                 tabContainer: 'root',
@@ -467,44 +550,7 @@ DashboardApp.service('MenuService', function () {
                         unique: true
                     }
                 ]
-            }, /* #8 User Messages */
-            {
-                id: 'trades',
-                tabContainer: 'root',
-                head: {
-                    icon: 'fa fa-area-chart font-yellow-soft',
-                    title: 'MENU.TRADES'
-                },
-                subMenuItems: [
-                    {
-                        id: 'deal_entry',
-                        head: {
-                            icon: 'fa fa-area-chart font-yellow-soft',
-                            title: 'MENU.TRADES.DEAL_ENTRY'
-                        },
-                        view: '/trades/deal_entry/deal_entry_list.html',
-                        unique: true
-                    },
-                    {
-                        id: 'proposal',
-                        head: {
-                            icon: 'fa fa-area-chart font-yellow-soft',
-                            title: 'MENU.TRADES.PROPOSAL'
-                        },
-                        view: '/trades/proposal/search_proposal.html',
-                        unique: true
-                    },
-                    {
-                        id: 'trades_query_filter',
-                        head: {
-                            icon: 'fa fa-area-chart font-yellow-soft',
-                            title: 'MENU.TRADES.QUERY_FILTER'
-                        },
-                        view: '/trades/query_filter/query_filter.html',
-                        unique: true
-                    }
-                ]
-            }, /* #9 Trade Query */
+            }
         ];
 
 

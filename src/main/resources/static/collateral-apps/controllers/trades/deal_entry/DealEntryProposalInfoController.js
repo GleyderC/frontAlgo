@@ -2,63 +2,115 @@
 
 var DashboardApp = angular.module('DashboardApp');
 
-DashboardApp.controller('DealEntryProposalInfoController', ['TradeProposalService', 'LegalEntityService', '$scope',
+DashboardApp.controller('DealEntryProposalInfoController', ['TradeDealEntryService', 'LegalEntityService', '$scope',
     '$timeout', 'localStorageService', 'uiGridConstants', 'DashboardService', '$q',
-    function (TradeProposalService,LegalEntityService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService, $q) {
+    function (TradeDealEntryService,LegalEntityService, $scope, $timeout, localStorageService, uiGridConstants, DashboardService, $q) {
 
         $scope.DealEntryProposalInfo = {};
-
-        $scope.DealEntryProposalInfo = {};
+        $scope.DealEntryProposalInfo.BTBHedgeFxRate ='';
+        $scope.DealEntryProposalInfo.ClientTradeFxRate='';
 
         /* Functions */
-        $scope.DealEntryProposalInfo.calculateWeSellBuy = function (input) {
-
-            if(input == 'fx' && ($scope.DealEntryProposalInfo.BTBHedgeFxRate!='0.00000' || $scope.DealEntryProposalInfo.CounterParty.WeSell!='0.00' || $scope.DealEntryProposalInfo.CounterParty.WeBuy !='0.00')){
-                $scope.DealEntryProposalInfo.CounterParty.WeBuy = ($scope.DealEntryProposalInfo.CounterParty.WeSell / $scope.DealEntryProposalInfo.BTBHedgeFxRate);
-            }
-            else if(input=='sell') {
-                $scope.DealEntryProposalInfo.CounterParty.WeBuy = ($scope.DealEntryProposalInfo.CounterParty.WeSell / $scope.DealEntryProposalInfo.BTBHedgeFxRate);
-            }
-            else {
-                $scope.DealEntryProposalInfo.CounterParty.WeSell = ($scope.DealEntryProposalInfo.CounterParty.WeBuy * $scope.DealEntryProposalInfo.BTBHedgeFxRate)
-            }
-
-        }
 
         $scope.DealEntryProposalInfo.calculateClientSellBuy = function (input, indexClient) {
 
-            if(input == 'fx' && ($scope.DealEntryProposalInfo.ClientTradeFxRate!='0.00000')){
+            if(input == 'fx' && ($scope.DealEntryProposalInfo.ClientTradeFxRate!=0 && $scope.DealEntryProposalInfo.ClientTradeFxRate!='')){
                 $scope.DealEntryProposalInfo.clients.forEach( function (client) {
                     if(client.ClientSell != '0.00'){
                         client.ClientBuy = (client.ClientSell / $scope.DealEntryProposalInfo.ClientTradeFxRate);
                     }
+                    else if(client.ClientBuy != '0.00'){
+                        client.ClientSell = (client.ClientBuy * $scope.DealEntryProposalInfo.ClientTradeFxRate);
+                    }
                 });
 
             }
-            else if(input=='sell') {
+            else if(input=='sell' && ($scope.DealEntryProposalInfo.ClientTradeFxRate!=0 && $scope.DealEntryProposalInfo.ClientTradeFxRate!='')) {
                 $scope.DealEntryProposalInfo.clients[indexClient].ClientBuy = ($scope.DealEntryProposalInfo.clients[indexClient].ClientSell / $scope.DealEntryProposalInfo.ClientTradeFxRate);
             }
-            else {
+            else if(input=='buy' && ($scope.DealEntryProposalInfo.ClientTradeFxRate!=0 && $scope.DealEntryProposalInfo.ClientTradeFxRate!='')){
                 $scope.DealEntryProposalInfo.clients[indexClient].ClientSell = ($scope.DealEntryProposalInfo.clients[indexClient].ClientBuy * $scope.DealEntryProposalInfo.ClientTradeFxRate)
             }
-            if($scope.DealEntryProposalInfo.clients.length == 1){
-                $scope.DealEntryProposalInfo.BTBHedgeFxRate = $scope.DealEntryProposalInfo.ClientTradeFxRate;
-                $scope.DealEntryProposalInfo.CounterParty.WeBuy = $scope.DealEntryProposalInfo.clients[0].ClientBuy;
-                $scope.DealEntryProposalInfo.CounterParty.WeSell = $scope.DealEntryProposalInfo.clients[0].ClientSell;
+
+            if($scope.DealEntryProposalInfo.forceHedge == true){
+                if($scope.DealEntryProposalInfo.SellCurrency.selected.name == 'EUR'){
+                    $scope.DealEntryProposalInfo.CounterParty.WeBuy =  $scope.DealEntryProposalInfo.clients[0].ClientBuy;
+                    //angular.element(".we-buy").scope().$apply();
+                    if($scope.DealEntryProposalInfo.BTBHedgeFxRate!=0 && $scope.DealEntryProposalInfo.BTBHedgeFxRate!=''){
+                        $scope.DealEntryProposalInfo.CounterParty.WeSell = ($scope.DealEntryProposalInfo.CounterParty.WeBuy * $scope.DealEntryProposalInfo.BTBHedgeFxRate);
+                    }
+                }
+                else if($scope.DealEntryProposalInfo.BuyCurrency.selected.name == 'EUR') {
+                    $scope.DealEntryProposalInfo.CounterParty.WeSell = $scope.DealEntryProposalInfo.clients[0].ClientSell;
+                    if ($scope.DealEntryProposalInfo.BTBHedgeFxRate != 0 && $scope.DealEntryProposalInfo.BTBHedgeFxRate != '') {
+                        $scope.DealEntryProposalInfo.CounterParty.WeBuy = ($scope.DealEntryProposalInfo.CounterParty.WeSell / $scope.DealEntryProposalInfo.BTBHedgeFxRate);
+                    }
+                }
+            }
+
+        }
+
+        $scope.DealEntryProposalInfo.calculateWeSellBuy = function (input) {
+
+            if(input == 'fx' && ($scope.DealEntryProposalInfo.BTBHedgeFxRate!=0 && $scope.DealEntryProposalInfo.BTBHedgeFxRate!='')){
+                if($scope.DealEntryProposalInfo.CounterParty.WeSell!='0.00'){
+                    $scope.DealEntryProposalInfo.CounterParty.WeBuy = ($scope.DealEntryProposalInfo.CounterParty.WeSell / $scope.DealEntryProposalInfo.BTBHedgeFxRate);
+                }
+                else if($scope.DealEntryProposalInfo.CounterParty.WeBuy !='0.00'){
+                    $scope.DealEntryProposalInfo.CounterParty.WeSell = ($scope.DealEntryProposalInfo.CounterParty.WeBuy * $scope.DealEntryProposalInfo.BTBHedgeFxRate)
+                }
+
+            }
+            else if(input=='sell' && ($scope.DealEntryProposalInfo.BTBHedgeFxRate!=0 && $scope.DealEntryProposalInfo.BTBHedgeFxRate!='')) {
+                $scope.DealEntryProposalInfo.CounterParty.WeBuy = ($scope.DealEntryProposalInfo.CounterParty.WeSell / $scope.DealEntryProposalInfo.BTBHedgeFxRate);
+            }
+            else if(input=='buy' && ($scope.DealEntryProposalInfo.BTBHedgeFxRate!=0 && $scope.DealEntryProposalInfo.BTBHedgeFxRate!='')){
+                $scope.DealEntryProposalInfo.CounterParty.WeSell = ($scope.DealEntryProposalInfo.CounterParty.WeBuy * $scope.DealEntryProposalInfo.BTBHedgeFxRate)
+            }
+
+            if($scope.DealEntryProposalInfo.forceHedge == true){
+
+                if($scope.DealEntryProposalInfo.SellCurrency.selected.name == 'EUR'){
+
+                    $scope.DealEntryProposalInfo.clients[0].ClientBuy = $scope.DealEntryProposalInfo.CounterParty.WeBuy;
+                    if($scope.DealEntryProposalInfo.ClientTradeFxRate!=0 && $scope.DealEntryProposalInfo.ClientTradeFxRate!=''){
+                        $scope.DealEntryProposalInfo.clients[0].ClientSell = ($scope.DealEntryProposalInfo.clients[0].ClientBuy * $scope.DealEntryProposalInfo.ClientTradeFxRate);
+                    }
+                }
+                else if($scope.DealEntryProposalInfo.BuyCurrency.selected.name == 'EUR'){
+                    $scope.DealEntryProposalInfo.clients[0].ClientSell = $scope.DealEntryProposalInfo.CounterParty.WeSell;
+                    if($scope.DealEntryProposalInfo.ClientTradeFxRate!=0 && $scope.DealEntryProposalInfo.ClientTradeFxRate!=''){
+                        $scope.DealEntryProposalInfo.clients[0].ClientBuy = ($scope.DealEntryProposalInfo.clients[0].ClientSell / $scope.DealEntryProposalInfo.ClientTradeFxRate);
+                    }
+                }
             }
 
         }
 
         $scope.exchangeCurrency = function () {
 
-            let tmpPayCurrency = $scope.DealEntryProposalInfo.PayCurrency.selected;
-            let tmpReceiveCurrency = $scope.DealEntryProposalInfo.ReceiveCurrency.selected;
+            let tmpSellCurrency = $scope.DealEntryProposalInfo.SellCurrency.selected;
+            let tmpBuyCurrency = $scope.DealEntryProposalInfo.BuyCurrency.selected;
 
-            if((tmpPayCurrency && tmpReceiveCurrency) && (tmpPayCurrency != tmpReceiveCurrency) ){
-                $scope.DealEntryProposalInfo.PayCurrency.selected = tmpReceiveCurrency;
-                $scope.DealEntryProposalInfo.ReceiveCurrency.selected = tmpPayCurrency;
+            if((tmpSellCurrency && tmpBuyCurrency) && (tmpSellCurrency != tmpBuyCurrency) ){
+                $scope.DealEntryProposalInfo.SellCurrency.selected = tmpBuyCurrency;
+                $scope.DealEntryProposalInfo.BuyCurrency.selected = tmpSellCurrency;
             }
 
+            if($scope.DealEntryProposalInfo.forceHedge === true){
+                if($scope.DealEntryProposalInfo.SellCurrency.selected.name == 'EUR'){
+                    $scope.DealEntryProposalInfo.calculateClientSellBuy('sell',0);
+                }
+                else if($scope.DealEntryProposalInfo.BuyCurrency.selected.name == 'EUR'){
+                    $scope.DealEntryProposalInfo.calculateClientSellBuy('buy','0');
+                }
+            }
+        }
+
+        $scope.DealEntryProposalInfo.checkForceHedge = function(){
+            if($scope.DealEntryProposalInfo.forceHedge === true){
+                $scope.DealEntryProposalInfo.calculateClientSellBuy('sell',0);
+            }
         }
 
         $scope.DealEntryProposalInfo.filterLeg = function (leg) {
@@ -201,7 +253,8 @@ DashboardApp.controller('DealEntryProposalInfoController', ['TradeProposalServic
         }
         /* End Functions*/
 
-        $scope.DealEntryProposalInfo.Strategies = [ {"key" : 'market_trade', "name": 'Market Trade'},
+        $scope.DealEntryProposalInfo.Strategies = [ { "key": 'client', "name": 'Client'},
+            {"key" : 'market_trade', "name": 'Market Trade'},
             { "key": 'client_market_trade', "name": 'Client + Market Trade'}];
 
         $scope.DealEntryProposalInfo.StrategyID = 'FX_'+Math.floor((Math.random() * 999999999) + 1);
@@ -218,12 +271,13 @@ DashboardApp.controller('DealEntryProposalInfoController', ['TradeProposalServic
 
         //FX Forward
         $scope.DealEntryProposalInfo.Strategy = {};
-        $scope.DealEntryProposalInfo.PayCurrency = {}
-        $scope.DealEntryProposalInfo.PayCurrencyList = localStorageService.get("CurrencyEnum");
-        $scope.DealEntryProposalInfo.PayCurrencyList.splice(2,1);
-        $scope.DealEntryProposalInfo.ReceiveCurrency = {};
-        $scope.DealEntryProposalInfo.ReceivecurrencyList = localStorageService.get("CurrencyEnum");
-        $scope.DealEntryProposalInfo.ReceivecurrencyList.splice(2,1);
+        $scope.DealEntryProposalInfo.forceHedge = false;
+        $scope.DealEntryProposalInfo.SellCurrency = {selected:{}}
+        $scope.DealEntryProposalInfo.SellCurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.DealEntryProposalInfo.SellCurrencyList.splice(2,1);
+        $scope.DealEntryProposalInfo.BuyCurrency = {selected:{}};
+        $scope.DealEntryProposalInfo.BuyCurrencyList = localStorageService.get("CurrencyEnum");
+        $scope.DealEntryProposalInfo.BuyCurrencyList.splice(2,1);
 
         $scope.DealEntryProposalInfo.PayBasisCalculationConvention = {};
         $scope.DealEntryProposalInfo.ReceiveBasisCalculationConvention = {};
@@ -550,6 +604,5 @@ DashboardApp.controller('DealEntryProposalInfoController', ['TradeProposalServic
 
 
         }
-
 
     }]);

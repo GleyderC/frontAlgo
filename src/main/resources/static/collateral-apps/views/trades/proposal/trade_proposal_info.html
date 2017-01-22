@@ -72,7 +72,7 @@
             </div>
             <div class="row" ng-if="TradeProposalInfo.ProductGroup.selected.name == 'FX_DELIVERABLE'">
                 <div class="col-md-3">
-                    <label class="control-label">Sell Currency</label>
+                    <label class="control-label">Buy Currency</label>
                     <ui-select ng-model="TradeProposalInfo.SellCurrency.selected" theme="select2" style="display: block;">
                         <ui-select-match placeholder="Select Currency">{{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="SellCurrency in TradeProposalInfo.SellCurrencyList | filter: $select.search">
@@ -577,10 +577,10 @@
                                 <a>P&L (Profit And Losses)</a>
                             </td>
                             <td ng-if="TradeProposalInfo.SellCurrency.selected.name == 'EUR'" class="collateral-money">
-                                {{(TradeProposalInfo.clients[0].ClientSell - TradeProposalInfo.CounterParty.WeSell | currency:'')}}
+                                {{((TradeProposalInfo.clients[0].ClientSell - TradeProposalInfo.CounterParty.WeSell) >0) ?(TradeProposalInfo.clients[0].ClientSell - TradeProposalInfo.CounterParty.WeSell) : ((TradeProposalInfo.clients[0].ClientSell - TradeProposalInfo.CounterParty.WeSell)*-1) | currency:''}}
                             </td>
                             <td ng-if="TradeProposalInfo.BuyCurrency.selected.name == 'EUR'" class="collateral-money">
-                                {{(TradeProposalInfo.clients[0].ClientBuy - TradeProposalInfo.CounterParty.WeBuy | currency:'')}}
+                                {{((TradeProposalInfo.clients[0].ClientBuy - TradeProposalInfo.CounterParty.WeBuy) >0) ?(TradeProposalInfo.clients[0].ClientBuy - TradeProposalInfo.CounterParty.WeBuy) : ((TradeProposalInfo.clients[0].ClientBuy - TradeProposalInfo.CounterParty.WeBuy)*-1) | currency:''}}
                             </td>
                         </tr>
                         </tbody>

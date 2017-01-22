@@ -164,7 +164,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 },
                 closable: true,
                 autoload: true
-            }, 'static_data');
+            }, 'configuration');
 
             //buildLegalData();
 
@@ -184,7 +184,7 @@ DashboardApp.controller('SearchLegalEntityController', ['LegalEntityService', '$
                 },
                 closable: true,
                 autoload: true
-            }, 'static_data');
+            }, 'configuration');
 
             //elementService.scrollToElement("legal-entity-tabs", 80);
         };
