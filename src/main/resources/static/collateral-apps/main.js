@@ -498,6 +498,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/trades/proposal/TradeProposalInfoController.js',
                             'collateral-apps/controllers/trades/deal_entry/DealEntryProposalInfoController.js',
 
+                            /* BO_VIEW */
+                             'collateral-apps/controllers/trades/bo_view/BoViewController.js',
+
 
                             /* Analytics Controller*/
                             'collateral-apps/controllers/analytics/what_if_simulation/SearchSimulationController.js',
