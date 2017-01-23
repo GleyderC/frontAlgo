@@ -97,7 +97,7 @@ DashboardApp.service('MenuService', function () {
                             icon: 'fa fa-eur font-blue-steel',
                             title: 'MENU.BACK_OFFICE.LIQUIDITY_MANAGEMENT'
                         },
-                        view: '/back_office/liquidity_management/liquidity_management.html',
+                        view: '/back_office/liquidity_management/main.html',
                         unique: true
                     },
                     {

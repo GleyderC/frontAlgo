@@ -430,6 +430,9 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/services/trades/TradeDealEntryService.js',
                             'collateral-apps/services/trades/TradeProposalService.js',
 
+
+                            'collateral-apps/services/back_office/liquidity_management/LiquidityManagementService.js',
+
                             /* Legal Entity Controller js */
                             'collateral-apps/controllers/static_data/LegalEntityController.js',
                             /* Bilateral Controller js */
@@ -508,6 +511,10 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/analytics/what_if_simulation/SimulationController.js',
                             'collateral-apps/controllers/analytics/what_if_simulation/SimulationTradeProposalController.js',
                             'collateral-apps/controllers/analytics/what_if_simulation/test/TestSimulationController.js',
+
+                            /*Liquidity Management*/
+                            'collateral-apps/controllers/back_office/liquidity_management/LiquidityManagementController.js',
+
 
                         ],
                         serie: true,

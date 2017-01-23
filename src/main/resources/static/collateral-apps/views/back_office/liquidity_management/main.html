@@ -1,0 +1,64 @@
+<div class="portlet light" id="liquidityMgmnt" ng-controller="LiquidityManagementController">
+	<div class="row portlet light bordered">
+		<div class="portlet-title">
+			<div class="caption" col-md-3>
+				<i class="fa fa- font-dark font-green-haze"></i> <span
+					class="caption-subject bold uppercase font-green-haze">
+					Liquidity Management</span>
+			</div>
+			
+			<div class="tools">
+			<a href="javascript:;" class="collapse"> </a> <a href="javascript:;"
+					class="fullscreen"> </a>
+			</div>
+		</div>
+
+		<div class="portlet-body">
+						<div class="row" style="margin-left: 5px;margin-right: 10px;">
+							<div class="portlet-body">
+								<div ui-grid="gridLiquidityManagement" 
+									 ui-grid-resize-columns  ui-grid-pagination class="grid grid-collateral" style="height: 575px;"></div>
+								</div>
+						</div>
+						<br/>
+						<div class="row" id="table-liquidity-detail">
+							<table class="table table-striped table-hover table-bordered" > 
+							<thead>
+								<tr>
+									<th class="text-center">Currency</th>
+									<th class="text-center">TradeID</th>
+									<th class="text-center">Origin ID</th>
+									<th class="text-center">Family</th>
+									<th class="text-center">Group</th>
+									<th class="text-center">Sense</th>
+									<th class="text-center">Currency Pair</th>
+									<th class="text-center">Amount</th>
+									<th class="text-center">Settlement Date</th>
+									<th class="text-center">Trade Date</th>
+								</tr>
+							</thead>
+								<tbody>
+									<tr ng-repeat="trade  in liquidity.trades" index="$index + 1" class="text-center media-middle"> 
+										<td ng-if="$index==0" rowspan="3" style="vertical-align: middle;" >
+											{{liquidity.currency}}
+										</td>
+										<td>{{trade.tradeID}}</td>
+										<td>{{trade.originID}}</td>
+										<td>{{trade.family}}</td>
+										<td>{{trade.group}}</td>
+										<td>{{trade.sense}}</td>
+										<td>{{trade.currency_pair}}</td>
+										<td class="collateral-money">{{trade.amount | number:2	}}</td>
+										<td>{{trade.settlement_date}}</td>
+										<td>{{trade.trade_date}}</td>
+
+
+									</tr>
+								</tbody>
+							</table> 
+						</div>
+			</div>
+		</div>
+	</div>
+
+</div>
