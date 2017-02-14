@@ -472,6 +472,7 @@ CollateralApp.config(['$stateProvider', '$urlRouterProvider', function ($statePr
                             'collateral-apps/controllers/integration_reporting/IntegrationController.js',
                             'collateral-apps/controllers/integration_reporting/ScheduledTaskController.js',
                             'collateral-apps/controllers/integration_reporting/ScheduledTask/set_ScheduledTaskController.js',
+                            'collateral-apps/controllers/integration_reporting/ScheduledTask/ScheduledTaskListController.js',
 
                             /* Files Upload Controller */
                             'collateral-apps/controllers/integration_reporting/IRFileUploadController.js',

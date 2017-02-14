@@ -251,6 +251,15 @@ DashboardApp.service('MenuService', function () {
                         view: '',
                         subMenuItems: [
                             {
+                                id: 'ir_scheduled_task_list2',
+                                head: {
+                                    icon: 'fa fa-list font-yellow-gold',
+                                    title: 'List2'
+                                },
+                                view: '/integration_reporting/ScheduledTask/scheduled_task_list.html',
+                                unique: true
+                            },
+                            {
                                 id: 'ir_scheduled_task_list',
                                 head: {
                                     icon: 'fa fa-list font-yellow-gold',
@@ -265,7 +274,7 @@ DashboardApp.service('MenuService', function () {
                                     icon: 'fa fa-wrench font-yellow-gold',
                                     title: 'Config'
                                 },
-                                view: '/integration_reporting/ScheduledTask/set_scheduled_task.html',
+                                view: '/integration_reporting/ScheduledTask/scheduled_task_edit.html',
                                 unique: true
                             }
                         ],
