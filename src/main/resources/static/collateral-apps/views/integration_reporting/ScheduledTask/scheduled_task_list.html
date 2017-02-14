@@ -1,0 +1,64 @@
+<div class="portlet light" ng-controller="SearchScheduledTaskController">
+    <div class="row portlet light bordered" id="scheduled-task-table">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-check-square-o font-dark font-green-haze"></i>
+                <span class="caption-subject bold uppercase font-green-haze">Scheduled Task</span>
+                <span class="caption-helper">Lists</span>
+            </div>
+            <div class="tools">
+                <a href="javascript:;" class="collapse"> </a>
+                <a href="" class="fullscreen"> </a>
+            </div>
+            <div class="col-md-3">
+                <div class="btn-group">
+                    <button class="btn sbold green" ng-click="addScheduledTask()"> Add New
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet-body">
+            <div class="row">
+                <div ui-grid="gridScheduledTaskOptions" ui-grid-exporter ui-grid-auto-resize ui-grid-edit
+                     ui-grid-resize-columns ui-grid-selection ui-grid-pagination
+                     class="grid grid-collateral"></div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+    <!-- END ROW -->
+    <script type="text/ng-template" id="view-log.html">
+        <div class="modal-header">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>
+                    <span class="caption-subject font-dark sbold uppercase">Log Task</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12 portlet light bordered">
+                    <div class="alert alert-info" ng-bind="entity.log" ng-show="entity.log!=''">
+                        <strong>Log:</strong> You have 198 unread messages. </div>
+
+                    <div class="row" ng-if="entity.log!=''">
+                        <div class="col-md-offset-11">
+                            <div class="btn-group">
+                                <button type="submit" class="btn green" ngclipboard data-clipboard-text="{{entity.log}}"
+                                        uib-popover="Copy to Clipboard" popover-trigger="mouseenter">
+                                    <i class="fa fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning" ng-show="entity.log==''">
+                        <strong>Warning!</strong> You Must Run this Task </div>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

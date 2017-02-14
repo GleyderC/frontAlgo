@@ -4,32 +4,36 @@ var DashboardApps = angular.module('DashboardApp');
 
 
 DashboardApps.controller('setScheduledTaskController', [ '$scope',
-    'toastr','$timeout', 'localStorageService', 'uiGridConstants',
+    'toastr','$timeout', 'localStorageService', 'uiGridConstants','ModalService','MarginCallService','ScheduledTaskFactory',
     function ($scope,$toastr, $timeout, localStorageService,
-              uiGridConstants) {
+              uiGridConstants,$modal,MarginCallService,ScheduledTaskFactory) {
+
+        $scope.fileDefinitions= [];
+        MarginCallService.getInputFilesDefinition().then(function (result) {
+
+            $scope.fileDefinitions = result.data.dataResponse.fileDefinitions;
+            $scope.fileDefinitions.selected = {};
+
+        });
+        //console.log($scope.parameters.ScheduledTaskListSelected.id);
+
+
 
         $scope.taskselect = {};
-        $scope.tasklistcreated = [
-            { name: 'Task 1', date: "24/05/17" , type:"PT" , id:"01"},
-            { name: 'Task 2', date: "24/02/17" , type:"PT" , id:"02"},
-            { name: 'Task 3', date: "22/02/17" , type:"CT" , id:"03"},
-            { name: 'Task 4', date: "26/01/17" , type:"PT" , id:"04"},
-            { name: 'Task 5', date: "12/02/17" , type:"CT" , id:"05"},
-
-        ];
+        $scope.tasklistcreated =ScheduledTaskFactory.getTasklistcreated();
 
 
         $scope.reportselect = {};
         $scope.reportslistcreated = [
-            { name: 'Reporte 1',      email: 'juan@email.com',      date: "24/05/17" },
-            { name: 'Reporte 2',      email: 'adam1@email.com',      date: "12/02/16" },
-            { name: 'Reporte 3',      email: 'adam12@email.com',      date: "15/12/16" },
-            { name: 'Reporte 4',      email: 'adam123@email.com',      date: "11/01/17" },
+            { name: 'Report 1',      email: 'juan@email.com',      date: "24/05/17" },
+            { name: 'Report 2',      email: 'adam1@email.com',      date: "12/02/16" },
+            { name: 'Report 3',      email: 'adam12@email.com',      date: "15/12/16" },
+            { name: 'Report 4',      email: 'adam123@email.com',      date: "11/01/17" }
 
         ];
         $scope.myConfig = {
             allowMultiple: true
-        }
+        };
         $scope.howsend = {};
         $scope.howsends = [
             { name: 'Vía Email', val: 'email'},
@@ -42,4 +46,32 @@ DashboardApps.controller('setScheduledTaskController', [ '$scope',
             {name: 'Predefined Integration', val: 'PI'},
             {name: 'Custom Task', val: 'CT'}
          ];
+
+        $scope.clear = function() {
+            $scope.type.selected = undefined;
+            $scope.howsend.selected = undefined;
+            $scope.reportselect.selected = undefined;
+            $scope.taskselect.selected = undefined;
+        };
+
+        function findValues(data, idToLookFor,valor) {
+            var array = data;
+            for (var i = 0; i < array.length; i++) {
+                if (array[i][valor] == idToLookFor) {
+                    return(array[i]);
+                }
+            }
+        }
+
+        if ($scope.parameters.ScheduledTaskListSelected!=null){
+            $scope.taskselect.selected=$scope.parameters.ScheduledTaskListSelected;
+            $scope.type.selected=findValues($scope.types,$scope.parameters.ScheduledTaskListSelected.type,"val");
+            $("#scheduled-task-name").val($scope.parameters.ScheduledTaskListSelected.name);
+        }else{
+            console.log("vacio")
+        }
+        $scope.hola = function() {
+            console.log($scope.parameters.ScheduledTaskListSelected.name);
+        };
+
     }]);

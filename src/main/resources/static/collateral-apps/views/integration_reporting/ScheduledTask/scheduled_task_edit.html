@@ -2,34 +2,32 @@
 
     <div class="row portlet light bordered" id="set-scheduled-task-table">
         <div class="portlet-title">
-            <div class="caption col-md-12">
+
+            <div class="caption col-md-10">
                 <i class="fa fa-wrench font-dark font-green-haze"></i>
                 <span class="caption-subject bold uppercase font-green-haze">Config Scheduled Task</span>
                 <span class="caption-helper">Select Scheduled Tasks List for Edit</span>
-                <div class="col-md 12">
-                    <div class="col-md-6">
-                        <ui-select style="" tagging="tagTransform" ng-model="taskselect.selected" theme="selectize"  style="width: 800px;" title="Choose a Secheduled Task">
-                            <ui-select-match placeholder="Select a Task...">{{$select.selected.name}} &lt;{{$select.selected.date}}&lt;{{$select.selected.type}}&gt;</ui-select-match>
-                            <ui-select-choices repeat="taskselect in tasklistcreated | propsFilter: {name: $select.search, date: $select.search}">
-                                <div ng-if="taskselect.isTag" ng-bind-html="taskselect.name +' <small>(new)</small>'| highlight: $select.search"></div>
-                                <div ng-if="!taskselect.isTag" ng-bind-html="taskselect.name + reportselect.isTag| highlight: $select.search"></div>
-                                <small>
-                                    Type: {{taskselect.type}}
-                                    date: <span ng-bind-html="''+taskselect.date | highlight: $select.search"></span>
-                                </small>
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn blue" tittle="New Task" ng-click="">
-                            <i class="fa fa-plus"></i>Add
-                        </button>
-                    </div>
-                </div>
+
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse"> </a>
                 <a href="" class="fullscreen"> </a>
+            </div>
+            <div class="col-md 12">
+                <div class="col-md-6">
+                    <ui-select style="" tagging="tagTransform" ng-model="taskselect.selected" theme="selectize"  style="width: 800px;" title="Choose a Secheduled Task">
+                        <ui-select-match placeholder="Select a Task...">{{$select.selected.name}} &lt;{{$select.selected.date}}&lt;{{$select.selected.type}}&gt;</ui-select-match>
+                        <ui-select-choices repeat="taskselect in tasklistcreated | propsFilter: {name: $select.search, date: $select.search}">
+                            <div ng-if="taskselect.isTag" ng-bind-html="taskselect.name +' <small>(new)</small>'| highlight: $select.search"></div>
+                            <div ng-if="!taskselect.isTag" ng-bind-html="taskselect.name + reportselect.isTag| highlight: $select.search"></div>
+                            <small>
+                                Type: {{taskselect.type}}
+                                date: <span ng-bind-html="''+taskselect.date | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
             </div>
         </div>
         <div class="portlet-body">
@@ -55,14 +53,19 @@
                     </div>
 
                 </div>
+                <div class="col-md-2" style="padding-top: 2%;">
+                    <button type="button" class="btn blue" tittle="New Task" ng-click="">
+                        <i class="fa fa-plus"></i>Add
+                    </button>
+                </div>
 
-                <div class="form-group col-md-4" style="text-align: -webkit-center;" >
+                <div class="form-group col-md-2" style="text-align: -webkit-center;padding-top:2%" >
 
 
                     <button type="button" ng-show="(type.selected.val=='PR'||type.selected.val=='CT')" class="btn green" title="Save" ng-click="">
                         <i class="fa fa-save"></i>Save
                     </button>
-                    <button type="button" ng-show="(type.selected.val=='PR'||type.selected.val=='CT')" class="btn red" title="Cancel" ng-click="">
+                    <button type="button" ng-show="(type.selected.val=='PR'||type.selected.val=='CT')" class="btn red" title="Cancel" ng-click="clear()">
                         <i class="fa fa-ban"></i>Cancel
                     </button>
 
@@ -200,4 +203,6 @@
             </div>
         </div>
     </div>
+
+
 </div>
